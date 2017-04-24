@@ -1,0 +1,1232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="basic" header="Tabla Maestra" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{busquedaTabla.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+                            <p:commandButton actionListener="#{busquedaTabla.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="tservicio" fileName="Servicios"  />
+                            </h:commandLink>
+
+                        </p:panelGrid>
+                        <div class="tablaMTexto">
+                            <h:outputText value="#{busquedaTabla.textoGeneracionMatrix}"/>
+                        </div>
+                        <div style="height: 15px"></div>
+                        <p:dataTable id="tservicio" var="tservicio" value="#{busquedaTabla.tServiciosRecords}" widgetVar="MatrizTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda" filteredValue="#{busquedaTabla.filteredTServiciosRecords}"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     editable="true"
+                                     rowKey="#{tservicio.id}"
+                                     selection="#{busquedaTabla.selectedServiciosRecords}"
+                                     rowStyleClass="#{not empty tservicio.macro  ?  '' : 'firstColColored'}
+                                                    #{not empty tservicio.linea  ?  '' : 'secondColColored'}
+                                                    #{not empty tservicio.identificador  ?  '' : 'idColColored'}
+                                                    #{ tservicio.identificador eq '0' ?  'idColColored' : ''}
+                                                    #{not empty tservicio.tipoDia  ?  '' : 'diaColColored'}
+                                                    #{not empty tservicio.trayecto  ?  '' : 'trayectoColColored'}
+                                                    #{not empty tservicio.seccion  ?  '' : 'seccionColColored'}
+                                                    #{not empty tservicio.codigoInicio  ?  '' : 'pIniColColored'}
+                                                    #{not empty tservicio.codigoFin  ?  '' : 'pFinColColored'}
+                                                    #{not empty tservicio.nombreGeneral  ?  '' : 'nGeneralColColored'}
+                                                    #{not empty tservicio.nombreEspecial  ?  '' : 'nEspecialColColored'}
+                                                    #{not empty tservicio.matrizNombre  ?  '' : 'matrizColColored'}
+                                                    #{not empty tservicio.idInicio  ?  '' : 'nIncioColColored'}
+                                                    #{not empty tservicio.idFin  ?  '' : 'nFinColColored'}
+                                                    #{not empty tservicio.tipoServicio  ?  '' : 'tipoSColColored'}
+                                                    #{not empty tservicio.distancia  ?  '' : 'disColColored'}
+                                                    #{ tservicio.distancia eq -1 ?  'disColColored' : ''}
+                                                    "
+                        >
+
+
+
+                            <p:ajax event="rowEdit" listener="#{busquedaTabla.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{busquedaTabla.onRowCancel}" update=":form:msgs" />
+
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column colspan="3" headerText="Id" style="width: 350px" />
+                                    <p:column colspan="11" headerText="Servicio" style="width: 1350px"/>
+                                    <p:column colspan="1" headerText="Matriz D" style="width: 130px"/>
+                                    <p:column colspan="4" headerText="Punto Inicio" style="width: 430px"/>
+                                    <p:column colspan="4" headerText="Punto Fin" style="width: 430px"/>
+                                    <p:column colspan="3" headerText="Detalle Servicio" style="width: 330px"/>
+                                    <p:column colspan="4" headerText="Horarios Programados" style="width: 430px"/>
+                                    <p:column colspan="4" headerText="Horarios Usuarios" style="width: 430px"/>
+                                    <p:column colspan="5" headerText="Ciclo" style="width: 520px"/>
+                                    <p:column colspan="3" headerText="Velocidades" style="width: 380px"/>
+                                    <p:column colspan="5" headerText="Intervalos" style="width: 520px"/>
+                                    <p:column colspan="5" headerText="Buses Hora" style="width: 520px"/>
+                                    <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
+
+
+                                </p:row>
+                                <p:row>
+                                    <p:column style="width: 10%;table-layout: fixed" width="10%"/>
+                                    <p:column style="width: 10%;table-layout: fixed" />
+                                    <p:column headerText="Id" filterBy="#{tservicio.identificador}"   filterStyle="width: 100px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.identificador}" style="width: 120px"/>
+                                    <p:column filterBy="#{tservicio.tipoDia}" headerText="TipoDia"  filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipoDia}" />
+                                    <p:column filterBy="#{tservicio.trayecto}" headerText="Trayecto"  filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.trayecto}" />
+                                    <p:column filterBy="#{tservicio.macro}" headerText="Macro" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.macro}" />
+                                    <p:column filterBy="#{tservicio.linea}" headerText="Linea" filterStyle="width: 50px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.linea}" />
+                                    <p:column filterBy="#{tservicio.seccion}" headerText="Seccion" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.seccion}"/>
+                                    <p:column filterBy="#{tservicio.codigoInicio}" headerText="PuntoI"  filterStyle="width: 50px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.codigoInicio}"/>
+                                    <p:column filterBy="#{tservicio.codigoFin}" headerText="PuntoF" filterStyle="width: 50px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.codigoFin}" />
+                                    <p:column filterBy="#{tservicio.secuencia}" headerText="Secuencia" filterStyle="width: 90px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.secuencia}"/>
+                                    <p:column filterBy="#{tservicio.tipologia.nombre}" headerText="Tipología"
+                                              filterMatchMode="contains" sortBy="#{tservicio.servicio.tipologia.nombre}"/>
+                                    <p:column filterBy="#{tservicio.nombreGeneral}" headerText="Servicio U" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.nombreGeneral}" />
+                                    <p:column filterBy="#{tservicio.nombreEspecial}" headerText="Servicio E" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.nombreEspecial}"/>
+                                    <p:column filterBy="#{tservicio.matrizNombre}"
+                                              headerText="Matriz" filterStyle="width: 110px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.matrizNombre}" />
+                                    <p:column filterBy="#{tservicio.idInicio}" headerText="M-L-S-P Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.idInicio}" />
+                                    <p:column filterBy="#{tservicio.nombreInicio}" headerText="Punto Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.nombreInicio}" />
+                                    <p:column filterBy="#{tservicio.zonaTInicio}" headerText="Zona T Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.zonaTInicio}" />
+                                    <p:column filterBy="#{tservicio.zonaPInicio}" headerText="Zona P Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.zonaPInicio}" />
+                                    <p:column filterBy="#{tservicio.idFin}" headerText="M-L-S-P Fin" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.idInicio}" />
+                                    <p:column filterBy="#{tservicio.nombreIFin}" headerText="Punto Fin" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.nombreIFin}" />
+                                    <p:column filterBy="#{tservicio.zonaTFin}" headerText="Zona T Fin" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.zonaTFin}" />
+                                    <p:column filterBy="#{tservicio.zonaPFin}" headerText="Zona P Fin" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.zonaPFin}" />
+                                    <p:column filterBy="#{tservicio.tipoServicio}" headerText="Tipo" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipoServicio}" />
+                                    <p:column filterBy="#{tservicio.distancia}" headerText="Distancia" filterStyle="width: 90px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.distancia}" />
+                                    <p:column filterBy="#{tservicio.estadoFormato}" headerText="Estado" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.estadoFormato}" />
+
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioA}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinA}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioB}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioB}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinB}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinB}" />
+
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioC}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioC}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinC}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinC}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioD}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioD}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinD}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinD}" />
+
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoInicio}" headerText="Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoInicio}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoAM}" headerText="Pico AM" filterStyle="width: 800px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoAM}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoValle}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPM}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoCierre}" headerText="Cierre" filterStyle="width: 800px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCierre}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoInicio}" headerText="Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoInicio}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoAM}" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoAM}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoValle}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPM}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoCierre}" headerText="Cierre" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCierre}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoInicio}" headerText="Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoInicio}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoAM}" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoAM}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoValle}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPM}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoCierre}" headerText="Cierre" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCierre}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoValle}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoAM}" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoAM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoValle}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoPM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoAM}" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoAM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoValle}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoPM}" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPM}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="Cierre" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="Inicio" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="Pico AM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="Pico PM" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}" />
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="Cierre" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}" />
+                                    <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}" />
+                                    <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Picos" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}" />
+                                    <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Valle" filterStyle="width: 80px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}" />
+                                </p:row>
+                            </p:columnGroup>
+
+                            <p:column selectionMode="multiple" style="width:32px;text-align:center"/>
+                            <p:column style="width:32px">
+                                <p:rowEditor />
+                            </p:column>
+
+                            <p:column
+                                    style="width: 120px" styleClass="idCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.identificador}" style="width: 122px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="nombreInput" value="#{tservicio.identificador}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+
+
+                            <p:column filterBy="#{tservicio.tipoDia}" headerText="TipoDia"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipoDia}"
+                                      style="width: 100px" styleClass="diaCol">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.tipoDia}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.tipoDia}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.trayecto}" headerText="Trayecto"  filterStyle="width: 70px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.trayecto}"
+                                      style="width: 80px" styleClass="trayectoCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.trayecto}" style="width: 80px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.trayecto}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.macro}" headerText="Macro" filterStyle="width: 70px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.macro}"
+                                      style="width: 90px" styleClass="firstCol">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.macro}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.macro}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.linea}" headerText="Linea" filterStyle="width: 50px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.linea}"
+                                      style="width: 80px" styleClass="secondCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.linea}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.linea}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.seccion}" headerText="Seccion" filterStyle="width: 70px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.seccion}"
+                                      style="width: 100px" styleClass="seccionCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.seccion}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.seccion}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.codigoInicio}" headerText="PuntoI"  filterStyle="width: 50px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.codigoInicio}"
+                                      style="width: 90px" styleClass="pinicol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.codigoInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.codigoInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.codigoFin}" headerText="PuntoF" filterStyle="width: 50px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.codigoFin}"
+                                      style="width: 95px" styleClass="pfincol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.codigoFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.codigoFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.secuencia}" headerText="Secuencia" filterStyle="width: 60px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.secuencia}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.secuencia}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.secuencia}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipologia.nombre}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{tservicio.servicio.tipologia.nombre}"
+                                      style="width: 130px" >
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.tipologia.nombre}" style="width: 132px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.tipologia.nombre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.nombreGeneral}" headerText="Servicio U" filterStyle="width: 60px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.nombreGeneral}"
+                                      style="width: 120px" styleClass="nGeneralCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.nombreGeneral}" style="width: 122px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.nombreGeneral}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.nombreEspecial}" headerText="Servicio E" filterStyle="width: 60px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.nombreEspecial}"
+                                      style="width: 120px" styleClass="nEspecialCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.nombreEspecial}" style="width: 122px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.nombreEspecial}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.matrizNombre}"
+                                      headerText="Matriz" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.matrizNombre}"
+                                      style="width: 130px" styleClass="matrizCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.matrizNombre}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.matrizNombre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.idInicio}" headerText="M-L-S-P Inicio" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.idInicio}"
+                                      style="width: 145px" styleClass="nInicioCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.idInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.idInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.nombreInicio}" headerText="Punto Inicio" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.nombreInicio}"
+                                      style="width: 145px" styleClass="nInicioCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.nombreInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.nombreInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.zonaTInicio}" headerText="Zona T Inicio" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.zonaTInicio}"
+                                      style="width: 130px" styleClass="nInicioCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.zonaTInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.zonaTInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.zonaPInicio}" headerText="Zona P Inicio" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.zonaPInicio}"
+                                      style="width: 130px" styleClass="nInicioCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.zonaPInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.zonaPInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.idFin}" headerText="M-L-S-P Fin" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.idInicio}"
+                                      style="width: 130px" styleClass="nFinCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.idFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.idFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.nombreIFin}" headerText="Punto Fin" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.nombreIFin}"
+                                      style="width: 145px" styleClass="nFinCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.nombreIFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.nombreIFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.zonaTFin}" headerText="Zona T Fin" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.zonaTFin}"
+                                      style="width: 130px" styleClass="nFinCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.zonaTFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.zonaTFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.zonaPFin}" headerText="Zona P Fin" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.zonaPFin}"
+                                      style="width: 130px" styleClass="nFinCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.zonaPFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.zonaPFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipoServicio}" headerText="Tipo Servicio" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipoServicio}"
+                                      style="width: 140px" styleClass="tiposcol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.tipoServicio}" style="width: 142px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.tipoServicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.distancia}" headerText="Distancia" filterStyle="width: 90px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.distancia}"
+                                      style="width: 120px" styleClass="disCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.distancia}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.distancia}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.estadoFormato}" headerText="Estado" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.estadoFormato}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.estadoFormato}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.estadoFormato}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioA}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioA}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioA}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioA}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinA}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinA}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinA}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinA}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioB}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioB}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioB}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioB}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinB}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinB}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinB}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinB}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioC}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioC}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioC}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioC}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinC}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinC}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinC}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinC}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioD}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioD}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioD}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioD}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinD}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinD}"
+                                      style="width: 100px">
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinD}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinD}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.optimoInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.optimoInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.optimoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.optimoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoValle}" headerText="C-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.optimoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.optimoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.optimoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.optimoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.optimoCierre}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.optimoCierre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.minimoInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.minimoInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.minimoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.minimoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoValle}" headerText="C-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.minimoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.minimoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.minimoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.minimoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.minimoCierre}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.minimoCierre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.maximoInicio}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.maximoInicio}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.maximoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.maximoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoValle}" headerText="C-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.maximoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.maximoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.maximoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.maximoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.cicloServicio.maximoCierre}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.cicloServicio.maximoCierre}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.optimoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.optimoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoValle}" headerText="V-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.optimoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.optimoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.optimoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.optimoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.minimoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.minimoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoValle}" headerText="V-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.minimoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.minimoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.minimoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.minimoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.maximoAM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.maximoAM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoValle}" headerText="V-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.maximoValle}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.maximoValle}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.velocidadProgramada.maximoPM}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.velocidadProgramada.maximoPM}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorInicio}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}"
+                                      style="width: 120px" >
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorAM}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorPM}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorCierre}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesInicio}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesAM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesPM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesCierre}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.franjaCuartos}" style="width: 104px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.franjaCuartos}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Capacidad Picos" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.tipologia.capacidadPicos}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Capacidad Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.tipologia.capacidadValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton id="delete" process="tservicio"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 value="Eliminar"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()"
+
+                                >
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dataTable>
+
+                        <p:dialog header="Servicio Informacion" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.serviciosSelected}" columnClasses="label,value" >
+
+                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.identificador}"/>
+
+                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.macro}"  />
+
+                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.linea}"  />
+
+                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.seccion}"  />
+
+                                    <h:outputText value="Punto Inicio:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.codigoInicio}"  />
+
+                                    <h:outputText value="Punto Final:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.codigoFin}"  />
+
+                                    <h:outputText value="Nombre General:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.nombreGeneral}"  />
+
+                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.serviciosSelected.nombreEspecial}"  />
+
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Actualizar" action="#{serviciosP.actualizar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="actualizar"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{serviciosP.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelar"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+
+                        <p:dialog header="Servicio Tabla Maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="nuevoDialog" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.nuevaTabla}" columnClasses="label,value">
+
+                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.identificador}"  />
+
+                                    <h:outputText value="Trayecto:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.trayecto}"  />
+
+                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.macro}"  />
+
+                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.linea}"  />
+
+                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.seccion}"  />
+
+                                    <h:outputText value="Punto I:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.codigoInicio}"  />
+
+                                    <h:outputText value="Punto F:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.codigoFin}"  />
+
+                                    <h:outputText value="Nombre Generico:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.nombreGeneral}"  />
+
+                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.nombreEspecial}"  />
+
+                                    <h:outputText value="Tipo Servicio:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.tipoServicio}"  />
+
+                                    <h:outputText value="Distancia:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.distancia}"  />
+
+                                    <h:outputText value="Franja Cuartos:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.franjaCuartos}"  />
+
+                                    <h:outputText value="Tipología:" style="color:black"/>
+                                    <p:selectOneMenu value="#{busquedaTabla.nuevaTabla.tipologiaAux}" style="width:100%" >
+                                        <f:selectItem itemLabel="ARTICULADO" itemValue="ARTICULADO" />
+                                        <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
+                                        <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
+
+                                    </p:selectOneMenu>
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Nuevo" action="#{busquedaTabla.nuevoRegistro}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="nuevo"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{busquedaTabla.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelars"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:confirmDialog message="Esta seguro de eliminar estos registro?"
+                                         showEffect="fade"
+                                         hideEffect="explode"
+                                         widgetVar="groupDeleteConfirm">
+                            <p:commandButton title="GDelYesButton"
+                                             value="Yes"
+                                             action="#{busquedaTabla.eliminar}"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                            />
+                            <p:commandButton title="GDelNoButton"
+                                             value="No"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"/>
+                        </p:confirmDialog>
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

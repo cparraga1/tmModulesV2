@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+	<h:head>
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
+		<h:outputStylesheet name="common-style.css" library="css" />
+		<h:outputStylesheet name="css/bootstrap.min.css" />
+		<h:outputStylesheet name="css/simple-sidebar.css" />
+		<h:outputScript name="js/bootstrap.min.js" />
+
+		<!--<h:outputScript name="js/jquery.js" />-->
+	</h:head>
+    
+    <h:body>
+
+	<div id="page">
+		
+		<div id="sidebar">
+			<ui:insert name="sidebar" >
+				<ui:include src="/template/common/commonHeader.xhtml" />
+			</ui:insert>
+	    </div>
+	    
+	    <div id="content">
+		<div id="page-content-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+		   	<ui:insert name="content" >
+		   		<ui:include src="/template/common/commonContent.xhtml" />
+		   	</ui:insert>
+				</div>
+			</div>
+			</div>
+	    </div>
+    	
+    </div>
+    
+    </h:body>
+
+</html>
+
+<!--<script>-->
+<!--$("#menu-toggle").click(function(e) {-->
+	<!--e.preventDefault();-->
+	<!--$("#wrapper").toggleClass("toggled");-->
+<!--});-->
+<!--</script>-->

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <body>
+	    <ui:composition>
+            <!--<div id="wrapper">-->
+            <!--<div style="background-color: #2e6da4">-->
+            <h:form id="formSideBar">
+                <div class="menu">
+
+
+
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a href="#">Programación BRT</a>
+                        </div>
+                        <div>
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--<li><a href="#" ><span class="glyphicon glyphicon-user"></span>Registro</a></li>-->
+                                <li><p:commandLink action="#{loginBean.logout}"><span class="ui-icon-person"></span>Salir</p:commandLink></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <p:panel style="border:none;padding-top: 5px;">
+
+
+                <p:megaMenu orientation="horizontal" style="margin-top:30px;">
+                    <p:submenu label="Tabla Maestra" icon="ui-icon-script">
+                        <p:column>
+                            <p:submenu label="Parametrizacion">
+                                <p:menuitem value="Servicios" action="#{menu.refreshServicios}" />
+                                <p:menuitem value="Servicios por Dia" action="#{menu.refreshServiciosporDia}" />
+                                <p:menuitem value="Estaciones" action="#{menu.refreshNodo}"/>
+                            </p:submenu>
+                            <p:submenu label="Tabla Maestra">
+                                <p:menuitem value="Nueva Tabla Maestra" action="#{menu.refreshNuevaTablaMaestra}" />
+                                <p:menuitem value="Buscar Tabla Maestra" action="#{menu.refreshBuscarTablaMaestra}" />
+                            </p:submenu>
+                        </p:column>
+                    </p:submenu>
+
+                    <p:submenu label="GIS Carga" icon="ui-icon-document">
+                        <p:column>
+                            <p:submenu label="GIS Carga">
+                                <p:menuitem value="Nuevo GIS Carga" action="#{menu.refreshNuevoGISCarga}" />
+                                <p:menuitem value="Buscar GIS Carga" action="#{menu.refreshBuscarGISCarga}" />
+                            </p:submenu>
+                        </p:column>
+                    </p:submenu>
+
+                    <p:submenu label="Matriz Distancias" icon="ui-icon-carat-2-e-w">
+                        <p:column>
+                            <p:submenu label="Matriz Distancias">
+                                <p:menuitem value="Nueva Matriz Distancias" action="#{menu.refreshNuevaMatrizDistancia}" />
+
+                                <p:menuitem value="Buscar Matriz Distancias" action="#{menu.refreshBuscarMatrizDistancia}" />
+                            </p:submenu>
+                        </p:column>
+
+                    </p:submenu>
+
+
+
+                </p:megaMenu>
+                </p:panel>
+
+            </h:form>
+            <!--</div>-->
+            <!--</div>-->
+	    </ui:composition>
+    </body>
+</html>
+
+

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form >
+                <p:panel id="basic" header="Matriz de distancia" style="margin-bottom:20px" visible="#{busquedaMatriz.visibleRecords}">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{busquedaMatriz.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
+                            <p:commandButton actionListener="#{busquedaMatriz.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="matriz" fileName="#{busquedaMatriz.selectedMatriz.descripcion}"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div class="tablaMTexto">
+                            <h:outputText value="#{busquedaMatriz.selectedMatriz.descripcion}"/>
+                        </div>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="matriz" var="matriz" value="#{busquedaMatriz.distanciaNodosRecords}" widgetVar="MatrizTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     selection="#{busquedaMatriz.selectedDistanciaNodosRecords}" rowKey="#{matriz.id}"
+                                     >
+
+
+                            <f:facet name="header" style="background-color: #4cae4c">
+                                <p:outputPanel>
+                                    <h:outputText value="Buscar en todos los campos " />
+                                    <p:inputText id="globalFilter" onkeyup="PF('MatrizTable').filter()" style="width:150px" placeholder=""/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
+                            <p:column filterBy="#{matriz.servicioDistancia.ruta}" headerText="Ruta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.ruta}"
+                                      style="width: 120px">
+                                <h:outputText value="#{matriz.servicioDistancia.ruta}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.servicioDistancia.macro}" filterStyle="width: 65px;"
+                                      headerText="Macro"  filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.macro}"
+                                      style="width: 70px">
+                                <h:outputText value="#{matriz.servicioDistancia.macro}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.servicioDistancia.linea}" headerText="Línea" filterStyle="width: 65px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.linea}"
+                                      style="width: 70px">
+                                <h:outputText value="#{matriz.servicioDistancia.linea}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.servicioDistancia.seccion}" headerText="Sección" filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.seccion}"
+                                      style="width: 85px">
+                                <h:outputText value="#{matriz.servicioDistancia.seccion}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.nodoCodigo}" headerText="Nodo" filterStyle="width: 65px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.nodoCodigo}"
+                                      style="width: 70px">
+                                <h:outputText value="#{matriz.nodoCodigo}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.distancia}" headerText="Abscisa" filterStyle="width: 90px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.distancia}"
+                                      style="width: 95px">
+                                <h:outputText value="#{matriz.distancia}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.nodoNombre}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{matriz.nodoNombre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{matriz.nodoNombre}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                <!--<p:commandButton process="checkboxDT" update=":form:multiCarDetail" icon="ui-icon-search" -->
+                                                 <!--value="Eliminar" oncomplete="PF('multiCarDialog').show()" />-->
+                                <p:commandButton id="delete" process="matriz"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 value="Eliminar"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()"
+
+                                                >
+                                    <!--<f:setPropertyActionListener value="#{ser}" target="#{serviciosTipoDiaP.selectedServicio}" />-->
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dataTable>
+                        <p:confirmDialog message="Esta seguro de eliminar estos registro?"
+                                         showEffect="fade"
+                                         hideEffect="explode"
+                                         widgetVar="groupDeleteConfirm">
+                            <p:commandButton title="GDelYesButton"
+                                             value="Yes"
+                                             action="#{busquedaMatriz.eliminar}"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                            />
+                            <p:commandButton title="GDelNoButton"
+                                             value="No"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"/>
+                        </p:confirmDialog>
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
+

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form >
+                <p:panel id="basic" header="Gis Carga" style="margin-bottom:20px" visible="#{busquedaGis.visibleRecords}">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                                <p:commandButton actionListener="#{busquedaGis.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
+                                <p:commandButton actionListener="#{busquedaGis.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="arco" fileName="GIS de carga"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="arco" var="arco" value="#{busquedaGis.arcoTiempoRecords}" widgetVar="gisTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     filteredValue="#{busquedaGis.filteredArcoTiempoRecords}"
+                                     rowKey="#{arco.id}"
+                                     selection="#{busquedaGis.selectedArcoTiempo}" selectionMode="single"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="500"
+                                    >
+
+
+                            <f:facet name="header" style="background-color: #4cae4c">
+                                <p:outputPanel>
+                                    <h:outputText value="Buscar en todos los campos" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('gisTable').filter()" style="width:150px" placeholder=""/>
+                                </p:outputPanel>
+                            </f:facet>
+
+
+                            <p:column filterBy="#{arco.servicio.linea}" headerText="Linea"  filterMatchMode="contains" sortBy="#{arco.servicio.linea}"
+                             style="width: 120px">
+                                <h:outputText value="#{arco.servicio.linea}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.servicio.nodoIncial}" headerText="Nodo Inicio" filterMatchMode="contains" sortBy="#{arco.servicio.nodoIncial}"
+                                      style="width: 125px">
+                                <h:outputText value="#{arco.servicio.nodoIncial}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.servicio.nodoFinal}" headerText="Nodo Final"  filterMatchMode="contains" sortBy="#{arco.servicio.nodoFinal}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.servicio.nodoFinal}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.distancia}" headerText="Distancia" filterMatchMode="contains" sortBy="#{arco.distancia}"
+                                      style="width: 130px">
+                                <h:outputText value="#{arco.distancia}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.servicio.trayecto}" headerText="Descripcion"  filterMatchMode="contains" sortBy="#{arco.servicio.trayecto}"
+                                      style="width: 130px">
+                                <h:outputText value="#{arco.servicio.trayecto}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.tipoDiaByArco.detalle}" headerText="Tipo Dia"  filterMatchMode="contains" sortBy="#{arco.tipoDiaByArco.detalle}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.tipoDiaByArco.detalle}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.horaDesde}" headerText="Hora Desde"  filterMatchMode="contains" sortBy="#{arco.horaDesde}"
+                                      style="width: 125px">
+                                <h:outputText value="#{arco.horaDesde}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.horaHasta}" headerText="Hora Hasta"  filterMatchMode="contains" sortBy="#{arco.horaHasta}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.horaHasta}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.tiempoOptimo}" headerText="T.Optimo"  filterMatchMode="contains" sortBy="#{arco.tiempoOptimo}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.tiempoOptimo}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.tiempoMinimo}" headerText="T.Minimo"  filterMatchMode="contains" sortBy="#{arco.tiempoMinimo}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.tiempoMinimo}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.tiempoMaximo}" headerText="T.Maximo"  filterMatchMode="contains" sortBy="#{arco.tiempoMaximo}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.tiempoMaximo}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.servicio.trayecto}" headerText="Trayecto"  filterMatchMode="contains" sortBy="#{arco.servicio.trayecto}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.servicio.trayecto}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.sentido}" headerText="Sentido"  filterMatchMode="contains" sortBy="#{arco.sentido}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.sentido}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.secuencia}" headerText="Secuencia"  filterMatchMode="contains" sortBy="#{arco.secuencia}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.secuencia}" />
+                            </p:column>
+
+                            <p:column filterBy="#{arco.tipoArco}" headerText="Tipo Arco"  filterMatchMode="contains" sortBy="#{arco.tipoArco}"
+                                      style="width: 120px">
+                                <h:outputText value="#{arco.tipoArco}" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

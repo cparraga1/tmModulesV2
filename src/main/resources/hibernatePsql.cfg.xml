@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">
+            org.hibernate.dialect.PostgreSQLDialect
+        </property>
+        <property name="hibernate.connection.driver_class">
+            org.postgresql.Driver
+        </property>
+
+        <!-- Assume test is the database name -->
+        <property name="hibernate.connection.url">
+            jdbc:postgresql://localhost:5432/TMData
+        </property>
+        <property name="hibernate.connection.username">
+            postgres
+        </property>
+        <property name="hibernate.connection.password">
+            1234
+        </property>
+        <property name="hibernate.show_sql">false</property>
+
+        <!-- List of XML mapping files -->
+        <mapping class="com.tmModulos.modelo.entity.tmData.GisCarga"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TablaMaestra"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ServicioDistancia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TipoDia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TipoDiaDetalle"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Nodo"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ArcoTiempo"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.MatrizDistancia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Servicio"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.DistanciaNodos"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Zona"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Tipologia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.FranjaHoraria"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ServicioFranjaHorario"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TablaMaestraServicios"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.IntervalosServicio"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.CicloServicio"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TipoFranja"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.IntervalosProgramacion"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TemporalHorarios"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TiempoIntervalos"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.IntervalosIdentificador"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Intervalos"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.GisIntervalos"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ServicioTipoDia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.GisServicio"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ListaNegraMatriz"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.VelocidadProgramada"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.HorariosServicio"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Horario"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Estacion"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Vagon"/>
+
+    </session-factory>
+</hibernate-configuration>

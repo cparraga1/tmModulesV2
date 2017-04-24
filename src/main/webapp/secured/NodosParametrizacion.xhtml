@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="basic" header="Estaciones" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{nodosP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+                            <p:commandButton actionListener="#{nodosP.habilitarNuevo}" update=":form:nuevaEstacion" value="Crear"
+                                             oncomplete="PF('nuevaEstacion').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="matriz" fileName="Estaciones"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="matriz" var="estacion" value="#{nodosP.estacionRecords}" widgetVar="MatrizTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     filteredValue="#{nodosP.filteredestacionRecords}"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     editable="true"
+                        selection="#{nodosP.selectedestacionRecords}" rowKey="#{estacion.id}">
+
+                            <p:ajax event="rowEdit" listener="#{nodosP.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{nodosP.onRowCancel}" update=":form:msgs" />
+
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+                            <p:column filterBy="#{estacion.codigo}" headerText="Codigo"  filterMatchMode="contains"
+                                      sortBy="#{estacion.codigo}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{estacion.codigo}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="modelInput" value="#{estacion.codigo}" style="width:100%"/>
+                                            </f:facet>
+
+                                        </p:cellEditor>
+
+                            </p:column>
+
+                            <p:column filterBy="#{estacion.nombre}" headerText="Nombre"  filterMatchMode="contains"
+                                      sortBy="#{estacion.nombre}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{estacion.nombre}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText id="nombreInput" value="#{estacion.nombre}" style="width:100%"/>
+                                    </f:facet>
+
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{estacion.zonaProgramacion.nombre}"
+                                      headerText="Zona P"  filterMatchMode="contains" sortBy="#{estacion.zonaProgramacion.nombre}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{estacion.zonaProgramacion.nombre}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{nodosP.auxNombreZonaP}" style="width:100%" >
+                                            <f:selectItems value="#{nodosP.zonasProgramadasRecords}" var="zona" itemLabel="#{zona.nombre}" itemValue="#{zona}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{estacion.zonaUsuario.nombre}" headerText="Zona U"
+                                      filterMatchMode="contains" sortBy="#{estacion.zonaUsuario.nombre}"
+                                      style="width: 120px">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{estacion.zonaUsuario.nombre}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{nodosP.auxNombreZonaU}" style="width:100%" >
+                                            <f:selectItems value="#{nodosP.zonasUsuariosRecords}" var="zona" itemLabel="#{zona.nombre}" itemValue="#{zona}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:32px">
+                                <p:rowEditor />
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center">
+                                <p:commandButton action="#{nodosP.verDetalleEstacion}" icon="ui-icon-search" title="View">
+                                    <f:setPropertyActionListener value="#{estacion}" target="#{nodosP.selectedestacion}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <f:facet name="footer">
+                                <p:commandButton id="delete" process="matriz"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 value="Eliminar"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()"
+
+                                >
+                                </p:commandButton>
+                            </f:facet>
+
+                        </p:dataTable>
+
+                    </div>
+                </p:panel>
+
+                <p:dialog header="Nodo Informacion" widgetVar="nuevaEstacion" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="nuevaEstacion" style="text-align:center;">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevaEstacion}" columnClasses="label,value">
+
+                            <h:outputText value="Codigo:" style="color:black" />
+                            <h:inputText value="#{nodosP.nuevaEstacion.codigo}"/>
+
+                            <h:outputText value="Nombre:" style="color:black"/>
+                            <h:inputText value="#{nodosP.nuevaEstacion.nombre}"  />
+
+                            <h:outputText value="Zona Usuario:" style="color:black"/>
+                            <h:selectOneMenu value="#{nodosP.auxNombreZonaU}" style="width:100%" >
+                                <f:selectItems value="#{nodosP.zonasUsuariosRecords}" var="zona" itemLabel="#{zona.nombre}" itemValue="#{zona}" />
+                            </h:selectOneMenu>
+
+                            <h:outputText value="Zona Programacion:" style="color:black"/>
+                            <h:selectOneMenu value="#{nodosP.auxNombreZonaP}" style="width:100%" >
+                                <f:selectItems value="#{nodosP.zonasProgramadasRecords}" var="zona" itemLabel="#{zona.nombre}" itemValue="#{zona}" />
+                            </h:selectOneMenu>
+
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Nuevo" action="#{nodosP.nuevo}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="nuevo"
+                                             async="true" />
+
+                            <p:commandButton value="Cancelar" action="#{nodosP.cancelar}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="cancelars"
+                                             async="true" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:confirmDialog message="Esta seguro de eliminar estos registro? Se borrara toda la información asociada a esta Estacion"
+                                 showEffect="fade"
+                                 hideEffect="explode"
+                                 widgetVar="groupDeleteConfirm">
+                    <p:commandButton title="GDelYesButton"
+                                     value="Yes"
+                                     action="#{nodosP.eliminarEstacion}"
+                                     oncomplete="PF('groupDeleteConfirm').hide()"
+                    />
+                    <p:commandButton title="GDelNoButton"
+                                     value="No"
+                                     oncomplete="PF('groupDeleteConfirm').hide()"/>
+                </p:confirmDialog>
+
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

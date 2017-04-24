@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panel id="basic" header="Buscar Tabla Maestra"  style="margin-bottom:20px">
+                    <h:panelGrid columns="2" style="margin-bottom:10px;margin-top: 10px" cellpadding="10">
+                        <p:outputLabel  value="Tipo Busqueda:" />
+                        <p:selectOneRadio id="busqueda" value="#{busquedaTabla.busqueda}">
+                            <p:ajax process="@this" update="@form" listener="#{busquedaTabla.cambioTipoBusqueda}"/>
+                            <f:selectItem itemLabel="Fecha" itemValue="1" />
+                            <f:selectItem itemLabel="Rango Fechas" itemValue="2" />
+                        </p:selectOneRadio>
+                        <p:outputLabel  value="Tipo Fecha:" />
+                        <p:selectOneRadio id="tipoFecha" value="#{busquedaTabla.tipoFecha}">
+                            <f:selectItem itemLabel="Fecha de creación" itemValue="fechaCreacion" />
+                            <f:selectItem itemLabel="Fecha de programación" itemValue="fechaAplicacion" />
+                        </p:selectOneRadio>
+                        <p:outputLabel for="button" value="Fecha Inicial (DD-MM-AAAA):" />
+                        <p:panel  style="border:none">
+                            <p:calendar id="button" value="#{busquedaTabla.fechaInicial}" showOn="button" />
+                        </p:panel>
+
+                        <p:outputLabel for="buttonF" value="Fecha Final (DD-MM-AAAA):" />
+                        <p:panel visible="#{busquedaTabla.fechaFinalVisible}" style="border:none">
+                            <p:calendar id="buttonF" value="#{busquedaTabla.fechaFinal}" showOn="button" />
+                        </p:panel>
+
+                    </h:panelGrid>
+                    <h:panelGrid columns="2"  cellpadding="15">
+                        <p:commandButton value="Buscar" action="#{busquedaTabla.buscar}" ajax="false"
+                                         icon="ui-icon ui-icon-search" id="withIcon" />
+
+                        <p:commandButton value="Reiniciar" id="withIcon2" icon="ui-icon ui-icon-arrowrefresh-1-s" action="#{busquedaTabla.reinciar}" ajax="false" />
+                    </h:panelGrid>
+
+
+                </p:panel>
+                <p:panel  >
+                    <p:dataTable id="basicDT" var="tabla" value="#{busquedaTabla.tablaMaestraRecords}"
+                                 emptyMessage="No se encontraron registros relacionados a la busqueda">
+                        <f:facet name="header">
+                            Matriz de distancias
+                        </f:facet>
+                        <p:column headerText="Numeración">
+                            <h:outputText value="#{tabla.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Fecha Creación">
+                            <h:outputText value="#{tabla.fechaCreacionFormato}" />
+                        </p:column>
+                        <p:column headerText="Fecha Vigencia">
+                            <h:outputText value="#{tabla.fechaProgramacionFormato}" />
+                        </p:column>
+                        <p:column style="width:100px;text-align: center">
+                            <p:commandButton  update=":form:nuevoDialog" value="Ver"
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" >
+                                <f:setPropertyActionListener value="#{tabla}" target="#{busquedaTabla.selectedTabla}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:dialog header="Opciones visualización tabla maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="nuevoDialog" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value">
+                                <h:outputText value="Tipo Ciclo:" style="color: black;" />
+                                <h:selectOneMenu value="#{busquedaTabla.tipoCiclo}" style="width:100%" >
+                                    <f:selectItem itemLabel="OPTIMO" itemValue="Optimo" />
+                                    <f:selectItem itemLabel="MINIMO" itemValue="Minimo" />
+                                    <f:selectItem itemLabel="MAXIMO" itemValue="Maximo" />
+                                </h:selectOneMenu>
+                                <h:outputText value="Tipo Intervalo:" style="color: black;"/>
+                                <h:selectOneMenu value="#{busquedaTabla.tipoIntervalo}" style="width:100%" >
+                                    <f:selectItem itemLabel="PROMEDIO" itemValue="Promedio" />
+                                    <f:selectItem itemLabel="MODA" itemValue="Moda" />
+                                    <f:selectItem itemLabel="MINIMO" itemValue="Minimo" />
+                                    <f:selectItem itemLabel="MAXIMO" itemValue="Maximo" />
+                                </h:selectOneMenu>
+                                <p:commandButton value="Visualizar" action="#{busquedaTabla.busquedaTablaMaestra}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="nuevo"
+                                                 async="true" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </p:panel>
+                <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                    <p:panelGrid id="display" columns="2" columnClasses="label,value">
+                        <h:outputText value="Button:" />
+                        <h:outputText value="#{busquedaTabla.fechaInicial}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                </p:dialog>
+
+
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form >
+
+
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                <p:panel id="basic" header="Buscar GIS de Carga"  style="margin-bottom:20px">
+                    <h:panelGrid columns="2" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:outputLabel  value="Tipo Busqueda:" />
+                        <p:selectOneRadio id="busqueda" value="#{busquedaInt.busqueda}">
+                            <p:ajax process="@this" update="@form" listener="#{busquedaInt.cambioTipoBusqueda}"/>
+                            <f:selectItem itemLabel="Fecha" itemValue="1" />
+                            <f:selectItem itemLabel="Rango Fechas" itemValue="2" />
+                        </p:selectOneRadio>
+                        <p:outputLabel  value="Tipo Fecha:" />
+                        <p:selectOneRadio id="tipoFecha" value="#{busquedaInt.tipoFecha}">
+                            <f:selectItem itemLabel="Fecha de creacion" itemValue="fechaCreacion" />
+                            <f:selectItem itemLabel="Fecha de programacion" itemValue="fechaProgramacion" />
+                        </p:selectOneRadio>
+                        <p:outputLabel for="button" value="Fecha Inicial (DD-MM-AAAA):" />
+                        <p:panel  style="border:none">
+                            <p:calendar id="button" value="#{busquedaInt.fechaInicial}" showOn="button" />
+                        </p:panel>
+
+                        <p:outputLabel for="buttonF" value="Fecha Final (DD-MM-AAAA):" />
+                        <p:panel visible="#{busquedaInt.fechaFinalVisible}" style="border:none">
+                            <p:calendar id="buttonF" value="#{busquedaInt.fechaFinal}" showOn="button" />
+                        </p:panel>
+
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="2"  cellpadding="15">
+                        <p:commandButton value="Buscar" action="#{busquedaInt.buscar}" ajax="false"
+                                         icon="ui-icon ui-icon-search" id="withIcon" />
+
+                        <p:commandButton value="Reiniciar" id="withIcon2" icon="ui-icon ui-icon-arrowrefresh-1-s" action="#{busquedaInt.reiniciar}" ajax="false" />
+                    </h:panelGrid>
+
+
+                </p:panel>
+                <p:panel >
+                    <p:dataTable id="basicDT" var="carga" value="#{busquedaInt.gisIntervalosRecords}"
+                                 emptyMessage="No se encontraron registros relacionados a la busqueda">
+                        <f:facet name="header">
+                            Gis de Carga
+                        </f:facet>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{carga.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Tipo Dia">
+                            <h:outputText value="#{carga.tipoDia.nombre}" />
+                        </p:column>
+                        <p:column headerText="Fecha Vigencia">
+                            <h:outputText value="#{carga.fechaProgramacionFormato}" />
+                        </p:column>
+                        <p:column headerText="Tabla Maestra">
+                            <h:outputText value="#{carga.tablaMaestra.descripcion}" />
+                        </p:column>
+                        <p:column style="width:100px;text-align: center">
+
+                            <p:commandButton ajax="false"
+                                    onclick="PrimeFaces.monitorDownload(start, stop)"
+                                             icon="ui-icon-search" >
+                                <f:setPropertyActionListener value="#{carga}" target="#{busquedaInt.selectedIntervalo}" />
+                                <p:fileDownload value="#{busquedaInt.file}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+                <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                    <p:panelGrid id="display" columns="2" columnClasses="label,value">
+                        <h:outputText value="Button:" />
+                        <h:outputText value="#{busquedaInt.fechaInicial}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                </p:dialog>
+
+                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                           minHeight="40" style="height: 40px">
+                    <h:outputText value="En Proceso.." />
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

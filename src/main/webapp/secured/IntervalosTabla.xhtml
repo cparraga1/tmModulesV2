@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form >
+                <p:panel id="basic" header="Intervalos GIS" style="margin-bottom:20px" >
+                    <div style="margin-top:20px">
+                        <p:accordionPanel>
+                        <p:tab title="Promedio">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{busquedaInt.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
+                            <p:commandButton actionListener="#{busquedaInt.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="tservicio" fileName="Tabla Maestra"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+
+                        <p:dataTable var="intervalos" value="#{busquedaInt.intervalosRecords}" expandableRowGroups="true"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510" >
+                            <!--<p:headerRow>-->
+                                <!--<p:column colspan="6">-->
+                                    <!--<h:outputText value="Promedio" />-->
+                                <!--</p:column>-->
+                            <!--</p:headerRow>-->
+                            <f:facet name="header">
+                                <p:column colspan="6">
+                                    <h:outputText value="Promedio" />
+                                </p:column>
+                            </f:facet>
+                            <p:column headerText="Servicio" groupRow="true">
+                                <h:outputText value="#{intervalos.idServicio.identificador}" />
+                            </p:column>
+                            <p:column headerText="Inicio">
+                                <h:outputText value="#{intervalos.valorInicio}" />
+                            </p:column>
+                            <p:column headerText="Pico AM">
+                                <h:outputText value="#{intervalos.valorAM}" />
+                            </p:column>
+                            <p:column headerText="Valle">
+                                <h:outputText value="#{intervalos.valorValle}" />
+                            </p:column>
+                            <p:column headerText="Pico PM">
+                            <h:outputText value="#{intervalos.valorPM}" />
+                        </p:column>
+                            <p:column headerText="Cierre">
+                                <h:outputText value="#{intervalos.valorCierre}" />
+                            </p:column>
+                        </p:dataTable>
+                        </p:tab>
+                            <p:tab title="Moda">
+
+                            </p:tab>
+                        </p:accordionPanel>
+
+                    </div>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

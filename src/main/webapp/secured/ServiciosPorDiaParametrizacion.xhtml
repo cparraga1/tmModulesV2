@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form" enctype="multipart/form-data">
+                <p:growl id="message" showDetail="true" />
+                <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="3">
+                            <h:outputText value="Seleccione el tipo dia:" />
+                            <h:selectOneMenu value="#{serviciosTipoDiaP.tipoDiaSeleccionado}" style="width:100%" >
+                                <f:selectItem itemLabel="HABIL" itemValue="HABIL" />
+                                <f:selectItem itemLabel="SABADO" itemValue="SABADO" />
+                                <f:selectItem itemLabel="FESTIVO" itemValue="FESTIVO" />
+                                <f:selectItem itemLabel="TODOS" itemValue="TODOS" />
+                            </h:selectOneMenu>
+                            <p:commandButton value="Buscar" action="#{serviciosTipoDiaP.buscar}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="buscar"
+                                             async="true" />
+                        </p:panelGrid>
+                        <p:panel visible="#{serviciosTipoDiaP.tablaVisible}">
+                        <p:panelGrid columns="5" >
+                            <p:commandButton actionListener="#{serviciosTipoDiaP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+                            <p:commandButton actionListener="#{serviciosTipoDiaP.habilitarNuevo}" update=":form:nuevoDialog" value="Asociar"
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+
+                            <p:commandButton actionListener="#{serviciosTipoDiaP.actualizarOrdenServicios}" update=":form:actualizarDialog" value="Actualizar Orden"
+                                             oncomplete="PF('actualizarDialog').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="matriz" fileName="Servicios por Tipo Dia"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="matriz" var="ser" value="#{serviciosTipoDiaP.serviciosRecords}" widgetVar="MatrizTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     editable="true"
+                                     rowKey="#{ser.id}"
+                                     selection="#{serviciosTipoDiaP.selectedServicio}" >
+
+
+                            <f:facet name="header" style="background-color: #4cae4c">
+                                <p:outputPanel>
+                                    <h:outputText value="Buscar en todos los campos" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('MatrizTable').filter()" style="width:150px" placeholder=""/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column selectionMode="single" style="width:16px;text-align:center" exportable="false"/>
+
+                            <p:column filterBy="#{ser.identificador}" headerText="Id"  filterMatchMode="contains" sortBy="#{ser.identificador}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ser.identificador}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.servicio.nombreEspecial}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{ser.servicio.nombreEspecial}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ser.servicio.nombreEspecial}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.orden}" headerText="Orden"  filterMatchMode="contains" sortBy="#{ser.orden}"
+                                      style="width: 120px" >
+                                <h:outputText value="#{ser.orden}"  />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.tipoDia.nombre}" headerText="Tipo Dia"  filterMatchMode="contains" sortBy="#{ser.tipoDia.nombre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ser.tipoDia.nombre}" />
+
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center" exportable="false">
+                                <p:commandButton id="delete"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()" >
+                                    <f:setPropertyActionListener value="#{ser}" target="#{serviciosTipoDiaP.selectedServicio}" />
+                                </p:commandButton>
+
+                            </p:column>
+
+
+
+
+                        </p:dataTable>
+
+                        <p:dialog header="Crear Servicio " widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="nuevoDialog" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty serviciosTipoDiaP.nuevoServicio}" columnClasses="label,value">
+
+                                    <h:outputText value="Servicio Asociado:" style="color:black"/>
+                                    <p:selectOneMenu id="advanced" value="#{serviciosTipoDiaP.nombreEspecialServicio}"  panelStyle="width:180px"
+                                                     effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
+                                        <f:selectItems value="#{serviciosTipoDiaP.serviciosPrincipalesRecords}" var="servicio"
+                                                       itemLabel="#{servicio.nombreEspecial}" itemValue="#{servicio.nombreEspecial}" />
+
+                                        <p:column>
+                                            <h:outputText value="#{t}" />
+                                        </p:column>
+
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Orden:" style="color:black"/>
+                                    <h:inputText value="#{serviciosTipoDiaP.nuevoServicio.orden}" disabled="true" />
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Crear" action="#{serviciosTipoDiaP.crear}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="actualizarw"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{serviciosTipoDiaP.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelar2"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                            <p:dialog header="Actualizar Orden servicios" widgetVar="actualizarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                <p:outputPanel id="actualizarDialog" style="text-align:center;">
+                                    <p:panelGrid columns="3">
+                                    <p:outputLabel value="Orden servicios:" />
+                                    <p:fileUpload value="#{serviciosTipoDiaP.ordenServiciosFile}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                                    <p:commandButton value="Actualizar" action="#{serviciosTipoDiaP.procesarOrdenServicios}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
+                                                     async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                     oncomplete="PF('dlg2').hide()"/>
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                                           minHeight="40" style="height: 40px">
+                                    <h:outputText value="En Proceso.." />
+                                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                                </p:dialog>
+                            </p:dialog>
+
+                            <p:confirmDialog message="Esta seguro de eliminar este registro?"
+                                             showEffect="fade"
+                                             hideEffect="explode"
+                                             widgetVar="groupDeleteConfirm">
+                                <p:commandButton title="GDelYesButton"
+                                                 value="Yes"
+                                                 action="#{serviciosTipoDiaP.eliminar}"
+                                                 oncomplete="PF('groupDeleteConfirm').hide()"
+                                                 update="matriz"/>
+                                <p:commandButton title="GDelNoButton"
+                                                 value="No"
+                                                 oncomplete="PF('groupDeleteConfirm').hide()"/>
+                            </p:confirmDialog>
+
+                        </p:panel>
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

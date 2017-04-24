@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="message" showDetail="true" />
+                <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{serviciosP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
+                            <p:commandButton actionListener="#{serviciosP.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+                            <h:outputText value="Exportar:" />
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:dataExporter type="xls"
+                                                target="matriz" fileName="Servicios"  />
+                            </h:commandLink>
+                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="matriz" var="ser" value="#{serviciosP.serviciosRecords}" widgetVar="MatrizTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda" filteredValue="#{serviciosP.filteredServiciosRecords}"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     editable="true">
+
+
+                            <f:facet name="header" style="background-color: #4cae4c" exportable="false">
+                                <p:outputPanel>
+                                    <h:outputText value="Buscar en todos los campos" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('MatrizTable').filter()" style="width:150px" placeholder=""/>
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <p:column filterBy="#{ser.macro}" headerText="Macro"  filterMatchMode="contains" sortBy="#{ser.macro}"
+                                      style="width: 70px">
+                                <h:outputText value="#{ser.macro}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.linea}" headerText="Linea"  filterMatchMode="contains" sortBy="#{ser.linea}"
+                                      style="width: 70px">
+                                <h:outputText value="#{ser.linea}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.seccion}" headerText="Seccion"  filterMatchMode="contains" sortBy="#{ser.seccion}"
+                                      style="width: 70px">
+                                <h:outputText value="#{ser.seccion}"  style="width: 75px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{ser.nombreGeneral}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{ser.nombreGeneral}"
+                                      style="width: 120px">
+                                        <h:outputText value="#{ser.nombreGeneral}" />
+
+                            </p:column>
+
+                            <p:column filterBy="#{ser.nombreEspecial}" headerText="Especial"  filterMatchMode="contains" sortBy="#{ser.nombreEspecial}"
+                                      style="width: 120px">
+                                        <h:outputText value="#{ser.nombreEspecial}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.tipologia.nombre}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{ser.tipologia.nombre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ser.tipologia.nombre}" />
+                            </p:column>
+
+                            <p:column filterBy="#{ser.estado}" headerText="Activo"  filterMatchMode="contains" sortBy="#{ser.estado}"
+                                      style="width:80px">
+                                <h:outputText value="#{ser.estado}" style="width: 90px"/>
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center" exportable="false">
+                                <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="View">
+                                    <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center" exportable="false">
+                                <p:commandButton id="delete"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()">
+                                    <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
+                                </p:commandButton>
+
+                            </p:column>
+
+
+                        </p:dataTable>
+
+                        <p:confirmDialog message="¿Esta seguro de eliminar este servicio?. Recuerd que se eliminaran las asociaciones del servicio y los tipo días."
+                                         showEffect="fade"
+                                         hideEffect="explode"
+                                         widgetVar="groupDeleteConfirm">
+                            <p:commandButton title="GDelYesButton"
+                                             value="Yes"
+                                             action="#{serviciosP.eliminar}"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                            />
+                            <p:commandButton title="GDelNoButton"
+                                             value="No"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"/>
+                        </p:confirmDialog>
+
+                        <p:dialog header="Servicio Informacion" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.selectedServicio}" columnClasses="label,value" >
+
+                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
+
+                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.macro}"  />
+
+                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.linea}"  />
+
+                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.seccion}"  />
+
+                                    <h:outputText value="Punto:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.punto}"  />
+
+
+                                    <h:outputText value="Linea Compuesta:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.lineaCompuesta}"  />
+
+                                    <h:outputText value="Trayecto:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.trayecto}"  />
+
+                                    <h:outputText value="Nombre Generico:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.nombreGeneral}"  />
+
+                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.selectedServicio.nombreEspecial}"  />
+
+
+                                    <h:outputText value="Estado:" style="color:black"/>
+                                    <p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.estado}" disabled="true"/>
+
+                                    <h:outputText value="TipoServicio:" style="color:black"/>
+                                    <h:selectOneMenu value="#{serviciosP.selectedServicio.tipoServicio}" style="width:100%" >
+                                        <f:selectItems value="#{serviciosP.tipoServicio}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="Tipología:" style="color:black"/>
+                                    <p:selectOneMenu value="#{serviciosP.console}" style="width:100%" >
+                                    <!--<f:selectItems value="#{serviciosP.tipologias}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />-->
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItem itemLabel="ARTICULADO" itemValue="ARTICULADO" />
+                                        <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
+                                        <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
+
+                                    </p:selectOneMenu>
+
+                                    <!--<p:panelGrid columns="6">-->
+                                        <!--<h:outputText value="Habil:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.habil}" />-->
+                                        <!--<h:outputText value="Sabado:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.sabado}" />-->
+                                        <!--<h:outputText value="Festivo:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.festivo}" />-->
+                                    <!--</p:panelGrid>-->
+
+
+
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Actualizar" action="#{serviciosP.actualizar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="actualizar"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{serviciosP.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelar"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+
+                        <p:dialog header="Servicio Informacion" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="nuevoDialog" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoServicio}" columnClasses="label,value">
+
+                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
+
+                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.macro}"  />
+
+                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.linea}"  />
+
+                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.seccion}"  />
+
+                                    <h:outputText value="Punto:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.punto}"  />
+
+
+                                    <h:outputText value="Linea Compuesta:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.lineaCompuesta}"  />
+
+                                    <h:outputText value="Trayecto:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.trayecto}"  />
+
+                                    <h:outputText value="Nombre Generico:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.nombreGeneral}"  />
+
+                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:inputText value="#{serviciosP.nuevoServicio.nombreEspecial}"  />
+
+
+                                    <h:outputText value="Estado:" style="color:black"/>
+                                    <p:selectBooleanCheckbox value="#{serviciosP.nuevoServicio.estado}" />
+
+                                    <h:outputText value="TipoServicio:" style="color:black"/>
+                                    <h:selectOneMenu value="#{serviciosP.nuevoServicio.tipoServicio}" style="width:100%" >
+                                        <f:selectItems value="#{serviciosP.tipoServicio}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="Tipología:" style="color:black"/>
+                                    <h:selectOneMenu value="#{serviciosP.console}" style="width:100%" >
+                                        <f:selectItem itemLabel="Select One" itemValue="" />
+                                        <f:selectItem itemLabel="ARTICULADO" itemValue="ARTICULADO" />
+                                        <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
+                                        <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
+                                    </h:selectOneMenu>
+
+                                    <!--<p:panelGrid columns="6">-->
+                                        <!--<h:outputText value="Habil:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.habil}" />-->
+                                        <!--<h:outputText value="Sabado:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.sabado}" />-->
+                                        <!--<h:outputText value="Festivo:" style="color:black"/>-->
+                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.festivo}" />-->
+                                    <!--</p:panelGrid>-->
+
+
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Nuevo" action="#{serviciosP.nuevo}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="nuevo"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{serviciosP.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelars"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

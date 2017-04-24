@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="basic" header="Vagones y Nodos" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <h3>#{nodosP.selectedestacion.nombre}</h3>
+                        <div style="height: 10px"></div>
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{nodosP.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
+                            <p:commandButton actionListener="#{nodosP.añadirVagon}" update=":form:nuevoVagon" value="Nuevo Vagon"
+                                             oncomplete="PF('nuevoVagon').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+                            <p:commandButton  update=":form:eliminarVagon" value="Eliminar Vagon"
+                                             oncomplete="PF('eliminarVagon').show()" icon="ui-icon-minus" title="View"/>
+                        </p:panelGrid>
+                        <div style="height: 8px"></div>
+
+
+                        <p:accordionPanel value="#{nodosP.vagonesPorEstacion}" var="vagon">
+                            <p:tab title="Vagón - #{vagon.vagon.nombre}">
+                                <div style="height: 5px"></div>
+                                <h:panelGrid columns="2" cellpadding="5">
+
+                                    <p:commandButton actionListener="#{nodosP.añadirNodo(vagon.vagon)}" id="anadir" value="Añadir"
+                                                     icon="ui-icon-plus"  update=":form:nuevoDialog"
+                                                     oncomplete="PF('nuevoDialog').show()"/>
+                                </h:panelGrid>
+                                <div style="height: 5px"></div>
+                                <h:panelGrid>
+                                    <p:dataTable id="nodos" var="nod" value="#{vagon.nodos}" widgetVar="nodoTable"
+                                                 emptyMessage="No hay nodos"
+                                                 scrollable="true" scrollWidth="100%" scrollHeight="150"
+                                                 editable="true" selectionMode="single"
+                                                 selection="#{nodosP.selectedNodo}" rowKey="#{nod.id}">
+
+                                        <!--<p:ajax event="rowEdit" listener="#{nodosP.editarNodosVagon}" update=":form"/>-->
+                                        <!--<p:ajax event="rowEditCancel" listener="#{nodosP.onRowCancel}" update=":form" />-->
+                                        <!--<p:column selectionMode="single" style="width:16px;text-align:center"/>-->
+                                        <p:column  headerText="Codigo"
+                                                   sortBy="#{nod.codigo}"
+                                                   style="width: 120px">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{nod.codigo}" />
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputText id="modelInput" value="#{nod.codigo}" style="width:100%"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+                                        <p:column  headerText="Codigo"
+                                                   sortBy="#{nod.nombre}"
+                                                   style="width: 120px">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{nod.nombre}" />
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputText id="modelInputw" value="#{nod.nombre}" style="width:100%"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+                                        <!--<p:column style="width:32px">-->
+                                            <!--<p:rowEditor >-->
+                                                <!--&lt;!&ndash;<f:setPropertyActionListener value="#{nod}" target="#{nodosP.selectedNodo}" />&ndash;&gt;-->
+                                                    <!--</p:rowEditor>-->
+                                        <!--</p:column>-->
+
+                                        <!--<p:column style="width:32px;text-align: center">-->
+                                            <!--<p:commandButton oncomplete="PF('editDialog').show()" icon="ui-icon ui-icon-pencil" title="View"-->
+                                                             <!--update=":form:editDialog"-->
+                                                             <!--actionListener="#{nodosP.editarNodo(nodosP.selectedNodo)}">-->
+                                                <!--<f:setPropertyActionListener value="#{nod}" target="#{nodosP.selectedNodo}" />-->
+                                            <!--</p:commandButton>-->
+                                        <!--</p:column>-->
+
+                                        <p:column style="width:32px;text-align: center">
+                                            <p:commandButton action="#{nodosP.eliminarNodo}" icon="ui-icon ui-icon-trash" title="View"
+                                            >
+                                                <f:setPropertyActionListener value="#{nod}" target="#{nodosP.selectedNodo}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                        <!--<f:facet name="footer">-->
+                                        <!--<p:commandButton id="delete" process="matriz"-->
+                                        <!--icon="ui-icon ui-icon-trash"-->
+                                        <!--value="Eliminar"-->
+                                        <!--title="GDeleteButton"-->
+                                        <!--onclick="PF('groupDeleteConfirm').show()"-->
+
+                                        <!--&gt;-->
+                                        <!--</p:commandButton>-->
+                                        <!--</f:facet>-->
+                                    </p:dataTable>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
+
+                    </div>
+                </p:panel>
+
+
+                <p:dialog header="Nodo Informacion" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="nuevoDialog" style="text-align:center;">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoNodoVagon}" columnClasses="label,value">
+
+                            <h:outputText value="Codigo:" style="color:black" />
+                            <h:inputText value="#{nodosP.nuevoNodoVagon.codigo}"/>
+
+                            <h:outputText value="Nombre:" style="color:black"/>
+                            <h:inputText value="#{nodosP.nuevoNodoVagon.nombre}"  />
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Nuevo" action="#{nodosP.añadirNodoVagon}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="nuevo"
+                                             async="true" />
+
+                            <p:commandButton value="Cancelar" action="#{nodosP.cancelar}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="cancelars"
+                                             async="true" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:dialog header="Nodo Informacion" widgetVar="editDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="editDialog" style="text-align:center;">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.selectedNodo}" columnClasses="label,value">
+
+                            <h:outputText value="Codigo:" style="color:black" />
+                            <h:inputText value="#{nodosP.selectedNodo.codigo}"/>
+
+                            <h:outputText value="Nombre:" style="color:black"/>
+                            <h:inputText value="#{nodosP.selectedNodo.nombre}"  />
+
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Editar" action="#{nodosP.editarNodosVagon}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="editar"
+                                                 async="true" />
+
+                                <p:commandButton value="Cancelar" action="#{nodosP.cancelar}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="cancelais"
+                                                 async="true" />
+                            </p:panelGrid>
+
+                        </p:panelGrid>
+
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:dialog header="Añadir Vagon" widgetVar="nuevoVagon" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="nuevoVagon" style="text-align:center;">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoVagon}" columnClasses="label,value">
+
+                            <h:outputText value="Numeración:" style="color:black" />
+                            <h:inputText value="#{nodosP.nuevoVagon.numeracion}"/>
+
+                            <h:outputText value="Nombre:" style="color:black"/>
+                            <h:inputText value="#{nodosP.nuevoVagon.nombre}"  />
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Nuevo" action="#{nodosP.añadirNuevoVagon}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="nuevoV"
+                                             async="true" />
+
+                            <p:commandButton value="Cancelar" action="#{nodosP.cancelar}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="cancelarsV"
+                                             async="true" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:dialog header="Eliminar Vagon" widgetVar="eliminarVagon" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="eliminarVagon" style="text-align:center;">
+                        <p:panelGrid  columns="4"  columnClasses="label,value">
+
+                            <h:outputText value="Seleccione vagon a eliminar:" style="color:black" />
+                            <h:selectOneMenu value="#{nodosP.vagonAEliminar}" style="width:100%" >
+                                <f:selectItems value="#{nodosP.vagonesPorEstacion}" var="vagon" itemLabel="#{vagon.vagon.nombre}" itemValue="#{vagon.vagon.id}" />
+                            </h:selectOneMenu>
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Eliminar" action="#{nodosP.eliminarVagon}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="nuevoe"
+                                             async="true" />
+
+                            <p:commandButton value="Cancelar" action="#{nodosP.cancelar}" ajax="false"
+                                             icon="ui-icon ui-icon-disk" id="cancelarse"
+                                             async="true" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+                <!--<p:confirmDialog message="Esta seguro de eliminar estos registro? Se borrara toda la información asociada a este Nodo"-->
+                                 <!--showEffect="fade"-->
+                                 <!--hideEffect="explode"-->
+                                 <!--widgetVar="groupDeleteConfirm">-->
+                    <!--<p:commandButton title="GDelYesButton"-->
+                                     <!--value="Yes"-->
+                                     <!--action="#{nodosP.eliminar}"-->
+                                     <!--oncomplete="PF('groupDeleteConfirm').hide()"-->
+                    <!--/>-->
+                    <!--<p:commandButton title="GDelNoButton"-->
+                                     <!--value="No"-->
+                                     <!--oncomplete="PF('groupDeleteConfirm').hide()"/>-->
+                <!--</p:confirmDialog>-->
+
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

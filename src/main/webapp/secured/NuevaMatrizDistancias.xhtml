@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage name="/resources/images/ajaxloadingbar.gif" />
+            </p:dialog>
+
+
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:panel id="basic" header="Generar Matriz de distancia"  style="margin-bottom:20px">
+                    <h:panelGrid  style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:panelGrid style="border:none" columns="5" >
+                        <p:outputLabel  value="Tipo Generación:" />
+                        <p:selectOneRadio id="busqueda" value="#{matrizDis.tipoGeneracion}">
+                            <p:ajax process="@this" update="@form" listener="#{matrizDis.cambioTipoGeneracion}"/>
+                            <f:selectItem itemLabel="Calcular" itemValue="1" />
+                            <f:selectItem itemLabel="Cargar Archivo" itemValue="2" />
+                        </p:selectOneRadio>
+                            <p:outputLabel value="Numeración:" for="numeracion" />
+                            <p:inputText value="#{matrizDis.numeracion}" id="numeracion"/>
+                            <p:message for="numeracion" display="tooltip" />
+                            <p:outputLabel value="Descripción:" for="desc" />
+                            <p:inputText value="#{matrizDis.descripcion}" id="desc"/>
+                        </p:panelGrid>
+                        <p:panel>
+                            <p:panelGrid columns="4" style="border:none">
+                                <p:outputLabel for="buttonV" value="Fecha Hábil (DD-MM-AAAA):" />
+                                <p:calendar id="buttonV" value="#{matrizDis.fechaDeVigencia}" showOn="button" />
+                                <p:outputLabel for="buttonS" value="Fecha Sabado (DD-MM-AAAA):" />
+                                <p:calendar id="buttonS" value="#{matrizDis.fechaSabado}" showOn="button" />
+                                <p:outputLabel for="buttonF" value="Fecha Festivos (DD-MM-AAAA):" />
+                                <p:calendar id="buttonF" value="#{matrizDis.fechaFestivos}" showOn="button" />
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel visible="#{matrizDis.archivoVisible}" style="border:none">
+                            <p:panelGrid columns="3">
+                            <!--<p:outputLabel for="button" value="Fecha Programación (DD-MM-AAAA):" />-->
+                            <!--<p:calendar id="button" value="#{matrizDis.fechaDeProgramacion}" showOn="button" />-->
+                            <p:outputLabel value="Archivo Matriz de Distancias (DD-MM-AAAA):" />
+                            <p:fileUpload value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+
+                                <p:commandButton value="Guardar" action="#{matrizDis.cargarArchivo}" ajax="false"
+                                                 icon="ui-icon ui-icon-disk" id="withIcon"
+                                                 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                 oncomplete="PF('dlg2').hide()"/>
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel visible="#{matrizDis.automaticoVisible}" style="border:none" >
+                            <p:panelGrid columns="2">
+                                <p:commandButton value="Calcular" action="#{matrizDis.calcularMatrizDistancias}" ajax="false"
+                                                 icon="ui-icon ui-icon-calculator" id="calcular" visible="#{matrizDis.automaticoVisible}"
+                                                 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                 oncomplete="PF('dlg2').hide()"/>
+                            </p:panelGrid>
+
+
+                        </p:panel>
+
+
+
+
+
+                    </h:panelGrid>
+
+
+
+
+                </p:panel>
+
+                <p:panel visible="#{matrizDis.resultadosVisibles}">
+                    <p:accordionPanel style="width: 100%" activeIndex="null">
+                        <p:tab title="Resultados">
+                            <h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+                                <p:dataList value="#{matrizDis.logDatos}" var="log" type="ordered" style="width: 100%">
+                                    <f:facet name="header">
+                                        Log
+                                    </f:facet>
+                                    #{log.tipoLog} : #{log.mensaje}
+                                </p:dataList>
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:panel>
+
+                <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                    <p:panelGrid id="display" columns="2" columnClasses="label,value">
+                        <h:outputText value="Button:" />
+                        <h:outputText value="#{gisCarga.fechaProgramacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                </p:dialog>
+
+                <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                minHeight="40" style="height: 40px">
+                    <h:outputText value="En Proceso.." />
+                    <p:graphicImage name="images/ajaxloadingbar.gif" />
+                </p:dialog>
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
