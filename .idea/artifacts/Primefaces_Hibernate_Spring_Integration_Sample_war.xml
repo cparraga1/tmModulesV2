@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Primefaces-Hibernate-Spring-Integration-Sample:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="Primefaces-Hibernate-Spring-Integration-Sample-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Primefaces-Hibernate-Spring-Integration-Sample:war exploded" />
+    </root>
+  </artifact>
+</component>
