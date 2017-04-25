@@ -130,25 +130,25 @@ public class MatrizProcessor {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 if( row.getCell(0) != null ){
-                    int codigoNodo=convertirAInt(row, MatrizDistanciaDefinicion.NODO_CODIGO);
+                    int codigoNodo=convertirAInt(row, MatrizDistanciaDefinicion.NODO);
 
 
                     String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
                     String nodoCodigo;
 
-                    if(row.getCell(MatrizDistanciaDefinicion.NODO_CODIGO).getCellType()==0 ){
-                        nodoCodigo= (int) row.getCell(MatrizDistanciaDefinicion.NODO_CODIGO).getNumericCellValue()+"";
+                    if(row.getCell(MatrizDistanciaDefinicion.NODO).getCellType()==0 ){
+                        nodoCodigo= (int) row.getCell(MatrizDistanciaDefinicion.NODO).getNumericCellValue()+"";
                     }else{
-                        nodoCodigo= row.getCell(MatrizDistanciaDefinicion.NODO_CODIGO).getStringCellValue();
+                        nodoCodigo= row.getCell(MatrizDistanciaDefinicion.NODO).getStringCellValue();
                     }
 
-                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(convertirAInt(row,MatrizDistanciaDefinicion.MACRO)
-                            , convertirAInt(row,MatrizDistanciaDefinicion.LINEA)
-                            , convertirAInt(row,MatrizDistanciaDefinicion.SECCION)
-                            ,row.getCell(MatrizDistanciaDefinicion.RUTA).getStringCellValue(),
+                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(convertirAInt(row,MatrizDistanciaDefinicion.LINEA)
+                            , convertirAInt(row,MatrizDistanciaDefinicion.SUBLINEA)
+                            , convertirAInt(row,MatrizDistanciaDefinicion.RUTA)
+                            ,row.getCell(MatrizDistanciaDefinicion.NOMBRE_RUTA).getStringCellValue(),
                             nodoCodigo);
                     guardarDistanciaNodos(matrizDistancia,
-                            convertirAInt(row,MatrizDistanciaDefinicion.ABSICSA),
+                            convertirAInt(row,MatrizDistanciaDefinicion.POSICION),
                             servicioDistancia,nodoNombre,nodoCodigo);
                 }else{
                     break;
