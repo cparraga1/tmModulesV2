@@ -57,6 +57,8 @@
         <mapping class="com.tmModulos.modelo.entity.tmData.Horario"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.Estacion"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.Vagon"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Equivalencias"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal"/>
 
     </session-factory>
 </hibernate-configuration>

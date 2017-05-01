@@ -41,7 +41,7 @@ public class DataProcesorImpl {
     @Autowired
     private ProcessorUtils processorUtils;
 
-    private String destination="C:\\temp\\";
+    private String destination;
     private boolean exitoso;
 
     private static Logger log = Logger.getLogger(DataProcesorImpl.class);
@@ -62,8 +62,9 @@ public class DataProcesorImpl {
         log.info("<< GIS Carga Incio de Procesamiento >>");
         logDatos.add(new LogDatos("GIS Carga Incio de Procesamiento", TipoLog.INFO));
         serviciosNoEncontrados = new ArrayList<>();
+        destination="C:\\temp\\";
         processorUtils.copyFile(fileName,in,destination);
-        destination=destination+fileName;
+        destination="C:\\temp\\"+fileName;
         GisCarga gisCarga = saveGisCarga(fechaProgrmacion,fechaVigencia,descripcion,tipoDia);
         try {
             readExcelAndSaveData(destination,gisCarga,tipoDia);

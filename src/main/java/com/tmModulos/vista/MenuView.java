@@ -91,6 +91,16 @@ public class MenuView {
         }
     }
 
+    public void refreshVerificacionHorarios(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/VerifHorarios.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void refreshBuscarMatrizDistancia(){
