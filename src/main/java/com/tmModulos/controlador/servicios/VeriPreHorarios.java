@@ -47,6 +47,16 @@ public class VeriPreHorarios {
     public List<Equivalencias> getEquivalenciasByData(int linea, int sublinea, int puntoI, int puntoF){
      return equivalenciasDao.getEquivalenciasByData(linea,sublinea,puntoI,puntoF);
     }
+
+    public void addEquivalenciasFromFile(String filename){
+        equivalenciasDao.addEquivalenciasFromFile(filename);
+    }
+
+    public void deleteEquivalencias(){
+        equivalenciasDao.deleteEquivalencias();
+    }
+
+
 }
 
 

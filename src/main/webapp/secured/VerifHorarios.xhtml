@@ -38,6 +38,11 @@
                                      oncomplete="PF('dlg2').hide()"/>
 
                 </p:panel>
+                <p:panel visible="#{VerHorario.visibleDescarga}">
+                    <h:commandButton  value="Descargar"  action="#{VerHorario.download()}"   >
+
+                    </h:commandButton>
+                </p:panel>
                 <!--<p:panel visible="#{gisCarga.resultadosVisibles}">-->
                     <!--<p:accordionPanel style="width: 100%" activeIndex="null">-->
                         <!--<p:tab title="Resultados">-->
