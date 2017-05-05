@@ -47,30 +47,27 @@ public class VerificacionHorarios {
         if(tipoValidacion.equals("Pre")){
 
             veriPreHorarios.addEquivalenciasFromFile(destination);
-            compareDataExcel(fileForTipoDia(tipoDia));
+            compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
             veriPreHorarios.deleteEquivalencias();
             File file = new File(destination);
             file.delete();
+
+        } else{
+            veriPreHorarios.addTablaHorarioFromFile(destination);
+            compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
+            veriPreHorarios.deleteTablaHorario();
 
         }
 
         return logDatos;
     }
 
-    private void compareDataExcel(String file) {
+    private void compareDataExcel(String file,String tipo) {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
             HSSFSheet worksheet = workbook.getSheetAt(0);
 
-//            File fileIn = new File(file);
-//            File fileout = new File("C:\\temp\\copyRes.xls");
-//            copyFile(fileIn,fileout);
-//
-//
-//            FileInputStream fileInputStreamOut = new FileInputStream("C:\\temp\\copyRes.xls");
-//            HSSFWorkbook workbookOut = new HSSFWorkbook(fileInputStreamOut);
-//            HSSFSheet worksheetOut = workbookOut.getSheetAt(0);
 
             Iterator<Row> rowIterator = worksheet.iterator();
             Row r =rowIterator.next();
@@ -84,32 +81,62 @@ public class VerificacionHorarios {
                 Row row = rowIterator.next();
 
                 if( row.getCell(0) != null ){
-                    String id = row.getCell(ComparadorHorarioIndex.iD_PRE).getStringCellValue();
-                    List<ExpedicionesTemporal> expedicionesTemporals = veriPreHorarios.getExpedicionesTemporalsData(id);
-                    if(expedicionesTemporals.size()>0){
-                        Date horaInicio = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO));
-                        Date horaInicioB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO_2));
-                        Date horaFin = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
-                        Date horaFinB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
-                        int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
+                    Date horaInicio = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO));
+                    Date horaInicioB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO_2));
+                    Date horaFin = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
+                    Date horaFinB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
+                    int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
+                    if(tipo.equals("Pre")){
+                        String id = row.getCell(ComparadorHorarioIndex.iD_PRE).getStringCellValue();
+                        List<ExpedicionesTemporal> expedicionesTemporals = veriPreHorarios.getExpedicionesTemporalsData(id);
+                        if(expedicionesTemporals.size()>0){
 
-                       List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
-                                horaFin,horaFinB,distancia);
+                            List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
+                                    horaFin,horaFinB,distancia);
 
-                        createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
-                        createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
-                        createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
-                        createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
-                        createCellResultados(row, validacion.get(4),ComparadorHorarioIndex.RES_DISTANCIA);
+                            createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
+                            createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
+                            createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
+                            createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
+                            createCellResultados(row, validacion.get(4),ComparadorHorarioIndex.RES_DISTANCIA);
 
+                        }else{
+                            String info = "N/A";
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI_2);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN_2);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_DISTANCIA);
+                        }
                     }else{
-                        String info = "N/A";
-                        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI);
-                        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN);
-                        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI_2);
-                        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN_2);
-                        createCellResultados(row, info,ComparadorHorarioIndex.RES_DISTANCIA);
+                        String id = row.getCell(ComparadorHorarioIndex.iD).getStringCellValue();
+                        String[] valores = id.split("-");
+                        int linea = Integer.parseInt(valores[0]);
+                        int sublinea = Integer.parseInt(valores[1]);
+                        int ruta = Integer.parseInt(valores[2]);
+                        int punto = Integer.parseInt(valores[3]);
+                        List<TempHorario> tempHorarios = veriPreHorarios.getTablaHorarioByData(linea,sublinea,ruta,punto);
+                        if(tempHorarios.size()>0){
+
+                            List< String> validacion = validarHorarioPost(tempHorarios,horaInicio,horaInicioB,
+                                    horaFin,horaFinB,distancia);
+
+                            createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
+                            createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
+                            createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
+                            createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
+                            createCellResultados(row, validacion.get(4),ComparadorHorarioIndex.RES_DISTANCIA);
+
+                        }else{
+                            String info = "N/A";
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI_2);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN_2);
+                            createCellResultados(row, info,ComparadorHorarioIndex.RES_DISTANCIA);
+                        }
                     }
+
                 }
 
 /*COPY temp_expediciones (hora_inicio,punto_inicio,hora_fin,punto_fin,identificador,km)
@@ -130,6 +157,8 @@ public class VerificacionHorarios {
             e.printStackTrace();
         }
     }
+
+
 
     private String getStringCellValue(Row row,int number) {
         Cell cell = row.getCell(number);
@@ -245,6 +274,57 @@ public class VerificacionHorarios {
         return comparaciones;
     }
 
+
+    private List<String> validarHorarioPost(List<TempHorario> tempHorarios, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
+        List<String> comparaciones = new ArrayList<>();
+        String compHoraIni="OK";
+        String compHoraIni2="OK";
+        String compHoraFin="OK";
+        String compHoraFin2="OK";
+        String compHoraDis="OK";
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        for(TempHorario temporal: tempHorarios){
+            Date expInicio = convertirATime(temporal.getInstante());
+
+            if( horaInicioB== null && horaFinB == null){
+                if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
+                }else{
+                    compHoraIni = parser.format(expInicio);
+                }
+
+                if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
+                }else{
+                    compHoraFin = parser.format(expInicio);
+                }
+            }else{
+                if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
+                        && (expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0)){
+
+                }else{
+                    if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
+
+                    }else{
+                        compHoraIni2 = parser.format(expInicio);
+                    }
+
+                    if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
+
+                    }else{
+                        compHoraFin2 = parser.format(expInicio);
+                    }
+                }
+
+            }
+        }
+
+        comparaciones.add(compHoraIni);
+        comparaciones.add(compHoraFin);
+        comparaciones.add(compHoraIni2);
+        comparaciones.add(compHoraFin2);
+        comparaciones.add(compHoraDis);
+
+        return comparaciones;
+    }
 
 
     private String fileForTipoDia(String tipoDia) {

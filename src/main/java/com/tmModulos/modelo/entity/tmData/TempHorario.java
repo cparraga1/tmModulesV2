@@ -27,6 +27,9 @@ public class TempHorario {
     @Column(name = "punto")
     private int punto;
 
+    @Column(name = "evento")
+    private int evento;
+
 
     public void TempHorario(){
 
@@ -70,5 +73,13 @@ public class TempHorario {
 
     public void setPunto(int punto) {
         this.punto = punto;
+    }
+
+    public int getEvento() {
+        return evento;
+    }
+
+    public void setEvento(int evento) {
+        this.evento = evento;
     }
 }
