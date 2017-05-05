@@ -45,11 +45,6 @@ public class VerificacionHorarios {
         destination="C:\\temp\\"+fileName;
 
         if(tipoValidacion.equals("Pre")){
-         //   readExcelAndSaveData(destination);
-//            readExcelAndSaveDataMemory(destination);
-//            System.out.println("si");
-//            compareDataMemory(fileForTipoDia(tipoDia));
-//            compareDataExcel(fileForTipoDia(tipoDia));
 
             veriPreHorarios.addEquivalenciasFromFile(destination);
             compareDataExcel(fileForTipoDia(tipoDia));
@@ -92,10 +87,10 @@ public class VerificacionHorarios {
                     String id = row.getCell(ComparadorHorarioIndex.iD_PRE).getStringCellValue();
                     List<ExpedicionesTemporal> expedicionesTemporals = veriPreHorarios.getExpedicionesTemporalsData(id);
                     if(expedicionesTemporals.size()>0){
-                        Date horaInicio = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_INICIO).getStringCellValue());
-                        Date horaInicioB = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_INICIO_2).getStringCellValue());
-                        Date horaFin = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_FIN).getStringCellValue());
-                        Date horaFinB = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_FIN_2).getStringCellValue());
+                        Date horaInicio = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO));
+                        Date horaInicioB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO_2));
+                        Date horaFin = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
+                        Date horaFinB = convertirATime(getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
                         int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
 
                        List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
@@ -134,6 +129,19 @@ public class VerificacionHorarios {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String getStringCellValue(Row row,int number) {
+        Cell cell = row.getCell(number);
+        switch (cell.getCellType()){
+            case Cell.CELL_TYPE_BLANK:
+                return "";
+            case Cell.CELL_TYPE_NUMERIC:
+                return ""+cell.getNumericCellValue();
+            case Cell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+        }
+        return "";
     }
 
     private void createCellResultados(Row row, String valor,int num) {
@@ -188,41 +196,43 @@ public class VerificacionHorarios {
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         for(ExpedicionesTemporal temporal: expedicionesTemporals){
             Date expInicio = convertirATime(temporal.getHoraInicio());
-            String km = temporal.getKm();
+            Double km = Double.parseDouble(temporal.getKm().replaceAll("\\,","."))*1000;
 
-            if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
+            if( horaInicioB== null && horaFinB == null){
+                if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
+                }else{
+                    compHoraIni = parser.format(expInicio);
+                }
 
+                if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
+                }else{
+                    compHoraFin = parser.format(expInicio);
+                }
             }else{
-                compHoraIni = parser.format(expInicio);
-            }
-
-            if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
-
-            }else{
-                compHoraFin = parser.format(expInicio);
-            }
-
-            if( horaInicioB != null ){
-                if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
+                if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
+                        && (expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0)){
 
                 }else{
-                    compHoraIni2 = parser.format(expInicio);
+                    if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
+
+                    }else{
+                        compHoraIni2 = parser.format(expInicio);
+                    }
+
+                    if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
+
+                    }else{
+                        compHoraFin2 = parser.format(expInicio);
+                    }
                 }
+
             }
 
-            if( horaFinB != null ){
-                if(expInicio.after(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
 
-                }else{
-                    compHoraFin2 = parser.format(expInicio);
-                }
-            }
-
-
-            if(km.equals(distancia+"")){
+            if(km==(double)distancia){
                 compHoraDis = "OK";
             }else{
-                compHoraDis = km;
+                compHoraDis = km+"";
             }
         }
 
@@ -239,267 +249,13 @@ public class VerificacionHorarios {
 
     private String fileForTipoDia(String tipoDia) {
         if(tipoDia.equals("SABADO")){
-
+            return "C:\\temp\\resumenServiciosSabado.xls";
         }else if (tipoDia.equals("FESTIVO")){
-
+            return "C:\\temp\\resumenServiciosFestivo.xls";
         }
         return "C:\\temp\\resumenServiciosHabil.xls";
     }
 
-    private void readExcelAndSaveData(String destination){
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-
-        try {
-
-            br = new BufferedReader(new FileReader(destination));
-            br.readLine(); // Leer encabezados
-            while ((line = br.readLine()) != null){
-                String [] valores = line.split(cvsSplitBy);
-                if(valores[ExpedicionesIndex.TIPO].equals("Exp") || valores[ExpedicionesIndex.TIPO].equals(" Exp") ){
-                    ExpedicionesTemporal temporal = new ExpedicionesTemporal();
-                    temporal.setHoraInicio(valores[ExpedicionesIndex.HORA_INICIO].replaceAll("\\s+",""));
-                    temporal.setPuntoInicio(Integer.parseInt(valores[ExpedicionesIndex.PUNTO_INICIO].replaceAll("\\s+",""))-1000000);
-                    temporal.setHoraFin(valores[ExpedicionesIndex.HORA_FIN].replaceAll("\\s+",""));
-                    temporal.setPuntoFin(Integer.parseInt(valores[ExpedicionesIndex.PUNTO_FIN].replaceAll("\\s+",""))-1000000);
-                    temporal.setKm(valores[ExpedicionesIndex.KM].replaceAll("\\s+","").replaceAll("\\,",""));
-                    temporal.setIdentificador(calcularId(valores));
-                    veriPreHorarios.addExpTemporal(temporal);
-                }
-            }
-
-
-        } catch (FileNotFoundException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } catch (IOException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-                }
-            }
-        }
-    }
-
-    private void readExcelAndSaveDataMemory(String destination){
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-        mapaDatos = new HashMap<String,auxEp>();
-
-        try {
-
-            br = new BufferedReader(new FileReader(destination));
-            br.readLine(); // Leer encabezados
-            while ((line = br.readLine()) != null){
-                String [] valores = line.split(cvsSplitBy);
-                if(valores[ExpedicionesIndex.TIPO].equals("Exp") || valores[ExpedicionesIndex.TIPO].equals(" Exp") ){
-                    Expediciones temporal = new Expediciones();
-                    auxEp auxiliar = new auxEp();
-                    Date expInicio = convertirATime(valores[ExpedicionesIndex.HORA_INICIO].replaceAll("\\s+",""));
-                    Date expFin = convertirATime(valores[ExpedicionesIndex.HORA_FIN].replaceAll("\\s+",""));
-                    String id = calcularId(valores);
-                    temporal.setHoraInicio(expInicio);
-                    temporal.setPuntoInicio(Integer.parseInt(valores[ExpedicionesIndex.PUNTO_INICIO].replaceAll("\\s+",""))-1000000);
-                    temporal.setHoraFin(expFin);
-                    temporal.setPuntoFin(Integer.parseInt(valores[ExpedicionesIndex.PUNTO_FIN].replaceAll("\\s+",""))-1000000);
-                    temporal.setKm(valores[ExpedicionesIndex.KM].replaceAll("\\s+","").replaceAll("\\,",""));
-                    temporal.setIdentificador(id);
-                    if(mapaDatos.get(id)!=null){
-
-                        auxiliar = mapaDatos.get(id);
-                        Date mayorExpInicio = auxiliar.getMayorExp().getHoraInicio();
-                        Date menorExpInicio = auxiliar.getMenorExp().getHoraInicio();
-
-                        if(mayorExpInicio.before(expInicio)){
-                            auxiliar.setMayorExp(temporal);
-                        }
-
-                        if(menorExpInicio.after(expInicio)){
-                            auxiliar.setMenorExp(temporal);
-                        }
-                        mapaDatos.replace(id, auxiliar);
-
-                    }else{
-                        auxiliar.setMenorExp(temporal);
-                        auxiliar.setMayorExp(temporal);
-                        mapaDatos.put(id,auxiliar);
-                    }
-
-
-
-                }
-            }
-
-
-        } catch (FileNotFoundException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } catch (IOException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-                }
-            }
-        }
-    }
-
-    private List<String> validarHorario(auxEp expedicionesTemporals, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
-        List<String> comparaciones = new ArrayList<>();
-        String compHoraIni="OK";
-        String compHoraFin="OK";
-        String compHoraDis="OK";
-        Date mayor = expedicionesTemporals.getMayorExp().getHoraInicio();
-        Date menor = expedicionesTemporals.getMenorExp().getHoraFin();
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        String km = expedicionesTemporals.getMayorExp().getKm();
-
-            if(mayor.after(horaInicio) || mayor.compareTo(horaInicio)==0 ){
-                if(mayor.before(horaFin) || mayor.compareTo(horaFin)==0){
-                    compHoraIni = "OK";
-                }else if(horaInicioB!=null){
-                    if(mayor.after(horaInicioB) || mayor.compareTo(horaInicioB)==0){
-                        if(mayor.before(horaFinB) || mayor.compareTo(horaFinB)==0){
-                            compHoraIni ="OK";
-                        }else{
-                            compHoraIni = parser.format(mayor);
-                        }
-                    }else{
-
-                        compHoraIni = parser.format(mayor);
-                    }
-                }else{
-                    compHoraIni = parser.format(mayor);
-                }
-
-            }
-
-        if(menor.after(horaInicio) || menor.compareTo(horaInicio)==0 ){
-            if(menor.before(horaFin)  || menor.compareTo(horaFin)==0){
-                compHoraFin = "OK";
-            }else if(horaInicioB!=null){
-                if(menor.after(horaInicioB) || menor.compareTo(horaInicioB)==0){
-                    if(menor.before(horaFinB)| menor.compareTo(horaFinB)==0){
-                        compHoraFin ="OK";
-                    }else{
-                        compHoraFin = parser.format(menor);
-                    }
-                }else{
-
-                    compHoraFin = parser.format(menor);
-                }
-            }else{
-                compHoraFin = parser.format(menor);
-            }
-
-        }
-
-
-
-
-            if(km.equals(distancia+"")){
-                compHoraDis = "OK";
-            }else{
-                compHoraDis = km;
-            }
-
-        comparaciones.add(compHoraIni);
-        comparaciones.add(compHoraFin);
-        comparaciones.add(compHoraDis);
-
-        return comparaciones;
-    }
-
-
-    private void compareDataMemory(String file) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            HSSFSheet worksheet = workbook.getSheetAt(0);
-
-            Iterator<Row> rowIterator = worksheet.iterator();
-            Row r =rowIterator.next();
-            Cell cell = null;
-            // Access the cell first to update the value
-            cell = r.getCell(2);
-            // Get current value and then add 5 to it
-            cell.setCellValue(5);
-            while (rowIterator.hasNext()) {
-
-                Row row = rowIterator.next();
-
-                if( row.getCell(0) != null ){
-                    String id = row.getCell(ComparadorHorarioIndex.iD).getStringCellValue();
-                    auxEp auxEp = mapaDatos.get(id);
-                    if(auxEp!=null){
-                        Date horaInicio = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_INICIO).getStringCellValue());
-                        Date horaInicioB = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_INICIO_2).getStringCellValue());
-                        Date horaFin = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_FIN).getStringCellValue());
-                        Date horaFinB = convertirATime(row.getCell(ComparadorHorarioIndex.HORA_FIN_2).getStringCellValue());
-                        int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
-                        List< String> validacion = validarHorario(auxEp,horaInicio,horaInicioB,
-                                horaFin,horaFinB,distancia);
-
-                        Cell resultadoHoraIni= row.createCell(ComparadorHorarioIndex.RES_HORA_INI);
-                        resultadoHoraIni.setCellValue(validacion.get(0));
-                        resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
-                        resultadoHoraIni.setCellValue(validacion.get(0));
-                        Cell resultadoHoraFin= row.createCell(ComparadorHorarioIndex.RES_HORA_FIN);
-                        resultadoHoraFin.setCellValue(validacion.get(1));
-                        resultadoHoraFin.setCellType(Cell.CELL_TYPE_STRING);
-                        resultadoHoraFin.setCellValue(validacion.get(1));
-                        Cell resultadoDistancia= row.createCell(ComparadorHorarioIndex.RES_DISTANCIA);
-                        resultadoDistancia.setCellValue(validacion.get(2));
-                        resultadoDistancia.setCellType(Cell.CELL_TYPE_STRING);
-                        resultadoDistancia.setCellValue(validacion.get(2));
-
-                    }else{
-                        Cell resultadoHoraIni= row.createCell(ComparadorHorarioIndex.RES_HORA_INI);
-                        resultadoHoraIni.setCellValue("No se encontro el servicio");
-                        resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
-                        resultadoHoraIni.setCellValue("No se encontro el servicio");
-                        Cell resultadoDistancia= row.createCell(ComparadorHorarioIndex.RES_DISTANCIA);
-                        resultadoHoraIni.setCellValue("No se encontro el servicio");
-                        resultadoDistancia.setCellType(Cell.CELL_TYPE_STRING);
-                    }
-                }
-
-/*COPY temp_expediciones (hora_inicio,punto_inicio,hora_fin,punto_fin,identificador,km)
- FROM 'C:/temp/prueba.csv'  DELIMITER ';' CSV HEADER;*/
-            }
-            fileInputStream.close();
-            FileOutputStream outFile =new FileOutputStream(new File("C:\\temp\\update.xls"));
-            workbook.write(outFile);
-            outFile.close();
-            System.out.println("Fin");
-        } catch (FileNotFoundException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } catch (IOException e) {
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private String calcularId(String[] valores) {
-        int puntoI = Integer.parseInt(valores[ExpedicionesIndex.PUNTO_INICIO].replaceAll("\\s+",""))-1000000;
-        int puntoF = Integer.parseInt(valores[ExpedicionesIndex.PUNTO_FIN].replaceAll("\\s+",""))-1000000;
-        String [] lineaData = valores[ExpedicionesIndex.LINEA].replaceAll("\\s+","").split("-");
-        int linea = Integer.parseInt(lineaData[0]);
-        int sublinea = Integer.parseInt(lineaData[1]);
-        List<Equivalencias> equivalencias = veriPreHorarios.getEquivalenciasByData(linea,sublinea,puntoI,puntoF);
-        if(equivalencias.size()>0){
-            return linea+"-"+sublinea+"-"+equivalencias.get(0).getRuta()+"-"+puntoI;
-        }
-        return linea+"-"+sublinea+"-"+puntoI;
-    }
 
 
 }

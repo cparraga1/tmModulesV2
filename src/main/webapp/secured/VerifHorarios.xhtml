@@ -32,7 +32,7 @@
                         <p:fileUpload value="#{VerHorario.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 
                     </h:panelGrid>
-                    <p:commandButton value="Guardar" action="#{VerHorario.upload}" ajax="false"
+                    <p:commandButton value="Verificar" action="#{VerHorario.upload}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                      async="true" process="@form" onclick="PF('dlg2').show();" global="false"
                                      oncomplete="PF('dlg2').hide()"/>
