@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,8 +52,7 @@ public class VerificacionHorarios {
             veriPreHorarios.addEquivalenciasFromFile(destination);
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
             veriPreHorarios.deleteEquivalencias();
-            File file = new File(destination);
-            file.delete();
+
 
         } else{
             veriPreHorarios.addTablaHorarioFromFile(destination);
@@ -58,6 +60,7 @@ public class VerificacionHorarios {
             veriPreHorarios.deleteTablaHorario();
 
         }
+
 
         return logDatos;
     }
