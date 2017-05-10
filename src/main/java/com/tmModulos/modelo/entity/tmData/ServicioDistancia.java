@@ -25,6 +25,18 @@ public class ServicioDistancia {
     @Column(name = "identificador")
     private String identificador;
 
+    @Column(name = "nombre_linea")
+    private String nombreLinea;
+
+    @Column(name = "sentido")
+    private String sentido;
+
+    @Column(name = "config")
+    private Integer config;
+
+    @Column(name = "id_sentido")
+    private Integer id_sentido;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "servicioDistancia")
     private Set<DistanciaNodos> distanciaNodosRecords = new HashSet<DistanciaNodos>(0);
 
@@ -39,6 +51,17 @@ public class ServicioDistancia {
         this.macro = macro;
         this.linea = linea;
         this.seccion = seccion;
+    }
+
+    public ServicioDistancia(String ruta, int macro, int linea, int seccion, String nombreLinea, String sentido, int config, int id_sentido) {
+        this.ruta = ruta;
+        this.macro = macro;
+        this.linea = linea;
+        this.seccion = seccion;
+        this.nombreLinea = nombreLinea;
+        this.sentido = sentido;
+        this.config = config;
+        this.id_sentido = id_sentido;
     }
 
     public long getId() {
@@ -98,4 +121,35 @@ public class ServicioDistancia {
         this.identificador = identificador;
     }
 
+    public String getNombreLinea() {
+        return nombreLinea;
+    }
+
+    public void setNombreLinea(String nombreLinea) {
+        this.nombreLinea = nombreLinea;
+    }
+
+    public String getSentido() {
+        return sentido;
+    }
+
+    public void setSentido(String sentido) {
+        this.sentido = sentido;
+    }
+
+    public Integer getConfig() {
+        return config;
+    }
+
+    public void setConfig(Integer config) {
+        this.config = config;
+    }
+
+    public Integer getId_sentido() {
+        return id_sentido;
+    }
+
+    public void setId_sentido(Integer id_sentido) {
+        this.id_sentido = id_sentido;
+    }
 }

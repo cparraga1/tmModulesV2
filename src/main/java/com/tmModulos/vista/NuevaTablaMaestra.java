@@ -33,6 +33,8 @@ public class NuevaTablaMaestra {
     private UploadedFile tablaMaestra;
     private String seleccionGIS;
 
+    private UploadedFile intervalosTiempo;
+
     private String gisCarga;
     private String selectedTipoDia;
     private List<String> tipoDia;
@@ -88,8 +90,12 @@ public class NuevaTablaMaestra {
 
     public void calcularTablaMaestra(){
         if(valid()){
-            logDatos=tablaMaestraProcessor.calcularTablaMaestra(fechaDeProgramacion,
-                    descripcion,gisCarga,matrizDistancia,fechaDeVigencia,selectedTipoDia);
+            try {
+                logDatos=tablaMaestraProcessor.calcularTablaMaestra(fechaDeProgramacion,
+                        descripcion,gisCarga,matrizDistancia,fechaDeVigencia,selectedTipoDia,intervalosTiempo.getFileName(),intervalosTiempo.getInputstream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             resultadosVisibles=true;
             if(logDatos.size()>2){
                 messagesView.info(Messages.MENSAJE_CALCULO_EXITOSO,Messages.ACCION_TABLA_MAESTRA_ALMACENADA);
@@ -111,8 +117,8 @@ public class NuevaTablaMaestra {
 
     public boolean valid(){
         if(descripcion!=null){
-            if(fechaDeProgramacion!=null && fechaDeVigencia!=null && selectedTipoDia != null){
-                if(gisCarga!=null && matrizDistancia!=null){
+            if(fechaDeProgramacion!=null && selectedTipoDia != null){
+                if(gisCarga!=null && matrizDistancia!=null && intervalosTiempo != null){
                     return true;
                 }
 
@@ -340,5 +346,13 @@ public class NuevaTablaMaestra {
 
     public void setFechaDeCreacion(Date fechaDeCreacion) {
         this.fechaDeCreacion = fechaDeCreacion;
+    }
+
+    public UploadedFile getIntervalosTiempo() {
+        return intervalosTiempo;
+    }
+
+    public void setIntervalosTiempo(UploadedFile intervalosTiempo) {
+        this.intervalosTiempo = intervalosTiempo;
     }
 }

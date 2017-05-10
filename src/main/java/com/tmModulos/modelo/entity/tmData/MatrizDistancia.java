@@ -35,11 +35,11 @@ public class MatrizDistancia {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "matrizDistancia")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "matrizDistancia",cascade = CascadeType.REMOVE )
     private Set<DistanciaNodos> distanciaNodosRecords= new HashSet<DistanciaNodos>(0);
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "matrizDistancia")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "matrizDistancia",cascade = CascadeType.REMOVE)
     private Set<TablaMaestra> tablaMaestraRecords= new HashSet<TablaMaestra>(0);
 
     @Transient

@@ -46,28 +46,45 @@
                             </f:facet>
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
-                            <p:column filterBy="#{matriz.servicioDistancia.ruta}" headerText="Ruta" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.ruta}"
-                                      style="width: 120px">
-                                <h:outputText value="#{matriz.servicioDistancia.ruta}" />
-                            </p:column>
 
                             <p:column filterBy="#{matriz.servicioDistancia.macro}" filterStyle="width: 65px;"
-                                      headerText="Macro"  filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.macro}"
+                                      headerText="Línea"  filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.macro}"
                                       style="width: 70px">
                                 <h:outputText value="#{matriz.servicioDistancia.macro}" />
                             </p:column>
 
-                            <p:column filterBy="#{matriz.servicioDistancia.linea}" headerText="Línea" filterStyle="width: 65px;"
+                            <p:column headerText="Nombre Linea"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.nombreLinea}" />
+                            </p:column>
+
+                            <p:column headerText="Config"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.config}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.servicioDistancia.linea}" headerText="Sublinea" filterStyle="width: 65px;"
                                       filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.linea}"
                                       style="width: 70px">
                                 <h:outputText value="#{matriz.servicioDistancia.linea}" />
                             </p:column>
 
-                            <p:column filterBy="#{matriz.servicioDistancia.seccion}" headerText="Sección" filterStyle="width: 80px;"
+                            <p:column filterBy="#{matriz.servicioDistancia.seccion}" headerText="Ruta" filterStyle="width: 80px;"
                                       filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.seccion}"
                                       style="width: 85px">
                                 <h:outputText value="#{matriz.servicioDistancia.seccion}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.servicioDistancia.ruta}" headerText="Nombre Ruta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.ruta}"
+                                      style="width: 120px">
+                                <h:outputText value="#{matriz.servicioDistancia.ruta}" />
+                            </p:column>
+
+                            <p:column headerText="Id Sentido"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.id_sentido}" />
+                            </p:column>
+
+                            <p:column headerText="Sentido"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.sentido}" />
                             </p:column>
 
                             <p:column filterBy="#{matriz.nodoCodigo}" headerText="Nodo" filterStyle="width: 65px;"
@@ -76,16 +93,18 @@
                                 <h:outputText value="#{matriz.nodoCodigo}" />
                             </p:column>
 
-                            <p:column filterBy="#{matriz.distancia}" headerText="Abscisa" filterStyle="width: 90px;"
+                            <p:column filterBy="#{matriz.nodoNombre}" headerText="Nombre Nodo"  filterMatchMode="contains" sortBy="#{matriz.nodoNombre}"
+                                      style="width: 120px">
+                                <h:outputText value="#{matriz.nodoNombre}" />
+                            </p:column>
+
+                            <p:column filterBy="#{matriz.distancia}" headerText="Posición" filterStyle="width: 90px;"
                                       filterMatchMode="contains" sortBy="#{matriz.distancia}"
                                       style="width: 95px">
                                 <h:outputText value="#{matriz.distancia}" />
                             </p:column>
 
-                            <p:column filterBy="#{matriz.nodoNombre}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{matriz.nodoNombre}"
-                                      style="width: 120px">
-                                <h:outputText value="#{matriz.nodoNombre}" />
-                            </p:column>
+
                             <f:facet name="footer">
                                 <!--<p:commandButton process="checkboxDT" update=":form:multiCarDetail" icon="ui-icon-search" -->
                                                  <!--value="Eliminar" oncomplete="PF('multiCarDialog').show()" />-->

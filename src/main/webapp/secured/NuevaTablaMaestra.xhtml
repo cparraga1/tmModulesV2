@@ -78,9 +78,8 @@
                             </p:panelGrid>
                         <p:panel  style="border:none" >
                             <h:panelGrid columns="5" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
-                                <p:outputLabel for="buttonV" value="Fecha Intervalos (DD-MM-AAAA):" />
-                                <p:calendar id="buttonV" value="#{tablaMaestra.fechaDeVigencia}" showOn="button" title="Formato: Dia-Mes-Año"/>
-                                <p:tooltip id="toolTipFocus" for="buttonV" showEvent="focus" hideEvent="blur" />
+                                <p:outputLabel for="buttonV" value="Intervalos de Tiempo" />
+                                <p:fileUpload value="#{tablaMaestra.intervalosTiempo}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
                                 <h:outputText value="Tipo Dia:" style="color:black"/>
                                 <p:selectOneMenu value="#{tablaMaestra.selectedTipoDia}" style="width:100%" >
                                     <f:selectItems value="#{tablaMaestra.tipoDia}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />

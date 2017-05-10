@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -97,7 +98,21 @@ public class BusquedaMatrizDistanciaView implements Serializable {
             fechaFinalVisible=true;
         }
     }
+    public void eliminarMatriz(){
+        matrizDistanciaService.deleteMatrizDistancia(selectedMatriz);
+        messagesView.error(Messages.MENSAJE_EXITOSO,Messages.ACCION_ELIMINACION_REGISTROS);
+        actualizarTabla();
+    }
 
+    public void actualizarTabla(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/BuscarMatrizDistancia.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void atras(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();

@@ -34,7 +34,7 @@ public class MatrizDistanciaService {
         matrizDistanciaDao.addMatrizDistancia( matrizDistancia );
 
     }
-
+    @Transactional(readOnly = false)
     public void deleteMatrizDistancia(MatrizDistancia matrizDistancia) {
         matrizDistanciaDao.deleteMatrizDistancia(matrizDistancia);
     }

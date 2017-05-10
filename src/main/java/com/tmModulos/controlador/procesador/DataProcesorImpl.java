@@ -4,10 +4,7 @@ package com.tmModulos.controlador.procesador;
 import com.tmModulos.controlador.servicios.GisCargaService;
 import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.TipoDiaService;
-import com.tmModulos.controlador.utils.GisCargaDefinition;
-import com.tmModulos.controlador.utils.LogDatos;
-import com.tmModulos.controlador.utils.ProcessorUtils;
-import com.tmModulos.controlador.utils.TipoLog;
+import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -40,6 +37,9 @@ public class DataProcesorImpl {
 
     @Autowired
     private ProcessorUtils processorUtils;
+
+    @Autowired
+    private ExcelExtract excelExtract;
 
     private String destination;
     private boolean exitoso;
@@ -80,20 +80,6 @@ public class DataProcesorImpl {
 
     }
 
-    private void printServiciosNoEncontrados() {
-        for (String servicio:serviciosNoEncontrados
-             ) {
-            System.out.println(servicio);
-
-        }
-
-
-    }
-
-    public void roollback(){
-        exitoso =false;
-    }
-
     public GisCarga saveGisCarga(Date fechaProgrmacion, Date fechaVigencia,String descripcion,String tipoDia){
        TipoDia dia= tipoDiaService.getTipoDia(tipoDia);
        GisCarga gisCarga = new GisCarga(new Date(),fechaProgrmacion,fechaVigencia,descripcion,dia);
@@ -104,15 +90,15 @@ public class DataProcesorImpl {
     }
 
     public GisServicio findOrSaveServicio(Row row,String nodoInicial,String nodoFinal){
-        Integer trayectoId=0;
+        Integer sublinea =0;
         int linea=0;
         int sentido=0;
         String identificador=null;
         try{
-            trayectoId = Integer.parseInt( row.getCell(GisCargaDefinition.TRAYECTO).getStringCellValue());
-            linea = Integer.parseInt( row.getCell(GisCargaDefinition.LINEA).getStringCellValue());
-            sentido = Integer.parseInt(row.getCell( GisCargaDefinition.SENTIDO ).getStringCellValue());
-            identificador = calclularIdentificador(trayectoId,linea+"",sentido,nodoInicial);
+            sublinea = excelExtract.getNumericCellValue(row,GisCargaDefinition.TRAYECTO);
+            linea = excelExtract.getNumericCellValue(row,GisCargaDefinition.LINEA);
+            sentido = excelExtract.getNumericCellValue(row,GisCargaDefinition.SENTIDO);
+            identificador = calclularIdentificador(sublinea,linea,sentido,nodoInicial);
         }catch (Exception e){
             log.error("Error en la extracion de datos excel");
             log.error(e.getMessage());
@@ -121,10 +107,10 @@ public class DataProcesorImpl {
             exitoso =false;
         }
 
-        if( identificador!= null && linea!=0 && sentido!=0 && trayectoId!=0){
+        if( identificador!= null && linea!=0 && sentido!=0 && sublinea!=0){
             GisServicio servicio = gisCargaService.getGisServicioByTrayectoLinea(identificador);
             if( servicio== null ){
-                servicio = new GisServicio(trayectoId,linea,nodoInicial,nodoFinal);
+                servicio = new GisServicio(sublinea,linea,nodoInicial,nodoFinal);
                 servicio.setIdentificador(identificador);
                 try{
                     gisCargaService.addGisServicio(servicio);
@@ -144,13 +130,8 @@ public class DataProcesorImpl {
 
     }
 
-    private String calclularIdentificador(Integer trayectoId, String linea, int sentido, String nodoInicial) {
-        String [] lineaDividida = linea.split("");
-        String lineaFinal=lineaDividida[1]+lineaDividida[2];
-        if(lineaDividida[1].equals("0")){
-            lineaFinal=lineaDividida[2];
-        }
-        String identificador= lineaDividida[0]+"-"+lineaFinal+"-"+sentido;
+    private String calclularIdentificador(Integer sublinea, Integer linea, int sentido, String nodoInicial) {
+        String identificador= linea+"-"+sublinea+"-"+sentido;
         Nodo nodo= nodoService.getNodo(nodoInicial);
         if(nodo!=null){
             identificador= identificador+"-"+nodo.getCodigo();
@@ -220,15 +201,15 @@ public class DataProcesorImpl {
 
     private void saveArcoTiempo(Row row,GisCarga gisCarga, GisServicio servicio, TipoDiaDetalle tipoDia) {
 
-        int distancia = Integer.parseInt(row.getCell( GisCargaDefinition.DISTANCIA ).getStringCellValue());
-        int secuencia = Integer.parseInt(row.getCell( GisCargaDefinition.SECUENCIA ).getStringCellValue());
-        int sentido = Integer.parseInt(row.getCell( GisCargaDefinition.SENTIDO ).getStringCellValue());
-        int tipoArco = Integer.parseInt(row.getCell( GisCargaDefinition.TIPOARCO ).getStringCellValue());
-        String horaDesde = row.getCell( GisCargaDefinition.HORADESDE ).getStringCellValue();
-        String horaHasta = row.getCell( GisCargaDefinition.HORAHASTA).getStringCellValue();
-        String tiempoMinimo = row.getCell( GisCargaDefinition.TIEMPOMINIMO ).getStringCellValue();
-        String tiempoMaximo = row.getCell( GisCargaDefinition.TIEMPOMAXIMO ).getStringCellValue();
-        String tiempoOptimo = row.getCell( GisCargaDefinition.TIEMPOOPTIMO ).getStringCellValue();
+        int distancia = excelExtract.getNumericCellValue(row,GisCargaDefinition.DISTANCIA );
+        int secuencia = excelExtract.getNumericCellValue(row,GisCargaDefinition.SECUENCIA);
+        int sentido = excelExtract.getNumericCellValue(row,GisCargaDefinition.SENTIDO );
+        int tipoArco = excelExtract.getNumericCellValue(row,GisCargaDefinition.TIPOARCO );
+        String horaDesde = excelExtract.getStringCellValue(row,GisCargaDefinition.HORADESDE );
+        String horaHasta = excelExtract.getStringCellValue(row,GisCargaDefinition.HORAHASTA );
+        String tiempoMinimo = excelExtract.getStringCellValue(row,GisCargaDefinition.TIEMPOMINIMO );
+        String tiempoMaximo = excelExtract.getStringCellValue(row,GisCargaDefinition.TIEMPOMAXIMO );
+        String tiempoOptimo = excelExtract.getStringCellValue(row,GisCargaDefinition.TIEMPOOPTIMO );
 
         ArcoTiempo arcoTiempo = new ArcoTiempo(
                 sentido,secuencia,tipoArco,
@@ -255,7 +236,7 @@ public class DataProcesorImpl {
     }
 
     private TipoDiaDetalle findOrSaveTipoDia(Row row,String tipoDiaD) {
-        String tipoDiaNombre = row.getCell(GisCargaDefinition.TIPODIA).getStringCellValue();
+        String tipoDiaNombre = excelExtract.getStringCellValue(row,GisCargaDefinition.TIPODIA);
         List<TipoDiaDetalle> tipoDiaByDetalle =  tipoDiaService.getTipoDiaByDetalle( tipoDiaNombre );
         if( tipoDiaByDetalle.size() == 0 ){
             TipoDia tipoDia = tipoDiaService.getTipoDia( tipoDiaD );

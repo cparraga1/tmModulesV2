@@ -5,10 +5,7 @@ import com.tmModulos.controlador.servicios.DistanciaNodosService;
 import com.tmModulos.controlador.servicios.MatrizDistanciaService;
 import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.TablaHorarioService;
-import com.tmModulos.controlador.utils.LogDatos;
-import com.tmModulos.controlador.utils.MatrizDistanciaDefinicion;
-import com.tmModulos.controlador.utils.ProcessorUtils;
-import com.tmModulos.controlador.utils.TipoLog;
+import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.dao.saeBogota.GroupedHorario;
 import com.tmModulos.modelo.dao.saeBogota.NodosDao;
 import com.tmModulos.modelo.entity.tmData.*;
@@ -50,9 +47,12 @@ public class MatrizProcessor {
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
 
+    @Autowired
+    private ExcelExtract excelExtract;
+
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(MatrizProcessor.class);
-    private String destination="C:\\temp\\";
+    private String destination="C:\\temp\\TmMigracion";
 
 
     public List<LogDatos> calcularMatrizDistancia(Date fechaHabil,String numeracion,Date fechaFestivos, Date fechaSabado,String desc){
@@ -88,11 +88,15 @@ public class MatrizProcessor {
         return horarios;
     }
 
-    private ServicioDistancia crearOBuscarServicioDistancia(int macro, int linea, int seccion, String nombreMatriz,String nodoCodigo) {
+    private ServicioDistancia crearOBuscarServicioDistancia(int macro, int linea, int seccion, String nombreMatriz,int nodoCodigo,Row row) {
         String identificador = macro+"-"+linea+"-"+seccion+"-"+nodoCodigo;
         ServicioDistancia servicioDistancia = matrizDistanciaService.getServicioDistanciaByMacroLineaSeccion(macro,linea,seccion);
         if(servicioDistancia==null){
-            servicioDistancia = new ServicioDistancia(nombreMatriz,macro,linea,seccion);
+            String nombreLinea = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_LINEA);
+            int config = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.CONFIG);
+            int idSentido = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.ID_SENTIDO);
+            String sentido = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.SENTIDO);
+            servicioDistancia = new ServicioDistancia(nombreMatriz,macro,linea,seccion,nombreLinea,sentido,config,idSentido);
             servicioDistancia.setIdentificador(identificador);
             matrizDistanciaService.addServicioDistancia(servicioDistancia);
         }
@@ -130,26 +134,17 @@ public class MatrizProcessor {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 if( row.getCell(0) != null ){
-                    int codigoNodo=convertirAInt(row, MatrizDistanciaDefinicion.NODO);
-
-
+                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
                     String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
-                    String nodoCodigo;
-
-                    if(row.getCell(MatrizDistanciaDefinicion.NODO).getCellType()==0 ){
-                        nodoCodigo= (int) row.getCell(MatrizDistanciaDefinicion.NODO).getNumericCellValue()+"";
-                    }else{
-                        nodoCodigo= row.getCell(MatrizDistanciaDefinicion.NODO).getStringCellValue();
-                    }
-
-                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(convertirAInt(row,MatrizDistanciaDefinicion.LINEA)
-                            , convertirAInt(row,MatrizDistanciaDefinicion.SUBLINEA)
-                            , convertirAInt(row,MatrizDistanciaDefinicion.RUTA)
-                            ,row.getCell(MatrizDistanciaDefinicion.NOMBRE_RUTA).getStringCellValue(),
-                            nodoCodigo);
+                    int linea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.LINEA);
+                    int sublinea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.SUBLINEA);
+                    int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
+                    String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
+                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(
+                            linea,sublinea,ruta,nombreRuta,codigoNodo,row);
                     guardarDistanciaNodos(matrizDistancia,
-                            convertirAInt(row,MatrizDistanciaDefinicion.POSICION),
-                            servicioDistancia,nodoNombre,nodoCodigo);
+                            excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION),
+                            servicioDistancia,nodoNombre,codigoNodo+"");
                 }else{
                     break;
                 }
