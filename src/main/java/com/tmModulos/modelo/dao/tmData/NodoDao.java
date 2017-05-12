@@ -47,7 +47,11 @@ public class NodoDao {
     public Nodo getNodo(String nombre){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Nodo.class);
         criteria.add(Restrictions.eq("nombre", nombre).ignoreCase());
-        return (Nodo) criteria.uniqueResult();
+        List<Nodo> lista = criteria.list();
+        if(lista.size()>0){
+            return lista.get(0);
+        }
+        return null;
     }
 
     public List<Nodo> getNodoByVagon(Vagon vagon){

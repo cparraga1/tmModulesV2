@@ -136,6 +136,8 @@ public class DataProcesorImpl {
         if(nodo!=null){
             identificador= identificador+"-"+nodo.getCodigo();
             return identificador;
+        }else{
+            Nodo nodoNuevo = new Nodo();
         }
         identificador= identificador+"-000";
         log.error("El nodo: "+nodoInicial+" No existe en la BD de nodos, a este se le ha asignado el numero 000");
@@ -149,7 +151,7 @@ public class DataProcesorImpl {
             log.info("Inicio de recorrido de archivo");
             FileInputStream fileInputStream = new FileInputStream(destination);
             HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            HSSFSheet worksheet = workbook.getSheetAt(0);
+            HSSFSheet worksheet = workbook.getSheetAt(1);
 
             Iterator<Row> rowIterator = worksheet.iterator();
             rowIterator.next();
@@ -230,8 +232,7 @@ public class DataProcesorImpl {
 
 
     private String findNodo(Row row, int nodoinicio) {
-         String nodoNombre = row.getCell(nodoinicio).getStringCellValue();
-
+         String nodoNombre = excelExtract.getStringCellValue(row,nodoinicio);
         return nodoNombre;
     }
 
