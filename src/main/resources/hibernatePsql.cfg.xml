@@ -22,7 +22,7 @@
         <property name="hibernate.connection.password">
             1234
         </property>
-        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.show_sql">true</property>
 
         <!-- List of XML mapping files -->
         <mapping class="com.tmModulos.modelo.entity.tmData.GisCarga"/>
@@ -59,6 +59,7 @@
         <mapping class="com.tmModulos.modelo.entity.tmData.Vagon"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.Equivalencias"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.HoraFranja"/>
 
     </session-factory>
 </hibernate-configuration>

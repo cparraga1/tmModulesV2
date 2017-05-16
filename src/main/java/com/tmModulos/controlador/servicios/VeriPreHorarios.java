@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.List;
 
 @Service("VeriPreHorarios")
@@ -71,6 +72,10 @@ public class VeriPreHorarios {
 
     public List<TempHorario> getTablaHorarioByData(int linea, int sublinea, int ruta, int punto){
         return tempHorarioDao.getTablaHorarioByData(linea,sublinea,ruta,punto);
+    }
+
+    public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        return tempHorarioDao.getSumInstanteByFranjaHora(idServicio,inicio,fin);
     }
 
 }

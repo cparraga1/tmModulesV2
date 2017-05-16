@@ -42,6 +42,15 @@ public class HorariosProvisionalServicio {
     @Autowired
     ServicioTipoDiaDao servicioTipoDiaDao;
 
+    @Autowired
+    TempHorarioDao tempHorarioDao;
+
+    @Autowired
+    private HoraFranjaDao horaFranjaDao;
+
+    public List<HoraFranja> getHoraByFranja(TipoFranja tipoFranja){
+        return horaFranjaDao.getHoraByFranja(tipoFranja);
+    }
 
 
     public IntervalosProgramacion getIntervaloForDate(Time date){
@@ -125,6 +134,21 @@ public class HorariosProvisionalServicio {
 
     public List<ServicioTipoDia> getServiciosByTipoDia(TipoDia tipoDia){
         return servicioTipoDiaDao.getServiciosByTipoDia(tipoDia);
+    }
+
+    public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        return tempHorarioDao.getSumInstanteByFranjaHora(idServicio,inicio,fin);
+    }
+
+    public Time getMinInstanteByFranjaHora(String idServicio, HoraFranja inicio, HoraFranja fin){
+        if(inicio != null && fin != null ){
+            return tempHorarioDao.getMinInstanteByFranjaHora(idServicio,inicio.getHoraInicio(),fin.getHoraFin());
+        }
+        return null;
+    }
+
+    public Time getMaxInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        return tempHorarioDao.getMaxInstanteByFranjaHora(idServicio,inicio,fin);
     }
 
     }

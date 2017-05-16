@@ -1,12 +1,15 @@
 package com.tmModulos.modelo.dao.tmData;
 
 import com.tmModulos.modelo.entity.tmData.Equivalencias;
+import com.tmModulos.modelo.entity.tmData.HoraFranja;
 import com.tmModulos.modelo.entity.tmData.TempHorario;
 import com.tmModulos.modelo.entity.tmData.TemporalHorarios;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.SessionImplementor;
 import org.postgresql.copy.CopyManager;
@@ -20,6 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.List;
 
 @Repository
@@ -48,7 +52,7 @@ public class TempHorarioDao {
         try {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
-            copyManager.copyIn("COPY temp_horario (jornada,tipo,operador,instante,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje)\n" +
+            copyManager.copyIn("COPY temp_horario (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje)\n" +
                     " FROM STDIN DELIMITER ';' CSV HEADER encoding 'windows-1251'", fileReader );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,5 +77,37 @@ public class TempHorarioDao {
 
         criteria.add(eventos);
         return criteria.list();
+    }
+
+    public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        Time sum = (Time) getSessionFactory().getCurrentSession().createCriteria(TempHorario.class)
+                .setProjection(Projections.sum("instante"))
+                .add(Restrictions.between("instante", inicio,fin))
+                .add(Restrictions.eq("identificador", idServicio))
+                .uniqueResult();
+
+        return sum;
+
+    }
+
+    public Time getMinInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        Time min = (Time) getSessionFactory().getCurrentSession().createCriteria(TempHorario.class)
+                .setProjection(Projections.min("instante"))
+                .add(Restrictions.between("instante", inicio,fin))
+                .add(Restrictions.eq("identificador", idServicio))
+                .uniqueResult();
+
+        return min;
+
+    }
+
+    public Time getMaxInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
+        Time min = (Time) getSessionFactory().getCurrentSession().createCriteria(TempHorario.class)
+                .setProjection(Projections.max("instante"))
+                .add(Restrictions.between("instante", inicio,fin))
+                .uniqueResult();
+
+        return min;
+
     }
 }

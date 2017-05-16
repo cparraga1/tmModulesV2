@@ -32,8 +32,19 @@ public class TipoFranja {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoFranja")
     private Set<IntervalosProgramacion> intervalosProgramacions = new HashSet<IntervalosProgramacion>(0);
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoFranja")
+    private Set<HoraFranja> horaFranjaRecords = new HashSet<HoraFranja>(0);
+
 
     public TipoFranja() {
+    }
+
+    public Set<HoraFranja> getHoraFranjaRecords() {
+        return horaFranjaRecords;
+    }
+
+    public void setHoraFranjaRecords(Set<HoraFranja> horaFranjaRecords) {
+        this.horaFranjaRecords = horaFranjaRecords;
     }
 
     public long getId() {

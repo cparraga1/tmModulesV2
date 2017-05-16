@@ -34,6 +34,9 @@ public class Servicio {
     @Column(name = "identificador")
     private String identificador;
 
+    @Column(name = "identificador_gis")
+    private String identificadorGIS;
+
     @Column(name = "nombre_general")
     private String nombreGeneral;
 
@@ -90,6 +93,15 @@ public class Servicio {
         this.linea = linea;
         this.seccion = seccion;
         this.config = config;
+    }
+
+
+    public String getIdentificadorGIS() {
+        return identificadorGIS;
+    }
+
+    public void setIdentificadorGIS(String identificadorGIS) {
+        this.identificadorGIS = identificadorGIS;
     }
 
     public long getId() {

@@ -109,34 +109,15 @@ public class TablaMaestraProcessor {
         serviciosTipoDia = cleanServiciosTipoDia(serviciosTipoDia);
 
        //Calcular intervalos
-      //  GisIntervalos gisIntervalos= generarIntervalosDeTiempo(fechaIntervalos,descripcion,tipoDia,tablaMaestra);
+        GisIntervalos gisIntervalos= generarIntervalosDeTiempo(fechaDeProgramacion,descripcion,tipoDia,tablaMaestra,dia);
        // intervalosProcessor.precalcularIntervalosProgramacion();
-
-//        System.out.println("Tamaño servicios: "+serviciosTipoDia.size());
-//        // Calcular tabla maestra para cada servicio encontrado
-//        int j=0;
-//
-//        while ( j<serviciosTipoDia.size() ) {
-//
-//            if(taskExecutor.getActiveCount() < 2){
-//                ServicioTipoDia servicio = serviciosTipoDia.get(j);
-//                System.out.println("!!! "+servicio.getIdentificador());
-//                taskExecutor.execute(new TablaMaestraServicioHilo(
-//                        servicio,gisIntervalos,gis,tablaMaestra,matriz,logDatos
-//                ));
-//                j++;
-//            }else{
-//                while(taskExecutor.getActiveCount()>=2){
-//                    System.out.println("Esperando  "+taskExecutor.getActiveCount());
-//                }
-//            }
 
             for (ServicioTipoDia servicio: serviciosTipoDia) {
 
 
             //Encontrar nodo Inicio del servicio por el codigo
            // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
-            GisServicio gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificador());
+            GisServicio gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
 
             TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
             tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
@@ -176,7 +157,7 @@ public class TablaMaestraProcessor {
                                 tablaMaestraService.addTServicios(tablaMaestraServicios);
 
                                 //Calcular Intervalos de tiempo
-                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio);
+                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio,gisIntervalos);
 
 
                         }else{
@@ -430,8 +411,8 @@ public class TablaMaestraProcessor {
        return nodo;
     }
 
-    private GisIntervalos generarIntervalosDeTiempo(Date fechaIntervalos,String descripcion, String tipoDia, TablaMaestra tablaMaestra) {
-       return intervalosProcessor.generarIntervalos(fechaIntervalos,descripcion,tipoDia,tablaMaestra);
+    private GisIntervalos generarIntervalosDeTiempo(Date fechaIntervalos,String descripcion, String tipoDia, TablaMaestra tablaMaestra, TipoDia servicio) {
+       return intervalosProcessor.generarIntervalos(fechaIntervalos,descripcion,tipoDia,tablaMaestra,servicio);
     }
 
     //Calcular ciclos de tiempos de recorrido - en base al GIS de carga

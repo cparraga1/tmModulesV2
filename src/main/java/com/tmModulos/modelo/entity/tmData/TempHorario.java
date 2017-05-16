@@ -1,6 +1,7 @@
 package com.tmModulos.modelo.entity.tmData;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @Table(name="temp_horario")
@@ -19,7 +20,7 @@ public class TempHorario {
     private int linea;
 
     @Column(name = "instante")
-    private String instante;
+    private Time instante;
 
     @Column(name = "ruta")
     private int ruta;
@@ -29,6 +30,9 @@ public class TempHorario {
 
     @Column(name = "evento")
     private int evento;
+
+    @Column(name = "identificador")
+    private String identificador;
 
 
     public void TempHorario(){
@@ -51,11 +55,11 @@ public class TempHorario {
         this.linea = linea;
     }
 
-    public String getInstante() {
+    public Time getInstante() {
         return instante;
     }
 
-    public void setInstante(String instante) {
+    public void setInstante(Time instante) {
         this.instante = instante;
     }
 
@@ -81,5 +85,13 @@ public class TempHorario {
 
     public void setEvento(int evento) {
         this.evento = evento;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
     }
 }

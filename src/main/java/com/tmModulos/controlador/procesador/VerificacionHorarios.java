@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -57,6 +58,18 @@ public class VerificacionHorarios {
         } else{
             veriPreHorarios.addTablaHorarioFromFile(destination);
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
+
+//            DateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+//            try {
+//                Date fajr_begins = (Date)formatter.parse("07:00:00");
+//                Date fajr_begins2 = (Date)formatter.parse("08:00:00");
+//                veriPreHorarios.getSumInstanteByFranjaHora("40-627-833-1690",new Time(fajr_begins.getTime()),
+//                        new Time(fajr_begins2.getTime()) );
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+
+
             veriPreHorarios.deleteTablaHorario();
 
         }
@@ -287,7 +300,7 @@ public class VerificacionHorarios {
         String compHoraDis="OK";
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         for(TempHorario temporal: tempHorarios){
-            Date expInicio = convertirATime(temporal.getInstante());
+            Date expInicio = convertirATime(temporal.getInstante().toString());
 
             if( horaInicioB== null && horaFinB == null){
                 if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){

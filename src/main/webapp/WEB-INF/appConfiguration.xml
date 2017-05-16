@@ -24,7 +24,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
-                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.show_sql">true</prop>
                 <!--<prop key="hbm2ddl.auto">create</prop>-->
                 <!--<prop key="hbm2ddl.auto">update</prop>-->
                 <!--<prop key="current_session_context_class">thread</prop>-->
@@ -72,6 +72,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal</value>
                 <value>com.tmModulos.modelo.entity.tmData.Equivalencias</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempHorario</value>
+                <value>com.tmModulos.modelo.entity.tmData.HoraFranja</value>
             </list>
         </property>
     </bean>
