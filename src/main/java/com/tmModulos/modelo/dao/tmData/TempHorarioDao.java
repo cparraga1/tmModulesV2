@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.SessionImplementor;
@@ -87,6 +88,15 @@ public class TempHorarioDao {
                 .uniqueResult();
 
         return sum;
+
+    }
+
+    public List<TempHorario> getListHorario(String idServicio, Time inicio, Time fin){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempHorario.class);
+        criteria.add(Restrictions.eq("identificador", idServicio));
+        criteria.add(Restrictions.between("instante", inicio,fin));
+        criteria.addOrder(Order.desc("instante"));
+        return criteria.list();
 
     }
 

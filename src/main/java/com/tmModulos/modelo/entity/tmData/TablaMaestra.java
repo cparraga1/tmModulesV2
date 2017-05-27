@@ -31,19 +31,19 @@ public class TablaMaestra {
     @Column(name = "es_definitiva")
     private Boolean esDefinitiva;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "matriz_distancia", nullable = false)
     private MatrizDistancia matrizDistancia;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gis_carga", nullable = false)
     private GisCarga gisCarga;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tablaMeestra", cascade = CascadeType.MERGE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tablaMeestra", cascade = CascadeType.ALL)
     private Set<TablaMaestraServicios> tablaServiciosRecords = new HashSet<TablaMaestraServicios>(0);
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tablaMaestra")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tablaMaestra", cascade = CascadeType.ALL)
     private Set<GisIntervalos> gisIntervaloses = new HashSet<GisIntervalos>(0);
 
     @Transient

@@ -119,11 +119,22 @@ public class IntervalosProcessor {
 
     public HoraFranja encontrarHoraFranjaMenor(List<HoraFranja> horaFranja,String idServicio){
 
-        Map<HoraFranja,Time> intervalosPorHora = new HashMap<HoraFranja,Time>();
+        Map<HoraFranja,Double> intervalosPorHora = new HashMap<HoraFranja,Double>();
         for( HoraFranja horaF : horaFranja ){
-            Time suma = horariosProvisionalServicio.getSumInstanteByFranjaHora(idServicio, horaF.getHoraInicio(), horaF.getHoraFin());
-            if(suma!=null){
-                intervalosPorHora.put(horaF,suma);
+            List<TempHorario> horarios= horariosProvisionalServicio.getListHorario(idServicio, horaF.getHoraInicio(), horaF.getHoraFin());
+            Double sumaDiff = 0.0;
+            if(horarios.size()>1){
+                Time horarioA = horarios.get(0).getInstante();
+                Time horarioB = null;
+                for(int i=1;i<horarios.size();i++){
+                    horarioB = horarios.get(i).getInstante();
+                    sumaDiff = sumaDiff + getDiferencia(horarioA,horarioB);
+                    horarioA = horarioB;
+                }
+                if(sumaDiff==0){
+                    System.out.println("entre");
+                }
+                intervalosPorHora.put(horaF,sumaDiff);
             }
 
         }
@@ -132,15 +143,17 @@ public class IntervalosProcessor {
 
 //        Time min = Collections.min(intervalosPorHora.values());
         if(intervalosPorHora.size()>0){
-            Time menor = intervalosPorHora.get(intervalosPorHora.keySet().iterator().next());
-            for(Map.Entry<HoraFranja,Time> entry : intervalosPorHora.entrySet()) {
-                HoraFranja key = entry.getKey();
-                Time value = entry.getValue();
-                if(menor.after(value)){
+            Double menor = intervalosPorHora.get(intervalosPorHora.keySet().iterator().next());
+            HoraFranja key = null;
+            for(Map.Entry<HoraFranja,Double> entry : intervalosPorHora.entrySet()) {
+                key = entry.getKey();
+                Double value = entry.getValue();
+                if(value<menor){
                     menor = value;
                 }
-                return key;
+
             }
+            return key;
         }
 
 
@@ -148,6 +161,10 @@ public class IntervalosProcessor {
 
     }
 
+    private double getDiferencia(Time horarioA, Time horarioB) {
+        long c = horarioA.getTime() - horarioB.getTime();
+        return c/1000;
+    }
 
 
     public List<Intervalos> calcularValorIntervaloPorFranja(TablaMaestraServicios tablaMaestraServicios,ServicioTipoDia servicio,GisIntervalos gisIntervalos) {

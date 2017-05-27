@@ -140,6 +140,10 @@ public class HorariosProvisionalServicio {
         return tempHorarioDao.getSumInstanteByFranjaHora(idServicio,inicio,fin);
     }
 
+    public List<TempHorario> getListHorario(String idServicio, Time inicio, Time fin){
+        return tempHorarioDao.getListHorario(idServicio,inicio,fin);
+    }
+
     public Time getMinInstanteByFranjaHora(String idServicio, HoraFranja inicio, HoraFranja fin){
         if(inicio != null && fin != null ){
             return tempHorarioDao.getMinInstanteByFranjaHora(idServicio,inicio.getHoraInicio(),fin.getHoraFin());

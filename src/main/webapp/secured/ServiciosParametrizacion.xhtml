@@ -42,17 +42,17 @@
                                 </p:outputPanel>
                             </f:facet>
 
-                            <p:column filterBy="#{ser.macro}" headerText="Macro"  filterMatchMode="contains" sortBy="#{ser.macro}"
+                            <p:column filterBy="#{ser.macro}" headerText="Línea"  filterMatchMode="contains" sortBy="#{ser.macro}"
                                       style="width: 70px">
                                 <h:outputText value="#{ser.macro}" style="width: 75px" />
                             </p:column>
 
-                            <p:column filterBy="#{ser.linea}" headerText="Linea"  filterMatchMode="contains" sortBy="#{ser.linea}"
+                            <p:column filterBy="#{ser.linea}" headerText="SubLínea"  filterMatchMode="contains" sortBy="#{ser.linea}"
                                       style="width: 70px">
                                 <h:outputText value="#{ser.linea}" style="width: 75px" />
                             </p:column>
 
-                            <p:column filterBy="#{ser.seccion}" headerText="Seccion"  filterMatchMode="contains" sortBy="#{ser.seccion}"
+                            <p:column filterBy="#{ser.seccion}" headerText="Ruta"  filterMatchMode="contains" sortBy="#{ser.seccion}"
                                       style="width: 70px">
                                 <h:outputText value="#{ser.seccion}"  style="width: 75px"/>
                             </p:column>
@@ -118,13 +118,13 @@
                                     <h:outputText value="Identificador:" style="color:black" />
                                     <h:inputText value="#{serviciosP.selectedServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
 
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Línea:" style="color:black"/>
                                     <h:inputText value="#{serviciosP.selectedServicio.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="SubLinea:" style="color:black"/>
                                     <h:inputText value="#{serviciosP.selectedServicio.linea}"  />
 
-                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:outputText value="Ruta:" style="color:black"/>
                                     <h:inputText value="#{serviciosP.selectedServicio.seccion}"  />
 
                                     <h:outputText value="Punto:" style="color:black"/>

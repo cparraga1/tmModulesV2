@@ -68,7 +68,36 @@
                                 <f:setPropertyActionListener value="#{tabla}" target="#{busquedaTabla.selectedTabla}" />
                             </p:commandButton>
                         </p:column>
+                        <p:column style="width:50px;text-align: center" exportable="false">
+                            <p:commandButton id="delete"
+                                             icon="ui-icon ui-icon-trash"
+                                             title="GDeleteButton"
+                                             onclick="PF('groupDeleteConfirm').show()">
+                                <f:setPropertyActionListener value="#{tabla}" target="#{busquedaTabla.selectedTabla}" />
+                            </p:commandButton>
+
+                        </p:column>
                     </p:dataTable>
+
+                    <p:confirmDialog message="¿Esta seguro de eliminar la matriz de distnacia?. Recuerd que se eliminaran todos los registros de la matriz."
+                                     showEffect="fade"
+                                     hideEffect="explode"
+                                     widgetVar="groupDeleteConfirm">
+                        <p:panel visible="#{!busquedaTabla.mensajeVisible}">
+                            <p:commandButton title="GDelYesButton"
+                                             value="Si" disabled="#{busquedaTabla.mensajeVisible}"
+                                             action="#{busquedaTabla.eliminarTabla}" ajax="false"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                            />
+                            <p:commandButton title="GDelNoButton"
+                                             value="No"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"/>
+                        </p:panel>
+
+                        <p:panel visible="#{busquedaTabla.mensajeVisible}">
+                        <p:outputLabel value="Eliminado Matriz de Distancia"></p:outputLabel>
+                        </p:panel>
+                    </p:confirmDialog>
 
                     <p:dialog header="Opciones visualización tabla maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="nuevoDialog" style="text-align:center;">
@@ -81,8 +110,6 @@
                                 </h:selectOneMenu>
                                 <h:outputText value="Tipo Intervalo:" style="color: black;"/>
                                 <h:selectOneMenu value="#{busquedaTabla.tipoIntervalo}" style="width:100%" >
-                                    <f:selectItem itemLabel="PROMEDIO" itemValue="Promedio" />
-                                    <f:selectItem itemLabel="MODA" itemValue="Moda" />
                                     <f:selectItem itemLabel="MINIMO" itemValue="Minimo" />
                                     <f:selectItem itemLabel="MAXIMO" itemValue="Maximo" />
                                 </h:selectOneMenu>

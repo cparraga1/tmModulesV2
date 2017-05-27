@@ -53,7 +53,7 @@
                             <!--<p:outputLabel for="button" value="Fecha Programación (DD-MM-AAAA):" />-->
                             <!--<p:calendar id="button" value="#{matrizDis.fechaDeProgramacion}" showOn="button" />-->
                             <p:outputLabel value="Archivo Matriz de Distancias (DD-MM-AAAA):" />
-                            <p:fileUpload value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                            <p:fileUpload  label="Seleccionar" value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 
                                 <p:commandButton value="Guardar" action="#{matrizDis.cargarArchivo}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="withIcon"

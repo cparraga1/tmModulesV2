@@ -135,7 +135,8 @@
                                 <p:outputPanel id="actualizarDialog" style="text-align:center;">
                                     <p:panelGrid columns="3">
                                     <p:outputLabel value="Orden servicios:" />
-                                    <p:fileUpload value="#{serviciosTipoDiaP.ordenServiciosFile}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                                    <p:fileUpload label="Seleccionar"
+                                            value="#{serviciosTipoDiaP.ordenServiciosFile}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
                                     <p:commandButton value="Actualizar" action="#{serviciosTipoDiaP.procesarOrdenServicios}" ajax="false"
                                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                                      async="true" process="@form" onclick="PF('dlg2').show();" global="false"

@@ -35,6 +35,8 @@ public class BusquedaTablaMaestraView {
     private boolean visibleOptimos;
     private boolean visibleMinimos;
     private boolean visibleMaximos;
+    private boolean mensajeVisible;
+
 
 //    private String tipologiaCiclo;
     private String tipoCiclo;
@@ -74,6 +76,7 @@ public class BusquedaTablaMaestraView {
         fechaFinalVisible=false;
         tablaMaestraRecords = tablaMaestraService.getCustomers();
         visibleRecords = false;
+        mensajeVisible = false;
     }
 
     public void inicio(){
@@ -88,11 +91,27 @@ public class BusquedaTablaMaestraView {
     }
 
     public void actualizar(){
+        tablaMaestraRecords = tablaMaestraService.getCustomers();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        mensajeVisible = false;
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/BuscarTablaMaestra.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     public void cancelar(){
 
+    }
+
+    public void eliminarTabla (){
+            mensajeVisible = true;
+            tablaMaestraService.deleteCustomer(selectedTabla);
+            messagesView.error(Messages.MENSAJE_EXITOSO,Messages.ACCION_ELIMINACION_REGISTROS);
+            actualizar();
     }
 
     public void nuevoRegistro(){
@@ -540,5 +559,13 @@ public class BusquedaTablaMaestraView {
 
     public void setTablaMaestraProcessor(TablaMaestraProcessor tablaMaestraProcessor) {
         this.tablaMaestraProcessor = tablaMaestraProcessor;
+    }
+
+    public boolean isMensajeVisible() {
+        return mensajeVisible;
+    }
+
+    public void setMensajeVisible(boolean mensajeVisible) {
+        this.mensajeVisible = mensajeVisible;
     }
 }

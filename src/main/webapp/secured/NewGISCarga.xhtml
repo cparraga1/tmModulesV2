@@ -29,7 +29,8 @@
 								<f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
 							</p:selectOneMenu>
 							<p:outputLabel value="Gis de Carga:" />
-							<p:fileUpload value="#{gisCarga.gisCarga}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+							<p:fileUpload value="#{gisCarga.gisCarga}" label="Seleccionar"
+										  mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 							<p:outputLabel value="Descripcion:" />
 							<p:inputText value="#{gisCarga.descripcion}"/>
 						</h:panelGrid>

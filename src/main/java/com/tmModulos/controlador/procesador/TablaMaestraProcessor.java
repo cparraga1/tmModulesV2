@@ -181,6 +181,7 @@ public class TablaMaestraProcessor {
 
                 }else{
                     servicioNoExisteEnGISCarga(servicio);
+
                 }
             }else{
                 tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
@@ -191,7 +192,7 @@ public class TablaMaestraProcessor {
                 servicioNoExisteEnGISCarga(servicio);
             }
             }
-
+        veriPreHorarios.deleteTablaHorario();
         logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
         return logDatos;
     }
@@ -323,9 +324,10 @@ public class TablaMaestraProcessor {
 
             if(horas!=0){
                 double velocidad =distanciaKM/horas;
-                String velocidadFormateada = String.format("%.2f",velocidad);
+             //   String velocidadFormateada = String.format("%.2f",velocidad);
                 try{
-                    return Double.parseDouble(velocidadFormateada);
+                    return velocidad;
+                //    return Double.parseDouble(velocidadFormateada);
                 }catch (Exception e){
                     logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
                     log.error(e.getMessage());
