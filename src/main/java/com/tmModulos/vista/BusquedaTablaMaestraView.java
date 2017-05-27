@@ -135,7 +135,7 @@ public class BusquedaTablaMaestraView {
     public void reinciar(){
         busqueda = "1";
         fechaFinalVisible=false;
-        tablaMaestraRecords = new ArrayList<>();
+        tablaMaestraRecords = tablaMaestraService.getCustomers();
         visibleRecords = false;
         fechaFinal = null;
         fechaInicial = null;

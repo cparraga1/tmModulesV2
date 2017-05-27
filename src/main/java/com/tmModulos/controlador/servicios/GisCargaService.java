@@ -40,6 +40,7 @@ public class GisCargaService {
         gisCargaDao.addGisCarga(gisCarga);
     }
 
+    @Transactional(readOnly = false)
     public void deleteGisCarga(GisCarga gisCarga) {
         gisCargaDao.deleteGisCarga(gisCarga);
     }

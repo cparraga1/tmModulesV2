@@ -63,11 +63,40 @@ public class BuscarGisCargaView implements Serializable {
     public void reiniciar(){
         busqueda = "1";
         fechaFinalVisible=false;
-        gisCargaRecords = new ArrayList<>();
+        gisCargaRecords = busquedaService.getGisCargaAll();
         selectedGisCarga = new ArrayList<>();
         visibleRecords = false;
         fechaFinal = null;
         fechaInicial = null;
+    }
+
+
+    public void eliminarGIS(){
+        if(selectedCarga!=null){
+            try{
+                busquedaService.deleteGisCarga(selectedCarga);
+                messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_ELIMINACION_REGISTROS);
+                actualizar();
+                selectedCarga = null;
+            }catch (Exception e){
+                messagesView.error(Messages.MENSAJE_FALLO,"No se puede eliminar el GIS de carga, esta relacionada a una tabla maestra");
+            }
+
+        }else{
+            messagesView.error(Messages.MENSAJE_FALLO,"Seleccione la matriz a eliminar");
+        }
+    }
+
+    public void actualizar(){
+        gisCargaRecords = busquedaService.getGisCargaAll();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/BuscarGISCarga.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void buscar(){

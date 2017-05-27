@@ -24,12 +24,12 @@ public class GisIntervalos {
     @Column(name = "cuadro")
     private String cuadro;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tipo_dia", nullable = false)
     private TipoDia tipoDia;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisIntervalos")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisIntervalos",cascade = CascadeType.ALL)
     private Set<TiempoIntervalos> tiempoIntervalosRecords = new HashSet<TiempoIntervalos>(0);
 
     @ManyToOne(fetch = FetchType.EAGER)

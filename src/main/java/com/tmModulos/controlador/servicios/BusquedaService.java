@@ -38,6 +38,11 @@ public class BusquedaService {
         return gisCargaService;
     }
 
+    public void deleteGisCarga(GisCarga gisCarga) {
+
+        gisCargaService.deleteGisCarga(gisCarga);
+    }
+
     public void setGisCargaService(GisCargaService gisCargaService) {
         this.gisCargaService = gisCargaService;
     }

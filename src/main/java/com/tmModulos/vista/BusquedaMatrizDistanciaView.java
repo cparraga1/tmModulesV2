@@ -98,13 +98,25 @@ public class BusquedaMatrizDistanciaView implements Serializable {
             fechaFinalVisible=true;
         }
     }
-    public void eliminarMatriz(){
-        matrizDistanciaService.deleteMatrizDistancia(selectedMatriz);
-        messagesView.error(Messages.MENSAJE_EXITOSO,Messages.ACCION_ELIMINACION_REGISTROS);
-        actualizarTabla();
-    }
 
+    public void eliminarMatriz(){
+        if(selectedMatriz!=null){
+            try{
+                matrizDistanciaService.deleteMatrizDistancia(selectedMatriz);
+                messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_ELIMINACION_REGISTROS);
+                actualizarTabla();
+                selectedMatriz = null;
+            }catch (Exception e){
+                messagesView.error(Messages.MENSAJE_FALLO,"No se puede eliminar la Matriz de Distancias, esta relacionada a una tabla maestra");
+            }
+
+        }else{
+            messagesView.error(Messages.MENSAJE_FALLO,"Seleccione la matriz a eliminar");
+        }
+
+    }
     public void actualizarTabla(){
+        MatrizDistanciaRecords = matrizDistanciaService.getMatrizDistanciaAll();
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
             ec.redirect(ec.getRequestContextPath()

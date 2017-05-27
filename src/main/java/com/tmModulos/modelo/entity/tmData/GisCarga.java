@@ -34,14 +34,14 @@ public class GisCarga {
     private String fechaVigenciaFormato;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "tipo_dia", nullable = false)
     private TipoDia tipoDia;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisCargaArco")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisCargaArco",cascade = CascadeType.ALL)
     private Set<ArcoTiempo> arcoTiempoRecords = new HashSet<ArcoTiempo>(0);
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisCarga")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisCarga",cascade = CascadeType.PERSIST)
     private Set<TablaMaestra> tablaMaestraRecords= new HashSet<TablaMaestra>(0);
 
     public GisCarga(Date fechaCreacion, Date fechaProgramacion, Date fechaVigencia, String descripcion,TipoDia tipoDia) {

@@ -52,7 +52,7 @@ public class MatrizProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(MatrizProcessor.class);
-    private String destination="C:\\temp\\TmMigracion";
+    private String destination="C:\\temp\\Migracion\\";
 
 
     public List<LogDatos> calcularMatrizDistancia(Date fechaHabil,String numeracion,Date fechaFestivos, Date fechaSabado,String desc){

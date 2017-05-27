@@ -54,7 +54,7 @@ public class TablaMaestraProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
-    private String destination="C:\\temp\\";
+    private String destination="C:\\temp\\Migracion\\";
 
 
     private Map serviciosIncluidos;
