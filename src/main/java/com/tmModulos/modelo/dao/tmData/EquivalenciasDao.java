@@ -52,7 +52,8 @@ public class EquivalenciasDao {
         criteria.add(Restrictions.eq("sublinea", sublinea));
         criteria.add(Restrictions.eq("puntoInicio", puntoI));
         criteria.add(Restrictions.eq("puntoFin", puntoF));
-        return criteria.list();
+        List<Equivalencias> lista = criteria.list();
+        return lista;
     }
 
 
@@ -76,7 +77,16 @@ public class EquivalenciasDao {
         }
     }
 
+    private void cerrarConexion(Connection conn, Session session) {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteEquivalencias(){
         getSessionFactory().getCurrentSession().createSQLQuery("DELETE FROM temp_expediciones").executeUpdate();
+
     }
 }

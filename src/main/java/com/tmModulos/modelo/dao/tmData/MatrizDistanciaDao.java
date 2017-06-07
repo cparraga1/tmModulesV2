@@ -50,18 +50,21 @@ public class MatrizDistanciaDao {
     public List<MatrizDistancia> getMatrizDistanciaByFecha(String tipoFecha,Date fecha){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
         criteria.add(Restrictions.eq(tipoFecha, fecha));
-        return criteria.list();
+        List<MatrizDistancia> lista = criteria.list();
+        return lista;
     }
 
     public List<MatrizDistancia> getMatrizDistanciaBetwenFechas(String tipoFecha,Date fechaIni,Date fechaFin){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
         criteria.add(  Restrictions.between(tipoFecha, fechaIni, fechaFin)  );
-        return criteria.list();
+        List<MatrizDistancia> lista = criteria.list();
+        return lista;
     }
 
     public MatrizDistancia getMatrizDistanciaById(String id){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
         criteria.add(Restrictions.eq("numeracion", id));
-        return (MatrizDistancia) criteria.uniqueResult();
+        MatrizDistancia matrizDistancia = (MatrizDistancia) criteria.uniqueResult();
+        return matrizDistancia;
     }
 }

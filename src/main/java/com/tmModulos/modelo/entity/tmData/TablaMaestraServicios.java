@@ -27,6 +27,12 @@ public class TablaMaestraServicios {
     @Column(name = "identificador")
     private String identificador;
 
+    @Column(name = "identificadorb")
+    private String identificadorb;
+
+    @Column(name = "identificadorc")
+    private String identificadorc;
+
     @Column(name = "identificador_inicio")
     private String idInicio;
 
@@ -49,7 +55,10 @@ public class TablaMaestraServicios {
     private int linea;
 
     @Column(name = "seccion")
-    private int seccion;
+    private Integer seccion;
+
+    @Column(name = "sentido")
+    private Integer sentido;
 
     @Column(name = "tipo_servicio")
     private String tipoServicio;
@@ -128,6 +137,9 @@ public class TablaMaestraServicios {
 
     @Transient
     private String tipologiaAux;
+
+    public TablaMaestraServicios() {
+    }
 
     public long getId() {
         return id;
@@ -423,5 +435,33 @@ public class TablaMaestraServicios {
 
     public void setTipologiaAux(String tipologiaAux) {
         this.tipologiaAux = tipologiaAux;
+    }
+
+    public String getIdentificadorb() {
+        return identificadorb;
+    }
+
+    public void setIdentificadorb(String identificadorb) {
+        this.identificadorb = identificadorb;
+    }
+
+    public void setSeccion(Integer seccion) {
+        this.seccion = seccion;
+    }
+
+    public Integer getSentido() {
+        return sentido;
+    }
+
+    public void setSentido(Integer sentido) {
+        this.sentido = sentido;
+    }
+
+    public String getIdentificadorc() {
+        return identificadorc;
+    }
+
+    public void setIdentificadorc(String identificadorc) {
+        this.identificadorc = identificadorc;
     }
 }

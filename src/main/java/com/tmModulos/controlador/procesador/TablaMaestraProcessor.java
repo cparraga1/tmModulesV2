@@ -166,6 +166,9 @@ public class TablaMaestraProcessor {
                             tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
                             HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
                             tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                            tablaMaestraServicios.setIdentificadorb("0");
+                            tablaMaestraServicios.setIdentificadorc("0");
+                            tablaMaestraServicios.setSentido(1);
                             tablaMaestraService.addTServicios(tablaMaestraServicios);
                         }
 
@@ -175,6 +178,9 @@ public class TablaMaestraProcessor {
                         tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
                         HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
                         tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                        tablaMaestraServicios.setIdentificadorb("0");
+                        tablaMaestraServicios.setIdentificadorc("0");
+                        tablaMaestraServicios.setSentido(1);
                         tablaMaestraService.addTServicios(tablaMaestraServicios);
                     }
 
@@ -188,6 +194,9 @@ public class TablaMaestraProcessor {
 
                 HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
                 tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                tablaMaestraServicios.setIdentificadorb("0");
+                tablaMaestraServicios.setIdentificadorc("0");
+                tablaMaestraServicios.setSentido(1);
                 tablaMaestraService.addTServicios(tablaMaestraServicios);
                 servicioNoExisteEnGISCarga(servicio);
             }
@@ -357,16 +366,30 @@ public class TablaMaestraProcessor {
         tablaMaestraServicios.setMacro(servicio.getServicio().getMacro());
         tablaMaestraServicios.setLinea(servicio.getServicio().getLinea());
         tablaMaestraServicios.setSeccion(servicio.getServicio().getSeccion());
+        tablaMaestraServicios.setSentido(1);
         tablaMaestraServicios.setTipoServicio(servicio.getServicio().getTipoServicio());
         tablaMaestraServicios.setNombreEspecial(servicio.getServicio().getNombreEspecial());
         tablaMaestraServicios.setNombreGeneral(servicio.getServicio().getNombreGeneral());
         tablaMaestraServicios.setEstado(servicio.getServicio().isEstado());
         tablaMaestraServicios.setIdentificador(servicio.getServicio().getIdentificador());
+
         tablaMaestraServicios.setTablaMeestra(tablaMaestra);
         tablaMaestraServicios.setTipologia(servicio.getServicio().getTipologia());
         tablaMaestraServicios.setDistancia(-1);
         tablaMaestraServicios.setSecuencia(0);
         return tablaMaestraServicios;
+    }
+
+    private String calcularSegundoServicio(String identificador,int sentido,String nombreP) {
+
+        String[] split = identificador.split("-");
+        String nuevoId= split[0]+"-"+split[1]+"-"+sentido+"-"+nombreP;
+        return nuevoId;
+    }
+
+    private String calcularTercerServicio(int linea, int sentido,int ruta, int cod) {
+        String nuevoId= linea+"-"+sentido+"-"+ruta+"-"+cod;
+        return nuevoId;
     }
 
     public TablaMaestraServicios agregarInfoNodo(Servicio servicio, TablaMaestraServicios tablaMaestraServicios, Nodo nodoInicio) {
@@ -375,6 +398,9 @@ public class TablaMaestraProcessor {
         tablaMaestraServicios.setZonaTInicio(nodoInicio.getVagon().getEstacion().getZonaUsuario().getNombre());
         tablaMaestraServicios.setZonaPInicio(nodoInicio.getVagon().getEstacion().getZonaProgramacion().getNombre());
         tablaMaestraServicios.setIdInicio(calcularId(servicio,nodoInicio.getCodigo()));
+        tablaMaestraServicios.setIdentificadorb(calcularSegundoServicio(servicio.getIdentificador(),servicio.getSeccion(),nodoInicio.getNombre()));
+        tablaMaestraServicios.setIdentificadorc("111");
+
         return  tablaMaestraServicios;
     }
 
@@ -656,6 +682,9 @@ public class TablaMaestraProcessor {
         nuevaTablaMaestraServicios.setNombreInicio(tablaMaestraServicios.getNombreInicio());
         nuevaTablaMaestraServicios.setNombreIFin(tablaMaestraServicios.getNombreIFin());
         nuevaTablaMaestraServicios.setTipologia(tablaMaestraServicios.getTipologia());
+        nuevaTablaMaestraServicios.setIdentificadorb(tablaMaestraServicios.getIdentificadorb());
+        nuevaTablaMaestraServicios.setIdentificadorc(tablaMaestraServicios.getIdentificadorc());
+        nuevaTablaMaestraServicios.setSentido(tablaMaestraServicios.getSentido());
 
         CicloServicio cicloServicio = new CicloServicio();
         cicloServicio.setOptimoInicio(tablaMaestraServicios.getCicloServicio().getOptimoInicio());

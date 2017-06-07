@@ -85,8 +85,10 @@
                                 <p:row>
                                     <p:column style="width: 10%;table-layout: fixed" width="10%"/>
                                     <p:column style="width: 10%;table-layout: fixed" />
-                                    <p:column headerText="Id" filterBy="#{tservicio.identificador}"   filterStyle="width: 100px;"
+                                    <p:column headerText="Id(L-SL-R-P)" filterBy="#{tservicio.identificador}"   filterStyle="width: 100px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.identificador}" style="width: 120px"/>
+                                    <p:column headerText="Id(L-SL-ST-P)" filterBy="#{tservicio.identificadorb}"   filterStyle="width: 100px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.identificadorb}" style="width: 120px"/>
                                     <p:column filterBy="#{tservicio.tipoDia}" headerText="TipoDia"  filterStyle="width: 80px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.tipoDia}" />
                                     <p:column filterBy="#{tservicio.trayecto}" headerText="Trayecto"  filterStyle="width: 80px;"
