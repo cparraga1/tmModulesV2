@@ -131,7 +131,7 @@ public class VerificacionHorarios {
                         int sublinea = Integer.parseInt(valores[1]);
                         int ruta = Integer.parseInt(valores[2]);
                         int punto = Integer.parseInt(valores[3]);
-                        List<TempHorario> tempHorarios = veriPreHorarios.getTablaHorarioByData(linea,sublinea,ruta,punto);
+                        List<TempPos> tempHorarios = veriPreHorarios.getTablaHorarioByData(linea,sublinea,ruta,punto);
                         if(tempHorarios.size()>0){
 
                             List< String> validacion = validarHorarioPost(tempHorarios,horaInicio,horaInicioB,
@@ -141,7 +141,7 @@ public class VerificacionHorarios {
                             createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
                             createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
                             createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
-                            createCellResultados(row, validacion.get(4),ComparadorHorarioIndex.RES_DISTANCIA);
+                            createCellResultados(row, "N/A",ComparadorHorarioIndex.RES_DISTANCIA);
 
                         }else{
                             String info = "N/A";
@@ -291,7 +291,7 @@ public class VerificacionHorarios {
     }
 
 
-    private List<String> validarHorarioPost(List<TempHorario> tempHorarios, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
+    private List<String> validarHorarioPost(List<TempPos> tempHorarios, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
         List<String> comparaciones = new ArrayList<>();
         String compHoraIni="OK";
         String compHoraIni2="OK";
@@ -299,7 +299,7 @@ public class VerificacionHorarios {
         String compHoraFin2="OK";
         String compHoraDis="OK";
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        for(TempHorario temporal: tempHorarios){
+        for(TempPos temporal: tempHorarios){
             Date expInicio = convertirATime(temporal.getInstante().toString());
 
             if( horaInicioB== null && horaFinB == null){

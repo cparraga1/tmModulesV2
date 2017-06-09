@@ -3,9 +3,11 @@ package com.tmModulos.controlador.servicios;
 import com.tmModulos.modelo.dao.tmData.EquivalenciasDao;
 import com.tmModulos.modelo.dao.tmData.ExpedicionesTemporalDao;
 import com.tmModulos.modelo.dao.tmData.TempHorarioDao;
+import com.tmModulos.modelo.dao.tmData.TempPosDao;
 import com.tmModulos.modelo.entity.tmData.Equivalencias;
 import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
 import com.tmModulos.modelo.entity.tmData.TempHorario;
+import com.tmModulos.modelo.entity.tmData.TempPos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ public class VeriPreHorarios {
     public EquivalenciasDao equivalenciasDao;
 
     @Autowired
-    public TempHorarioDao tempHorarioDao;
+    public TempPosDao tempHorarioDao;
 
 
     public void addExpTemporal(ExpedicionesTemporal temporal) {
@@ -70,7 +72,7 @@ public class VeriPreHorarios {
         tempHorarioDao.deleteTablaHorario();
     }
 
-    public List<TempHorario> getTablaHorarioByData(int linea, int sublinea, int ruta, int punto){
+    public List<TempPos> getTablaHorarioByData(int linea, int sublinea, int ruta, int punto){
         return tempHorarioDao.getTablaHorarioByData(linea,sublinea,ruta,punto);
     }
 

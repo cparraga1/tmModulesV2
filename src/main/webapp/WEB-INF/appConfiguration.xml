@@ -79,6 +79,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.Equivalencias</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempHorario</value>
                 <value>com.tmModulos.modelo.entity.tmData.HoraFranja</value>
+                <value>com.tmModulos.modelo.entity.tmData.TempPos</value>
             </list>
         </property>
     </bean>
