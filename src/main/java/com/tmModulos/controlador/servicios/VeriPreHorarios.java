@@ -4,10 +4,7 @@ import com.tmModulos.modelo.dao.tmData.EquivalenciasDao;
 import com.tmModulos.modelo.dao.tmData.ExpedicionesTemporalDao;
 import com.tmModulos.modelo.dao.tmData.TempHorarioDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
-import com.tmModulos.modelo.entity.tmData.Equivalencias;
-import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
-import com.tmModulos.modelo.entity.tmData.TempHorario;
-import com.tmModulos.modelo.entity.tmData.TempPos;
+import com.tmModulos.modelo.entity.tmData.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +65,10 @@ public class VeriPreHorarios {
         tempHorarioDao.addTablaHorarioFromFile(filename);
     }
 
+    public void addTablaHorarioTMFromFile(String filename){
+        tempHorarioDao.addTablaHorarioTMFromFile(filename);
+    }
+
     public void deleteTablaHorario(){
         tempHorarioDao.deleteTablaHorario();
     }
@@ -79,6 +80,7 @@ public class VeriPreHorarios {
     public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
         return tempHorarioDao.getSumInstanteByFranjaHora(idServicio,inicio,fin);
     }
+
 
 }
 

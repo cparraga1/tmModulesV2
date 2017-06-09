@@ -64,7 +64,10 @@ public class MatrizDistanciaDao {
     public MatrizDistancia getMatrizDistanciaById(String id){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
         criteria.add(Restrictions.eq("numeracion", id));
-        MatrizDistancia matrizDistancia = (MatrizDistancia) criteria.uniqueResult();
-        return matrizDistancia;
+        List<MatrizDistancia> matrizDistancia = criteria.list();
+        if(matrizDistancia.size()>0){
+            return matrizDistancia.get(0);
+        }
+        return null;
     }
 }

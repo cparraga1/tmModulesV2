@@ -155,4 +155,12 @@ public class HorariosProvisionalServicio {
         return tempHorarioDao.getMaxInstanteByFranjaHora(idServicio,inicio,fin);
     }
 
+    public List<TempHorario> getTiempoIntervalosByServicio(List<IntervalosProgramacion> intervalosFranjaInicio, ServicioTipoDia servicio) {
+
+        return tempHorarioDao.getTablaHorarioByData(servicio.getServicio(),intervalosFranjaInicio);
     }
+    @Transactional(readOnly = false)
+    public void addTablaHorarioFromFile(String destination) {
+        tempHorarioDao.addTablaHorarioFromFile(destination);
+    }
+}

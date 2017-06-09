@@ -61,6 +61,28 @@ public class TempPosDao {
         }
     }
 
+    public void addTablaHorarioTMFromFile(String filename){
+        SessionFactory factory = getSessionFactory();
+        Session session = factory.getCurrentSession();
+        SessionImplementor sessImpl = (SessionImplementor) session;
+        Connection conn = null;
+        conn = sessImpl.getJDBCContext().connection();
+        CopyManager copyManager = null;
+        try {
+            copyManager = new CopyManager((BaseConnection) conn);
+            FileReader fileReader = new FileReader(filename);
+            copyManager.copyIn("COPY temp_horario (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje)\n" +
+                    " FROM STDIN DELIMITER ';' CSV HEADER encoding 'windows-1251'", fileReader );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void deleteTablaHorario(){
         getSessionFactory().getCurrentSession().createSQLQuery("DELETE FROM temp_pos").executeUpdate();
     }

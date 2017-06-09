@@ -1,17 +1,11 @@
 package com.tmModulos.modelo.dao.tmData;
 
-import com.tmModulos.modelo.entity.tmData.Equivalencias;
-import com.tmModulos.modelo.entity.tmData.HoraFranja;
-import com.tmModulos.modelo.entity.tmData.TempHorario;
-import com.tmModulos.modelo.entity.tmData.TemporalHorarios;
+import com.tmModulos.modelo.entity.tmData.*;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.engine.SessionImplementor;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
@@ -25,6 +19,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -68,16 +63,30 @@ public class TempHorarioDao {
         getSessionFactory().getCurrentSession().createSQLQuery("DELETE FROM temp_horario").executeUpdate();
     }
 
-    public List<TempHorario> getTablaHorarioByData(int linea, int sublinea,int ruta, int punto){
+    public List<TempHorario> getTablaHorarioByData(Servicio servicio, List<IntervalosProgramacion> intervalos){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempHorario.class);
-        criteria.add(Restrictions.eq("linea", linea));
-        criteria.add(Restrictions.eq("sublinea", sublinea));
-        criteria.add(Restrictions.eq("punto", punto));
-        criteria.add(Restrictions.eq("ruta", ruta));
-        Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
+       Disjunction or = Restrictions.disjunction();
+        if(intervalos!=null){
+            if(intervalos.size()>0){
+//                for (IntervalosProgramacion intervalo: intervalos ) {
+                    or.add(Restrictions.between("instante",intervalos.get(0).getInicio(),intervalos.get(intervalos.size()-1).getFin()));
+//                }
+                criteria.add(or);
+                criteria.add(Restrictions.eq("linea", servicio.getMacro()));
+                criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
+                criteria.add(Restrictions.eq("punto", servicio.getPunto()));
+                criteria.add(Restrictions.eq("ruta", servicio.getSeccion()));
+                criteria.addOrder(Order.desc("instante"));
+                Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
 
-        criteria.add(eventos);
-        return criteria.list();
+                criteria.add(eventos);
+                return criteria.list();
+            }
+
+        }
+
+
+        return new ArrayList<>();
     }
 
     public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){

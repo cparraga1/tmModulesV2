@@ -90,7 +90,7 @@ public class TablaMaestraProcessor {
         processorUtils.copyFile(filename,in,destination);
         destination=destination+filename;
         // Copiar informacion intervalos
-        veriPreHorarios.addTablaHorarioFromFile(destination);
+        horariosProvisionalServicio.addTablaHorarioFromFile(destination);
 
 
         //Encontrar parametros para la generacion de la tabla maestra
