@@ -403,7 +403,7 @@ return intervalosLista;
         }
         if(tiempoTotal!=0){
             tiempoTotal= tiempoTotal/tiempos.size();
-           return transformarAFormatoTiempo(tiempoTotal);
+           return tiempoTotal;
         }
 
 
