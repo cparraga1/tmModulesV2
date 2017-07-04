@@ -201,10 +201,10 @@ public class IntervalosProcessor {
         List<Double> diffFranjaPM = extraerDiferenciaTiempos(tiemposFranjaPM);
         List<Double> diffFranjaCierre = extraerDiferenciaTiempos(tiemposFranjaCierre);
 
-       intervalosLista.add( calcularPromedio(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaPM,diffFranjaCierre,tablaMaestraServicios));
+       intervalosLista.add( calcularPromedio(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaCierre,diffFranjaPM,tablaMaestraServicios));
 //       intervalosLista.add( calcularModa(servicio,tiemposFranjaInciio,tiemposFranjaAM,tiemposFranjaValle,tiemposFranjaCierre,tiemposFranjaPM,tablaMaestraServicios));
-        intervalosLista.add(calcularMinimo(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaPM,diffFranjaCierre,tablaMaestraServicios));
-       intervalosLista.add( calcularMaximo(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaPM,diffFranjaCierre,tablaMaestraServicios));
+        intervalosLista.add(calcularMinimo(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaCierre,diffFranjaPM,tablaMaestraServicios));
+       intervalosLista.add( calcularMaximo(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaCierre,diffFranjaPM,tablaMaestraServicios));
 
 return intervalosLista;
     }
