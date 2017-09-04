@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="Primefaces-Hibernate-Spring-Integration-Sample:war exploded">
+  <artifact type="exploded-war" name="TM-Migracion:war exploded">
     <output-path>$PROJECT_DIR$/target/TM-Migracion-0.0.1-SNAPSHOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">

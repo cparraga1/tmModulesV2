@@ -17,4 +17,7 @@ public class ComparadorHorarioIndex {
     public static final int RES_HORA_FIN_2      = 11 ;
     public static final int DISTANCIA           = 12 ;
     public static final int RES_DISTANCIA       = 13 ;
+    public static final int INT_PROMEDIO        = 14 ;
+    public static final int INT_MINIMO          = 15 ;
+    public static final int INT_MAXIMO          = 16 ;
 }

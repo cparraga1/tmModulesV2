@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TM-Migracion:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="TM-Migracion-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="TM-Migracion:war exploded" />
+    </root>
+  </artifact>
+</component>

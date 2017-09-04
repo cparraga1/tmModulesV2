@@ -5,6 +5,7 @@ import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
 import com.tmModulos.modelo.entity.tmData.MatrizTemporal;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,6 +52,7 @@ public class ExpedicionesTemporalDao {
     public List<ExpedicionesTemporal> getExpedicionesTemporalsData(String id){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(ExpedicionesTemporal.class);
         criteria.add(Restrictions.eq("identificador", id));
+        criteria.addOrder(Order.asc("horaInicio"));
         return criteria.list();
     }
 }
