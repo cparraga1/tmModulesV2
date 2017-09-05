@@ -1,12 +1,13 @@
 package com.tmModulos;
 
+import com.tmModulos.controlador.utils.PathFiles;
 import jxl.read.biff.BiffException;
 
 import java.io.IOException;
 
 public class Main {
 	public static void main(String [] args) throws IOException, BiffException {
-		 String EXCEL_FILE_LOCATION = "C:\\temp\\test2.xls";
+		 String EXCEL_FILE_LOCATION = PathFiles.PATH_FOR_FILES +"test2.xls";
 //		Workbook wb = null;
 //		try {
 //			wb = WorkbookFactory.create(new File(EXCEL_FILE_LOCATION));

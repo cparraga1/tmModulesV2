@@ -1,10 +1,7 @@
 package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
-import com.tmModulos.controlador.utils.GisCargaDefinition;
-import com.tmModulos.controlador.utils.LogDatos;
-import com.tmModulos.controlador.utils.ProcessorUtils;
-import com.tmModulos.controlador.utils.TipoLog;
+import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -376,11 +373,11 @@ public class VerificacionHorarios {
 
     private String fileForTipoDia(String tipoDia) {
         if(tipoDia.equals("SABADO")){
-            return "C:\\temp\\migracion\\resumenServiciosSabado.xls";
+            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosSabado.xls";
         }else if (tipoDia.equals("FESTIVO")){
-            return "C:\\temp\\migracion\\resumenServiciosFestivo.xls";
+            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosFestivo.xls";
         }
-        return "C:\\temp\\migracion\\resumenServiciosHabil.xls";
+        return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
     }
 
 

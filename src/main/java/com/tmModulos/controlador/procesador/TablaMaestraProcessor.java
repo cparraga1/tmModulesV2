@@ -2,6 +2,7 @@ package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.*;
 import com.tmModulos.controlador.utils.LogDatos;
+import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.controlador.utils.TipoLog;
 import com.tmModulos.modelo.dao.tmData.GisCargaDao;
@@ -54,7 +55,7 @@ public class TablaMaestraProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
-    private String destination="C:\\temp\\Migracion\\";
+    private String destination= PathFiles.PATH_FOR_FILES+"\\Migracion\\";
 
 
     private Map serviciosIncluidos;

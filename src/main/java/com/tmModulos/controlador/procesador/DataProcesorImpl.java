@@ -62,9 +62,9 @@ public class DataProcesorImpl {
         log.info("<< GIS Carga Incio de Procesamiento >>");
         logDatos.add(new LogDatos("GIS Carga Incio de Procesamiento", TipoLog.INFO));
         serviciosNoEncontrados = new ArrayList<>();
-        destination="C:\\temp\\Migracion\\";
+        destination=PathFiles.PATH_FOR_FILES+"\\Migracion\\";
         processorUtils.copyFile(fileName,in,destination);
-        destination="C:\\temp\\Migracion\\"+fileName;
+        destination=PathFiles.PATH_FOR_FILES+"\\Migracion\\"+fileName;
         GisCarga gisCarga = saveGisCarga(fechaProgrmacion,fechaVigencia,descripcion,tipoDia);
         try {
             readExcelAndSaveData(destination,gisCarga,tipoDia);
