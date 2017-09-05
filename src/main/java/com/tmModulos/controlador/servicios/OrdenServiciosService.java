@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.servicios;
 
 import com.tmModulos.controlador.utils.GisCargaDefinition;
+import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.dao.tmData.ServicioTipoDiaDao;
 import com.tmModulos.modelo.entity.tmData.*;
@@ -30,7 +31,7 @@ public class OrdenServiciosService {
     @Autowired
     private ProcessorUtils processorUtils;
 
-    private String destination="C:\\temp\\";
+    private String destination= PathFiles.PATH_FOR_FILES;
     private boolean actualizar;
 
     public List<ServicioTipoDia>  processDataFromFile(String fileName, InputStream in, TipoDia tipoDia, List<ServicioTipoDia> servicios) {

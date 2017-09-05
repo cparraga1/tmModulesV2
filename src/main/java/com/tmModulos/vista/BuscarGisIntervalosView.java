@@ -2,6 +2,7 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.procesador.ConversionIntervalosServicio;
 import com.tmModulos.controlador.servicios.HorariosProvisionalServicio;
+import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.modelo.entity.tmData.GisIntervalos;
 import com.tmModulos.modelo.entity.tmData.Intervalos;
 import org.primefaces.model.DefaultStreamedContent;
@@ -50,7 +51,7 @@ public class BuscarGisIntervalosView {
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
 
-    private String destination="C:\\temp\\";
+    private String destination= PathFiles.PATH_FOR_FILES;
 
     private StreamedContent file;
 

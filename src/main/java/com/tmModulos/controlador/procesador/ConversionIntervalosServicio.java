@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.IntervalosConversionServicio;
+import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.modelo.dao.tmData.GisIntervalosDao;
 import com.tmModulos.modelo.dao.tmData.IntervalosProgramacionDao;
 import com.tmModulos.modelo.dao.tmData.ServicioTipoDiaDao;
@@ -31,7 +32,7 @@ public class ConversionIntervalosServicio {
    @Autowired
    private IntervalosConversionServicio intervalosServicio;
 
-    private String destination="C:\\temp\\";
+    private String destination= PathFiles.PATH_FOR_FILES;
 
     private List<IntervalosProgramacion> intervalosProgramacions;
     private List<ServicioTipoDia> servicios;

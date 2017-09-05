@@ -2,6 +2,7 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.procesador.DataProcesorImpl;
 import com.tmModulos.controlador.procesador.VerificacionHorarios;
+import com.tmModulos.controlador.utils.PathFiles;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
@@ -59,7 +60,7 @@ public class VerificaHorarioView implements Serializable {
 
 
 
-        File file = new File("C:\\temp\\update.xls");
+        File file = new File(PathFiles.PATH_FOR_FILES+"\\update.xls");
         file.createNewFile();
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();

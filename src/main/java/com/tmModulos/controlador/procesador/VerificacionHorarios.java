@@ -47,13 +47,14 @@ public class VerificacionHorarios {
 
     public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia) {
         logDatos = new ArrayList<>();
-        destination="C:\\temp\\";
+        destination=PathFiles.PATH_FOR_FILES+"\\";
         processorUtils.copyFile(fileName,in,destination);
-        destination="C:\\temp\\"+fileName;
+        destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
 
         if(tipoValidacion.equals("Pre")){
 
             veriPreHorarios.addEquivalenciasFromFile(destination);
+            System.out.println("Guarde en Base de Datos");
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
             veriPreHorarios.deleteEquivalencias();
 
@@ -168,7 +169,7 @@ public class VerificacionHorarios {
  FROM 'C:/temp/prueba.csv'  DELIMITER ';' CSV HEADER;*/
             }
             fileInputStream.close();
-            FileOutputStream outFile =new FileOutputStream(new File("C:\\temp\\update.xls"));
+            FileOutputStream outFile =new FileOutputStream(new File(PathFiles.PATH_FOR_FILES+"\\update.xls"));
             workbook.write(outFile);
             outFile.close();
             System.out.println("Fin");
@@ -246,6 +247,7 @@ public class VerificacionHorarios {
     }
 
     private List<String> validarHorario(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
+        System.out.println("Entre a validar horario");
         List<String> comparaciones = new ArrayList<>();
         String compHoraIni="OK";
         String compHoraIni2="OK";
