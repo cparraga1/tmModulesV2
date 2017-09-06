@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="message" showDetail="true" />
+                <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{franjaParametrizacion.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />                        </p:panelGrid>
+                        <div style="height: 10px"></div>
+                        <p:dataTable id="franjaTabla" var="franja" value="#{franjaParametrizacion.franjaRecords}"
+                                     emptyMessage="No hay registros relacionados a la busqueda">
+                                     <!--selectionMode="single" selection="#{franjaParametrizacion.franjaSelected}" rowKey="#{franja.id}">-->
+
+                            <p:column filterBy="#{franja.nombre}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{franja.nombre}"
+                                      style="width: 70px">
+                                <h:outputText value="#{franja.nombre}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column filterBy="#{franja.horaInicio}" headerText="Hora Inicio"  filterMatchMode="contains" sortBy="#{franja.horaInicio}"
+                                      style="width: 70px">
+                                <h:outputText value="#{franja.horaInicio}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column filterBy="#{franja.horaFin}" headerText="Hora Fin"  filterMatchMode="contains" sortBy="#{franja.horaFin}"
+                                      style="width: 70px">
+                                <h:outputText value="#{franja.horaFin}"  style="width: 75px"/>
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center">
+                                <p:commandButton update=":form:franjaDetail" oncomplete="PF('franjaDialog').show()" icon="ui-icon-pencil" title="View">
+                                    <f:setPropertyActionListener value="#{franja}" target="#{franjaParametrizacion.franjaSelected}" />
+                                </p:commandButton>
+                            </p:column>
+
+                            <!--<f:facet name="footer">-->
+                                <!--<p:commandButton process="franjaTabla" update=":form:franjaDetail" icon="ui-icon-search" value="View" oncomplete="PF('franjaDialog').show()" />-->
+                            <!--</f:facet>-->
+
+                        </p:dataTable>
+
+                        <p:dialog header="Franja Detalles" widgetVar="franjaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                            <p:outputPanel id="franjaDetail" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty franjaParametrizacion.franjaSelected}" columnClasses="label,value" >
+
+                                    <h:outputText value="Nombre:" style="color:black" />
+                                    <h:inputText value="#{franjaParametrizacion.franjaSelected.nombre}" />
+
+                                    <h:outputText value="Hora Inicio:"  />
+                                    <h:inputText value="#{franjaParametrizacion.franjaSelected.horaInicio}" />
+
+                                    <h:outputText value="Hora Fin:" />
+                                    <h:inputText value="#{franjaParametrizacion.franjaSelected.horaFin}"  />
+
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Actualizar" action="#{franjaParametrizacion.actualizar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="actualizar"
+                                                     async="true" />
+
+                                    <p:commandButton value="Cancelar" action="#{franjaParametrizacion.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk" id="cancelar"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+
+                    </div>
+                </p:panel>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

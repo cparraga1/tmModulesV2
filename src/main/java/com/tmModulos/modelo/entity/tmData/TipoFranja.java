@@ -95,4 +95,6 @@ public class TipoFranja {
     public void setIntervalosProgramacions(Set<IntervalosProgramacion> intervalosProgramacions) {
         this.intervalosProgramacions = intervalosProgramacions;
     }
+
+
 }

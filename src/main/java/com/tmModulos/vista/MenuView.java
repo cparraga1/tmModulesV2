@@ -21,6 +21,16 @@ public class MenuView {
         }
     }
 
+    public void refreshFranjaHoraria () {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/FranjaHorarioParametrizacion.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshServiciosporDia(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
