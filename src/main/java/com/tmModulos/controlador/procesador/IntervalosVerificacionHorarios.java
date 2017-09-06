@@ -1,6 +1,8 @@
 package com.tmModulos.controlador.procesador;
 
+import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Time;
@@ -9,10 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class IntervalosVerificacionHorarios {
+
+
 
     public IntervalosVerificacionHorarios() {
     }
@@ -20,25 +23,27 @@ public class IntervalosVerificacionHorarios {
     public List<String> calcularIntervalos(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB,
                                            Date horaFin, Date horaFinB) {
 
-        return calcularIntervalosUnHorario(expedicionesTemporals);
+        return calcularIntervalosUnHorario(expedicionesTemporals,horaInicio,horaFin,horaInicioB,horaFinB);
 
-//        if( horaInicioB == null ){
-//            return calcularIntervalosUnHorario(expedicionesTemporals);
-//        }else{
-//            return calcularIntervalosDosHorarios(expedicionesTemporals,horaInicio,horaFin,horaInicioB,horaFinB);
-//
-//        }
+
 
     }
 
 
 
-    private List<String> calcularIntervalosUnHorario(List<ExpedicionesTemporal> expedicionesTemporals) {
+    private List<String> calcularIntervalosUnHorario(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio,
+                                                     Date horaFin,Date horaInicioB, Date horaFinB) {
 
         List<String> intervalosExpediciones = new ArrayList<>();
 
         if( expedicionesTemporals.size()>1){
-            List<Long> diferenciaExpediciones  = calcularTiempoDiferencia(expedicionesTemporals);
+            List<Long> diferenciaExpediciones  = new ArrayList<>();
+            if( horaInicioB == null && horaFinB == null ){
+                diferenciaExpediciones  = calcularTiempoDiferencia(expedicionesTemporals);
+            }else{
+                diferenciaExpediciones  = calcularTiempoDiferenciaDosHorarios(expedicionesTemporals,horaInicio,horaFin,horaInicioB,horaFinB);
+            }
+
             intervalosExpediciones = calcularIntervalos(diferenciaExpediciones);
         }else{
 
@@ -50,7 +55,7 @@ public class IntervalosVerificacionHorarios {
     private List<String> calcularIntervalos(List<Long> diferenciaExpediciones) {
         List<String> resultadosIntervalos = new ArrayList<>();
         long minimo = diferenciaExpediciones.get(0);
-        long maximo = diferenciaExpediciones.get(1);
+        long maximo = diferenciaExpediciones.get(0);
         long promedio = 0;
         long sumatoria = 0;
         for (Long tiempo:diferenciaExpediciones ) {
@@ -60,20 +65,14 @@ public class IntervalosVerificacionHorarios {
         }
         promedio = sumatoria / diferenciaExpediciones.size();
 
-        resultadosIntervalos.add(convertLongToTime(promedio));
-        resultadosIntervalos.add(convertLongToTime(minimo));
-        resultadosIntervalos.add(convertLongToTime(maximo));
+        resultadosIntervalos.add(ProcessorUtils.convertLongToTime(promedio));
+        resultadosIntervalos.add(ProcessorUtils.convertLongToTime(minimo));
+        resultadosIntervalos.add(ProcessorUtils.convertLongToTime(maximo));
 
         return resultadosIntervalos;
     }
 
-    private String convertLongToTime(long tiempo) {
-       return  String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tiempo),
-                TimeUnit.MILLISECONDS.toMinutes(tiempo) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(tiempo)),
-                TimeUnit.MILLISECONDS.toSeconds(tiempo) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tiempo)));
 
-
-    }
 
 
     private List<Long> calcularTiempoDiferencia(List<ExpedicionesTemporal> expedicionesTemporals) {
@@ -90,13 +89,30 @@ public class IntervalosVerificacionHorarios {
         return  diferenciaExpediciones;
     }
 
-    private List<String> calcularIntervalosDosHorarios(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaFin, Date horaInicioB, Date horaFinB) {
-        return new ArrayList<>();
+    private List<Long> calcularTiempoDiferenciaDosHorarios(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio,Date horaFin,Date horaInicioB,Date horaFinB) {
+        List<Long> diferenciaExpediciones = new ArrayList<>();
+
+        Date expedicionA = convertirATime(expedicionesTemporals.get(0).getHoraInicio());
+        Date expedicionB;
+        boolean band = true;
+        for(int i=1;i<expedicionesTemporals.size();i++){
+            expedicionB = convertirATime(expedicionesTemporals.get(i).getHoraInicio());
+            if(expedicionB.after(horaInicio) && expedicionB.before(horaFin)){
+                diferenciaExpediciones.add(expedicionB.getTime() - expedicionA.getTime());
+                expedicionA = expedicionB;
+            }else if (band){
+                band = false;
+                expedicionA = expedicionB;
+            }else{
+                diferenciaExpediciones.add(expedicionB.getTime() - expedicionA.getTime());
+                expedicionA = expedicionB;
+            }
+        }
+
+        return  diferenciaExpediciones;
     }
 
-
-
-    private Date convertirATime(String stringCellValue) {
+    public Date convertirATime(String stringCellValue) {
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         if(!stringCellValue.equals("")){
             try {
@@ -107,6 +123,9 @@ public class IntervalosVerificacionHorarios {
             }
         }
 
-        return null;
+        return new Date();
     }
+
+
+
 }

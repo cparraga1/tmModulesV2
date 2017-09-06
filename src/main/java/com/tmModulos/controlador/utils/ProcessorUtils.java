@@ -1,8 +1,14 @@
 package com.tmModulos.controlador.utils;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ProcessorUtils {
@@ -34,5 +40,17 @@ public class ProcessorUtils {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+
+
+
+
+    public static String convertLongToTime(long tiempo) {
+        return  String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tiempo),
+                TimeUnit.MILLISECONDS.toMinutes(tiempo) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(tiempo)),
+                TimeUnit.MILLISECONDS.toSeconds(tiempo) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tiempo)));
+
+
     }
 }
