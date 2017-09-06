@@ -29,7 +29,7 @@ public class VerificacionHorarios {
 
     private List<LogDatos> logDatos;
     private String destination;
-    private Map<String,auxEp> mapaDatos;
+    private List<String> serviciosNoEncontrados;
 
     public final String ERROR_INICIO = "I-";
     public final String ERROR_FIN = "F-";
