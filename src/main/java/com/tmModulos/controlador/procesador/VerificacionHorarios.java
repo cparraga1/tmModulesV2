@@ -30,8 +30,10 @@ public class VerificacionHorarios {
     private String destination;
     private Map<String,auxEp> mapaDatos;
 
-    private final String ERROR_RANGO = "ER-";
-    private final String ERROR_LIMITES = "EL-";
+    public final String ERROR_INICIO = "I-";
+    public final String ERROR_FIN = "F-";
+    public final String ERROR_LIMITE = "L-";
+
 
     @Autowired
     private ProcessorUtils processorUtils;
@@ -113,6 +115,8 @@ public class VerificacionHorarios {
 
                             List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
                                     horaFin,horaFinB,distancia);
+                            
+
 
                             createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
                             createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
@@ -184,11 +188,48 @@ public class VerificacionHorarios {
         }
     }
 
+    private List<String> validarLimites(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB) {
+        List<String> limites = new ArrayList<>();
+        String compHoraInicio = "OK";
+        String compHoraInicioB = "OK";
+        String compHoraFin = "OK";
+        String compHoraFinB = "OK";
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        if(horaInicioB==null && horaFinB==null){
+            if(!horaInicio.equals(convertirATime(expedicionesTemporals.get(0).getHoraInicio()))) compHoraInicio = ERROR_INICIO+""+expedicionesTemporals.get(0).getHoraInicio();
+            if(!horaFin.equals(convertirATime(expedicionesTemporals.get(expedicionesTemporals.size()-1).getHoraInicio()))) compHoraFin = ERROR_FIN+""+expedicionesTemporals.get(expedicionesTemporals.size()-1).getHoraInicio();
+        }else{
+            Date horarioFin = convertirATime(expedicionesTemporals.get(0).getHoraInicio());
+            Date horarioInicioB = null;
 
+            for(int i=0;i<expedicionesTemporals.size();i++){
+                Date exp = convertirATime(expedicionesTemporals.get(i).getHoraInicio());
+                if(exp.after(horaFin)){
+                    horarioInicioB = exp;
+                    break;
+                }else {
+                    horarioFin = exp;
+                }
+            }
 
+            if(!horaInicio.equals(convertirATime(expedicionesTemporals.get(0).getHoraInicio()))) compHoraInicio = ERROR_INICIO+""+expedicionesTemporals.get(0).getHoraInicio();
+            if(!horaFin.equals(horarioFin)) compHoraFin = ERROR_FIN+""+parser.format(horarioFin);
+            if(!horaFinB.equals(convertirATime(expedicionesTemporals.get(expedicionesTemporals.size()-1).getHoraInicio()))) compHoraFinB = ERROR_FIN+""+expedicionesTemporals.get(expedicionesTemporals.size()-1).getHoraInicio();
+            if(horarioInicioB!=null){
+                if(!horaInicioB.equals(horarioInicioB)) compHoraInicioB = ERROR_INICIO+""+parser.format(horarioInicioB);
+            }else {
+                compHoraInicioB = ERROR_INICIO+""+parser.format(horaInicioB);
+            }
+        }
 
+        limites.add(compHoraInicio);
+        limites.add(compHoraFin);
+        limites.add(compHoraInicioB);
+        limites.add(compHoraFinB);
 
+        return limites;
 
+    }
 
 
     private String getStringCellValue(Row row,int number) {
@@ -255,28 +296,19 @@ public class VerificacionHorarios {
         String compHoraFin2="OK";
         String compHoraDis="OK";
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        boolean hayExpInicio = false;
-        boolean hayExpFin = false;
-        boolean hayExpInicioB = false;
-        boolean hayExpFinB = false;
         for(ExpedicionesTemporal temporal: expedicionesTemporals){
             Date expInicio = convertirATime(temporal.getHoraInicio());
             Double km = Double.parseDouble(temporal.getKm().replaceAll("\\,","."))*1000;
 
-            if(expInicio.equals(horaInicio)) hayExpInicio = true;
-            if(expInicio.equals(horaFin)) hayExpFin = true;
-            if(expInicio.equals(horaInicioB)) hayExpInicioB = true;
-            if(expInicio.equals(horaFinB)) hayExpFinB = true;
-
             if( horaInicioB== null && horaFinB == null){
                 if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
                 }else{
-                    compHoraIni = ERROR_RANGO+""+parser.format(expInicio);
+                    compHoraIni = ERROR_LIMITE+""+parser.format(expInicio);
                 }
 
                 if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
                 }else{
-                    compHoraFin = ERROR_RANGO+""+parser.format(expInicio);
+                    compHoraFin = ERROR_LIMITE+""+parser.format(expInicio);
                 }
             }else{
                 if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
@@ -286,13 +318,13 @@ public class VerificacionHorarios {
                     if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
 
                     }else{
-                        compHoraIni2 = ERROR_RANGO+""+parser.format(expInicio);
+                        compHoraIni2 = ERROR_LIMITE+""+parser.format(expInicio);
                     }
 
                     if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
 
                     }else{
-                        compHoraFin2 = ERROR_RANGO+""+parser.format(expInicio);
+                        compHoraFin2 = ERROR_LIMITE+""+parser.format(expInicio);
                     }
                 }
 
@@ -306,10 +338,13 @@ public class VerificacionHorarios {
             }
         }
 
-        if(!hayExpInicio) compHoraIni = ERROR_LIMITES+""+parser.format(horaInicio);
-        if(!hayExpFin) compHoraFin = ERROR_LIMITES+""+parser.format(horaFin);
-        if(!hayExpInicioB && horaInicioB!= null) compHoraIni2 = ERROR_LIMITES+""+parser.format(horaInicio);
-        if(!hayExpFinB && horaFinB != null) compHoraFin2 = ERROR_LIMITES+""+parser.format(horaFin);
+        List<String> resultadosLimites = validarLimites(expedicionesTemporals,horaInicio,horaInicioB,
+                horaFin,horaFinB);
+
+        if(compHoraIni.equals("OK")) compHoraIni = resultadosLimites.get(0);
+        if(compHoraFin.equals("OK")) compHoraFin = resultadosLimites.get(1);
+        if(compHoraIni2.equals("OK")) compHoraIni2 = resultadosLimites.get(2);
+        if(compHoraFin2.equals("OK")) compHoraFin2 = resultadosLimites.get(3);
 
         comparaciones.add(compHoraIni);
         comparaciones.add(compHoraFin);
