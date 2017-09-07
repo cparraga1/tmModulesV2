@@ -92,7 +92,8 @@ public class IntervalosVerificacionHorarios {
 
         if(franjas.size()>0){
             for(TempPos horario: tempHorarios){
-                Time exp =  horario.getInstante();
+
+                Date exp =  processorUtils.convertirATime(horario.getInstante().toString());
                 if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
                 }else if(estaEnelRango(exp,"Pico AM")){

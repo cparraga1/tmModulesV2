@@ -94,8 +94,8 @@ public class TempPosDao {
         criteria.add(Restrictions.eq("punto", punto));
         criteria.add(Restrictions.eq("ruta", ruta));
         Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
-
         criteria.add(eventos);
+        criteria.addOrder(Order.asc("instante"));
         return criteria.list();
     }
 
