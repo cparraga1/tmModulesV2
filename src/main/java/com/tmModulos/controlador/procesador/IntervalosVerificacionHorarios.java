@@ -19,6 +19,9 @@ public class IntervalosVerificacionHorarios {
     @Autowired
     private FranjaHorarioService franjaHorarioService;
 
+    @Autowired
+    private ProcessorUtils processorUtils;
+
     private Map<String,DateMap> franjas;
 
     public IntervalosVerificacionHorarios() {
@@ -31,8 +34,8 @@ public class IntervalosVerificacionHorarios {
         for(TipoFranja franja:franjasRecords){
             DateMap  dateMap = new DateMap();
             dateMap.setNombre(franja.getNombre());
-            dateMap.setHoraInicio(convertirATime(franja.getHoraInicio()));
-            dateMap.setHoraFin(convertirATime(franja.getHoraFin()));
+            dateMap.setHoraInicio(processorUtils.convertirATime(franja.getHoraInicio()));
+            dateMap.setHoraFin(processorUtils.convertirATime(franja.getHoraFin()));
             franjas.put(franja.getNombre(),dateMap);
         }
     }
@@ -50,7 +53,7 @@ public class IntervalosVerificacionHorarios {
 
         if(franjas.size()>0){
             for(ExpedicionesTemporal expediciones: expedicionesTemporals){
-                Date exp =  convertirATime(expediciones.getHoraInicio());
+                Date exp =  processorUtils.convertirATime(expediciones.getHoraInicio());
                 if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
                 }else if(estaEnelRango(exp,"Pico AM")){
@@ -164,10 +167,10 @@ public class IntervalosVerificacionHorarios {
     private List<Long> calcularTiempoDiferencia(List<ExpedicionesTemporal> expedicionesTemporals) {
         List<Long> diferenciaExpediciones = new ArrayList<>();
 
-        Date expedicionA = convertirATime(expedicionesTemporals.get(0).getHoraInicio());
+        Date expedicionA = processorUtils.convertirATime(expedicionesTemporals.get(0).getHoraInicio());
         Date expedicionB;
         for(int i=1;i<expedicionesTemporals.size();i++){
-            expedicionB = convertirATime(expedicionesTemporals.get(i).getHoraInicio());
+            expedicionB = processorUtils.convertirATime(expedicionesTemporals.get(i).getHoraInicio());
             diferenciaExpediciones.add(expedicionB.getTime() - expedicionA.getTime());
             expedicionA = expedicionB;
         }
@@ -178,11 +181,11 @@ public class IntervalosVerificacionHorarios {
     private List<Long> calcularTiempoDiferenciaDosHorarios(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio,Date horaFin,Date horaInicioB,Date horaFinB) {
         List<Long> diferenciaExpediciones = new ArrayList<>();
 
-        Date expedicionA = convertirATime(expedicionesTemporals.get(0).getHoraInicio());
+        Date expedicionA = processorUtils.convertirATime(expedicionesTemporals.get(0).getHoraInicio());
         Date expedicionB;
         boolean band = true;
         for(int i=1;i<expedicionesTemporals.size();i++){
-            expedicionB = convertirATime(expedicionesTemporals.get(i).getHoraInicio());
+            expedicionB = processorUtils.convertirATime(expedicionesTemporals.get(i).getHoraInicio());
             if(expedicionB.after(horaInicio) && expedicionB.before(horaFin)){
                 diferenciaExpediciones.add(expedicionB.getTime() - expedicionA.getTime());
                 expedicionA = expedicionB;
@@ -198,19 +201,7 @@ public class IntervalosVerificacionHorarios {
         return  diferenciaExpediciones;
     }
 
-    public Date convertirATime(String stringCellValue) {
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        if(!stringCellValue.equals("")){
-            try {
-                Date date = parser.parse(stringCellValue);
-                return date;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
 
-        return new Date();
-    }
 
     public FranjaHorarioService getFranjaHorarioService() {
         return franjaHorarioService;

@@ -42,7 +42,33 @@ public class ProcessorUtils {
         }
     }
 
+    public Date convertirATime(String stringCellValue) {
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        if(!stringCellValue.equals("")){
+            try {
+                Date date = parser.parse(stringCellValue);
+                return date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
+        return null;
+    }
+
+
+    public  String getStringCellValue(Row row, int number) {
+        Cell cell = row.getCell(number);
+        switch (cell.getCellType()){
+            case Cell.CELL_TYPE_BLANK:
+                return "";
+            case Cell.CELL_TYPE_NUMERIC:
+                return ""+cell.getNumericCellValue();
+            case Cell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+        }
+        return "";
+    }
 
 
 
