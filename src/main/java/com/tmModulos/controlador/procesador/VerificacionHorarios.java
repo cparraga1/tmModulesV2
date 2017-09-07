@@ -6,21 +6,12 @@ import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,6 +32,12 @@ public class VerificacionHorarios {
     @Autowired
     private IntervalosVerificacionHorarios intervalosVeri;
 
+    private CellStyle cellStyle;
+    private CellStyle generalStyle;
+    private Font font;
+    private Date intervaloMinimo;
+    private Date intervaloMaximo;
+
     public VerificacionHorarios() {}
 
     public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia) {
@@ -48,9 +45,11 @@ public class VerificacionHorarios {
         destination=PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
+        intervaloMinimo = processorUtils.convertirATime("00:01:00");
+        intervaloMaximo = processorUtils.convertirATime("00:07:00");
 
         if(tipoValidacion.equals("Pre")){
-
+            veriPreHorarios.deleteEquivalencias();
             veriPreHorarios.addEquivalenciasFromFile(destination);
             System.out.println("Guarde en Base de Datos");
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
@@ -71,6 +70,12 @@ public class VerificacionHorarios {
             FileInputStream fileInputStream = new FileInputStream(file);
             HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
             HSSFSheet worksheet = workbook.getSheetAt(0);
+
+            cellStyle = workbook.createCellStyle();
+            generalStyle = workbook.createCellStyle();
+            addGeneralStyle(cellStyle);
+            addGeneralStyle(generalStyle);
+            font = workbook.createFont();
 
 
             Iterator<Row> rowIterator = worksheet.iterator();
@@ -113,6 +118,13 @@ public class VerificacionHorarios {
         }
     }
 
+    private void addGeneralStyle(CellStyle style) {
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+    }
+
     private void verificacionPostHorario(Row row, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
         String id = row.getCell(ComparadorHorarioIndex.iD).getStringCellValue();
         String[] valores = id.split("-");
@@ -153,21 +165,21 @@ public class VerificacionHorarios {
 
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalos(expedicionesTemporals,horaInicio,horaInicioB,
                     horaFin,horaFinB);
-            createCellResultados(row, intervalosExpediciones.get(0),ComparadorHorarioIndex.INT_PROMEDIO_INI);
-            createCellResultados(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
-            createCellResultados(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
-            createCellResultados(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
-            createCellResultados(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
-            createCellResultados(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
-            createCellResultados(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
-            createCellResultados(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
-            createCellResultados(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
-            createCellResultados(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
-            createCellResultados(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
-            createCellResultados(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
-            createCellResultados(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
-            createCellResultados(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
-            createCellResultados(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(0),ComparadorHorarioIndex.INT_PROMEDIO_INI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
+            createCellResultadosIntervalos(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
 
         }else{
             registrosNoEncontrados(row,id);
@@ -234,6 +246,34 @@ public class VerificacionHorarios {
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
         resultadoHoraIni.setCellValue(valor);
+        if(!valor.equals("OK")){
+            font.setColor(IndexedColors.RED.getIndex());
+            cellStyle.setFont(font);
+            resultadoHoraIni.setCellStyle(cellStyle);
+        }else{
+            resultadoHoraIni.setCellStyle(generalStyle);
+        }
+
+    }
+
+    private void createCellResultadosIntervalos(Row row, String valor,int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
+        resultadoHoraIni.setCellValue(valor);
+
+        if(!valor.equals("N/A")){
+            Date tiempoIntervalo = processorUtils.convertirATime(valor);
+            if(tiempoIntervalo.before(intervaloMinimo) || tiempoIntervalo.after(intervaloMaximo)){
+                font.setColor(IndexedColors.RED.getIndex());
+                cellStyle.setFont(font);
+                resultadoHoraIni.setCellStyle(cellStyle);
+            }else{
+                resultadoHoraIni.setCellStyle(generalStyle);
+            }
+        }else{
+            resultadoHoraIni.setCellStyle(generalStyle);
+        }
 
 
     }
