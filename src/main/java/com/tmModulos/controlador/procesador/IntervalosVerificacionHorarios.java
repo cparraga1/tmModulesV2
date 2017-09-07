@@ -51,17 +51,13 @@ public class IntervalosVerificacionHorarios {
         if(franjas.size()>0){
             for(ExpedicionesTemporal expediciones: expedicionesTemporals){
                 Date exp =  convertirATime(expediciones.getHoraInicio());
-                if(exp.after(franjas.get("Inicio").getHoraInicio()) &&
-                        exp.before(franjas.get("Inicio").getHoraFin())){
+                if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
-                }else if(exp.after(franjas.get("Pico AM").getHoraInicio()) &&
-                        exp.before(franjas.get("Pico AM").getHoraFin())){
+                }else if(estaEnelRango(exp,"Pico AM")){
                     tiemposFranjaPicoAM.add(exp.getTime());
-                }else if(exp.after(franjas.get("Valle").getHoraInicio()) &&
-                        exp.before(franjas.get("Valle").getHoraFin())){
+                }else if(estaEnelRango(exp,"Valle")){
                     tiemposFranjaValle.add(exp.getTime());
-                }else if(exp.after(franjas.get("Pico PM").getHoraInicio()) &&
-                        exp.before(franjas.get("Pico PM").getHoraFin())){
+                }else if(estaEnelRango(exp,"Pico PM")){
                     tiemposFranjaPicoPM.add(exp.getTime());
                 }else{
                     tiemposFranjaCierre.add(exp.getTime());
@@ -77,6 +73,15 @@ public class IntervalosVerificacionHorarios {
        // return calcularIntervalosUnHorario(expedicionesTemporals,horaInicio,horaFin,horaInicioB,horaFinB);
         return intervalosResultado;
 
+    }
+
+    private boolean estaEnelRango(Date exp,String nombreFranja) {
+        if(exp.after(franjas.get(nombreFranja).getHoraInicio()) || exp.equals(franjas.get(nombreFranja).getHoraInicio())){
+            if(exp.before(franjas.get(nombreFranja).getHoraFin()) || exp.equals(franjas.get(nombreFranja).getHoraFin())){
+                return  true;
+            }
+        }
+        return false;
     }
 
     private List<String> calcularValorIntervalosPorFranja(List<String> intervalosResultado, List<Long> tiemposFranjaInicio) {
