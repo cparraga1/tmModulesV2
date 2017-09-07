@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
 import java.util.zip.ZipOutputStream;
 
 @ManagedBean(name="VerHorario")
@@ -29,19 +30,24 @@ public class VerificaHorarioView implements Serializable {
 
     private boolean visibleDescarga;
 
+    private String boxIntervaloMin;
+    private String boxIntervaloMax;
+
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
 
     @PostConstruct
     public void init(){
         visibleDescarga = false;
+        boxIntervaloMin = "00:01:00";
+        boxIntervaloMax = "00:07:00";
     }
 
 
     public void upload() {
             if(file!=null){
                 try {
-                    verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia);
+                    verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax);
                     messagesView.info("Verificación Terminada","");
                     visibleDescarga = true;
                 } catch (IOException e) {
@@ -145,6 +151,22 @@ public class VerificaHorarioView implements Serializable {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public String getBoxIntervaloMin() {
+        return boxIntervaloMin;
+    }
+
+    public void setBoxIntervaloMin(String boxIntervaloMin) {
+        this.boxIntervaloMin = boxIntervaloMin;
+    }
+
+    public String getBoxIntervaloMax() {
+        return boxIntervaloMax;
+    }
+
+    public void setBoxIntervaloMax(String boxIntervaloMax) {
+        this.boxIntervaloMax = boxIntervaloMax;
     }
 }
 

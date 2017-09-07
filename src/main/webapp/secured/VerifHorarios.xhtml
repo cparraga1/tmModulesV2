@@ -5,7 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pe="http://primefaces.org/ui/extensions"
 >
 <h:body>
 
@@ -28,6 +28,10 @@
                             <f:selectItem itemLabel="Pre" itemValue="Pre" />
                             <f:selectItem itemLabel="Pos" itemValue="Pos" />
                         </p:selectOneMenu>
+                        <p:outputLabel  value="Intervalo Minimo" />
+                        <p:inputText value="#{VerHorario.boxIntervaloMin}"/>
+                        <p:outputLabel  value="Intervalo Maximo" />
+                        <p:inputText value="#{VerHorario.boxIntervaloMax}"/>
                         <p:outputLabel value="Archivo Verificación:" />
                         <p:fileUpload value="#{VerHorario.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 

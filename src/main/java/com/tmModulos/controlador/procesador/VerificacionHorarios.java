@@ -37,16 +37,18 @@ public class VerificacionHorarios {
     private Font font;
     private Date intervaloMinimo;
     private Date intervaloMaximo;
+    private Date boxIntervaloMin;
+    private Date boxIntervaloMax;
 
     public VerificacionHorarios() {}
 
-    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia) {
+    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max) {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
-        intervaloMinimo = processorUtils.convertirATime("00:01:00");
-        intervaloMaximo = processorUtils.convertirATime("00:07:00");
+        intervaloMinimo = processorUtils.convertirATime(min);
+        intervaloMaximo = processorUtils.convertirATime(max);
 
         if(tipoValidacion.equals("Pre")){
             veriPreHorarios.deleteEquivalencias();
@@ -411,7 +413,19 @@ public class VerificacionHorarios {
         return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
     }
 
+    public Date getBoxIntervaloMin() {
+        return boxIntervaloMin;
+    }
 
+    public void setBoxIntervaloMin(Date boxIntervaloMin) {
+        this.boxIntervaloMin = boxIntervaloMin;
+    }
 
+    public Date getBoxIntervaloMax() {
+        return boxIntervaloMax;
+    }
 
+    public void setBoxIntervaloMax(Date boxIntervaloMax) {
+        this.boxIntervaloMax = boxIntervaloMax;
+    }
 }
