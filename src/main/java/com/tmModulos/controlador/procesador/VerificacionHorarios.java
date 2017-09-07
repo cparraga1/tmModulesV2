@@ -37,8 +37,6 @@ public class VerificacionHorarios {
     private Font font;
     private Date intervaloMinimo;
     private Date intervaloMaximo;
-    private Date boxIntervaloMin;
-    private Date boxIntervaloMax;
 
     public VerificacionHorarios() {}
 
@@ -140,15 +138,33 @@ public class VerificacionHorarios {
             List< String> validacion = validarHorarioPost(tempHorarios,horaInicio,horaInicioB,
                     horaFin,horaFinB,distancia);
 
-            createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
-            createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
-            createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
-            createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
-            createCellResultados(row, "N/A",ComparadorHorarioIndex.RES_DISTANCIA);
+            incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), "N/A");
+
+            List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPos(tempHorarios,horaInicio,horaInicioB,
+                    horaFin,horaFinB);
+            incluirResultadosIntervalos(row, intervalosExpediciones);
 
         }else{
             registrosNoEncontrados(row,id);
         }
+    }
+
+    private void incluirResultadosIntervalos(Row row, List<String> intervalosExpediciones) {
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(0), ComparadorHorarioIndex.INT_PROMEDIO_INI);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
     }
 
     private void verificacionPreHorario(Row row, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
@@ -159,42 +175,28 @@ public class VerificacionHorarios {
             List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
                     horaFin,horaFinB,distancia);
 
-            createCellResultados(row, validacion.get(0),ComparadorHorarioIndex.RES_HORA_INI);
-            createCellResultados(row, validacion.get(1),ComparadorHorarioIndex.RES_HORA_FIN);
-            createCellResultados(row, validacion.get(2),ComparadorHorarioIndex.RES_HORA_INI_2);
-            createCellResultados(row, validacion.get(3),ComparadorHorarioIndex.RES_HORA_FIN_2);
-            createCellResultados(row, validacion.get(4),ComparadorHorarioIndex.RES_DISTANCIA);
+            incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), validacion.get(4));
 
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalos(expedicionesTemporals,horaInicio,horaInicioB,
                     horaFin,horaFinB);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(0),ComparadorHorarioIndex.INT_PROMEDIO_INI);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
-            createCellResultadosIntervalos(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
+            incluirResultadosIntervalos(row, intervalosExpediciones);
 
         }else{
             registrosNoEncontrados(row,id);
         }
     }
 
+    private void incluirResultadosValidacionHorario(Row row, String valor, String valor2, String valor3, String valor4, String valor5) {
+        createCellResultados(row, valor, ComparadorHorarioIndex.RES_HORA_INI);
+        createCellResultados(row, valor2, ComparadorHorarioIndex.RES_HORA_FIN);
+        createCellResultados(row, valor3, ComparadorHorarioIndex.RES_HORA_INI_2);
+        createCellResultados(row, valor4, ComparadorHorarioIndex.RES_HORA_FIN_2);
+        createCellResultados(row, valor5, ComparadorHorarioIndex.RES_DISTANCIA);
+    }
+
     private void registrosNoEncontrados(Row row,String id) {
         String info = "N/A";
-        createCellResultados(row, info, ComparadorHorarioIndex.RES_HORA_INI);
-        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN);
-        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_INI_2);
-        createCellResultados(row, info,ComparadorHorarioIndex.RES_HORA_FIN_2);
-        createCellResultados(row, info,ComparadorHorarioIndex.RES_DISTANCIA);
+        incluirResultadosValidacionHorario(row, info, info, info, info, info);
     }
 
     private List<String> validarLimites(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB) {
@@ -366,12 +368,12 @@ public class VerificacionHorarios {
             if( horaInicioB== null && horaFinB == null){
                 if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
                 }else{
-                    compHoraIni = parser.format(expInicio);
+                    compHoraIni = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
                 }
 
                 if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
                 }else{
-                    compHoraFin = parser.format(expInicio);
+                    compHoraFin = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
                 }
             }else{
                 if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
@@ -381,13 +383,13 @@ public class VerificacionHorarios {
                     if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
 
                     }else{
-                        compHoraIni2 = parser.format(expInicio);
+                        compHoraIni2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
                     }
 
                     if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
 
                     }else{
-                        compHoraFin2 = parser.format(expInicio);
+                        compHoraFin2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
                     }
                 }
 
@@ -411,21 +413,5 @@ public class VerificacionHorarios {
             return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosFestivo.xls";
         }
         return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
-    }
-
-    public Date getBoxIntervaloMin() {
-        return boxIntervaloMin;
-    }
-
-    public void setBoxIntervaloMin(Date boxIntervaloMin) {
-        this.boxIntervaloMin = boxIntervaloMin;
-    }
-
-    public Date getBoxIntervaloMax() {
-        return boxIntervaloMax;
-    }
-
-    public void setBoxIntervaloMax(Date boxIntervaloMax) {
-        this.boxIntervaloMax = boxIntervaloMax;
     }
 }
