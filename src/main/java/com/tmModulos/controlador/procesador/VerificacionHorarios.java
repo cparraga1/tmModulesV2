@@ -79,6 +79,7 @@ public class VerificacionHorarios {
 
             Iterator<Row> rowIterator = worksheet.iterator();
             Row r =rowIterator.next();
+            rowIterator.next();
             while (rowIterator.hasNext()) {
 
                 Row row = rowIterator.next();
@@ -105,9 +106,21 @@ public class VerificacionHorarios {
 
                             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalos(expedicionesTemporals,horaInicio,horaInicioB,
                                     horaFin,horaFinB);
-                            createCellResultados(row, intervalosExpediciones.get(0),ComparadorHorarioIndex.INT_PROMEDIO);
-                            createCellResultados(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO);
-                            createCellResultados(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO);
+                            createCellResultados(row, intervalosExpediciones.get(0),ComparadorHorarioIndex.INT_PROMEDIO_INI);
+                            createCellResultados(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
+                            createCellResultados(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
+                            createCellResultados(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
+                            createCellResultados(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
+                            createCellResultados(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
+                            createCellResultados(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
+                            createCellResultados(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
+                            createCellResultados(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
+                            createCellResultados(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
+                            createCellResultados(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
+                            createCellResultados(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
+                            createCellResultados(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
+                            createCellResultados(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
+                            createCellResultados(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
 
                         }else{
                             registrosNoEncontrados(row,id);
