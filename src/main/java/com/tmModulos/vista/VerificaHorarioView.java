@@ -52,6 +52,10 @@ public class VerificaHorarioView implements Serializable {
                     visibleDescarga = true;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    messagesView.error(e.getMessage(),"");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    messagesView.error(e.getMessage(),"");
                 }
             }
     }

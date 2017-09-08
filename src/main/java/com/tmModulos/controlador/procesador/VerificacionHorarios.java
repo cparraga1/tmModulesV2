@@ -40,13 +40,13 @@ public class VerificacionHorarios {
 
     public VerificacionHorarios() {}
 
-    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max) {
+    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max) throws Exception {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
-        intervaloMinimo = processorUtils.convertirATime(min);
-        intervaloMaximo = processorUtils.convertirATime(max);
+
+        getIntervalosComparacion(min, max);
 
         if(tipoValidacion.equals("Pre")){
             veriPreHorarios.deleteEquivalencias();
@@ -56,6 +56,7 @@ public class VerificacionHorarios {
             veriPreHorarios.deleteEquivalencias();
 
         } else{
+            veriPreHorarios.deleteTablaHorario();
             veriPreHorarios.addTablaHorarioFromFile(destination);
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
             veriPreHorarios.deleteTablaHorario();
@@ -63,6 +64,17 @@ public class VerificacionHorarios {
         }
 
         return logDatos;
+    }
+
+    private void getIntervalosComparacion(String min, String max) throws Exception {
+            intervaloMinimo = processorUtils.convertirATime(min);
+            intervaloMaximo = processorUtils.convertirATime(max);
+            if(intervaloMinimo== null || intervaloMaximo == null){
+                throw new Exception("Formato de Tiempo Invalido");
+            }
+
+
+
     }
 
     private void compareDataExcel(String file,String tipo) {
@@ -91,6 +103,7 @@ public class VerificacionHorarios {
                     Date horaFin = processorUtils.convertirATime(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
                     Date horaFinB = processorUtils.convertirATime(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
                     int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
+                    intervalosVeri.cargarFranjas();
                     if(tipo.equals("Pre")){
                         verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia);
                     }else{

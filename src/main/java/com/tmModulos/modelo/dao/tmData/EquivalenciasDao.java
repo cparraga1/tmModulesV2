@@ -57,7 +57,7 @@ public class EquivalenciasDao {
     }
 
 
-    public void addEquivalenciasFromFile(String filename){
+    public void addEquivalenciasFromFile(String filename) throws Exception {
         SessionFactory factory = getSessionFactory();
         Session session = factory.getCurrentSession();
         SessionImplementor sessImpl = (SessionImplementor) session;
@@ -69,11 +69,11 @@ public class EquivalenciasDao {
             FileReader fileReader = new FileReader(filename);
             copyManager.copyIn("COPY temp_expediciones (evento,tipo,hora_inicio,punto_inicio,hora_fin,punto_fin,dur,bus,identificador,km,inferido,noo,frec,ser_bus,des_dur,des_frec) from  STDIN DELIMITER ';' CSV HEADER encoding 'windows-1251'", fileReader );
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 

@@ -53,16 +53,26 @@ public class VeriPreHorarios {
      return equivalenciasDao.getEquivalenciasByData(linea,sublinea,puntoI,puntoF);
     }
 
-    public void addEquivalenciasFromFile(String filename){
-        equivalenciasDao.addEquivalenciasFromFile(filename);
+    public void addEquivalenciasFromFile(String filename) throws Exception {
+        try{
+            equivalenciasDao.addEquivalenciasFromFile(filename);
+        }catch (Exception e){
+            throw new Exception("Archivo con Informacion no esperada");
+        }
+
     }
 
     public void deleteEquivalencias(){
         equivalenciasDao.deleteEquivalencias();
     }
 
-    public void addTablaHorarioFromFile(String filename){
-        tempHorarioDao.addTablaHorarioFromFile(filename);
+    public void addTablaHorarioFromFile(String filename) throws Exception {
+
+        try{
+            tempHorarioDao.addTablaHorarioFromFile(filename);
+        }catch (Exception e){
+            throw new Exception("Archivo con Informacion no esperada");
+        }
     }
 
     public void addTablaHorarioTMFromFile(String filename){

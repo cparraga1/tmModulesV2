@@ -44,7 +44,7 @@ public class IntervalosVerificacionHorarios {
 
     public List<String> calcularIntervalos(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB,
                                            Date horaFin, Date horaFinB) {
-        cargarFranjas();
+
         List<String> intervalosResultado = new ArrayList<>();
         List<Long> tiemposFranjaInicio = new ArrayList<>();
         List<Long> tiemposFranjaPicoAM = new ArrayList<>();
