@@ -6,10 +6,11 @@ import com.tmModulos.modelo.entity.tmData.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Service("UsuariosService")
-public class UsuarioServicios {
+public class UsuarioServicios implements Serializable{
 
     @Autowired
     public UsuarioDao usuarioDao;
