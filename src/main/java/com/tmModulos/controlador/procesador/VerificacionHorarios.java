@@ -256,6 +256,49 @@ public class VerificacionHorarios {
     }
 
 
+    private List<String> validarLimitesPos(List<TempPos> tempPos, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB) {
+        List<String> limites = new ArrayList<>();
+        String compHoraInicio = "OK";
+        String compHoraInicioB = "OK";
+        String compHoraFin = "OK";
+        String compHoraFinB = "OK";
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        if(horaInicioB==null && horaFinB==null){
+            if(!horaInicio.equals(processorUtils.convertirATime(tempPos.get(0).getInstante().toString()))) compHoraInicio = ErrorMessage.ERROR_INICIO+""+tempPos.get(0).getInstante().toString();
+            if(!horaFin.equals(processorUtils.convertirATime(tempPos.get(tempPos.size()-1).getInstante().toString()))) compHoraFin = ErrorMessage.ERROR_FIN+""+tempPos.get(tempPos.size()-1).getInstante().toString();
+        }else{
+            Date horarioFin = processorUtils.convertirATime(tempPos.get(0).getInstante().toString());
+            Date horarioInicioB = null;
+
+            for(int i=0;i<tempPos.size();i++){
+                Date exp = processorUtils.convertirATime(tempPos.get(i).getInstante().toString());
+                if(exp.after(horaFin)){
+                    horarioInicioB = exp;
+                    break;
+                }else {
+                    horarioFin = exp;
+                }
+            }
+
+            if(!horaInicio.equals(processorUtils.convertirATime(tempPos.get(0).getInstante().toString()))) compHoraInicio = ErrorMessage.ERROR_INICIO+""+tempPos.get(0).getInstante().toString();
+            if(!horaFin.equals(horarioFin)) compHoraFin = ErrorMessage.ERROR_FIN+""+parser.format(horarioFin);
+            if(!horaFinB.equals(processorUtils.convertirATime(tempPos.get(tempPos.size()-1).getInstante().toString()))) compHoraFinB = ErrorMessage.ERROR_FIN+""+tempPos.get(tempPos.size()-1).getInstante().toString();
+            if(horarioInicioB!=null){
+                if(!horaInicioB.equals(horarioInicioB)) compHoraInicioB = ErrorMessage.ERROR_INICIO+""+parser.format(horarioInicioB);
+            }else {
+                compHoraInicioB = ErrorMessage.ERROR_INICIO+""+parser.format(horaInicioB);
+            }
+        }
+
+        limites.add(compHoraInicio);
+        limites.add(compHoraFin);
+        limites.add(compHoraInicioB);
+        limites.add(compHoraFinB);
+
+        return limites;
+
+    }
+
 
 
     private void createCellResultados(Row row, String valor,int num) {
@@ -408,6 +451,20 @@ public class VerificacionHorarios {
 
             }
         }
+
+        comparaciones.add(compHoraIni);
+        comparaciones.add(compHoraFin);
+        comparaciones.add(compHoraIni2);
+        comparaciones.add(compHoraFin2);
+        comparaciones.add(compHoraDis);
+
+        List<String> resultadosLimites = validarLimitesPos(tempHorarios,horaInicio,horaInicioB,
+                horaFin,horaFinB);
+
+        if(compHoraIni.equals("OK")) compHoraIni = resultadosLimites.get(0);
+        if(compHoraFin.equals("OK")) compHoraFin = resultadosLimites.get(1);
+        if(compHoraIni2.equals("OK")) compHoraIni2 = resultadosLimites.get(2);
+        if(compHoraFin2.equals("OK")) compHoraFin2 = resultadosLimites.get(3);
 
         comparaciones.add(compHoraIni);
         comparaciones.add(compHoraFin);
