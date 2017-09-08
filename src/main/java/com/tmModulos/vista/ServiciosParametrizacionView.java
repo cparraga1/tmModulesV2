@@ -2,6 +2,7 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.ServicioService;
+import com.tmModulos.controlador.utils.TipoHorario;
 import com.tmModulos.modelo.entity.tmData.*;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean(name="serviciosP")
@@ -33,6 +36,11 @@ public class ServiciosParametrizacionView {
     private List<String> tipoServicio;
 
     private List<Horario> horarioPorServicio;
+    private List<TipoHorario> tipoHorarios;
+    private Horario nuevoHorario;
+    private Horario selectedHorario;
+    private Date horaInicioNuevoHorario;
+    private Date horaFinNuevoHorario;
 
     private String console;
 
@@ -44,6 +52,7 @@ public class ServiciosParametrizacionView {
     @PostConstruct
     public void init() {
         serviciosRecords= servicioService.getServicioAll();
+        tipoHorarios = obtenerTipoHorarios();
         horarioPorServicio = new ArrayList<>();
         tipologias = new ArrayList<>();
         tipologias.add("ARTICULADO");
@@ -53,6 +62,15 @@ public class ServiciosParametrizacionView {
         tipoServicio.add("1");
         tipoServicio.add("1-1");
         updateTipoDias();
+    }
+
+    private List<TipoHorario> obtenerTipoHorarios() {
+
+        tipoHorarios = new ArrayList<TipoHorario>();
+        tipoHorarios.add(new TipoHorario("Para Usuario","U"));
+        tipoHorarios.add(new TipoHorario("Para Programacion","P"));
+
+        return tipoHorarios;
     }
 
     private void updateTipoDias() {
@@ -152,8 +170,24 @@ public class ServiciosParametrizacionView {
 
     }
 
-    public void nuevoHorario(){
+    public void crearNuevoHorario(){
+        nuevoHorario = new Horario();
+    }
 
+    public void crearHorarioServicio(){
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
+        nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
+        nuevoHorario.setServicio(selectedServicio);
+        servicioService.addHorarios(nuevoHorario);
+        horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
+
+    }
+
+    public void cancelarHorarioServicio(){
+            nuevoHorario = new Horario();
+            horaInicioNuevoHorario = null;
+            horaFinNuevoHorario = null;
     }
 
     private List<Horario> obtenerHorariosPorServicioSeleccionado() {
@@ -261,5 +295,45 @@ public class ServiciosParametrizacionView {
 
     public void setHorarioPorServicio(List<Horario> horarioPorServicio) {
         this.horarioPorServicio = horarioPorServicio;
+    }
+
+    public Horario getNuevoHorario() {
+        return nuevoHorario;
+    }
+
+    public void setNuevoHorario(Horario nuevoHorario) {
+        this.nuevoHorario = nuevoHorario;
+    }
+
+    public Horario getSelectedHorario() {
+        return selectedHorario;
+    }
+
+    public void setSelectedHorario(Horario selectedHorario) {
+        this.selectedHorario = selectedHorario;
+    }
+
+    public Date getHoraInicioNuevoHorario() {
+        return horaInicioNuevoHorario;
+    }
+
+    public void setHoraInicioNuevoHorario(Date horaInicioNuevoHorario) {
+        this.horaInicioNuevoHorario = horaInicioNuevoHorario;
+    }
+
+    public Date getHoraFinNuevoHorario() {
+        return horaFinNuevoHorario;
+    }
+
+    public void setHoraFinNuevoHorario(Date horaFinNuevoHorario) {
+        this.horaFinNuevoHorario = horaFinNuevoHorario;
+    }
+
+    public List<TipoHorario> getTipoHorarios() {
+        return tipoHorarios;
+    }
+
+    public void setTipoHorarios(List<TipoHorario> tipoHorarios) {
+        this.tipoHorarios = tipoHorarios;
     }
 }

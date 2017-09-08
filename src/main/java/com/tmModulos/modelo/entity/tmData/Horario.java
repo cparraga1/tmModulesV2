@@ -8,8 +8,8 @@ public class Horario {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="Horarios2Generator")
-    @SequenceGenerator(name="Horarios2Generator", sequenceName = "Horario_id_seq",allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="HorarioServicioGenerator")
+    @SequenceGenerator(name="HorarioServicioGenerator", sequenceName = "horario_id_seq",allocationSize=1)
     @Column(name = "id")
     private long id;
 

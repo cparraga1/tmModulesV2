@@ -200,4 +200,9 @@ public class ServicioService {
         return horarioDao.getHorariosByServicio(servicio);
     }
 
+    @Transactional(readOnly = false)
+    public void addHorarios(Horario horariosServicio) {
+        horarioDao.addHorarios(horariosServicio);
+    }
+
 }
