@@ -84,6 +84,12 @@
                                 </p:commandButton>
                             </p:column>
 
+                            <p:column style="width:32px;text-align: center">
+                                <p:commandButton action="#{serviciosP.verDetalleFranjaHorario}" icon="ui-icon-calendar" title="View">
+                                    <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
+                                </p:commandButton>
+                            </p:column>
+
                             <p:column style="width:32px;text-align: center" exportable="false">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
@@ -110,6 +116,7 @@
                                              value="No"
                                              oncomplete="PF('groupDeleteConfirm').hide()"/>
                         </p:confirmDialog>
+
 
                         <p:dialog header="Servicio Informacion" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:outputPanel id="carDetail" style="text-align:center;">

@@ -32,6 +32,9 @@ public class ServicioService {
     @Autowired
     TipoDiaDao tipoDiaDao;
 
+    @Autowired
+    HorarioDao horarioDao;
+
 
     @Transactional(readOnly = false)
     public void addTipologia(Tipologia tipologia) {
@@ -191,6 +194,10 @@ public class ServicioService {
 
     public List<ServicioTipoDia> getServiciosByServicio(Servicio servicio){
         return servicioTipoDiaDao.getServiciosByServicio(servicio);
+    }
+
+    public List<Horario> getHorariosByServicio(Servicio servicio){
+        return horarioDao.getHorariosByServicio(servicio);
     }
 
 }

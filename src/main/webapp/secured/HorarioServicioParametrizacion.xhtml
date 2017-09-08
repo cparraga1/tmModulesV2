@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+
+        <ui:define name="content">
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="basic" header="Horario por Servicio" style="margin-bottom:20px" visible="true">
+                    <div style="margin-top:20px">
+                        <h3>#{serviciosP.selectedServicio.nombreEspecial}</h3>
+                        <div style="height: 10px"></div>
+                        <p:panelGrid columns="4">
+                            <p:commandButton actionListener="#{serviciosP.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
+
+                        </p:panelGrid>
+                        <div style="height: 8px"></div>
+
+                        <p:dataTable id="horario" var="hor" value="#{serviciosP.horarioPorServicio}" widgetVar="HorarioTable"
+                                     emptyMessage="No hay registros relacionados a la busqueda" editable="true">
+
+                            <p:column headerText="Tipo Horario" sortBy="#{hor.tipoHorario}"
+                                      style="width: 70px">
+                                <h:outputText value="#{hor.tipoHorario}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column headerText="Hora Inicio" sortBy="#{hor.horaInicio}"
+                                      style="width: 70px">
+                                <h:outputText value="#{hor.horaInicio}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column headerText="Hora Fin" sortBy="#{hor.horaFin}"
+                                      style="width: 70px">
+                                <h:outputText value="#{hor.horaFin}" style="width: 75px" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                    </div>
+                </p:panel>
+
+
+
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>

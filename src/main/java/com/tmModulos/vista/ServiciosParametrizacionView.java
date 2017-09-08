@@ -9,7 +9,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class ServiciosParametrizacionView {
     private List<String> selectedtipoDia;
     private List<String> tipoServicio;
 
+    private List<Horario> horarioPorServicio;
+
     private String console;
 
     private boolean tipoDiaVisible;
@@ -40,7 +44,7 @@ public class ServiciosParametrizacionView {
     @PostConstruct
     public void init() {
         serviciosRecords= servicioService.getServicioAll();
-
+        horarioPorServicio = new ArrayList<>();
         tipologias = new ArrayList<>();
         tipologias.add("ARTICULADO");
         tipologias.add("BIARTICULADO");
@@ -130,6 +134,33 @@ public class ServiciosParametrizacionView {
         nuevoServicio.setIdentificador(identificador);
         servicioService.addServicio(nuevoServicio);
         serviciosRecords= servicioService.getServicioAll();
+    }
+
+    public void verDetalleFranjaHorario(){
+        horarioPorServicio = obtenerHorariosPorServicioSeleccionado();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/HorarioServicioParametrizacion.xhtml");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void atras(){
+
+    }
+
+    public void nuevoHorario(){
+
+    }
+
+    private List<Horario> obtenerHorariosPorServicioSeleccionado() {
+
+        if(selectedServicio!= null) return servicioService.getHorariosByServicio(selectedServicio);
+
+        return new ArrayList<Horario>();
     }
 
     public void cancelar(){
@@ -222,5 +253,13 @@ public class ServiciosParametrizacionView {
 
     public void setAvailableItems(List<String> availableItems) {
         this.availableItems = availableItems;
+    }
+
+    public List<Horario> getHorarioPorServicio() {
+        return horarioPorServicio;
+    }
+
+    public void setHorarioPorServicio(List<Horario> horarioPorServicio) {
+        this.horarioPorServicio = horarioPorServicio;
     }
 }
