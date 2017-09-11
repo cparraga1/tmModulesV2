@@ -31,6 +31,11 @@ public class Horario {
     private Servicio servicio;
 
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_dia", nullable = false)
+    private TipoDia tipoDia;
+
+
 
     public Horario() {
     }
@@ -82,5 +87,14 @@ public class Horario {
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
     }
+
+    public TipoDia getTipoDia() {
+        return tipoDia;
+    }
+
+    public void setTipoDia(TipoDia tipoDia) {
+        this.tipoDia = tipoDia;
+    }
+
 
 }

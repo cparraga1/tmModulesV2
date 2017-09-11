@@ -32,6 +32,9 @@ public class TipoDia {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoDia")
     private Set<GisCarga> gisCarga = new HashSet<GisCarga>(0);
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoDia")
+    private Set<Horario> horario = new HashSet<Horario>(0);
+
     public long getId() {
         return id;
     }
@@ -78,5 +81,13 @@ public class TipoDia {
 
     public void setGisCarga(Set<GisCarga> gisCarga) {
         this.gisCarga = gisCarga;
+    }
+
+    public Set<Horario> getHorario() {
+        return horario;
+    }
+
+    public void setHorario(Set<Horario> horario) {
+        this.horario = horario;
     }
 }
