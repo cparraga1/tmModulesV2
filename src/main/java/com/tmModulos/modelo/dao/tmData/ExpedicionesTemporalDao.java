@@ -5,13 +5,13 @@ import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
 import com.tmModulos.modelo.entity.tmData.MatrizTemporal;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -55,4 +55,22 @@ public class ExpedicionesTemporalDao {
         criteria.addOrder(Order.asc("horaInicio"));
         return criteria.list();
     }
+
+    public List<String> getExpedicionesNoReferenciadas(List<String> serviciosEncontrados){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(ExpedicionesTemporal.class);
+        criteria.add(Restrictions.not(Restrictions.in("identificador",serviciosEncontrados)));
+        criteria.setProjection(Projections.projectionList().add(Projections.groupProperty("identificador")));
+        return criteria.list();
+    }
+
+//    private SimpleExpression getRestrictionList(List<String> serviciosEncontrados) {
+//        List<Criterion> notIn = new ArrayList<Criterion>();
+//        if(serviciosEncontrados.size()>0){
+//
+//            for (String id:serviciosEncontrados) {
+//                notIn.add(Restrictions.("identificador",id));
+//            }
+//        }
+//        return Restrictions.or(notIn);
+//    }
 }

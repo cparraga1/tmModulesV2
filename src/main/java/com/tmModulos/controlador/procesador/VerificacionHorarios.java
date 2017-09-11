@@ -3,9 +3,7 @@ package com.tmModulos.controlador.procesador;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ public class VerificacionHorarios {
 
     private List<LogDatos> logDatos;
     private String destination;
-    private List<String> serviciosNoEncontrados;
+    private List<String> serviciosEncontrados;
 
 
     @Autowired
@@ -45,6 +43,7 @@ public class VerificacionHorarios {
         destination=PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
+        serviciosEncontrados = new ArrayList<String>();
 
         getIntervalosComparacion(min, max);
 
@@ -53,6 +52,7 @@ public class VerificacionHorarios {
             veriPreHorarios.addEquivalenciasFromFile(destination);
             System.out.println("Guarde en Base de Datos");
             compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
+
             veriPreHorarios.deleteEquivalencias();
 
         } else{
@@ -64,6 +64,25 @@ public class VerificacionHorarios {
         }
 
         return logDatos;
+    }
+
+    private void validarServiciosEncontrados(String tipoValidacion,HSSFSheet workSheet) {
+        if( serviciosEncontrados.size() > 0 ){
+            List<String> serviciosNoEncontrados = new ArrayList<>();
+            int lastRow = workSheet.getLastRowNum()+2;
+            createCellResultados(workSheet.createRow(lastRow ),"Servicios No Encontrados",ComparadorHorarioIndex.iD_PRE);
+            lastRow ++ ;
+            if(tipoValidacion.equals("Pre")){
+                serviciosNoEncontrados = veriPreHorarios.getExpedicionesNoReferenciadas(serviciosEncontrados);
+            }else{
+                serviciosNoEncontrados = veriPreHorarios.getTempPosNoReferenciadas(serviciosEncontrados);
+            }
+
+            for(int i=0; i< serviciosNoEncontrados.size(); i++){
+                Row row = workSheet.createRow(lastRow + i);
+                createCellResultados(row,serviciosNoEncontrados.get(i),ComparadorHorarioIndex.iD_PRE);
+            }
+        }
     }
 
     private void getIntervalosComparacion(String min, String max) throws Exception {
@@ -115,6 +134,7 @@ public class VerificacionHorarios {
 /*COPY temp_expediciones (hora_inicio,punto_inicio,hora_fin,punto_fin,identificador,km)
  FROM 'C:/temp/prueba.csv'  DELIMITER ';' CSV HEADER;*/
             }
+            validarServiciosEncontrados(tipo,worksheet);
             fileInputStream.close();
             FileOutputStream outFile =new FileOutputStream(new File(PathFiles.PATH_FOR_FILES+"\\update.xls"));
             workbook.write(outFile);
@@ -147,7 +167,7 @@ public class VerificacionHorarios {
         int punto = Integer.parseInt(valores[3]);
         List<TempPos> tempHorarios = veriPreHorarios.getTablaHorarioByData(linea,sublinea,ruta,punto);
         if(tempHorarios.size()>0){
-
+            serviciosEncontrados.add(id);
             List< String> validacion = validarHorarioPost(tempHorarios,horaInicio,horaInicioB,
                     horaFin,horaFinB,distancia);
 
@@ -184,7 +204,7 @@ public class VerificacionHorarios {
         String id = row.getCell(ComparadorHorarioIndex.iD_PRE).getStringCellValue();
         List<ExpedicionesTemporal> expedicionesTemporals = veriPreHorarios.getExpedicionesTemporalsData(id);
         if(expedicionesTemporals.size()>0){
-
+            serviciosEncontrados.add(expedicionesTemporals.get(0).getIdentificador());
             List< String> validacion = validarHorario(expedicionesTemporals,horaInicio,horaInicioB,
                     horaFin,horaFinB,distancia);
 
@@ -322,7 +342,7 @@ public class VerificacionHorarios {
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
         resultadoHoraIni.setCellValue(valor);
 
-        if(!valor.equals("N/A")){
+        if(!valor.equals("")){
             Date tiempoIntervalo = processorUtils.convertirATime(valor);
             if(tiempoIntervalo.before(intervaloMinimo) || tiempoIntervalo.after(intervaloMaximo)){
                 font.setColor(IndexedColors.RED.getIndex());

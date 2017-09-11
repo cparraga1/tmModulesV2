@@ -87,6 +87,15 @@ public class TempPosDao {
         getSessionFactory().getCurrentSession().createSQLQuery("DELETE FROM temp_pos").executeUpdate();
     }
 
+    public List<String> getTempPosNoReferenciadas(List<String> serviciosEncontrados){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempPos.class);
+        criteria.add(Restrictions.not(Restrictions.in("identificador",serviciosEncontrados)));
+        Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
+        criteria.add(eventos);
+        criteria.setProjection(Projections.projectionList().add(Projections.groupProperty("identificador")));
+        return criteria.list();
+    }
+
     public List<TempPos> getTablaHorarioByData(int linea, int sublinea,int ruta, int punto){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempPos.class);
         criteria.add(Restrictions.eq("linea", linea));

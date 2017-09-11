@@ -136,9 +136,9 @@ public class IntervalosVerificacionHorarios {
             intervalosResultado.add(resultadosFranja.get(1));
             intervalosResultado.add(resultadosFranja.get(2));
         }else{
-            intervalosResultado.add("N/A");
-            intervalosResultado.add("N/A");
-            intervalosResultado.add("N/A");
+            intervalosResultado.add("");
+            intervalosResultado.add("");
+            intervalosResultado.add("");
         }
 
         return intervalosResultado;

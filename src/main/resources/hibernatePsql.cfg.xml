@@ -62,6 +62,7 @@
         <mapping class="com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.HoraFranja"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.TempPos"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.VerificacionTipoDia"/>
 
     </session-factory>
 </hibernate-configuration>

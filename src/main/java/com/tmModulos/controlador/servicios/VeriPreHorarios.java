@@ -48,6 +48,10 @@ public class VeriPreHorarios {
         return expedicionesTemporalDao.getExpedicionesTemporalsData(id);
     }
 
+    public List<String> getExpedicionesNoReferenciadas(List<String> serviciosEncontrados){
+        return expedicionesTemporalDao.getExpedicionesNoReferenciadas(serviciosEncontrados);
+    }
+
 
     public List<Equivalencias> getEquivalenciasByData(int linea, int sublinea, int puntoI, int puntoF){
      return equivalenciasDao.getEquivalenciasByData(linea,sublinea,puntoI,puntoF);
@@ -85,6 +89,10 @@ public class VeriPreHorarios {
 
     public List<TempPos> getTablaHorarioByData(int linea, int sublinea, int ruta, int punto){
         return tempHorarioDao.getTablaHorarioByData(linea,sublinea,ruta,punto);
+    }
+
+    public List<String> getTempPosNoReferenciadas(List<String> serviciosEncontrados){
+        return tempHorarioDao.getTempPosNoReferenciadas(serviciosEncontrados);
     }
 
     public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
