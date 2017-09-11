@@ -3,6 +3,7 @@ package com.tmModulos.vista;
 import com.tmModulos.controlador.procesador.DataProcesorImpl;
 import com.tmModulos.controlador.procesador.VerificacionHorarios;
 import com.tmModulos.controlador.utils.PathFiles;
+import com.tmModulos.modelo.entity.tmData.VerificacionTipoDia;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Date;
+import java.util.List;
 import java.util.zip.ZipOutputStream;
 
 @ManagedBean(name="VerHorario")
@@ -25,6 +27,7 @@ public class VerificaHorarioView implements Serializable {
     private VerificacionHorarios verificacionHorarios;
 
     private UploadedFile file;
+    private List<VerificacionTipoDia> tipoDiaRecords;
     private String tipoDia;
     private String tipoVerificacion;
 
@@ -41,6 +44,7 @@ public class VerificaHorarioView implements Serializable {
         visibleDescarga = false;
         boxIntervaloMin = "00:01:00";
         boxIntervaloMax = "00:07:00";
+        tipoDiaRecords = verificacionHorarios.getTiposDiasDisponibles();
     }
 
 
@@ -171,6 +175,14 @@ public class VerificaHorarioView implements Serializable {
 
     public void setBoxIntervaloMax(String boxIntervaloMax) {
         this.boxIntervaloMax = boxIntervaloMax;
+    }
+
+    public List<VerificacionTipoDia> getTipoDiaRecords() {
+        return tipoDiaRecords;
+    }
+
+    public void setTipoDiaRecords(List<VerificacionTipoDia> tipoDiaRecords) {
+        this.tipoDiaRecords = tipoDiaRecords;
     }
 }
 

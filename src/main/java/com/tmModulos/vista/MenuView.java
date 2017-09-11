@@ -111,6 +111,16 @@ public class MenuView {
         }
     }
 
+    public void refreshConfVerificacionHorarios(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ParametrizacionVerificacionHorario.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public void refreshBuscarMatrizDistancia(){
