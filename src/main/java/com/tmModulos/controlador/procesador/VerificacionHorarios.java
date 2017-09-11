@@ -1,5 +1,6 @@
 package com.tmModulos.controlador.procesador;
 
+import com.tmModulos.controlador.servicios.ConfVeriHorario;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
@@ -23,6 +24,9 @@ public class VerificacionHorarios {
 
     @Autowired
     private ProcessorUtils processorUtils;
+
+    @Autowired
+    private ConfVeriHorario confVeriHorario;
 
     @Autowired
     private VeriPreHorarios veriPreHorarios;
@@ -96,7 +100,7 @@ public class VerificacionHorarios {
 
     }
 
-    private void compareDataExcel(String file,String tipo) {
+    private void compareDataExcel(String file,String tipo) throws Exception {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
@@ -142,12 +146,12 @@ public class VerificacionHorarios {
             System.out.println("Fin");
         } catch (FileNotFoundException e) {
             logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-            e.printStackTrace();
+            throw new Exception("No existe un archivo de Verificacion para ese Tipo Dia");
         } catch (IOException e) {
             logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -495,13 +499,27 @@ public class VerificacionHorarios {
         return comparaciones;
     }
 
+    public List<VerificacionTipoDia> getTiposDiasDisponibles () {
+        return confVeriHorario.getTipoDiaAll();
+    }
+
 
     private String fileForTipoDia(String tipoDia) {
-        if(tipoDia.equals("SABADO")){
-            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosSabado.xls";
-        }else if (tipoDia.equals("FESTIVO")){
-            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosFestivo.xls";
-        }
-        return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
+
+        return PathFiles.PATH_FOR_FILES+"\\Migracion\\"+tipoDia+".xls";
+//        if(tipoDia.equals("SABADO")){
+//            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosSabado.xls";
+//        }else if (tipoDia.equals("FESTIVO")){
+//            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosFestivo.xls";
+//        }
+//        return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
+    }
+
+    public ConfVeriHorario getConfVeriHorario() {
+        return confVeriHorario;
+    }
+
+    public void setConfVeriHorario(ConfVeriHorario confVeriHorario) {
+        this.confVeriHorario = confVeriHorario;
     }
 }

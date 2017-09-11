@@ -30,6 +30,9 @@ public class Messages {
     public static final String ACCION_MATRIZ_ALMACENADA = "Matriz de distancias Almacenada";
     public static final String ACCION_TABLA_MAESTRA_ALMACENADA = "Tabla Maestra Almacenada";
     public static final String ACCION_GIS_CARGA_ALMACENADA = "GIS de carga Almacenado";
+    public static final String ACCION_TIPO_DIA_ALMACENADA = "Nuevo tipo dia Almacenado";
+    public static final String ACCION_TIPO_DIA_ELIMINADO = "Nuevo tipo dia Eliminado";
+    public static final String ACCION_TIPO_DIA_ACTUALIZADO = "Nuevo tipo dia Actualizado";
     public static final String ACCION_ORDEN_SERVICIOS_ACTUALIZADO = "Orden de los servicios actualizado";
     public static final String ACCION_CALCULO_FALLA = "No es posible generar matriz de distancias para la fecha seleccionada";
 
