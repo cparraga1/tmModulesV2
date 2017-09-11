@@ -205,4 +205,9 @@ public class ServicioService {
         horarioDao.addHorarios(horariosServicio);
     }
 
+    @Transactional(readOnly = false)
+    public void deleteHorarios(Horario horariosServicio) {
+        horarioDao.deleteHorarios(horariosServicio);
+    }
+
 }

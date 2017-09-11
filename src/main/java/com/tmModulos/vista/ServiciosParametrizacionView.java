@@ -167,7 +167,7 @@ public class ServiciosParametrizacionView {
     }
 
     public void atras(){
-
+            verDetalleFranjaHorario();
     }
 
     public void crearNuevoHorario(){
@@ -183,6 +183,14 @@ public class ServiciosParametrizacionView {
         horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
 
     }
+
+    public void eliminarHorario(){
+        if(selectedHorario!= null){
+            servicioService.deleteHorarios(selectedHorario);
+            horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
+        }
+    }
+
 
     public void cancelarHorarioServicio(){
             nuevoHorario = new Horario();

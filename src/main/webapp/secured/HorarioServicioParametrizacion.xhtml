@@ -44,7 +44,32 @@
                                 <h:outputText value="#{hor.horaFin}" style="width: 75px" />
                             </p:column>
 
+                            <p:column style="width:32px;text-align: center" exportable="false">
+                                <p:commandButton id="delete"
+                                                 icon="ui-icon ui-icon-trash"
+                                                 title="GDeleteButton"
+                                                 onclick="PF('groupDeleteConfirm').show()">
+                                    <f:setPropertyActionListener value="#{hor}" target="#{serviciosP.selectedHorario}" />
+                                </p:commandButton>
+
+                            </p:column>
+
                         </p:dataTable>
+
+
+                        <p:confirmDialog message="¿Esta seguro de eliminar este horario?"
+                                         showEffect="fade"
+                                         hideEffect="explode"
+                                         widgetVar="groupDeleteConfirm">
+                            <p:commandButton title="GDelYesButton"
+                                             value="Yes"
+                                             action="#{serviciosP.eliminarHorario}"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"
+                            />
+                            <p:commandButton title="GDelNoButton"
+                                             value="No"
+                                             oncomplete="PF('groupDeleteConfirm').hide()"/>
+                        </p:confirmDialog>
 
                     </div>
                 </p:panel>
@@ -76,6 +101,8 @@
                         </p:panelGrid>
                     </p:outputPanel>
                 </p:dialog>
+
+
 
 
             </h:form>

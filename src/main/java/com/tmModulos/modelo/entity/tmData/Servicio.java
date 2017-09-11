@@ -25,6 +25,9 @@ public class Servicio {
     @Column(name = "seccion")
     private int seccion;
 
+    @Column(name = "sentido")
+    private int sentido;
+
     @Column(name = "config")
     private int config;
 
@@ -217,7 +220,13 @@ public class Servicio {
         this.punto = punto;
     }
 
+    public int getSentido() {
+        return sentido;
+    }
 
+    public void setSentido(int sentido) {
+        this.sentido = sentido;
+    }
 
     public String getEstadoFormato() {
         if(estado){

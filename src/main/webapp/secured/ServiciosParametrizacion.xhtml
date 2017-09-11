@@ -122,47 +122,52 @@
                             <p:outputPanel id="carDetail" style="text-align:center;">
                                 <p:panelGrid  columns="4" rendered="#{not empty serviciosP.selectedServicio}" columnClasses="label,value" >
 
-                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:outputText value="Identificador:"  />
                                     <h:inputText value="#{serviciosP.selectedServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
 
                                     <h:outputText value="Identificador (L-SL-S-PInicio):"  />
                                     <h:inputText value="#{serviciosP.selectedServicio.identificadorGIS}" />
 
-                                    <h:outputText value="Línea:" style="color:black"/>
+                                    <h:outputText value="Línea:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.macro}"  />
 
-                                    <h:outputText value="SubLinea:" style="color:black"/>
+                                    <h:outputText value="SubLinea:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.linea}"  />
 
-                                    <h:outputText value="Ruta:" style="color:black"/>
+                                    <h:outputText value="Ruta:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.seccion}"  />
 
-                                    <h:outputText value="Punto:" style="color:black"/>
+                                    <h:outputText value="Punto:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.punto}"  />
 
+                                    <h:outputText value="Sentido:" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.sentido}"  />
 
-                                    <h:outputText value="Linea Compuesta:" style="color:black"/>
+
+                                    <h:outputText value="Linea Compuesta:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.lineaCompuesta}"  />
 
                                     <h:outputText value="Trayecto:" style="color:black"/>
                                     <h:inputText value="#{serviciosP.selectedServicio.trayecto}"  />
 
-                                    <h:outputText value="Nombre Generico:" style="color:black"/>
+                                    <h:outputText value="Nombre Generico:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.nombreGeneral}"  />
 
-                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:outputText value="Nombre Especifico:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.nombreEspecial}"  />
 
 
-                                    <h:outputText value="Estado:" style="color:black"/>
+
+
+                                    <h:outputText value="Estado:" />
                                     <p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.estado}" disabled="true"/>
 
-                                    <h:outputText value="TipoServicio:" style="color:black"/>
+                                    <h:outputText value="TipoServicio:" />
                                     <h:selectOneMenu value="#{serviciosP.selectedServicio.tipoServicio}" style="width:100%" >
                                         <f:selectItems value="#{serviciosP.tipoServicio}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
                                     </h:selectOneMenu>
 
-                                    <h:outputText value="Tipología:" style="color:black"/>
+                                    <h:outputText value="Tipología:" />
                                     <p:selectOneMenu value="#{serviciosP.console}" style="width:100%" >
                                     <!--<f:selectItems value="#{serviciosP.tipologias}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />-->
                                         <f:selectItem itemLabel="Select One" itemValue="" />
@@ -171,16 +176,6 @@
                                         <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
 
                                     </p:selectOneMenu>
-
-                                    <!--<p:panelGrid columns="6">-->
-                                        <!--<h:outputText value="Habil:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.habil}" />-->
-                                        <!--<h:outputText value="Sabado:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.sabado}" />-->
-                                        <!--<h:outputText value="Festivo:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.festivo}" />-->
-                                    <!--</p:panelGrid>-->
-
 
 
 
@@ -202,33 +197,40 @@
                             <p:outputPanel id="nuevoDialog" style="text-align:center;">
                                 <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoServicio}" columnClasses="label,value">
 
-                                    <h:outputText value="Identificador:" style="color:black" />
+                                    <h:outputText value="Identificador:"  />
                                     <h:inputText value="#{serviciosP.nuevoServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
 
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Identificador (L-SL-S-PInicio):"  />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.identificadorGIS}" />
+
+                                    <h:outputText value="Línea:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="SubLinea:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.linea}"  />
 
-                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:outputText value="Ruta:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.seccion}"  />
 
-                                    <h:outputText value="Punto:" style="color:black"/>
+                                    <h:outputText value="Punto:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.punto}"  />
 
+                                    <h:outputText value="Sentido:" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.sentido}"  />
 
-                                    <h:outputText value="Linea Compuesta:" style="color:black"/>
+
+                                    <h:outputText value="Linea Compuesta:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.lineaCompuesta}"  />
 
                                     <h:outputText value="Trayecto:" style="color:black"/>
                                     <h:inputText value="#{serviciosP.nuevoServicio.trayecto}"  />
 
-                                    <h:outputText value="Nombre Generico:" style="color:black"/>
+                                    <h:outputText value="Nombre Generico:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.nombreGeneral}"  />
 
-                                    <h:outputText value="Nombre Especifico:" style="color:black"/>
+                                    <h:outputText value="Nombre Especifico:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.nombreEspecial}"  />
+
 
 
                                     <h:outputText value="Estado:" style="color:black"/>
