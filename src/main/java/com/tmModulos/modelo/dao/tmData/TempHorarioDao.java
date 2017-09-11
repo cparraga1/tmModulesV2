@@ -49,7 +49,7 @@ public class TempHorarioDao {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
             copyManager.copyIn("COPY temp_horario (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje)\n" +
-                    " FROM STDIN DELIMITER ';' CSV HEADER ", fileReader );
+                    " FROM STDIN DELIMITER ';' CSV HEADER ", fileReader);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
