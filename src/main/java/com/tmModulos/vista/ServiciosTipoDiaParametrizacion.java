@@ -62,6 +62,16 @@ public class ServiciosTipoDiaParametrizacion {
         return true;
     }
 
+    public String concatenarValorServicio(Servicio servicio){
+
+        if(servicio != null ){
+            return servicio.getNombreEspecial() + " S."+servicio.getSentido();
+        }
+
+        return "";
+
+    }
+
 
     public void eliminar(){
         if(selectedServicio!= null){
@@ -78,7 +88,7 @@ public class ServiciosTipoDiaParametrizacion {
 
     public void crear(){
         if(nombreEspecialServicio!=null && nuevoServicio!=null){
-                Servicio servicio = servicioService.getServicioByNombreEspecial(nombreEspecialServicio);
+                Servicio servicio = servicioService.getServicioByIdentificadorGIS(nombreEspecialServicio);
                 nuevoServicio.setServicio(servicio);
                 nuevoServicio.setIdentificador(servicio.getIdentificador());
                 nuevoServicio.setTipoDia(tipoDia);

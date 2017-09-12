@@ -87,4 +87,14 @@ public class ServicioDao {
         }
         return list.get(0);
     }
+
+    public Servicio getServicioByIdentificadorGIS(String identificador){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Servicio.class);
+        criteria.add(Restrictions.eq("identificadorGIS", identificador));
+        List<Servicio> list = criteria.list();
+        if(list.size()<1){
+            return null;
+        }
+        return list.get(0);
+    }
 }

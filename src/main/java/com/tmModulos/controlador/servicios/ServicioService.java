@@ -172,6 +172,10 @@ public class ServicioService {
         return servicioDao.getServicioByNombreEspecial(nombre);
     }
 
+    public Servicio getServicioByIdentificadorGIS(String id){
+        return servicioDao.getServicioByIdentificadorGIS(id);
+    }
+
     @Transactional(readOnly = false)
     public void addServicio(ServicioTipoDia servicio) {
         servicioTipoDiaDao.addServicio(servicio);

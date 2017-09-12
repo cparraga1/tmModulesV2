@@ -73,6 +73,11 @@
                                 <h:outputText value="#{ser.servicio.nombreEspecial}" />
                             </p:column>
 
+                            <p:column filterBy="#{ser.servicio.sentido}" headerText="Sentido"  filterMatchMode="contains" sortBy="#{ser.servicio.sentido}"
+                                      style="width: 120px">
+                                <h:outputText value="#{ser.servicio.sentido}" />
+                            </p:column>
+
                             <p:column filterBy="#{ser.orden}" headerText="Orden"  filterMatchMode="contains" sortBy="#{ser.orden}"
                                       style="width: 120px" >
                                 <h:outputText value="#{ser.orden}"  />
@@ -81,8 +86,9 @@
                             <p:column filterBy="#{ser.tipoDia.nombre}" headerText="Tipo Dia"  filterMatchMode="contains" sortBy="#{ser.tipoDia.nombre}"
                                       style="width: 120px">
                                 <h:outputText value="#{ser.tipoDia.nombre}" />
-
                             </p:column>
+
+
 
                             <p:column style="width:32px;text-align: center" exportable="false">
                                 <p:commandButton id="delete"
@@ -107,7 +113,7 @@
                                     <p:selectOneMenu id="advanced" value="#{serviciosTipoDiaP.nombreEspecialServicio}"  panelStyle="width:180px"
                                                      effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
                                         <f:selectItems value="#{serviciosTipoDiaP.serviciosPrincipalesRecords}" var="servicio"
-                                                       itemLabel="#{servicio.nombreEspecial}" itemValue="#{servicio.nombreEspecial}" />
+                                                       itemLabel="#{serviciosTipoDiaP.concatenarValorServicio(servicio)}" itemValue="#{servicio.identificadorGIS}" />
 
                                         <p:column>
                                             <h:outputText value="#{t}" />

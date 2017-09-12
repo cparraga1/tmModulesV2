@@ -506,13 +506,7 @@ public class VerificacionHorarios {
 
     private String fileForTipoDia(String tipoDia) {
 
-        return PathFiles.PATH_FOR_FILES+"\\Migracion\\"+tipoDia+".xls";
-//        if(tipoDia.equals("SABADO")){
-//            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosSabado.xls";
-//        }else if (tipoDia.equals("FESTIVO")){
-//            return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosFestivo.xls";
-//        }
-//        return PathFiles.PATH_FOR_FILES+"\\Migracion\\resumenServiciosHabil.xls";
+        return PathFiles.PATH_FOR_FILES+"\\Migracion\\VerificaHorario\\"+tipoDia+".xls";
     }
 
     public ConfVeriHorario getConfVeriHorario() {

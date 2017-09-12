@@ -57,6 +57,11 @@
                                 <h:outputText value="#{ser.seccion}"  style="width: 75px"/>
                             </p:column>
 
+                            <p:column filterBy="#{ser.punto}" headerText="Punto Inicio"  filterMatchMode="contains" sortBy="#{ser.punto}"
+                                      style="width:80px">
+                                <h:outputText value="#{ser.punto}" style="width: 90px"/>
+                            </p:column>
+
                             <p:column filterBy="#{ser.nombreGeneral}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{ser.nombreGeneral}"
                                       style="width: 120px">
                                         <h:outputText value="#{ser.nombreGeneral}" />
@@ -73,18 +78,14 @@
                                 <h:outputText value="#{ser.tipologia.nombre}" />
                             </p:column>
 
-                            <p:column filterBy="#{ser.estado}" headerText="Activo"  filterMatchMode="contains" sortBy="#{ser.estado}"
-                                      style="width:80px">
-                                <h:outputText value="#{ser.estado}" style="width: 90px"/>
-                            </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:32px;text-align: center" exportable="false" >
                                 <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center">
+                            <p:column style="width:32px;text-align: center" exportable="false">
                                 <p:commandButton action="#{serviciosP.verDetalleFranjaHorario}" icon="ui-icon-calendar" title="View">
                                     <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
                                 </p:commandButton>
@@ -120,7 +121,7 @@
 
                         <p:dialog header="Servicio Informacion" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:outputPanel id="carDetail" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.selectedServicio}" columnClasses="label,value" >
+                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.selectedServicio}" columnClasses="value" >
 
                                     <h:outputText value="Identificador:"  />
                                     <h:inputText value="#{serviciosP.selectedServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
@@ -195,7 +196,7 @@
 
                         <p:dialog header="Servicio Informacion" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="nuevoDialog" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoServicio}" columnClasses="label,value">
+                                <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoServicio}" columnClasses="value">
 
                                     <h:outputText value="Identificador:"  />
                                     <h:inputText value="#{serviciosP.nuevoServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
