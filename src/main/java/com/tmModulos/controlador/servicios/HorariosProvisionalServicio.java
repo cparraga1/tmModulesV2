@@ -163,4 +163,9 @@ public class HorariosProvisionalServicio {
     public void addTablaHorarioFromFile(String destination) {
         tempHorarioDao.addTablaHorarioFromFile(destination);
     }
+
+    @Transactional(readOnly = false)
+    public void deleteTablaHorarioFromFile() {
+        tempHorarioDao.deleteTablaHorario();
+    }
 }

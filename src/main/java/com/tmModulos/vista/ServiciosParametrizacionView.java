@@ -37,6 +37,8 @@ public class ServiciosParametrizacionView {
 
     private List<Horario> horarioPorServicio;
     private List<TipoHorario> tipoHorarios;
+    private List<TipoDia> tipodias;
+    private String tipoDia;
     private Horario nuevoHorario;
     private Horario selectedHorario;
     private Date horaInicioNuevoHorario;
@@ -52,6 +54,7 @@ public class ServiciosParametrizacionView {
     @PostConstruct
     public void init() {
         serviciosRecords= servicioService.getServicioAll();
+        tipodias = servicioService.getTipoDiaAll();
         tipoHorarios = obtenerTipoHorarios();
         horarioPorServicio = new ArrayList<>();
         tipologias = new ArrayList<>();
@@ -167,7 +170,14 @@ public class ServiciosParametrizacionView {
     }
 
     public void atras(){
-            verDetalleFranjaHorario();
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ServiciosParametrizacion.xhtml");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void crearNuevoHorario(){
@@ -179,15 +189,21 @@ public class ServiciosParametrizacionView {
         nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
         nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
         nuevoHorario.setServicio(selectedServicio);
+        TipoDia tipoDiaObj = servicioService.getTipoDia(tipoDia);
+        nuevoHorario.setTipoDia(tipoDiaObj);
         servicioService.addHorarios(nuevoHorario);
         horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
 
     }
 
+    public void actualizarHorarioServicio(){
+        servicioService.updateHorarios(selectedHorario);
+    }
+
     public void eliminarHorario(){
         if(selectedHorario!= null){
             servicioService.deleteHorarios(selectedHorario);
-            horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
+            verDetalleFranjaHorario();
         }
     }
 
@@ -343,5 +359,21 @@ public class ServiciosParametrizacionView {
 
     public void setTipoHorarios(List<TipoHorario> tipoHorarios) {
         this.tipoHorarios = tipoHorarios;
+    }
+
+    public List<TipoDia> getTipodias() {
+        return tipodias;
+    }
+
+    public void setTipodias(List<TipoDia> tipodias) {
+        this.tipodias = tipodias;
+    }
+
+    public String getTipoDia() {
+        return tipoDia;
+    }
+
+    public void setTipoDia(String tipoDia) {
+        this.tipoDia = tipoDia;
     }
 }

@@ -34,6 +34,11 @@
                                 <h:outputText value="#{hor.tipoHorario}" style="width: 75px" />
                             </p:column>
 
+                            <p:column headerText="Tipo Dia" sortBy="#{hor.tipoDia.nombre}"
+                                      style="width: 70px">
+                                <h:outputText value="#{hor.tipoDia.nombre}" style="width: 75px" />
+                            </p:column>
+
                             <p:column headerText="Hora Inicio" sortBy="#{hor.horaInicio}"
                                       style="width: 70px">
                                 <h:outputText value="#{hor.horaInicio}" style="width: 75px" />
@@ -42,6 +47,12 @@
                             <p:column headerText="Hora Fin" sortBy="#{hor.horaFin}"
                                       style="width: 70px">
                                 <h:outputText value="#{hor.horaFin}" style="width: 75px" />
+                            </p:column>
+
+                            <p:column style="width:32px;text-align: center" exportable="false" >
+                                <p:commandButton update=":form:editarHorario" oncomplete="PF('editarHorario').show()" icon="ui-icon-pencil" title="View">
+                                    <f:setPropertyActionListener value="#{hor}" target="#{serviciosP.selectedHorario}" />
+                                </p:commandButton>
                             </p:column>
 
                             <p:column style="width:32px;text-align: center" exportable="false">
@@ -77,17 +88,23 @@
 
                 <p:dialog header="Nuevo Horario" widgetVar="nuevoHorario" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="nuevoHorario" style="text-align:center;">
-                        <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoHorario}" columnClasses="label,value">
+                        <p:panelGrid  columns="4" rendered="#{not empty serviciosP.nuevoHorario}" columnClasses="value">
 
                             <h:outputText value="Tipo Horario:" style="color:black"/>
                             <h:selectOneMenu value="#{serviciosP.nuevoHorario.tipoHorario}" style="width:100%" >
                                 <f:selectItems value="#{serviciosP.tipoHorarios}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo.acronimo}" />
                             </h:selectOneMenu>
 
+                            <h:outputText value="Tipo Dia:" style="color:black"/>
+                            <h:selectOneMenu value="#{serviciosP.tipoDia}" style="width:100%" >
+                                <f:selectItems value="#{serviciosP.tipodias}" var="tipod" itemLabel="#{tipod.nombre}" itemValue="#{tipod.nombre}" />
+                            </h:selectOneMenu>
+
                             <h:outputText value="Hora Inicio:" style="color:black" />
                             <p:calendar id="time" value="#{serviciosP.horaInicioNuevoHorario}" pattern="HH:mm" timeOnly="true"  />
                             <h:outputText value="Hora Fin:" style="color:black" />
                             <p:calendar id="timeFin" value="#{serviciosP.horaFinNuevoHorario}" pattern="HH:mm" timeOnly="true"  />
+
 
                         </p:panelGrid>
                         <p:panelGrid columns="2">
@@ -97,6 +114,34 @@
 
                             <p:commandButton value="Cancelar" action="#{serviciosP.cancelarHorarioServicio}" ajax="false"
                                              icon="ui-icon ui-icon-disk" id="cancelarsV"
+                                             async="true" />
+                        </p:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+
+                <p:dialog header="Editar Horario" widgetVar="editarHorario" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="editarHorario" style="text-align:center;">
+                        <p:panelGrid  columns="4" rendered="#{not empty serviciosP.selectedHorario}" columnClasses="value">
+
+                            <h:outputText value="Tipo Horario:" />
+                            <h:selectOneMenu value="#{serviciosP.selectedHorario.tipoHorario}" style="width:100%" >
+                                <f:selectItems value="#{serviciosP.tipoHorarios}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo.acronimo}" />
+                            </h:selectOneMenu>
+
+
+                            <h:outputText value="Hora Inicio:" style="color:black" />
+                            <p:inputText  value="#{serviciosP.selectedHorario.horaInicio}" pattern="HH:mm" timeOnly="true"  />
+                            <h:outputText value="Hora Fin:" style="color:black" />
+                            <p:inputText  value="#{serviciosP.selectedHorario.horaFin}" pattern="HH:mm" timeOnly="true"  />
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+                            <p:commandButton value="Actualizar" action="#{serviciosP.actualizarHorarioServicio}" ajax="false"
+                                             icon="ui-icon ui-icon-disk"
+                                             async="true" />
+
+                            <p:commandButton value="Cancelar" action="#{serviciosP.cancelarHorarioServicio}" ajax="false"
+                                             icon="ui-icon ui-icon-disk"
                                              async="true" />
                         </p:panelGrid>
                     </p:outputPanel>

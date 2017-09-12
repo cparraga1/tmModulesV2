@@ -90,4 +90,9 @@ public class TipoDia {
     public void setHorario(Set<Horario> horario) {
         this.horario = horario;
     }
+
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
 }

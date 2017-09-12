@@ -38,6 +38,8 @@ public class TempHorarioDao {
     }
 
 
+
+
     public void addTablaHorarioFromFile(String filename){
         SessionFactory factory = getSessionFactory();
         Session session = factory.getCurrentSession();

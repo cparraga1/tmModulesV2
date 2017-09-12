@@ -45,4 +45,11 @@ public class HorarioDao {
         return criteria.list();
     }
 
+    public List<Horario> getHorariosByServicioAndTipoDio(Servicio servicio,TipoDia tipoDia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Horario.class);
+        criteria.add(Restrictions.eq("servicio", servicio));
+        criteria.add(Restrictions.eq("tipoDia", tipoDia));
+        return criteria.list();
+    }
+
 }

@@ -169,19 +169,19 @@ public class TablaMaestraServicioHilo implements Runnable{
             for(Horario hr: horariosByServicio){
                 if(hr.getTipoHorario().equals("P")){
                     if(hr.getConfig()==1){
-                        horario.setHoraInicioA(hr.getHoraInicio());
-                        horario.setHoraFinA(hr.getHoraFin());
+                        horario.setHoraFinProgA(hr.getHoraInicio());
+                        horario.setHoraFinProgA(hr.getHoraFin());
                     }else if(hr.getConfig() ==2){
-                        horario.setHoraInicioB(hr.getHoraInicio());
-                        horario.setHoraFinB(hr.getHoraFin());
+                        horario.setHoraInicioProgB(hr.getHoraInicio());
+                        horario.setHoraFinProgB(hr.getHoraFin());
                     }
                 }else {
                     if(hr.getConfig()==1){
-                        horario.setHoraInicioC(hr.getHoraInicio());
-                        horario.setHoraFinC(hr.getHoraFin());
+                        horario.setHoraFinUsuarioA(hr.getHoraInicio());
+                        horario.setHoraFinUsuarioA(hr.getHoraFin());
                     }else if(hr.getConfig() ==2){
-                        horario.setHoraInicioD(hr.getHoraInicio());
-                        horario.setHoraFinD(hr.getHoraFin());
+                        horario.setHoraInicioUsuarioB(hr.getHoraInicio());
+                        horario.setHoraFinUsuarioB(hr.getHoraFin());
                     }
                 }
             }

@@ -91,6 +91,7 @@ public class TablaMaestraProcessor {
         processorUtils.copyFile(filename,in,destination);
         destination=destination+filename;
         // Copiar informacion intervalos
+        horariosProvisionalServicio.deleteTablaHorarioFromFile();
         horariosProvisionalServicio.addTablaHorarioFromFile(destination);
 
 
@@ -146,6 +147,7 @@ public class TablaMaestraProcessor {
                             tablaMaestraServicios.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
                             tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
                             tablaMaestraServicios= calcularDistancia(tablaMaestraServicios,nodoInicio,nodoFinal,matriz);
+
                                 //Calcular ciclos
                                 CicloServicio cicloServicio = calcularCiclos(tablaMaestraServicios,arcoTiempoRecords);
                                 tablaMaestraServicios.setCicloServicio(cicloServicio);
@@ -203,6 +205,7 @@ public class TablaMaestraProcessor {
             }
             }
         veriPreHorarios.deleteTablaHorario();
+        horariosProvisionalServicio.deleteTablaHorarioFromFile();
         logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
         return logDatos;
     }
@@ -248,19 +251,19 @@ public class TablaMaestraProcessor {
             for(Horario hr: horariosByServicio){
                 if(hr.getTipoHorario().equals("P")){
                     if(hr.getConfig()==1){
-                        horario.setHoraInicioA(hr.getHoraInicio());
-                        horario.setHoraFinA(hr.getHoraFin());
+                        horario.setHoraInicioProgA(hr.getHoraInicio());
+                        horario.setHoraFinProgA(hr.getHoraFin());
                     }else if(hr.getConfig() ==2){
-                        horario.setHoraInicioB(hr.getHoraInicio());
-                        horario.setHoraFinB(hr.getHoraFin());
+                        horario.setHoraInicioProgB(hr.getHoraInicio());
+                        horario.setHoraFinProgB(hr.getHoraFin());
                     }
                 }else {
                     if(hr.getConfig()==1){
-                        horario.setHoraInicioC(hr.getHoraInicio());
-                        horario.setHoraFinC(hr.getHoraFin());
+                        horario.setHoraInicioUsuarioA(hr.getHoraInicio());
+                        horario.setHoraFinUsuarioA(hr.getHoraFin());
                     }else if(hr.getConfig() ==2){
-                        horario.setHoraInicioD(hr.getHoraInicio());
-                        horario.setHoraFinD(hr.getHoraFin());
+                        horario.setHoraInicioUsuarioB(hr.getHoraInicio());
+                        horario.setHoraFinUsuarioB(hr.getHoraFin());
                     }
                 }
             }
@@ -272,14 +275,14 @@ public class TablaMaestraProcessor {
         List<Horario> horariosByServicio = tablaMaestraService.getHorariosByServicio(servicio);
         HorariosServicio horario = getHorariosServicio(horariosByServicio);
         HorariosServicio oldHorario =  tablaMaestraServicios.getHorariosServicio();
-        oldHorario.setHoraInicioA(horario.getHoraInicioA());
-        oldHorario.setHoraFinA(horario.getHoraFinA());
-        oldHorario.setHoraInicioB(horario.getHoraInicioB());
-        oldHorario.setHoraFinB(horario.getHoraFinB());
-        oldHorario.setHoraInicioC(horario.getHoraInicioC());
-        oldHorario.setHoraFinC(horario.getHoraFinC());
-        oldHorario.setHoraInicioD(horario.getHoraInicioD());
-        oldHorario.setHoraFinD(horario.getHoraFinD());
+        oldHorario.setHoraInicioProgA(horario.getHoraInicioProgA());
+        oldHorario.setHoraFinProgA(horario.getHoraFinProgA());
+        oldHorario.setHoraInicioProgB(horario.getHoraInicioProgB());
+        oldHorario.setHoraFinProgB(horario.getHoraFinProgB());
+        oldHorario.setHoraInicioUsuarioA(horario.getHoraInicioUsuarioA());
+        oldHorario.setHoraFinUsuarioA(horario.getHoraFinUsuarioA());
+        oldHorario.setHoraInicioUsuarioB(horario.getHoraInicioUsuarioB());
+        oldHorario.setHoraFinUsuarioB(horario.getHoraFinUsuarioB());
         tablaMaestraService.updateHorariosServicios(oldHorario);
 
     }
@@ -720,14 +723,14 @@ public class TablaMaestraProcessor {
         nuevaTablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
 
         HorariosServicio horariosServicio = new HorariosServicio();
-        horariosServicio.setHoraInicioA(tablaMaestraServicios.getHorariosServicio().getHoraInicioA());
-        horariosServicio.setHoraFinA(tablaMaestraServicios.getHorariosServicio().getHoraFinA());
-        horariosServicio.setHoraInicioB(tablaMaestraServicios.getHorariosServicio().getHoraInicioB());
-        horariosServicio.setHoraFinB(tablaMaestraServicios.getHorariosServicio().getHoraFinB());
-        horariosServicio.setHoraInicioC(tablaMaestraServicios.getHorariosServicio().getHoraInicioC());
-        horariosServicio.setHoraFinC(tablaMaestraServicios.getHorariosServicio().getHoraFinC());
-        horariosServicio.setHoraInicioD(tablaMaestraServicios.getHorariosServicio().getHoraInicioD());
-        horariosServicio.setHoraFinD(tablaMaestraServicios.getHorariosServicio().getHoraFinD());
+        horariosServicio.setHoraInicioProgA(tablaMaestraServicios.getHorariosServicio().getHoraInicioProgA());
+        horariosServicio.setHoraFinProgA(tablaMaestraServicios.getHorariosServicio().getHoraFinProgA());
+        horariosServicio.setHoraInicioProgB(tablaMaestraServicios.getHorariosServicio().getHoraInicioProgB());
+        horariosServicio.setHoraFinProgB(tablaMaestraServicios.getHorariosServicio().getHoraFinProgB());
+        horariosServicio.setHoraInicioUsuarioA(tablaMaestraServicios.getHorariosServicio().getHoraInicioUsuarioA());
+        horariosServicio.setHoraFinUsuarioA(tablaMaestraServicios.getHorariosServicio().getHoraFinUsuarioA());
+        horariosServicio.setHoraInicioUsuarioB(tablaMaestraServicios.getHorariosServicio().getHoraInicioUsuarioB());
+        horariosServicio.setHoraFinUsuarioB(tablaMaestraServicios.getHorariosServicio().getHoraFinUsuarioB());
         tablaMaestraService.addHorariosServicios(horariosServicio);
         nuevaTablaMaestraServicios.setHorariosServicio(horariosServicio);
 

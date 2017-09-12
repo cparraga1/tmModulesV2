@@ -12,29 +12,29 @@ public class HorariosServicio {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "hora_inicio_a")
-    private String horaInicioA;
-
-    @Column(name = "hora_inicio_b")
-    private String horaInicioB;
-
     @Column(name = "hora_inicio_c")
-    private String horaInicioC;
+    private String horaInicioUsuarioA;
 
     @Column(name = "hora_inicio_d")
-    private String horaInicioD;
+    private String horaInicioUsuarioB;
 
-    @Column(name = "hora_fin_a")
-    private String horaFinA;
+    @Column(name = "hora_inicio_a")
+    private String horaInicioProgA;
 
-    @Column(name = "hora_fin_b")
-    private String horaFinB;
+    @Column(name = "hora_inicio_b")
+    private String horaInicioProgB;
 
     @Column(name = "hora_fin_c")
-    private String horaFinC;
+    private String horaFinUsuarioA;
 
     @Column(name = "hora_fin_d")
-    private String horaFinD;
+    private String horaFinUsuarioB;
+
+    @Column(name = "hora_fin_a")
+    private String horaFinProgA;
+
+    @Column(name = "hora_fin_b")
+    private String horaFinProgB;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "horariosServicio", cascade = CascadeType.REMOVE)
     private TablaMaestraServicios tablaMaestraServicios;
@@ -51,69 +51,6 @@ public class HorariosServicio {
         this.id = id;
     }
 
-    public String getHoraInicioA() {
-        return horaInicioA;
-    }
-
-    public void setHoraInicioA(String horaInicioA) {
-        this.horaInicioA = horaInicioA;
-    }
-
-    public String getHoraInicioB() {
-        return horaInicioB;
-    }
-
-    public void setHoraInicioB(String horaInicioB) {
-        this.horaInicioB = horaInicioB;
-    }
-
-    public String getHoraInicioC() {
-        return horaInicioC;
-    }
-
-    public void setHoraInicioC(String horaInicioC) {
-        this.horaInicioC = horaInicioC;
-    }
-
-    public String getHoraInicioD() {
-        return horaInicioD;
-    }
-
-    public void setHoraInicioD(String horaInicioD) {
-        this.horaInicioD = horaInicioD;
-    }
-
-    public String getHoraFinA() {
-        return horaFinA;
-    }
-
-    public void setHoraFinA(String horaFinA) {
-        this.horaFinA = horaFinA;
-    }
-
-    public String getHoraFinB() {
-        return horaFinB;
-    }
-
-    public void setHoraFinB(String horaFinB) {
-        this.horaFinB = horaFinB;
-    }
-
-    public String getHoraFinC() {
-        return horaFinC;
-    }
-
-    public void setHoraFinC(String horaFinC) {
-        this.horaFinC = horaFinC;
-    }
-
-    public String getHoraFinD() {
-        return horaFinD;
-    }
-
-    public void setHoraFinD(String horaFinD) {
-        this.horaFinD = horaFinD;
-    }
 
     public TablaMaestraServicios getTablaMaestraServicios() {
         return tablaMaestraServicios;
@@ -121,5 +58,69 @@ public class HorariosServicio {
 
     public void setTablaMaestraServicios(TablaMaestraServicios tablaMaestraServicios) {
         this.tablaMaestraServicios = tablaMaestraServicios;
+    }
+
+    public String getHoraInicioUsuarioA() {
+        return horaInicioUsuarioA;
+    }
+
+    public void setHoraInicioUsuarioA(String horaInicioUsuarioA) {
+        this.horaInicioUsuarioA = horaInicioUsuarioA;
+    }
+
+    public String getHoraInicioUsuarioB() {
+        return horaInicioUsuarioB;
+    }
+
+    public void setHoraInicioUsuarioB(String horaInicioUsuarioB) {
+        this.horaInicioUsuarioB = horaInicioUsuarioB;
+    }
+
+    public String getHoraInicioProgA() {
+        return horaInicioProgA;
+    }
+
+    public void setHoraInicioProgA(String horaInicioProgA) {
+        this.horaInicioProgA = horaInicioProgA;
+    }
+
+    public String getHoraInicioProgB() {
+        return horaInicioProgB;
+    }
+
+    public void setHoraInicioProgB(String horaInicioProgB) {
+        this.horaInicioProgB = horaInicioProgB;
+    }
+
+    public String getHoraFinUsuarioA() {
+        return horaFinUsuarioA;
+    }
+
+    public void setHoraFinUsuarioA(String horaFinUsuarioA) {
+        this.horaFinUsuarioA = horaFinUsuarioA;
+    }
+
+    public String getHoraFinUsuarioB() {
+        return horaFinUsuarioB;
+    }
+
+    public void setHoraFinUsuarioB(String horaFinUsuarioB) {
+        this.horaFinUsuarioB = horaFinUsuarioB;
+    }
+
+    public String getHoraFinProgA() {
+        return horaFinProgA;
+    }
+
+    public void setHoraFinProgA(String horaFinProgA) {
+        this.horaFinProgA = horaFinProgA;
+    }
+
+    public String getHoraFinProgB() {
+        return horaFinProgB;
+    }
+
+    public void setHoraFinProgB(String horaFinProgB) {
+        this.horaFinProgB = horaFinProgB;
     }
 }
