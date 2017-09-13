@@ -137,23 +137,23 @@
                                     <p:column filterBy="#{tservicio.estadoFormato}" headerText="Estado" filterStyle="width: 60px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.estadoFormato}" />
 
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioA}" headerText="Inicio" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioA}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinA}" headerText="Fin" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinA}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioB}" headerText="Inicio" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioB}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinB}" headerText="Fin" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinB}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioProgA}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioProgA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinProgA}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinProgA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioProgB}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioProgB}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinProgB}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinProgB}" />
 
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioC}" headerText="Inicio" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioC}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinC}" headerText="Fin" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinC}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioD}" headerText="Inicio" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioD}" />
-                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinD}" headerText="Fin" filterStyle="width: 60px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinD}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioUsuarioA}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioUsuarioA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinUsuarioA}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinUsuarioA}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaInicioUsuarioB}" headerText="Inicio" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioUsuarioB}" />
+                                    <p:column filterBy="#{tservicio.horariosServicio.horaFinUsuarioB}" headerText="Fin" filterStyle="width: 60px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinUsuarioB}" />
 
                                     <p:column filterBy="#{tservicio.cicloServicio.optimoInicio}" headerText="Inicio" filterStyle="width: 80px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoInicio}"
@@ -584,110 +584,110 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioA}" headerText="Inicio"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioA}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioProgA}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioProgA}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioA}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioProgA}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioA}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioProgA}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaFinA}" headerText="Fin"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinA}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinProgA}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinProgA}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaFinA}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinProgA}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinA}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinProgA}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioB}" headerText="Inicio"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioB}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioProgB}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioProgB}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioB}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioProgB}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioB}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioProgB}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaFinB}" headerText="Fin"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinB}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinProgB}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinProgB}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaFinB}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinProgB}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinB}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinProgB}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
 
 
 
-                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioC}" headerText="Inicio"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioC}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioUsuarioA}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioUsuarioA}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioC}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioUsuarioA}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioC}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioUsuarioA}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaFinC}" headerText="Fin"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinC}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinUsuarioA}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinUsuarioA}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaFinC}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinUsuarioA}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinC}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinUsuarioA}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioD}" headerText="Inicio"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioD}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaInicioUsuarioB}" headerText="Inicio"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioUsuarioB}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioD}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaInicioUsuarioB}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioD}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaInicioUsuarioB}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column filterBy="#{tservicio.horariosServicio.horaFinD}" headerText="Fin"  filterStyle="width: 80px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinD}"
+                            <p:column filterBy="#{tservicio.horariosServicio.horaFinUsuarioB}" headerText="Fin"  filterStyle="width: 80px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinUsuarioB}"
                                       style="width: 100px">
 
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.horariosServicio.horaFinD}" style="width: 104px"/>
+                                        <h:outputText value="#{tservicio.horariosServicio.horaFinUsuarioB}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinD}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.horariosServicio.horaFinUsuarioB}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
