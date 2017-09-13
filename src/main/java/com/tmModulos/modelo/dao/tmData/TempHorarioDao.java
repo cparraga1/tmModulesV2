@@ -71,9 +71,9 @@ public class TempHorarioDao {
         if(intervalos!=null){
             if(intervalos.size()>0){
 //                for (IntervalosProgramacion intervalo: intervalos ) {
-                    or.add(Restrictions.between("instante",intervalos.get(0).getInicio(),intervalos.get(intervalos.size()-1).getFin()));
+//                    or.add(Restrictions.between("instante",intervalos.get(0).getInicio(),intervalos.get(intervalos.size()-1).getFin()));
 //                }
-                criteria.add(or);
+                criteria.add(Restrictions.between("instante",intervalos.get(0).getInicio(),intervalos.get(intervalos.size()-1).getFin()));
                 criteria.add(Restrictions.eq("linea", servicio.getMacro()));
                 criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
                 criteria.add(Restrictions.eq("punto", servicio.getPunto()));

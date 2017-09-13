@@ -4,6 +4,7 @@ import com.tmModulos.controlador.servicios.HorariosProvisionalServicio;
 import com.tmModulos.controlador.servicios.TablaHorarioService;
 import com.tmModulos.controlador.servicios.TipoDiaService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
+import com.tmModulos.controlador.utils.FranjaCuartos;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.dao.tmData.HoraFranjaDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
@@ -176,7 +177,7 @@ public class IntervalosProcessor {
 
 
     public List<Intervalos> calcularValorIntervaloPorFranja(TablaMaestraServicios tablaMaestraServicios,ServicioTipoDia servicio,GisIntervalos gisIntervalos) {
-        precalcularIntervalosProgramacion();
+
 
         //Buscar Menor hora de la franja
 //        HoraFranja horaFranjaInicio = encontrarHoraFranjaMenor(this.horaFranjaInicio, servicio.getServicio().getIdentificador());
@@ -195,10 +196,10 @@ public class IntervalosProcessor {
 //        intervalosLista.add(getMenorInstante(servicio.getServicio().getIdentificador(),horaFranjaInicio,horaFranjaPicoAM,
 //                horaFranjaValle,horaFranjaPicoPM,horaFranjaCierre,servicio,tablaMaestraServicios));
 
-        List<Double> diffFranjaInicio = extraerDiferenciaTiempos(tiemposFranjaInciio);
-        List<Double> diffFranjaAM = extraerDiferenciaTiempos(tiemposFranjaAM);
-        List<Double> diffFranjaIValle = extraerDiferenciaTiempos(tiemposFranjaValle);
-        List<Double> diffFranjaPM = extraerDiferenciaTiempos(tiemposFranjaPM);
+        List<Double> diffFranjaInicio = extraerValorTiempoPorCuartos(tiemposFranjaInciio,intervalosFranjaInicio);
+        List<Double> diffFranjaAM = extraerValorTiempoPorCuartos(tiemposFranjaAM,intervalosFranjaPicoAM);
+        List<Double> diffFranjaIValle = extraerValorTiempoPorCuartos(tiemposFranjaValle,intervalosFranjaValle);
+        List<Double> diffFranjaPM = extraerValorTiempoPorCuartos(tiemposFranjaPM,intervalosFranjaPicoPM);
         List<Double> diffFranjaCierre = extraerDiferenciaTiempos(tiemposFranjaCierre);
 
        intervalosLista.add( calcularPromedio(servicio,diffFranjaInicio,diffFranjaAM,diffFranjaIValle,diffFranjaCierre,diffFranjaPM,tablaMaestraServicios));
@@ -427,6 +428,41 @@ return intervalosLista;
 
         return diferenciaTiempos;
     }
+
+    // CLAVE PARA BUSES HORA
+    public List<Double> extraerValorTiempoPorCuartos(List<TempHorario> tiempos, List<IntervalosProgramacion> intervalos){
+        List<FranjaCuartos> franjaCuartos = new ArrayList<>();
+        List<Double> diferenciaTiempos = new ArrayList<>();
+        for (int i=0; i< intervalos.size(); i++ ) {
+                FranjaCuartos franja = new FranjaCuartos();
+                franja.setIntervalosProgramacion(intervalos.get(i));
+                franja.setTablaHorario(encontrarValoresFranja(intervalos.get(i),tiempos));
+                if(!franja.getTablaHorario().isEmpty()){
+                    franja.setDiffTiempos(extraerDiferenciaTiempos(franja.getTablaHorario()));
+                    franjaCuartos.add(franja);
+                }
+
+        }
+
+        // AQUI PROMEDIO O NUMERO MENOR
+        for( FranjaCuartos franjaCua : franjaCuartos){
+            diferenciaTiempos.add(minimo(franjaCua.getDiffTiempos()));
+        }
+
+        return diferenciaTiempos;
+    }
+
+    private List<TempHorario> encontrarValoresFranja(IntervalosProgramacion intervalosProgramacion, List<TempHorario> tiempos) {
+        List<TempHorario> horarioPorFranja = new ArrayList<>();
+        for (int i=0; i< tiempos.size(); i++ ) {
+            if(tiempos.get(i).getInstante().after(intervalosProgramacion.getInicio()) &&
+                    tiempos.get(i).getInstante().before(intervalosProgramacion.getFin())){
+                    horarioPorFranja.add(tiempos.get(i));
+            }
+        }
+        return horarioPorFranja;
+    }
+
 
     private double transformarAFormatoTiempo(double tiempoTotal) {
         Time time = getTime((int) tiempoTotal);

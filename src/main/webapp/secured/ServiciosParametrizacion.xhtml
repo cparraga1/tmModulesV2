@@ -30,9 +30,10 @@
                         </p:panelGrid>
                         <div style="height: 10px"></div>
                         <p:dataTable id="matriz" var="ser" value="#{serviciosP.serviciosRecords}" widgetVar="MatrizTable"
-                                     emptyMessage="No hay registros relacionados a la busqueda" filteredValue="#{serviciosP.filteredServiciosRecords}"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     filteredValue="#{serviciosP.filteredServiciosRecords}"
                                      scrollable="true" scrollWidth="100%" scrollHeight="510"
-                                     editable="true">
+                                     editable="true" style="table-layout: fixed; width: auto">
 
 
                             <f:facet name="header" style="background-color: #4cae4c" exportable="false">
@@ -43,55 +44,55 @@
                             </f:facet>
 
                             <p:column filterBy="#{ser.macro}" headerText="Línea"  filterMatchMode="contains" sortBy="#{ser.macro}"
-                                      style="width: 70px">
-                                <h:outputText value="#{ser.macro}" style="width: 75px" />
+                                      >
+                                <h:outputText value="#{ser.macro}"  />
                             </p:column>
 
                             <p:column filterBy="#{ser.linea}" headerText="SubLínea"  filterMatchMode="contains" sortBy="#{ser.linea}"
-                                      style="width: 70px">
-                                <h:outputText value="#{ser.linea}" style="width: 75px" />
+                                     >
+                                <h:outputText value="#{ser.linea}"  />
                             </p:column>
 
                             <p:column filterBy="#{ser.seccion}" headerText="Ruta"  filterMatchMode="contains" sortBy="#{ser.seccion}"
-                                      style="width: 70px">
-                                <h:outputText value="#{ser.seccion}"  style="width: 75px"/>
+                                      >
+                                <h:outputText value="#{ser.seccion}"  />
                             </p:column>
 
                             <p:column filterBy="#{ser.punto}" headerText="Punto Inicio"  filterMatchMode="contains" sortBy="#{ser.punto}"
-                                      style="width:80px">
-                                <h:outputText value="#{ser.punto}" style="width: 90px"/>
+                                      >
+                                <h:outputText value="#{ser.punto}" />
                             </p:column>
 
                             <p:column filterBy="#{ser.nombreGeneral}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{ser.nombreGeneral}"
-                                      style="width: 120px">
+                                     >
                                         <h:outputText value="#{ser.nombreGeneral}" />
 
                             </p:column>
 
                             <p:column filterBy="#{ser.nombreEspecial}" headerText="Especial"  filterMatchMode="contains" sortBy="#{ser.nombreEspecial}"
-                                      style="width: 120px">
+                                      >
                                         <h:outputText value="#{ser.nombreEspecial}" />
                             </p:column>
 
                             <p:column filterBy="#{ser.tipologia.nombre}" headerText="Tipología"  filterMatchMode="contains" sortBy="#{ser.tipologia.nombre}"
-                                      style="width: 120px">
+                                      >
                                 <h:outputText value="#{ser.tipologia.nombre}" />
                             </p:column>
 
 
-                            <p:column style="width:32px;text-align: center" exportable="false" >
+                            <p:column style="width:55px;text-align: center" exportable="false" >
                                 <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:55px;text-align: center" exportable="false">
                                 <p:commandButton action="#{serviciosP.verDetalleFranjaHorario}" icon="ui-icon-calendar" title="View">
                                     <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:55px;text-align: center" exportable="false">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"
