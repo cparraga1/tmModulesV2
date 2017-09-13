@@ -51,7 +51,8 @@
                                      scrollable="true" scrollWidth="100%" scrollHeight="510"
                                      editable="true"
                                      rowKey="#{ser.id}"
-                                     selection="#{serviciosTipoDiaP.selectedServicio}" >
+                                     selection="#{serviciosTipoDiaP.selectedServicio}"
+                                     style="table-layout: fixed; width: auto">
 
 
                             <f:facet name="header" style="background-color: #4cae4c">
@@ -61,36 +62,36 @@
                                 </p:outputPanel>
                             </f:facet>
 
-                            <p:column selectionMode="single" style="width:16px;text-align:center" exportable="false"/>
+                            <p:column selectionMode="single" style="width:35px;text-align:center" exportable="false"/>
 
                             <p:column filterBy="#{ser.identificador}" headerText="Id"  filterMatchMode="contains" sortBy="#{ser.identificador}"
-                                      style="width: 120px">
+                                      >
                                 <h:outputText value="#{ser.identificador}" />
                             </p:column>
 
                             <p:column filterBy="#{ser.servicio.nombreEspecial}" headerText="Nombre"  filterMatchMode="contains" sortBy="#{ser.servicio.nombreEspecial}"
-                                      style="width: 120px">
+                                      >
                                 <h:outputText value="#{ser.servicio.nombreEspecial}" />
                             </p:column>
 
                             <p:column filterBy="#{ser.servicio.sentido}" headerText="Sentido"  filterMatchMode="contains" sortBy="#{ser.servicio.sentido}"
-                                      style="width: 120px">
+                                      >
                                 <h:outputText value="#{ser.servicio.sentido}" />
                             </p:column>
 
                             <p:column filterBy="#{ser.orden}" headerText="Orden"  filterMatchMode="contains" sortBy="#{ser.orden}"
-                                      style="width: 120px" >
+                                     >
                                 <h:outputText value="#{ser.orden}"  />
                             </p:column>
 
                             <p:column filterBy="#{ser.tipoDia.nombre}" headerText="Tipo Dia"  filterMatchMode="contains" sortBy="#{ser.tipoDia.nombre}"
-                                      style="width: 120px">
+                                      >
                                 <h:outputText value="#{ser.tipoDia.nombre}" />
                             </p:column>
 
 
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:50px;text-align: center" exportable="false">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"
