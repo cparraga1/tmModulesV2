@@ -159,6 +159,10 @@ public class HorariosProvisionalServicio {
 
         return tempHorarioDao.getTablaHorarioByData(servicio.getServicio(),intervalosFranjaInicio);
     }
+
+    public List<TempHorario> getTablaHorarioPorServicio(Servicio servicio){
+        return tempHorarioDao.getTablaHorarioPorServicio(servicio);
+    }
     @Transactional(readOnly = false)
     public void addTablaHorarioFromFile(String destination) {
         tempHorarioDao.addTablaHorarioFromFile(destination);

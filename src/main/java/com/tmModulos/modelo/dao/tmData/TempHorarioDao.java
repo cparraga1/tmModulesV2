@@ -91,6 +91,20 @@ public class TempHorarioDao {
         return new ArrayList<>();
     }
 
+    public List<TempHorario> getTablaHorarioPorServicio(Servicio servicio){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempHorario.class);
+
+                criteria.add(Restrictions.eq("linea", servicio.getMacro()));
+                criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
+                criteria.add(Restrictions.eq("punto", servicio.getPunto()));
+                criteria.add(Restrictions.eq("ruta", servicio.getSeccion()));
+                criteria.addOrder(Order.desc("instante"));
+                Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
+
+                criteria.add(eventos);
+                return criteria.list();
+    }
+
     public Time getSumInstanteByFranjaHora(String idServicio, Time inicio, Time fin){
         Time sum = (Time) getSessionFactory().getCurrentSession().createCriteria(TempHorario.class)
                 .setProjection(Projections.sum("instante"))

@@ -111,6 +111,16 @@ public class MenuView {
         }
     }
 
+    public void refreshBusesHoraConvertor(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ConversionABusesHora.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshConfVerificacionHorarios(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

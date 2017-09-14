@@ -5,6 +5,7 @@ import com.tmModulos.controlador.servicios.TablaHorarioService;
 import com.tmModulos.controlador.servicios.TipoDiaService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.FranjaCuartos;
+import com.tmModulos.controlador.utils.IntervaloCuartos;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.dao.tmData.HoraFranjaDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
@@ -118,12 +119,6 @@ public class IntervalosProcessor {
         intervalosFranjaPicoPM= horariosProvisionalServicio.getIntervaloByFranja(franjaPicoPM);
         intervalosFranjaCierre= horariosProvisionalServicio.getIntervaloByFranja(franjaCierre);
 
-//        horaFranjaInicio = horariosProvisionalServicio.getHoraByFranja(franjaIncio);
-//        horaFranjaPicoAM = horariosProvisionalServicio.getHoraByFranja(franjaPicoAM);
-//        horaFranjaValle = horariosProvisionalServicio.getHoraByFranja(franjaValle);
-//        horaFranjaPicoPM = horariosProvisionalServicio.getHoraByFranja(franjaPicoPM);
-//        horaFranjaCierre = horariosProvisionalServicio.getHoraByFranja(franjaCierre);
-
     }
 
     public HoraFranja encontrarHoraFranjaMenor(List<HoraFranja> horaFranja,String idServicio){
@@ -173,6 +168,71 @@ public class IntervalosProcessor {
     private double getDiferencia(Time horarioA, Time horarioB) {
         long c = horarioA.getTime() - horarioB.getTime();
         return c/1000;
+    }
+
+    public List<Intervalos> calcularIntervalos(TablaMaestraServicios tablaMaestraServicios,ServicioTipoDia servicio) {
+        List<IntervaloCuartos> tiemposServicio = encontrarTiemposPorServicio(servicio);
+        calcularDiferenciaDeTiempo(tiemposServicio);
+        identificarIntervaloDeTiempo(tiemposServicio);
+
+        return null;
+    }
+
+    private void identificarIntervaloDeTiempo(List<IntervaloCuartos> tiemposServicio) {
+
+    }
+
+    private void calcularDiferenciaDeTiempo(List<IntervaloCuartos> tiemposServicio) {
+        for(int x = 0; x<tiemposServicio.size(); x++){
+            IntervaloCuartos intervaloCuartos = tiemposServicio.get(x);
+            try{
+                Long tiempoB =tiemposServicio.get(x-1).getInstante().getTime();
+                intervaloCuartos.setDiferencia( tiempoB - intervaloCuartos.getInstante().getTime() );
+                tiemposServicio.set(x,intervaloCuartos);
+            }catch (Exception e){
+               // Cuando es el primer Registro
+            }
+
+        }
+    }
+
+    private List<IntervaloCuartos> encontrarTiemposPorServicio(ServicioTipoDia servicio) {
+        List<IntervaloCuartos> tiemposPorServicio = new ArrayList<IntervaloCuartos>();
+
+        List<TempHorario> tiemposFranjaInciio = horariosProvisionalServicio.getTiempoIntervalosByServicio(intervalosFranjaInicio,servicio);
+        List<TempHorario> tiemposFranjaAM = horariosProvisionalServicio.getTiempoIntervalosByServicio(intervalosFranjaPicoAM,servicio);
+        List<TempHorario> tiemposFranjaValle = horariosProvisionalServicio.getTiempoIntervalosByServicio(intervalosFranjaValle,servicio);
+        List<TempHorario> tiemposFranjaPM = horariosProvisionalServicio.getTiempoIntervalosByServicio(intervalosFranjaPicoPM,servicio);
+        List<TempHorario> tiemposFranjaCierre = horariosProvisionalServicio.getTiempoIntervalosByServicio(intervalosFranjaCierre,servicio);
+
+        tiemposPorServicio = asignarIntervaloYTiempos(tiemposFranjaInciio,tiemposPorServicio,"Inicio",intervalosFranjaInicio);
+        List<TempHorario> tiemposBD = horariosProvisionalServicio.getTablaHorarioPorServicio(servicio.getServicio());
+        for(TempHorario tempHorario: tiemposBD){
+            tiemposPorServicio.add(new IntervaloCuartos(tempHorario.getInstante()));
+        }
+        return tiemposPorServicio;
+    }
+
+    private List<IntervaloCuartos> asignarIntervaloYTiempos(List<TempHorario> tiemposFranja, List<IntervaloCuartos> tiemposPorServicio, String nombreIntervalo, List<IntervalosProgramacion> intervalos) {
+        for(TempHorario tempHorario: tiemposFranja){
+            IntervaloCuartos intervaloCuartos = new IntervaloCuartos(tempHorario.getInstante());
+            intervaloCuartos.setFranja(nombreIntervalo);
+            intervaloCuartos.setIntervalo(encontrarIntervaloProg(intervalos,tempHorario.getInstante()));
+            tiemposPorServicio.add(intervaloCuartos);
+        }
+
+        return tiemposPorServicio;
+    }
+
+    private IntervalosProgramacion encontrarIntervaloProg(List<IntervalosProgramacion> intervalos, Time instante) {
+        for(IntervalosProgramacion prog: intervalos){
+            if(instante.after(prog.getInicio()) || instante.equals(prog.getInicio())){
+                if(instante.before(prog.getFin()) || instante.equals(prog.getFin())){
+                    return  prog;
+                }
+            }
+        }
+        return null;
     }
 
 
