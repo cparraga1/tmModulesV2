@@ -50,7 +50,7 @@ public class TempPosDao {
         try {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
-            copyManager.copyIn("COPY temp_pos (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje)\n" +
+            copyManager.copyIn("COPY temp_pos (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje,ad1,ad2,ad3,ad4,ad5)\n" +
                     " FROM STDIN DELIMITER ';' CSV HEADER", fileReader );
         } catch (SQLException e) {
             throw new Exception(e.getMessage());
