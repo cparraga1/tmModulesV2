@@ -131,7 +131,7 @@ public class DataProcesorImpl {
     }
 
     private String calclularIdentificador(Integer sublinea, Integer linea, int sentido, String nodoInicial) {
-        String identificador= linea+"-"+sublinea+"-"+sentido;
+        String identificador= linea+"-"+sentido+"-"+sublinea;
         Nodo nodo= nodoService.getNodo(nodoInicial);
         if(nodo!=null){
             identificador= identificador+"-"+nodo.getCodigo();
