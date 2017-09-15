@@ -481,7 +481,10 @@ public class TablaMaestraProcessor {
     private CicloServicio getCicloServicio(List<ArcoTiempo> arcoTiempoRecords) {
         CicloServicio cicloServicio = new CicloServicio();
         for (ArcoTiempo arcoTiempo: arcoTiempoRecords){
-            TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(arcoTiempo.getHoraDesde(),arcoTiempo.getHoraHasta());
+            String horaInicio = arcoTiempo.getHoraDesde();
+            String horaFin = arcoTiempo.getHoraHasta();
+            horaFin = validarHoraFin(horaFin);
+            TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(horaInicio,horaFin);
             if(tipoFranja!=null){
                 if(tipoFranja.getNombre().equals("Inicio")){
                     cicloServicio.setMinimoInicio(arcoTiempo.getTiempoMinimo());
@@ -511,6 +514,16 @@ public class TablaMaestraProcessor {
 
         }
         return cicloServicio;
+    }
+
+    private String validarHoraFin(String horaFin) {
+
+        if(horaFin.equals("24:00:00") || horaFin.equals("25:00:00") || horaFin.equals("26:00:00")
+                || horaFin.equals("27:00:00") || horaFin.equals("28:00:00") || horaFin.equals("29:00:00")
+                || horaFin.equals("30:00:00")){
+            return "00:00:00";
+        }
+        return horaFin;
     }
 
     public TablaMaestraServicios calcularDistancia(TablaMaestraServicios tablaMaestraServicios, Nodo nodoIni,Nodo nodoFin, MatrizDistancia matrizDistancia) {

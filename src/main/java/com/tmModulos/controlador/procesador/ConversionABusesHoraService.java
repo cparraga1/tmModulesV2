@@ -114,7 +114,7 @@ public class ConversionABusesHoraService {
             Map.Entry pair = (Map.Entry) it.next();
             IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
             double valorIntervalo = (double) pair.getValue();
-            createCellResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo+"",cell);
+            createCellNumberResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo,cell);
         }
     }
 
@@ -127,12 +127,11 @@ public class ConversionABusesHoraService {
 
     private void crearRowsFranjaHorario(HSSFSheet worksheet,HSSFWorkbook workbook) {
         intervalosProcessor.precalcularIntervalosProgramacion();
-        CellStyle cellStyle = workbook.createCellStyle();
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaInicio(), FranjaDef.INICIO,worksheet,cellStyle);
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoAM(), FranjaDef.PICO_AM,worksheet,cellStyle);
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaValle(), FranjaDef.VALLE,worksheet,cellStyle);
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoPM(), FranjaDef.PICO_PM,worksheet,cellStyle);
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaCierre(), FranjaDef.CIERRE,worksheet,cellStyle);
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaInicio(), FranjaDef.INICIO,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoAM(), FranjaDef.PICO_AM,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaValle(), FranjaDef.VALLE,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoPM(), FranjaDef.PICO_PM,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaCierre(), FranjaDef.CIERRE,worksheet,workbook.createCellStyle());
 
     }
 
@@ -152,10 +151,11 @@ public class ConversionABusesHoraService {
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         if(nombreFranja.equals(FranjaDef.INICIO) || nombreFranja.equals(FranjaDef.VALLE) || nombreFranja.equals(FranjaDef.CIERRE)){
-            cellStyle.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
+            cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         }else{
-            cellStyle.setFillBackgroundColor(HSSFColor.LIGHT_BLUE.index);
+            cellStyle.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
         }
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         return cellStyle;
     }
 
@@ -173,7 +173,13 @@ public class ConversionABusesHoraService {
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
         resultadoHoraIni.setCellValue(valor);
+    }
 
+    private void createCellNumberResultados(Row row, double valor,int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_NUMERIC);
+        resultadoHoraIni.setCellValue(valor);
     }
 
 
