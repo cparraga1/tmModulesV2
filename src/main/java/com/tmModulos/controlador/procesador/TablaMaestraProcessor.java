@@ -161,7 +161,8 @@ public class TablaMaestraProcessor {
 
                                 //Calcular Intervalos de tiempo
                                 intervalosProcessor.precalcularIntervalosProgramacion();
-                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio,gisIntervalos);
+                                 List<Intervalos> intervaloses = intervalosProcessor.calcularIntervalos(tablaMaestraServicios, servicio);
+//                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio,gisIntervalos);
 
 
                         }else{
@@ -340,7 +341,7 @@ public class TablaMaestraProcessor {
                 double velocidad =distanciaKM/horas;
              //   String velocidadFormateada = String.format("%.2f",velocidad);
                 try{
-                    return velocidad;
+                    return ProcessorUtils.round(velocidad,2);
                 //    return Double.parseDouble(velocidadFormateada);
                 }catch (Exception e){
                     logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));

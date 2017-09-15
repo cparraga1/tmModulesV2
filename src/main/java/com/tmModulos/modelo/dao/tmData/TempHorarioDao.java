@@ -78,7 +78,7 @@ public class TempHorarioDao {
                 criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
                 criteria.add(Restrictions.eq("punto", servicio.getPunto()));
                 criteria.add(Restrictions.eq("ruta", servicio.getSeccion()));
-                criteria.addOrder(Order.desc("instante"));
+                criteria.addOrder(Order.asc("instante"));
                 Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
 
                 criteria.add(eventos);
@@ -98,7 +98,7 @@ public class TempHorarioDao {
                 criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
                 criteria.add(Restrictions.eq("punto", servicio.getPunto()));
                 criteria.add(Restrictions.eq("ruta", servicio.getSeccion()));
-                criteria.addOrder(Order.desc("instante"));
+                criteria.addOrder(Order.asc("instante"));
                 Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
 
                 criteria.add(eventos);

@@ -5,6 +5,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -78,5 +81,26 @@ public class ProcessorUtils {
                 TimeUnit.MILLISECONDS.toSeconds(tiempo) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(tiempo)));
 
 
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static double transformarAFormatoTiempo(Time time) {
+        if(time!=null){
+            SimpleDateFormat format = new SimpleDateFormat("mm.ss");
+            String date = format.format(new Date(time.getTime()));
+            if (date.split("")[0].equals("0")) {
+                String [] fecha = date.split("");
+                date = fecha[1]+fecha[2]+fecha[3]+fecha[4];
+            }
+            return Double.parseDouble(date);
+        }
+        return 0.0;
     }
 }
