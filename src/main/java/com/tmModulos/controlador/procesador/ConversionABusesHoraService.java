@@ -64,8 +64,8 @@ public class ConversionABusesHoraService {
 
     private void createExcelBusesHora(String tipoDia) throws Exception {
         try {
-//            File file = new File(PathFiles.PATH_FOR_FILES+"\\Migracion\\"+PathFiles.BUSES_HORA_FILE);
-//            file.createNewFile();
+            File file = new File(PathFiles.PATH_FOR_FILES+"\\Migracion\\"+PathFiles.BUSES_HORA_FILE);
+            file.createNewFile();
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet worksheet = workbook.createSheet("Buses Hora");
 //            cellStyle = workbook.createCellStyle();
@@ -96,24 +96,33 @@ public class ConversionABusesHoraService {
     private void crearRowsContenido(HSSFSheet worksheet, HSSFWorkbook workbook, String tipoDia) {
         TipoDia dia = conversorTablaHorario.getTipoDia(tipoDia);
         List<ServicioTipoDia> servicioTipoDiaList = servicioService.getServiciosByTipoDia(dia);
+        int cellActual = 2;
         for (int x = 0; x<servicioTipoDiaList.size();x++){
             ServicioTipoDia servicioTipoDia = servicioTipoDiaList.get(x);
             Map<IntervalosProgramacion, Double> cuartos = intervalosProcessor.convertirTablaHorarioABusesHora(servicioTipoDia);
-            crearRowsServicio(servicioTipoDia.getServicio(),workbook,worksheet,x);
-            crearRowsIntervalos(cuartos,workbook,worksheet,x);
+            crearRowsServicio(servicioTipoDia.getServicio(),workbook,worksheet,cellActual);
+            crearRowsIntervalos(cuartos,workbook,worksheet,cellActual);
+            cellActual++;
         }
 
     }
 
     private void crearRowsIntervalos(Map<IntervalosProgramacion, Double> cuartos, HSSFWorkbook workbook, HSSFSheet worksheet, int cell) {
 
+        Iterator it = cuartos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
+            double valorIntervalo = (double) pair.getValue();
+            createCellResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo+"",cell);
+        }
     }
 
     private void crearRowsServicio(Servicio servicio, HSSFWorkbook workbook, HSSFSheet worksheet, int cell) {
-        createCellResultados(worksheet.createRow(BusesHoraDef.SERVICIO),servicio.getNombreEspecial(),cell);
-        createCellResultados(worksheet.createRow(BusesHoraDef.PUNTO_INICIO),servicio.getPunto()+"",cell);
-        createCellResultados(worksheet.createRow(BusesHoraDef.PUNTO_FIN),servicio.getPunto()+"",cell);
-        createCellResultados(worksheet.createRow(BusesHoraDef.ZONA),servicio.getPunto()+"",cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.SERVICIO),servicio.getNombreEspecial(),cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_INICIO),servicio.getPunto()+"",cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_FIN),servicio.getPunto()+"",cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.ZONA),servicio.getPunto()+"",cell);
     }
 
     private void crearRowsFranjaHorario(HSSFSheet worksheet,HSSFWorkbook workbook) {
