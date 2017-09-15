@@ -41,16 +41,16 @@ public class IntervalosProcessor {
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
 
-    TipoFranja franjaIncio ;
-    TipoFranja franjaPicoAM;
-    TipoFranja franjaValle;
-    TipoFranja franjaPicoPM;
-    TipoFranja franjaCierre;
-    List<IntervalosProgramacion> intervalosFranjaInicio;
-    List<IntervalosProgramacion> intervalosFranjaPicoAM;
-    List<IntervalosProgramacion> intervalosFranjaValle;
-    List<IntervalosProgramacion> intervalosFranjaPicoPM;
-    List<IntervalosProgramacion> intervalosFranjaCierre;
+    private TipoFranja franjaIncio ;
+    private TipoFranja franjaPicoAM;
+    private TipoFranja franjaValle;
+    private TipoFranja franjaPicoPM;
+    private TipoFranja franjaCierre;
+    private List<IntervalosProgramacion> intervalosFranjaInicio;
+    private List<IntervalosProgramacion> intervalosFranjaPicoAM;
+    private List<IntervalosProgramacion> intervalosFranjaValle;
+    private List<IntervalosProgramacion> intervalosFranjaPicoPM;
+    private List<IntervalosProgramacion> intervalosFranjaCierre;
     Map<IntervalosProgramacion, Double> valoresFinalesInicio;
     Map<IntervalosProgramacion, Double> valoresFinalesPicoAM;
     Map<IntervalosProgramacion, Double> valoresFinalesValle;
@@ -71,6 +71,27 @@ public class IntervalosProcessor {
         GisIntervalos gisIntervalos = new GisIntervalos(new Date(),fechaVigencia,descripcion,"Habil",servicio,tablaMaestra);
         horariosProvisionalServicio.addGisIntervalo(gisIntervalos);
         return gisIntervalos;
+    }
+
+    public Map<IntervalosProgramacion, Double> convertirTablaHorarioABusesHora(ServicioTipoDia servicioTipoDia){
+        List<IntervaloCuartos> tiemposServicio = encontrarTiemposPorServicioBusesHora(servicioTipoDia);
+        calcularDiferenciaDeTiempo(tiemposServicio);
+        Map<IntervalosProgramacion, Double> intervalosDeTiempo = calcularIntervalosBusesHora(tiemposServicio);
+        return intervalosDeTiempo;
+    }
+
+    private Map<IntervalosProgramacion, Double> calcularIntervalosBusesHora(List<IntervaloCuartos> tiemposServicio) {
+        Map<IntervalosProgramacion, Double> cuartos = new HashMap<IntervalosProgramacion, Double>();
+        Map<IntervalosProgramacion, List<Long>> franjaCuartos = distribuirTiemposEIntervalos(tiemposServicio);
+        Iterator it = franjaCuartos.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            List<Long> valores = (List<Long>) pair.getValue();
+            double valorFInal = calcularPromedio(valores);
+            IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
+            cuartos.put(intervalo,valorFInal);
+        }
+        return cuartos;
     }
 
 
@@ -226,6 +247,18 @@ public class IntervalosProcessor {
         }
     }
 
+    private List<IntervaloCuartos> encontrarTiemposPorServicioBusesHora(ServicioTipoDia servicio) {
+        List<IntervaloCuartos> tiemposPorServicio = new ArrayList<>();
+        List<TempPos> tablaHorario = tempHorarioDao.getTablaHorarioPorServicio(servicio.getServicio());
+        for(TempPos horario:tablaHorario){
+            IntervaloCuartos cuartos = new IntervaloCuartos();
+            cuartos.setInstante(horario.getInstante());
+            cuartos.setIntervalo(obtenerIntervaloProg(horario.getInstante()));
+            tiemposPorServicio.add(cuartos);
+        }
+        return tiemposPorServicio;
+    }
+
     private List<IntervaloCuartos> encontrarTiemposPorServicio(ServicioTipoDia servicio) {
         List<IntervaloCuartos> tiemposPorServicio = new ArrayList<>();
         List<TempHorario> tablaHorario = horariosProvisionalServicio.getTablaHorarioPorServicio(servicio.getServicio());
@@ -317,6 +350,43 @@ public class IntervalosProcessor {
     }
 
 
+    public List<IntervalosProgramacion> getIntervalosFranjaInicio() {
+        return intervalosFranjaInicio;
+    }
 
+    public void setIntervalosFranjaInicio(List<IntervalosProgramacion> intervalosFranjaInicio) {
+        this.intervalosFranjaInicio = intervalosFranjaInicio;
+    }
 
+    public List<IntervalosProgramacion> getIntervalosFranjaPicoAM() {
+        return intervalosFranjaPicoAM;
+    }
+
+    public void setIntervalosFranjaPicoAM(List<IntervalosProgramacion> intervalosFranjaPicoAM) {
+        this.intervalosFranjaPicoAM = intervalosFranjaPicoAM;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaValle() {
+        return intervalosFranjaValle;
+    }
+
+    public void setIntervalosFranjaValle(List<IntervalosProgramacion> intervalosFranjaValle) {
+        this.intervalosFranjaValle = intervalosFranjaValle;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaPicoPM() {
+        return intervalosFranjaPicoPM;
+    }
+
+    public void setIntervalosFranjaPicoPM(List<IntervalosProgramacion> intervalosFranjaPicoPM) {
+        this.intervalosFranjaPicoPM = intervalosFranjaPicoPM;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaCierre() {
+        return intervalosFranjaCierre;
+    }
+
+    public void setIntervalosFranjaCierre(List<IntervalosProgramacion> intervalosFranjaCierre) {
+        this.intervalosFranjaCierre = intervalosFranjaCierre;
+    }
 }

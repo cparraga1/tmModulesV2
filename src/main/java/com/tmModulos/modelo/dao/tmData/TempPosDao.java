@@ -1,5 +1,6 @@
 package com.tmModulos.modelo.dao.tmData;
 
+import com.tmModulos.modelo.entity.tmData.Servicio;
 import com.tmModulos.modelo.entity.tmData.TempHorario;
 import com.tmModulos.modelo.entity.tmData.TempPos;
 import org.hibernate.Criteria;
@@ -147,5 +148,19 @@ public class TempPosDao {
 
         return min;
 
+    }
+
+    public List<TempPos> getTablaHorarioPorServicio(Servicio servicio){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempPos.class);
+
+        criteria.add(Restrictions.eq("linea", servicio.getMacro()));
+        criteria.add(Restrictions.eq("sublinea", servicio.getLinea()));
+        criteria.add(Restrictions.eq("punto", servicio.getPunto()));
+        criteria.add(Restrictions.eq("ruta", servicio.getSeccion()));
+        criteria.addOrder(Order.asc("instante"));
+        Criterion eventos= Restrictions.or(Restrictions.eq("evento",3),Restrictions.eq("evento", 11));
+
+        criteria.add(eventos);
+        return criteria.list();
     }
 }

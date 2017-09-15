@@ -23,6 +23,9 @@ public class IntervalosProgramacion {
     @Column(name = "fin")
     private Time fin;
 
+    @Column(name = "orden")
+    private int orden;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_franja", nullable = false)
     private TipoFranja tipoFranja;
@@ -83,10 +86,11 @@ public class IntervalosProgramacion {
         this.tipoFranja = tipoFranja;
     }
 
-//    @Override
-//    public String toString() {
-//        return convertirTiempo(inicio)+"-"+convertirTiempo(fin);
-//    }
+    public int getOrden() {
+        return orden;
+    }
 
-
+    public void setOrden(int orden) {
+        this.orden = orden;
+    }
 }

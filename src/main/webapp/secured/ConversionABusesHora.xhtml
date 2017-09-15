@@ -18,47 +18,24 @@
                 <p:panel id="basic" header="Convertir a Buses Hora"  style="margin-bottom:20px">
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="tipoDia" value="Tipo Día:" />
-                        <p:selectOneMenu id="tipoDia" value="#{VerHorario.tipoDia}" style="width:125px">
-                            <f:selectItems value="#{VerHorario.tipoDiaRecords}" var="tipo" itemLabel="#{tipo.tipoDia}" itemValue="#{tipo.archivo}" />
+                        <p:selectOneMenu id="tipoDia" value="#{ConvBusesHora.tipoDia}" style="width:125px">
+                            <f:selectItems value="#{ConvBusesHora.tipoDiaRecords}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
                         </p:selectOneMenu>
-                        <p:outputLabel for="tipoVerificacion" value="Tipo Verificación:" />
-                        <p:selectOneMenu id="tipoVerificacion" value="#{VerHorario.tipoVerificacion}" style="width:125px">
-                            <f:selectItem itemLabel="Pre" itemValue="Pre" />
-                            <f:selectItem itemLabel="Pos" itemValue="Pos" />
-                        </p:selectOneMenu>
-                        <p:outputLabel  value="Intervalo Minimo" />
-                        <p:inputText value="#{VerHorario.boxIntervaloMin}"/>
-                        <p:outputLabel  value="Intervalo Maximo" />
-                        <p:inputText value="#{VerHorario.boxIntervaloMax}"/>
-                        <p:outputLabel value="Archivo Verificación:" />
-                        <p:fileUpload value="#{VerHorario.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                        <p:outputLabel value="Archivo Tabla Horario:" />
+                        <p:fileUpload value="#{ConvBusesHora.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(csv)$/"/>
 
                     </h:panelGrid>
-                    <p:commandButton value="Verificar" action="#{VerHorario.upload}" ajax="false"
+                    <p:commandButton value="Verificar" action="#{ConvBusesHora.upload}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                      async="true" process="@form" onclick="PF('dlg2').show();" global="false"
                                      oncomplete="PF('dlg2').hide()"/>
 
                 </p:panel>
-                <p:panel visible="#{VerHorario.visibleDescarga}">
-                    <h:commandButton  value="Descargar"  action="#{VerHorario.download()}"   >
+                <p:panel visible="#{ConvBusesHora.visibleDescarga}">
+                    <h:commandButton  value="Descargar"  action="#{ConvBusesHora.download()}"   >
 
                     </h:commandButton>
                 </p:panel>
-                <!--<p:panel visible="#{gisCarga.resultadosVisibles}">-->
-                <!--<p:accordionPanel style="width: 100%" activeIndex="null">-->
-                <!--<p:tab title="Resultados">-->
-                <!--<h:panelGrid columns="2" cellpadding="10" style="width: 100%">-->
-                <!--<p:dataList value="#{gisCarga.logDatos}" var="log" type="ordered" style="width: 100%">-->
-                <!--<f:facet name="header">-->
-                <!--Log-->
-                <!--</f:facet>-->
-                <!--#{log.tipoLog} : #{log.mensaje}-->
-                <!--</p:dataList>-->
-                <!--</h:panelGrid>-->
-                <!--</p:tab>-->
-                <!--</p:accordionPanel>-->
-                <!--</p:panel>-->
 
                 <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
                            minHeight="40" style="height: 40px">
