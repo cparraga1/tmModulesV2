@@ -726,7 +726,9 @@
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
                                       style="width: 120px">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorInicio}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
@@ -744,7 +746,9 @@
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
                                       style="width: 120px">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorPM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorPM}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
