@@ -81,6 +81,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.HoraFranja</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempPos</value>
                 <value>com.tmModulos.modelo.entity.tmData.VerificacionTipoDia</value>
+                <value>com.tmModulos.modelo.entity.tmData.TempBusesHora</value>
             </list>
         </property>
     </bean>

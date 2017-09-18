@@ -190,23 +190,6 @@ public class MatrizProcessor {
     }
 
 
-    private Nodo findOrSaveNodo(int nodoCodigo,String nodoNombre) {
-       Nodo nodos = nodoService.getNodo( nodoNombre );
-        if( nodos != null){
-            Zona zona = nodoService.getZonaByName("SIN ASIGNAR","P");
-            Nodo nodo = new Nodo(nodoNombre,nodoCodigo);
-         //   nodo.setZonaProgramacion(zona);
-         //   nodo.setZonaUsuario(zona);
-            nodoService.addNodo( nodo );
-            return nodo;
-        }
-//        else if (nodos.get(0).getCodigo()==null){
-//                nodos.get(0).setCodigo(nodoCodigo);
-//                nodoService.updateNodo(nodos.get(0));
-//        }
-        return  nodos;
-    }
-
 
 
     private MatrizDistancia guardarMatrizDistancia(Date fecha,String numeracion,Date fechaFestivos, Date fechaSabado, String desc){

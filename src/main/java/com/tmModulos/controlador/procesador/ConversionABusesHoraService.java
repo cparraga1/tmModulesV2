@@ -2,6 +2,7 @@ package com.tmModulos.controlador.procesador;
 
 
 import com.tmModulos.controlador.servicios.ConversorTablaHorario;
+import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.ServicioService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.*;
@@ -30,6 +31,9 @@ public class ConversionABusesHoraService {
 
     @Autowired
     private ConversorTablaHorario conversorTablaHorario;
+
+    @Autowired
+    private NodoService nodoService;
 
     @Autowired
     private ServicioService servicioService;
@@ -119,10 +123,31 @@ public class ConversionABusesHoraService {
     }
 
     private void crearRowsServicio(Servicio servicio, HSSFWorkbook workbook, HSSFSheet worksheet, int cell) {
+        Nodo nodoInicio = obtenerNodoInicio(servicio.getPunto());
+        Nodo nodoFin = obtenerNodoInicio(servicio.getPuntoFin());
+        String nombreZona = obtenerNombreZona(nodoInicio);
         createCellResultados(worksheet.getRow(BusesHoraDef.SERVICIO),servicio.getNombreEspecial(),cell);
-        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_INICIO),servicio.getPunto()+"",cell);
-        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_FIN),servicio.getPunto()+"",cell);
-        createCellResultados(worksheet.getRow(BusesHoraDef.ZONA),servicio.getPunto()+"",cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_INICIO),obtenerNombreNodo(nodoInicio),cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.PUNTO_FIN),obtenerNombreNodo(nodoFin),cell);
+        createCellResultados(worksheet.getRow(BusesHoraDef.ZONA),nombreZona,cell);
+    }
+
+    private String obtenerNombreZona(Nodo nodoInicio) {
+        if(nodoInicio==null){
+            return "N/A";
+        }
+        return nodoInicio.getVagon().getEstacion().getZonaProgramacion().getNombre();
+    }
+
+    private String obtenerNombreNodo(Nodo nodoInicio) {
+        if(nodoInicio==null){
+            return "N/A";
+        }
+        return nodoInicio.getNombre();
+    }
+
+    private Nodo obtenerNodoInicio(int punto) {
+        return nodoService.getNodoByCodigo(""+punto);
     }
 
     private void crearRowsFranjaHorario(HSSFSheet worksheet,HSSFWorkbook workbook) {

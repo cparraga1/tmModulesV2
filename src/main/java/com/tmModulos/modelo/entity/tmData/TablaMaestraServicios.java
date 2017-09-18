@@ -73,10 +73,10 @@ public class TablaMaestraServicios {
     private boolean estado;
 
     @Column(name = "codigo_inicio")
-    private Integer codigoInicio;
+    private String codigoInicio;
 
     @Column(name = "codigo_fin")
-    private Integer codigoFin;
+    private String codigoFin;
 
     @Column(name = "zonaT_inicio")
     private String zonaTInicio;
@@ -261,19 +261,19 @@ public class TablaMaestraServicios {
         this.estado = estado;
     }
 
-    public Integer getCodigoInicio() {
+    public String getCodigoInicio() {
         return codigoInicio;
     }
 
-    public void setCodigoInicio(Integer codigoInicio) {
+    public void setCodigoInicio(String codigoInicio) {
         this.codigoInicio = codigoInicio;
     }
 
-    public Integer getCodigoFin() {
+    public String getCodigoFin() {
         return codigoFin;
     }
 
-    public void setCodigoFin(Integer codigoFin) {
+    public void setCodigoFin(String codigoFin) {
         this.codigoFin = codigoFin;
     }
 

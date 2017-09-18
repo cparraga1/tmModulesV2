@@ -147,18 +147,7 @@ public class NodosHilo implements Runnable{
         return nodosByTipoandCode;
     }
 
-    private Nodo findOrSaveNodo(int nodoCodigo, String nodoNombre) {
-        List<Nodo> nodos = auxiliarDao.getNodo( nodoNombre );
-        if( nodos.size() == 0 ){
-            Nodo nodo = new Nodo(nodoNombre,nodoCodigo);
-            auxiliarDao.addNodo( nodo );
-            return nodo;
-        }else if (nodos.get(0).getCodigo()==null){
-            nodos.get(0).setCodigo(nodoCodigo);
-            auxiliarDao.updateNodo(nodos.get(0));
-        }
-        return  nodos.get(0);
-    }
+
 
     private ServicioDistancia crearOBuscarServicioDistancia(int macro, int linea, int seccion, String nombreMatriz, int nodoCodigo) {
         if(seccion==4 || seccion==3){

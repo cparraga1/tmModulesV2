@@ -624,7 +624,7 @@ public class TablaMaestraProcessor {
      return   distanciaNodosB.getDistancia()+ultimoNodoSeccion.getDistancia();
     }
 
-    private String calcularId(Servicio servicio, Integer codigo) {
+    private String calcularId(Servicio servicio, String codigo) {
         return servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getSeccion()+"-"+codigo;
     }
 

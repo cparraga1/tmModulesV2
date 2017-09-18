@@ -292,7 +292,7 @@ public class BusquedaTablaMaestraView {
                 servicioSeleccionado.setSeccion(nuevoServicio.getSeccion());
                 servicioSeleccionado.setNombreGeneral(nuevoServicio.getNombreGeneral());
                // servicioSeleccionado.setNombreEspecial(nuevoServicio.getNombreEspecial());
-                servicioSeleccionado.setCodigoInicio(nuevoServicio.getPunto());
+                servicioSeleccionado.setCodigoInicio(nuevoServicio.getPunto()+"");
 
           GisServicio  gisServicio=tablaMaestraEdicion.getGisServicioByTrayectoLinea(identificador);
           if(gisServicio!=null){

@@ -50,7 +50,7 @@ public class NodoService {
         return nodoDao.getNodoByVagon(vagon);
     }
 
-    public Nodo getNodoByCodigo(int codigo){ return nodoDao.getNodoByCodigo(codigo);}
+    public Nodo getNodoByCodigo(String codigo){ return nodoDao.getNodoByCodigo(codigo);}
 
     @Transactional(readOnly = false)
     public void addZona(Zona zona) {

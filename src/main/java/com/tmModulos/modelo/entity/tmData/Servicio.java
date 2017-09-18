@@ -31,6 +31,9 @@ public class Servicio {
     @Column(name = "config")
     private int config;
 
+    @Column(name = "punto_fin")
+    private int puntoFin;
+
     @Column(name = "punto")
     private int punto;
 
@@ -293,5 +296,13 @@ public class Servicio {
 
     public void setSabado(boolean sabado) {
         this.sabado = sabado;
+    }
+
+    public int getPuntoFin() {
+        return puntoFin;
+    }
+
+    public void setPuntoFin(int puntoFin) {
+        this.puntoFin = puntoFin;
     }
 }

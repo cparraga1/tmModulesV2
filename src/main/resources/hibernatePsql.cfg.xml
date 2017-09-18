@@ -63,6 +63,7 @@
         <mapping class="com.tmModulos.modelo.entity.tmData.HoraFranja"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.TempPos"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.VerificacionTipoDia"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.TempBusesHora"/>
 
     </session-factory>
 </hibernate-configuration>

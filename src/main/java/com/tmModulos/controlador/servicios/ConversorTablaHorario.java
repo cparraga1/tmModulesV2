@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.servicios;
 
 import com.tmModulos.modelo.dao.tmData.ServicioTipoDiaDao;
+import com.tmModulos.modelo.dao.tmData.TempBusesHoraDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
 import com.tmModulos.modelo.dao.tmData.TipoDiaDao;
 import com.tmModulos.modelo.entity.tmData.ServicioTipoDia;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ConversorTablaHorario {
 
     @Autowired
-    public TempPosDao tempHorarioDao;
+    public TempBusesHoraDao tempHorarioDao;
 
 
     @Autowired

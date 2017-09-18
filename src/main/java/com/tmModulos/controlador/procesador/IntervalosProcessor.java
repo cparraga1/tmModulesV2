@@ -9,6 +9,7 @@ import com.tmModulos.controlador.utils.FranjaDef;
 import com.tmModulos.controlador.utils.IntervaloCuartos;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.dao.tmData.HoraFranjaDao;
+import com.tmModulos.modelo.dao.tmData.TempBusesHoraDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
 import com.tmModulos.modelo.entity.saeBogota.HorarioS;
 import com.tmModulos.modelo.entity.saeBogota.Vigencias;
@@ -37,6 +38,9 @@ public class IntervalosProcessor {
 
     @Autowired
     public TempPosDao tempHorarioDao;
+
+    @Autowired
+    public TempBusesHoraDao tempBusesHoraDao;
 
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
@@ -249,8 +253,8 @@ public class IntervalosProcessor {
 
     private List<IntervaloCuartos> encontrarTiemposPorServicioBusesHora(ServicioTipoDia servicio) {
         List<IntervaloCuartos> tiemposPorServicio = new ArrayList<>();
-        List<TempPos> tablaHorario = tempHorarioDao.getTablaHorarioPorServicio(servicio.getServicio());
-        for(TempPos horario:tablaHorario){
+        List<TempBusesHora> tablaHorario = tempBusesHoraDao.getTablaHorarioPorServicio(servicio.getServicio());
+        for(TempBusesHora horario:tablaHorario){
             IntervaloCuartos cuartos = new IntervaloCuartos();
             cuartos.setInstante(horario.getInstante());
             cuartos.setIntervalo(obtenerIntervaloProg(horario.getInstante()));
@@ -328,7 +332,7 @@ public class IntervalosProcessor {
 
     private int calcularBuses(double promedioInicio) {
         if(promedioInicio!=0){
-            return (int) (60/promedioInicio);
+            return (int) ((60/promedioInicio)+1);
         }
         return 0;
     }

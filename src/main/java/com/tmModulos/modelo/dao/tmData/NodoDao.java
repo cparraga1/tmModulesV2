@@ -60,7 +60,7 @@ public class NodoDao {
         return criteria.list();
     }
 
-    public Nodo getNodoByCodigo(int codigo){
+    public Nodo getNodoByCodigo(String codigo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Nodo.class);
         criteria.add(Restrictions.eq("codigo", codigo));
         Nodo nodo =null;
