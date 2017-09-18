@@ -377,6 +377,7 @@ public class VerificacionHorarios {
         for(ExpedicionesTemporal temporal: expedicionesTemporals){
             Date expInicio = processorUtils.convertirATime(temporal.getHoraInicio());
             Double km = Double.parseDouble(temporal.getKm().replaceAll("\\,","."))*1000;
+            km = ProcessorUtils.round(km,0);
 
             if( horaInicioB== null && horaFinB == null){
                 if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){

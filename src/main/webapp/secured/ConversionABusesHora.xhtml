@@ -22,7 +22,7 @@
                             <f:selectItems value="#{ConvBusesHora.tipoDiaRecords}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
                         </p:selectOneMenu>
                         <p:outputLabel value="Archivo Tabla Horario:" />
-                        <p:fileUpload value="#{ConvBusesHora.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(csv)$/"/>
+                        <p:fileUpload value="#{ConvBusesHora.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(csv)$/"/>
 
                     </h:panelGrid>
                     <p:commandButton value="Verificar" action="#{ConvBusesHora.upload}" ajax="false"

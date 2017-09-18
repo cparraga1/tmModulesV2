@@ -31,7 +31,7 @@
                         <p:outputLabel  value="Intervalo Maximo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMax}"/>
                         <p:outputLabel value="Archivo Verificación:" />
-                        <p:fileUpload value="#{VerHorario.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                        <p:fileUpload value="#{VerHorario.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 
                     </h:panelGrid>
                     <p:commandButton value="Verificar" action="#{VerHorario.upload}" ajax="false"
