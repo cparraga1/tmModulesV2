@@ -110,9 +110,9 @@
                                 </h:selectOneMenu>
                                 <h:outputText value="Tipo Intervalo:" style="color: black;"/>
                                 <h:selectOneMenu value="#{busquedaTabla.tipoIntervalo}" style="width:100%" >
+                                    <f:selectItem itemLabel="PROMEDIO" itemValue="Promedio" />
                                     <f:selectItem itemLabel="MINIMO" itemValue="Minimo" />
                                     <f:selectItem itemLabel="MAXIMO" itemValue="Maximo" />
-                                    <f:selectItem itemLabel="PROMEDIO" itemValue="Promedio" />
                                 </h:selectOneMenu>
                                 <p:commandButton value="Visualizar" action="#{busquedaTabla.busquedaTablaMaestra}" ajax="false"
                                                  icon="ui-icon ui-icon-disk" id="nuevo"
