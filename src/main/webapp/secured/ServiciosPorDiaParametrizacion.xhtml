@@ -32,11 +32,11 @@
                         <p:panelGrid columns="5" >
                             <p:commandButton actionListener="#{serviciosTipoDiaP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{serviciosTipoDiaP.habilitarNuevo}" update=":form:nuevoDialog" value="Asociar"
-                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
 
                             <p:commandButton actionListener="#{serviciosTipoDiaP.actualizarOrdenServicios}" update=":form:actualizarDialog" value="Actualizar Orden"
-                                             oncomplete="PF('actualizarDialog').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('actualizarDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
@@ -91,7 +91,7 @@
 
 
 
-                            <p:column style="width:50px;text-align: center" exportable="false">
+                            <p:column style="width:50px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar()}">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"

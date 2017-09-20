@@ -21,7 +21,7 @@
                         <p:panelGrid columns="4">
                             <p:commandButton actionListener="#{serviciosP.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
                             <p:commandButton actionListener="#{serviciosP.crearNuevoHorario}" update=":form:nuevoHorario" value="Nuevo Horario"
-                                             oncomplete="PF('nuevoHorario').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevoHorario').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
                         </p:panelGrid>
                         <div style="height: 8px"></div>
@@ -49,13 +49,13 @@
                                 <h:outputText value="#{hor.horaFin}" style="width: 75px" />
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false" >
+                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEditar ()}">
                                 <p:commandButton update=":form:editarHorario" oncomplete="PF('editarHorario').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{hor}" target="#{serviciosP.selectedHorario}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar()}">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"

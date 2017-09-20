@@ -64,6 +64,8 @@
         <mapping class="com.tmModulos.modelo.entity.tmData.TempPos"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.VerificacionTipoDia"/>
         <mapping class="com.tmModulos.modelo.entity.tmData.TempBusesHora"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Role"/>
+        <mapping class="com.tmModulos.modelo.entity.tmData.Usuario"/>
 
     </session-factory>
 </hibernate-configuration>

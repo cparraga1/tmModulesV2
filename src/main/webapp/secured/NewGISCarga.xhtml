@@ -39,23 +39,23 @@
 										 async="true" process="@form" onclick="PF('dlg2').show();" global="false"
 										 oncomplete="PF('dlg2').hide()"/>
 
-
+						<p:panel visible="#{gisCarga.resultadosVisibles}">
+							<p:accordionPanel style="width: 100%" activeIndex="null">
+								<p:tab title="Resultados">
+									<h:panelGrid columns="2" cellpadding="10" style="width: 100%">
+										<p:dataList value="#{gisCarga.logDatos}" var="log" type="ordered" style="width: 100%">
+											<f:facet name="header">
+												Log
+											</f:facet>
+											#{log.tipoLog} : #{log.mensaje}
+										</p:dataList>
+									</h:panelGrid>
+								</p:tab>
+							</p:accordionPanel>
+						</p:panel>
 
 					</p:panel>
-					<p:panel visible="#{gisCarga.resultadosVisibles}">
-					<p:accordionPanel style="width: 100%" activeIndex="null">
-						<p:tab title="Resultados">
-							<h:panelGrid columns="2" cellpadding="10" style="width: 100%">
-								<p:dataList value="#{gisCarga.logDatos}" var="log" type="ordered" style="width: 100%">
-									<f:facet name="header">
-										Log
-									</f:facet>
-									#{log.tipoLog} : #{log.mensaje}
-								</p:dataList>
-							</h:panelGrid>
-						</p:tab>
-					</p:accordionPanel>
-					</p:panel>
+
 					<p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
 							<p:panelGrid id="display" columns="2" columnClasses="label,value">
 								<h:outputText value="Button:" />

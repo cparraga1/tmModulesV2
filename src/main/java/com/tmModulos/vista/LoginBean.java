@@ -3,6 +3,7 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.UsuarioServicios;
 import com.tmModulos.controlador.servicios.Util;
+import com.tmModulos.modelo.entity.tmData.Role;
 import com.tmModulos.modelo.entity.tmData.Usuario;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +21,9 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String uname;
+    private String nombreUsuario;
     private String password;
+    private Role role;
 
 
     @ManagedProperty(value="#{navigationBean}")
@@ -58,6 +61,8 @@ public class LoginBean implements Serializable {
             if (usuario.getContrasena().equals(password)) {
                 HttpSession session = Util.getSession();
                 session.setAttribute("user", uname);
+                this.role =usuario.getRole();
+                this.nombreUsuario = usuario.getNombre();
                 return navigationBean.redirectToWelcome();
             } else {
                 FacesContext.getCurrentInstance().addMessage(
@@ -99,5 +104,35 @@ public class LoginBean implements Serializable {
 
     public void setUsuarioServicios(UsuarioServicios usuarioServicios) {
         this.usuarioServicios = usuarioServicios;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean puedeEditar(){
+        if(role!= null){
+            return role.isPermisoEscribir();
+        }
+        return false;
+    }
+
+    public boolean puedeEliminar(){
+        if(role!= null){
+            return role.isPermisoEliminar();
+        }
+        return false;
     }
 }

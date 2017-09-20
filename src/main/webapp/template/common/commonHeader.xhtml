@@ -39,7 +39,7 @@
                                 <p:menuitem value="Franja Horaria" action="#{menu.refreshFranjaHoraria}"/>
                             </p:submenu>
                             <p:submenu label="Tabla Maestra">
-                                <p:menuitem value="Generar Nueva Tabla Maestra" action="#{menu.refreshNuevaTablaMaestra}" />
+                                <p:menuitem value="Generar Nueva Tabla Maestra" action="#{menu.refreshNuevaTablaMaestra}" rendered="#{loginBean.puedeEditar()}"/>
                                 <p:menuitem value="Buscar Tabla Maestra" action="#{menu.refreshBuscarTablaMaestra}" />
                             </p:submenu>
                         </p:column>
@@ -49,7 +49,7 @@
                     <p:submenu label="Matriz Distancias" icon="ui-icon-carat-2-e-w">
                         <p:column>
                             <p:submenu label="Matriz Distancias">
-                                <p:menuitem value="Nueva Matriz Distancias" action="#{menu.refreshNuevaMatrizDistancia}" />
+                                <p:menuitem value="Nueva Matriz Distancias" action="#{menu.refreshNuevaMatrizDistancia}" rendered="#{loginBean.puedeEditar()}"/>
                                 <p:menuitem value="Buscar Matriz Distancias" action="#{menu.refreshBuscarMatrizDistancia}" />
                             </p:submenu>
                         </p:column>
@@ -59,7 +59,7 @@
                     <p:submenu label="GIS Carga" icon="ui-icon-document">
                         <p:column>
                             <p:submenu label="GIS Carga">
-                                <p:menuitem value="Nuevo GIS Carga" action="#{menu.refreshNuevoGISCarga}" />
+                                <p:menuitem value="Nuevo GIS Carga" action="#{menu.refreshNuevoGISCarga}" rendered="#{loginBean.puedeEditar()}"/>
                                 <p:menuitem value="Buscar GIS Carga" action="#{menu.refreshBuscarGISCarga}" />
                             </p:submenu>
                         </p:column>
@@ -69,7 +69,7 @@
                         <p:column>
                             <p:submenu label="Horarios">
                                 <p:menuitem value="Verificación de horarios" action="#{menu.refreshVerificacionHorarios}" />
-                                <p:menuitem value="Configuracion Verificacion" action="#{menu.refreshConfVerificacionHorarios}" />
+                                <p:menuitem value="Configuracion Verificacion" action="#{menu.refreshConfVerificacionHorarios}" rendered="#{loginBean.puedeEditar ()}"/>
                             </p:submenu>
                         </p:column>
 

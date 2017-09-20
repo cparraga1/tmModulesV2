@@ -1,5 +1,6 @@
 package com.tmModulos.modelo.entity.tmData;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -15,11 +16,18 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "roleu", nullable = false)
+    private Role role;
+
     @Column(name = "usuario")
     private String usuario;
 
     @Column(name = "contrasena")
     private String contrasena;
+
+    @Column(name = "activo")
+    private boolean activo;
 
     @Column(name = "area")
     private String area;
@@ -65,5 +73,21 @@ public class Usuario {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

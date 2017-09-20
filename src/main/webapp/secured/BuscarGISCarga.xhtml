@@ -73,7 +73,7 @@
                             </p:commandButton>
                         </p:column>
 
-                        <p:column style="width:50px;text-align: center" exportable="false">
+                        <p:column style="width:50px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar()}">
                             <p:commandButton id="delete"
                                              icon="ui-icon ui-icon-trash"
                                              title="GDeleteButton"

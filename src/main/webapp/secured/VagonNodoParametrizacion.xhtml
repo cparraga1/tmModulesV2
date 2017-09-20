@@ -21,10 +21,10 @@
                         <p:panelGrid columns="4">
                             <p:commandButton actionListener="#{nodosP.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
                             <p:commandButton actionListener="#{nodosP.añadirVagon}" update=":form:nuevoVagon" value="Nuevo Vagon"
-                                             oncomplete="PF('nuevoVagon').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevoVagon').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar()}">
                             </p:commandButton>
                             <p:commandButton  update=":form:eliminarVagon" value="Eliminar Vagon"
-                                             oncomplete="PF('eliminarVagon').show()" icon="ui-icon-minus" title="View"/>
+                                             oncomplete="PF('eliminarVagon').show()" icon="ui-icon-minus" title="View" rendered="#{loginBean.puedeEliminar()}"/>
                         </p:panelGrid>
                         <div style="height: 8px"></div>
 
@@ -36,7 +36,7 @@
 
                                     <p:commandButton actionListener="#{nodosP.añadirNodo(vagon.vagon)}" id="anadir" value="Añadir"
                                                      icon="ui-icon-plus"  update=":form:nuevoDialog"
-                                                     oncomplete="PF('nuevoDialog').show()"/>
+                                                     oncomplete="PF('nuevoDialog').show()" rendered="#{loginBean.puedeEditar()}"/>
                                 </h:panelGrid>
                                 <div style="height: 5px"></div>
                                 <h:panelGrid>
@@ -89,7 +89,7 @@
                                             <!--</p:commandButton>-->
                                         <!--</p:column>-->
 
-                                        <p:column style="width:32px;text-align: center">
+                                        <p:column style="width:32px;text-align: center" rendered="#{loginBean.puedeEliminar()}">
                                             <p:commandButton action="#{nodosP.eliminarNodo}" icon="ui-icon ui-icon-trash" title="View"
                                             >
                                                 <f:setPropertyActionListener value="#{nod}" target="#{nodosP.selectedNodo}" />

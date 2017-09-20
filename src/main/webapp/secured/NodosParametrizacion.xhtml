@@ -19,7 +19,7 @@
                         <p:panelGrid columns="4">
                             <p:commandButton actionListener="#{nodosP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{nodosP.habilitarNuevo}" update=":form:nuevaEstacion" value="Crear"
-                                             oncomplete="PF('nuevaEstacion').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevaEstacion').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
@@ -39,7 +39,7 @@
                             <p:ajax event="rowEdit" listener="#{nodosP.onRowEdit}" update=":form:msgs"/>
                             <p:ajax event="rowEditCancel" listener="#{nodosP.onRowCancel}" update=":form:msgs" />
 
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center" rendered="#{loginBean.puedeEliminar ()}"/>
 
                             <p:column filterBy="#{estacion.codigo}" headerText="Codigo"  filterMatchMode="contains"
                                       sortBy="#{estacion.codigo}"
@@ -102,7 +102,7 @@
                                 </p:cellEditor>
                             </p:column>
 
-                            <p:column style="width:32px">
+                            <p:column style="width:32px" rendered="#{loginBean.puedeEditar ()}">
                                 <p:rowEditor />
                             </p:column>
 
@@ -112,12 +112,12 @@
                                 </p:commandButton>
                             </p:column>
 
-                            <f:facet name="footer">
+                            <f:facet name="footer" >
                                 <p:commandButton id="delete" process="matriz"
                                                  icon="ui-icon ui-icon-trash"
                                                  value="Eliminar"
                                                  title="GDeleteButton"
-                                                 onclick="PF('groupDeleteConfirm').show()"
+                                                 onclick="PF('groupDeleteConfirm').show()" rendered="#{loginBean.puedeEliminar ()}"
 
                                 >
                                 </p:commandButton>

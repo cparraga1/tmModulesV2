@@ -19,7 +19,7 @@
                         <p:panelGrid columns="4">
                             <p:commandButton actionListener="#{serviciosP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{serviciosP.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
-                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
@@ -80,7 +80,7 @@
                             </p:column>
 
 
-                            <p:column style="width:55px;text-align: center" exportable="false" >
+                            <p:column style="width:55px;text-align: center" exportable="false"  rendered="#{loginBean.puedeEditar ()}">
                                 <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{ser}" target="#{serviciosP.selectedServicio}" />
                                 </p:commandButton>
@@ -92,7 +92,7 @@
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:55px;text-align: center" exportable="false">
+                            <p:column style="width:55px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar ()}">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"

@@ -37,7 +37,7 @@
                                 <h:outputText value="#{franja.horaFin}"  style="width: 75px"/>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center">
+                            <p:column style="width:32px;text-align: center" rendered="#{loginBean.puedeEditar ()}">
                                 <p:commandButton update=":form:franjaDetail" oncomplete="PF('franjaDialog').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{franja}" target="#{franjaParametrizacion.franjaSelected}" />
                                 </p:commandButton>

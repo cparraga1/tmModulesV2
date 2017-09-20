@@ -45,7 +45,7 @@
                                 </p:outputPanel>
                             </f:facet>
 
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false"/>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" rendered="#{loginBean.puedeEliminar()}"/>
 
                             <p:column filterBy="#{matriz.servicioDistancia.macro}" filterStyle="width: 65px;"
                                       headerText="Línea"  filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.macro}"
@@ -105,7 +105,7 @@
                             </p:column>
 
 
-                            <f:facet name="footer">
+                            <f:facet name="footer" >
                                 <!--<p:commandButton process="checkboxDT" update=":form:multiCarDetail" icon="ui-icon-search" -->
                                                  <!--value="Eliminar" oncomplete="PF('multiCarDialog').show()" />-->
                                 <p:commandButton id="delete" process="matriz"
@@ -113,6 +113,7 @@
                                                  value="Eliminar"
                                                  title="GDeleteButton"
                                                  onclick="PF('groupDeleteConfirm').show()"
+                                                 rendered="#{loginBean.puedeEliminar ()}"
 
                                                 >
                                     <!--<f:setPropertyActionListener value="#{ser}" target="#{serviciosTipoDiaP.selectedServicio}" />-->

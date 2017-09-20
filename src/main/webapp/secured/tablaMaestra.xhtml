@@ -19,7 +19,7 @@
                         <p:panelGrid columns="4">
                             <p:commandButton actionListener="#{busquedaTabla.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{busquedaTabla.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
-                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
@@ -83,8 +83,8 @@
 
                                 </p:row>
                                 <p:row>
-                                    <p:column style="width: 10%;table-layout: fixed" width="10%"/>
-                                    <p:column style="width: 10%;table-layout: fixed" />
+                                    <p:column style="width: 10%;table-layout: fixed" width="10%" rendered="#{loginBean.puedeEditar ()}"/>
+                                    <p:column style="width: 10%;table-layout: fixed" rendered="#{loginBean.puedeEditar ()}"/>
                                     <p:column headerText="Id(L-SL-R-P)" filterBy="#{tservicio.identificador}"   filterStyle="width: 100px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.identificador}" style="width: 120px"/>
                                     <p:column headerText="Id(L-SL-ST-P)" filterBy="#{tservicio.identificadorb}"   filterStyle="width: 100px;"
@@ -255,8 +255,8 @@
                                 </p:row>
                             </p:columnGroup>
 
-                            <p:column selectionMode="multiple" style="width:32px;text-align:center"/>
-                            <p:column style="width:32px">
+                            <p:column selectionMode="multiple" style="width:32px;text-align:center" rendered="#{loginBean.puedeEliminar()}"/>
+                            <p:column style="width:32px" rendered="#{loginBean.puedeEditar ()}">
                                 <p:rowEditor />
                             </p:column>
 
@@ -813,7 +813,7 @@
                             </p:column>
 
                             <f:facet name="footer">
-                                <p:commandButton id="delete" process="tservicio"
+                                <p:commandButton id="delete" process="tservicio" rendered="#{loginBean.puedeEliminar ()}"
                                                  icon="ui-icon ui-icon-trash"
                                                  value="Eliminar"
                                                  title="GDeleteButton"

@@ -37,13 +37,13 @@
                             </p:column>
 
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEditar ()}">
                                 <p:commandButton update=":form:tipoDetail" oncomplete="PF('tipoDialog').show()" icon="ui-icon-pencil" title="View">
                                     <f:setPropertyActionListener value="#{tipo}" target="#{confVerif.selectedTipoDia}" />
                                 </p:commandButton>
                             </p:column>
 
-                            <p:column style="width:32px;text-align: center" exportable="false">
+                            <p:column style="width:32px;text-align: center" exportable="false" rendered="#{loginBean.puedeEliminar ()}">
                                 <p:commandButton id="delete"
                                                  icon="ui-icon ui-icon-trash"
                                                  title="GDeleteButton"
