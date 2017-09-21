@@ -10,26 +10,26 @@
             <!--<div style="background-color: #2e6da4">-->
             <h:form id="formSideBar">
                 <div class="menu">
-
-
-
                     <div class="container-fluid">
                         <div class="navbar-header">
-                            <a href="#">Programación BRT</a>
+                            <a class="navbar-brand" href="#"><span>
+                                <img src="../resources/images/bus.png" height="24"/></span> Tabla Maestra <span class="text-danger"> SIRCI</span></a>
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
-                                <!--<li><a href="#" ><span class="glyphicon glyphicon-user"></span>Registro</a></li>-->
-                                <li><p:commandLink action="#{loginBean.logout}"><span class="ui-icon-person"></span>Salir</p:commandLink></li>
+                                <li><a><p:outputLabel class="icon-camera-retro" style="font-style: italic" value="#{loginBean.nombreUsuario}">  </p:outputLabel></a></li>
+
+                                <li><p:commandButton action="#{loginBean.logout}" value="Desconectarse" styleClass="btn btn-danger btn-margin-right navbar-btn"
+                                                     icon="ui-icon-circle-arrow-e" >Desconectarse</p:commandButton></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <p:panel style="border:none;padding-top: 5px;">
+                <p:panel style="border:none;padding-top: 8px;">
 
 
-                <p:megaMenu orientation="horizontal" style="margin-top:30px;">
+                <p:megaMenu orientation="horizontal" style="margin-top:40px;">
                     <p:submenu label="Tabla Maestra" icon="ui-icon-script">
                         <p:column>
                             <p:submenu label="Parametrizacion">
