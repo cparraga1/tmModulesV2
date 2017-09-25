@@ -24,6 +24,11 @@
                         <p:outputLabel value="Archivo Tabla Horario:" />
                         <p:fileUpload value="#{ConvBusesHora.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(csv)$/"/>
 
+                        <p:outputLabel  value="Intervalo Minimo" />
+                        <p:inputText value="#{ConvBusesHora.boxIntervaloMin}"/>
+                        <p:outputLabel  value="Intervalo Maximo" />
+                        <p:inputText value="#{ConvBusesHora.boxIntervaloMax}"/>
+
                     </h:panelGrid>
                     <p:commandButton value="Verificar" action="#{ConvBusesHora.upload}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"

@@ -33,6 +33,9 @@ public class ConversionBusesHoraView {
     private String tipoDia;
     private boolean visibleDescarga;
 
+    private String boxIntervaloMin;
+    private String boxIntervaloMax;
+
     private List<String> tipoDiaRecords;
 
     public ConversionBusesHoraView() {
@@ -45,7 +48,8 @@ public class ConversionBusesHoraView {
         tipoDiaRecords.add("HABIL");
         tipoDiaRecords.add("SABADO");
         tipoDiaRecords.add("FESTIVO");
-     //   tipoDiaRecords = conversionABusesHoraService.getTiposDiasDisponibles();
+        boxIntervaloMin = "00:01:00";
+        boxIntervaloMax = "00:07:00";
     }
 
     public void upload() {
@@ -142,5 +146,19 @@ public class ConversionBusesHoraView {
         this.tipoDia = tipoDia;
     }
 
+    public String getBoxIntervaloMin() {
+        return boxIntervaloMin;
+    }
 
+    public void setBoxIntervaloMin(String boxIntervaloMin) {
+        this.boxIntervaloMin = boxIntervaloMin;
+    }
+
+    public String getBoxIntervaloMax() {
+        return boxIntervaloMax;
+    }
+
+    public void setBoxIntervaloMax(String boxIntervaloMax) {
+        this.boxIntervaloMax = boxIntervaloMax;
+    }
 }
