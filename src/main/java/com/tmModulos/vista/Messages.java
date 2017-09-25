@@ -17,9 +17,14 @@ public class Messages {
     public static final String ACCION_FALLO_ARCHIVO = "Verifique el archivo";
     public static final String ACCION_ARCHIVO_INCOMPATIBLE = "El archivo debe ser tipo .xls";
 
+    public static final String ACCION_PASSWORD_OLD = "Contraseña Actual Incorrecta";
+    public static final String ACCION_PASSWORD_NEW = "Las nueva contraseña no coincide";
+    public static final String ACCION_CAMBIO_PASSWORD = "La contraseña fue actualizada";
+
 
     //INFORMACION
     public static final String MENSAJE_CARGA_EXITOSA = "Carga exitosa";
+    public static final String MENSAJE_CARGA_FALLIDA = "Proceso Fallido";
     public static final String MENSAJE_EXITOSO = "Proceso Existoso";
     public static final String MENSAJE_CALCULO_EXITOSO = "Generacion exitosa";
     public static final String MENSAJE_CALCULO_FALLA = "Generacion fallida";

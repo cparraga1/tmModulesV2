@@ -24,7 +24,17 @@ public class LoginBean implements Serializable {
     private String nombreUsuario;
     private String password;
     private Role role;
+    private String area;
+    private Usuario usuario;
 
+    //Perfil Usuario
+    public boolean cambioContrasena ;
+    public String contrasenaAntigua;
+    public String contrasenaNueva;
+    public String contrasenaNuevaRep;
+
+    @ManagedProperty("#{MessagesView}")
+    private MessagesView messagesView;
 
     @ManagedProperty(value="#{navigationBean}")
     private NavigationBean navigationBean;
@@ -35,7 +45,7 @@ public class LoginBean implements Serializable {
 
     @PostConstruct
     public void init(){
-        System.out.println("");
+        cambioContrasena = false;
     }
 
     public String getPassword() {
@@ -63,6 +73,8 @@ public class LoginBean implements Serializable {
                 session.setAttribute("user", uname);
                 this.role =usuario.getRole();
                 this.nombreUsuario = usuario.getNombre();
+                this.area = usuario.getArea();
+                this.usuario = usuario;
                 return navigationBean.redirectToWelcome();
             } else {
                 FacesContext.getCurrentInstance().addMessage(
@@ -88,6 +100,39 @@ public class LoginBean implements Serializable {
         HttpSession session = Util.getSession();
         session.invalidate();
         return navigationBean.redirectToLogin();
+    }
+
+    public void cambiar(){
+        if(contrasenaViejaEsCorrecta()) {
+            if(contrasenasNuevasIguales()){
+                usuario.setContrasena(contrasenaNueva);
+                usuarioServicios.updateUsuario(usuario);
+                messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_CAMBIO_PASSWORD);
+            }else{
+                messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_PASSWORD_NEW);
+            }
+        }else{
+            messagesView.error(Messages.MENSAJE_CARGA_FALLIDA,Messages.ACCION_PASSWORD_OLD);
+        }
+    }
+
+    private boolean contrasenasNuevasIguales() {
+        if(contrasenaNueva.equals(contrasenaNuevaRep)) return true;
+        return false;
+    }
+
+    private boolean contrasenaViejaEsCorrecta() {
+        if(contrasenaAntigua.equals(usuario.getContrasena())) return true;
+
+        return false;
+    }
+
+    public void modificarContrasena(){
+        cambioContrasena = true;
+    }
+
+    public String gotoperfil(){
+        return "/secured/miPerfil.xhtml?faces-redirect=true";
     }
 
     public NavigationBean getNavigationBean() {
@@ -134,5 +179,61 @@ public class LoginBean implements Serializable {
             return role.isPermisoEliminar();
         }
         return false;
+    }
+
+    public boolean isCambioContrasena() {
+        return cambioContrasena;
+    }
+
+    public void setCambioContrasena(boolean cambioContrasena) {
+        this.cambioContrasena = cambioContrasena;
+    }
+
+    public String getContrasenaAntigua() {
+        return contrasenaAntigua;
+    }
+
+    public void setContrasenaAntigua(String contrasenaAntigua) {
+        this.contrasenaAntigua = contrasenaAntigua;
+    }
+
+    public String getContrasenaNueva() {
+        return contrasenaNueva;
+    }
+
+    public void setContrasenaNueva(String contrasenaNueva) {
+        this.contrasenaNueva = contrasenaNueva;
+    }
+
+    public String getContrasenaNuevaRep() {
+        return contrasenaNuevaRep;
+    }
+
+    public void setContrasenaNuevaRep(String contrasenaNuevaRep) {
+        this.contrasenaNuevaRep = contrasenaNuevaRep;
+    }
+
+    public MessagesView getMessagesView() {
+        return messagesView;
+    }
+
+    public void setMessagesView(MessagesView messagesView) {
+        this.messagesView = messagesView;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

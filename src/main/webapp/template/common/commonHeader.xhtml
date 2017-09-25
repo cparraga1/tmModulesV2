@@ -17,7 +17,7 @@
                         </div>
                         <div>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a><p:outputLabel class="icon-camera-retro" style="font-style: italic" value="#{loginBean.nombreUsuario}">  </p:outputLabel></a></li>
+                                <li><p:commandLink action="#{loginBean.gotoperfil}"><p:outputLabel class="icon-camera-retro" style="font-style: italic" value="#{loginBean.nombreUsuario}">  </p:outputLabel></p:commandLink></li>
 
                                 <li><p:commandButton action="#{loginBean.logout}" value="Desconectarse" styleClass="btn btn-danger btn-margin-right navbar-btn"
                                                      icon="ui-icon-circle-arrow-e" >Desconectarse</p:commandButton></li>

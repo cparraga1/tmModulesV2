@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+<h:body>
+
+    <ui:composition template="/template/common/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form enctype="multipart/form-data">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:layout style="min-width:400px;min-height:600px;">
+                    <p:layoutUnit position="west" resizable="true" size="1040" minSize="40" maxSize="200">
+                        <p:graphicImage value="../resources/images/userAvatar.png" />
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="center" size="1040">
+                        <p:panel id="basic" header="Información Personal"  style="margin-bottom:10px">
+                            <h:panelGrid columns="2" cellpadding="5" cellspacing="8" >
+                                <h:outputText value="Nombre:" style="font-weight: bold;"/>
+                                <h:outputText value="#{loginBean.nombreUsuario}" />
+                                <h:outputText value="Area:" style="font-weight: bold;"/>
+                                <h:outputText value="#{loginBean.area}" />
+                                <h:outputText value="Usuario: " style="font-weight: bold;"/>
+                                <h:outputText value="#{loginBean.uname}" />
+                                <p:commandButton value="Actualizar Contraseña" action="#{loginBean.modificarContrasena}" ajax="false"
+                                                 icon="ui-icon-arrowrefresh-1-e"  styleClass="boton"
+                                />
+
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:panel visible="#{loginBean.cambioContrasena}">
+                            <p:accordionPanel style="width: 100%" activeIndex="null">
+                                <p:tab title="Cambiar Contraseña">
+                                    <h:panelGrid columns="2" cellpadding="5" cellspacing="5" style="width: 100%">
+                                        <h:outputText value="Contraseña Antigua:" />
+                                        <p:password value="#{loginBean.contrasenaAntigua}" />
+                                        <h:outputText value="Contraseña Nueva:" />
+                                        <p:password value="#{loginBean.contrasenaNueva}" />
+                                        <h:outputText value="Repita la Nueva Contraseña" />
+                                        <p:password value="#{loginBean.contrasenaNuevaRep}" />
+                                        <p:commandButton value="Cambiar" action="#{loginBean.cambiar}" ajax="false"
+                                                         icon="ui-icon-wrench"  styleClass="boton"
+                                        />
+                                    </h:panelGrid>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:panel>
+                    </p:layoutUnit>
+                </p:layout>
+
+
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</h:body>
+
+</html>
