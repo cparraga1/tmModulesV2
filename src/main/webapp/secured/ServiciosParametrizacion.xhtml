@@ -79,6 +79,11 @@
                                 <h:outputText value="#{ser.tipologia.nombre}" />
                             </p:column>
 
+                            <p:column filterBy="#{ser.estado}" headerText="¿Activo?"  filterMatchMode="contains" sortBy="#{ser.estado}"
+                            >
+                                <h:selectBooleanCheckbox value="#{ser.estado}" disabled="true" />
+                            </p:column>
+
 
                             <p:column style="width:55px;text-align: center" exportable="false"  rendered="#{loginBean.puedeEditar ()}">
                                 <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-pencil" title="View">
@@ -128,7 +133,7 @@
                                     <h:inputText value="#{serviciosP.selectedServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
 
                                     <h:outputText value="Identificador (L-SL-S-PInicio):"  />
-                                    <h:inputText value="#{serviciosP.selectedServicio.identificadorGIS}" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.identificadorGIS}" disabled="true" style="background-color: #d6d7d8"/>
 
                                     <h:outputText value="Línea:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.macro}"  />
@@ -139,18 +144,16 @@
                                     <h:outputText value="Ruta:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.seccion}"  />
 
-                                    <h:outputText value="Punto:" />
-                                    <h:inputText value="#{serviciosP.selectedServicio.punto}"  />
 
                                     <h:outputText value="Sentido:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.sentido}"  />
 
 
-                                    <h:outputText value="Linea Compuesta:" />
-                                    <h:inputText value="#{serviciosP.selectedServicio.lineaCompuesta}"  />
+                                    <h:outputText value="Punto Inicio:" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.punto}"  />
 
-                                    <h:outputText value="Trayecto:" style="color:black"/>
-                                    <h:inputText value="#{serviciosP.selectedServicio.trayecto}"  />
+                                    <h:outputText value="Punto Fin:" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.puntoFin}"  />
 
                                     <h:outputText value="Nombre Generico:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.nombreGeneral}"  />
@@ -159,25 +162,20 @@
                                     <h:inputText value="#{serviciosP.selectedServicio.nombreEspecial}"  />
 
 
-
-
-                                    <h:outputText value="Estado:" />
-                                    <p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.estado}" disabled="true"/>
-
                                     <h:outputText value="TipoServicio:" />
                                     <h:selectOneMenu value="#{serviciosP.selectedServicio.tipoServicio}" style="width:100%" >
                                         <f:selectItems value="#{serviciosP.tipoServicio}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
                                     </h:selectOneMenu>
 
                                     <h:outputText value="Tipología:" />
-                                    <p:selectOneMenu value="#{serviciosP.console}" style="width:100%" >
+                                    <h:selectOneMenu value="#{serviciosP.console}" style="width:100%" >
                                     <!--<f:selectItems value="#{serviciosP.tipologias}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />-->
                                         <f:selectItem itemLabel="Select One" itemValue="" />
                                         <f:selectItem itemLabel="ARTICULADO" itemValue="ARTICULADO" />
                                         <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
                                         <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
 
-                                    </p:selectOneMenu>
+                                    </h:selectOneMenu>
 
 
 
@@ -203,7 +201,7 @@
                                     <h:inputText value="#{serviciosP.nuevoServicio.identificador}" disabled="true" style="background-color: #d6d7d8" />
 
                                     <h:outputText value="Identificador (L-SL-S-PInicio):"  />
-                                    <h:inputText value="#{serviciosP.nuevoServicio.identificadorGIS}" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.identificadorGIS}" disabled="true" style="background-color: #d6d7d8"/>
 
                                     <h:outputText value="Línea:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.macro}"  />
@@ -214,18 +212,14 @@
                                     <h:outputText value="Ruta:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.seccion}"  />
 
-                                    <h:outputText value="Punto:" />
-                                    <h:inputText value="#{serviciosP.nuevoServicio.punto}"  />
-
                                     <h:outputText value="Sentido:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.sentido}"  />
 
+                                    <h:outputText value="Punto Inicio:" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.punto}"  />
 
-                                    <h:outputText value="Linea Compuesta:" />
-                                    <h:inputText value="#{serviciosP.nuevoServicio.lineaCompuesta}"  />
-
-                                    <h:outputText value="Trayecto:" style="color:black"/>
-                                    <h:inputText value="#{serviciosP.nuevoServicio.trayecto}"  />
+                                    <h:outputText value="Punto Fin:" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.puntoFin}"  />
 
                                     <h:outputText value="Nombre Generico:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.nombreGeneral}"  />
@@ -250,16 +244,6 @@
                                         <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
                                         <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
                                     </h:selectOneMenu>
-
-                                    <!--<p:panelGrid columns="6">-->
-                                        <!--<h:outputText value="Habil:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.habil}" />-->
-                                        <!--<h:outputText value="Sabado:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.sabado}" />-->
-                                        <!--<h:outputText value="Festivo:" style="color:black"/>-->
-                                        <!--<p:selectBooleanCheckbox value="#{serviciosP.selectedServicio.festivo}" />-->
-                                    <!--</p:panelGrid>-->
-
 
 
                                 </p:panelGrid>

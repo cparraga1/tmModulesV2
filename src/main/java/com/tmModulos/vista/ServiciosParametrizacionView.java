@@ -26,6 +26,9 @@ public class ServiciosParametrizacionView {
     @ManagedProperty("#{ServicioService}")
     private ServicioService servicioService;
 
+    @ManagedProperty("#{MessagesView}")
+    private MessagesView messagesView;
+
     private List<Servicio> serviciosRecords;
     private List<Servicio> filteredServiciosRecords;
     private Servicio selectedServicio;
@@ -98,9 +101,11 @@ public class ServiciosParametrizacionView {
         Tipologia tipologia = servicioService.getTipologiaByNombre(console);
         selectedServicio.setTipologia(tipologia);
         String identificador = selectedServicio.getMacro()+"-"+selectedServicio.getLinea()+"-"+selectedServicio.getSeccion()+"-"+selectedServicio.getPunto();
+        String identificadorGIS = selectedServicio.getMacro()+"-"+selectedServicio.getSentido()+"-"+selectedServicio.getLinea()+"-"+selectedServicio.getPunto();
         selectedServicio.setIdentificador(identificador);
+        selectedServicio.setIdentificadorGIS(identificadorGIS);
         servicioService.updateServicio(selectedServicio);
-
+        messagesView.info("Servicio Actualizado","");
         actualizarServicioPorTipoDia();
     }
 
@@ -130,7 +135,7 @@ public class ServiciosParametrizacionView {
         for(ServicioTipoDia servicioTipoDia:serviciosByServicio){
             servicioService.deleteServicioTipoDia(servicioTipoDia);
         }
-        addMessage(FacesMessage.SEVERITY_INFO,"Servicio Eliminado", "");
+        messagesView.info("Servicio Eliminado","");
         serviciosRecords = servicioService.getServicioAll();
     }
 
@@ -152,9 +157,14 @@ public class ServiciosParametrizacionView {
         Tipologia tipologia = servicioService.getTipologiaByNombre(console);
         nuevoServicio.setTipologia(tipologia);
         String identificador = nuevoServicio.getMacro()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getSeccion()+"-"+nuevoServicio.getPunto();
+        String identificadorGIS = nuevoServicio.getMacro()+"-"+nuevoServicio.getSentido()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getPunto();
         nuevoServicio.setIdentificador(identificador);
+        nuevoServicio.setLineaCompuesta(0);
+        nuevoServicio.setTrayecto(0);
+        nuevoServicio.setIdentificadorGIS(identificadorGIS);
         servicioService.addServicio(nuevoServicio);
         serviciosRecords= servicioService.getServicioAll();
+        messagesView.info("Servicio Creado","");
     }
 
     public void verDetalleFranjaHorario(){
@@ -375,5 +385,13 @@ public class ServiciosParametrizacionView {
 
     public void setTipoDia(String tipoDia) {
         this.tipoDia = tipoDia;
+    }
+
+    public MessagesView getMessagesView() {
+        return messagesView;
+    }
+
+    public void setMessagesView(MessagesView messagesView) {
+        this.messagesView = messagesView;
     }
 }
