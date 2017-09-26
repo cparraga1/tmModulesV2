@@ -7,19 +7,14 @@ import com.tmModulos.controlador.servicios.ServicioService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.sql.Time;
 import java.util.*;
 
 @Service("ConversionBusesHora")
@@ -52,7 +47,7 @@ public class ConversionABusesHoraService {
         return conversorTablaHorario.getTipoDiaAll();
     }
 
-    public void convertirABusesHora(String fileName, InputStream inputstream, String tipoDia) throws Exception {
+    public void convertirABusesHora(String fileName, InputStream inputstream, String tipoDia, String intMin, String intMax) throws Exception {
         logDatos = new ArrayList<>();
         destination= PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,inputstream,destination);
@@ -61,12 +56,12 @@ public class ConversionABusesHoraService {
         conversorTablaHorario.deleteTablaHorario();
         conversorTablaHorario.addTablaHorarioFromFile(destination);
            //compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
-            createExcelBusesHora(tipoDia);
+            createExcelBusesHora(tipoDia,intMin,intMax);
         conversorTablaHorario.deleteTablaHorario();
 
     }
 
-    private void createExcelBusesHora(String tipoDia) throws Exception {
+    private void createExcelBusesHora(String tipoDia, String intMin, String intMax) throws Exception {
         try {
             File file = new File(PathFiles.PATH_FOR_FILES+"\\Migracion\\"+PathFiles.BUSES_HORA_FILE);
             file.createNewFile();
@@ -79,7 +74,7 @@ public class ConversionABusesHoraService {
 //            font = workbook.createFont();
             crearRowsIniciales(worksheet);
             crearRowsFranjaHorario(worksheet,workbook);
-            crearRowsContenido(worksheet,workbook,tipoDia);
+            crearRowsContenido(worksheet,workbook,tipoDia,intMin,intMax);
 
             FileOutputStream outFile =new FileOutputStream(PathFiles.PATH_FOR_FILES+"\\Migracion\\"+PathFiles.BUSES_HORA_FILE);
             workbook.write(outFile);
@@ -97,7 +92,7 @@ public class ConversionABusesHoraService {
         }
     }
 
-    private void crearRowsContenido(HSSFSheet worksheet, HSSFWorkbook workbook, String tipoDia) {
+    private void crearRowsContenido(HSSFSheet worksheet, HSSFWorkbook workbook, String tipoDia, String intMin, String intMax) {
         TipoDia dia = conversorTablaHorario.getTipoDia(tipoDia);
         List<ServicioTipoDia> servicioTipoDiaList = servicioService.getServiciosByTipoDia(dia);
         int cellActual = 2;
@@ -105,21 +100,45 @@ public class ConversionABusesHoraService {
             ServicioTipoDia servicioTipoDia = servicioTipoDiaList.get(x);
             Map<IntervalosProgramacion, Double> cuartos = intervalosProcessor.convertirTablaHorarioABusesHora(servicioTipoDia);
             crearRowsServicio(servicioTipoDia.getServicio(),workbook,worksheet,cellActual);
-            crearRowsIntervalos(cuartos,workbook,worksheet,cellActual);
+            crearRowsIntervalos(cuartos,workbook,worksheet,cellActual,intMin,intMax);
             cellActual++;
         }
 
     }
 
-    private void crearRowsIntervalos(Map<IntervalosProgramacion, Double> cuartos, HSSFWorkbook workbook, HSSFSheet worksheet, int cell) {
+    private void crearRowsIntervalos(Map<IntervalosProgramacion, Double> cuartos, HSSFWorkbook workbook, HSSFSheet worksheet, int cell, String intMin, String intMax) {
+        double intervaloMinimo = calcularIntervalo(intMin);
+        double intervaloMaximo = calcularIntervalo(intMax);
+
+        CellStyle cellStyle = workbook.createCellStyle();
+        CellStyle generalCellStyle = workbook.createCellStyle();
+        Font font = workbook.createFont();
+        font.setColor(IndexedColors.RED.getIndex());
+        cellStyle.setFont(font);
+
 
         Iterator it = cuartos.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
             double valorIntervalo = (double) pair.getValue();
-            createCellNumberResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo,cell);
+            if(valorIntervalo>intervaloMaximo || valorIntervalo<intervaloMinimo){
+                createCellNumberResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo,cell,cellStyle);
+            }else{
+                createCellNumberResultados(worksheet.getRow(intervalo.getOrden()),valorIntervalo,cell,generalCellStyle);
+            }
+
         }
+    }
+
+    private double calcularIntervalo(String intMin) {
+        try{
+            Date tiempo = ProcessorUtils.convertirATime(intMin);
+            return ProcessorUtils.transformarAFormatoTiempo(new Time(tiempo.getTime()));
+        }catch (Exception e){
+
+        }
+        return 0;
     }
 
     private void crearRowsServicio(Servicio servicio, HSSFWorkbook workbook, HSSFSheet worksheet, int cell) {
@@ -200,11 +219,12 @@ public class ConversionABusesHoraService {
         resultadoHoraIni.setCellValue(valor);
     }
 
-    private void createCellNumberResultados(Row row, double valor,int num) {
+    private void createCellNumberResultados(Row row, double valor,int num,CellStyle cellStyle) {
         Cell resultadoHoraIni= row.createCell(num);
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_NUMERIC);
         resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellStyle(cellStyle);
     }
 
 

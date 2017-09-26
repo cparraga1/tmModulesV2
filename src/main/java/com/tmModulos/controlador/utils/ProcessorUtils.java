@@ -45,7 +45,7 @@ public class ProcessorUtils {
         }
     }
 
-    public Date convertirATime(String stringCellValue) {
+    public static Date convertirATime(String stringCellValue) {
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         if(!stringCellValue.equals("")){
             try {

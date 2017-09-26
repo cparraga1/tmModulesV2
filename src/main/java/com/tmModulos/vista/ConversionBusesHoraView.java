@@ -55,7 +55,7 @@ public class ConversionBusesHoraView {
     public void upload() {
         if(file!=null){
             try {
-                conversionABusesHoraService.convertirABusesHora(file.getFileName(),file.getInputstream(),tipoDia);
+                conversionABusesHoraService.convertirABusesHora(file.getFileName(),file.getInputstream(),tipoDia, boxIntervaloMin,boxIntervaloMax);
                 messagesView.info("Verificación Terminada","");
                 visibleDescarga = true;
             } catch (IOException e) {
