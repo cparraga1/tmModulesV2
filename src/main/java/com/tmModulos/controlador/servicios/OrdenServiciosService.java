@@ -55,7 +55,7 @@ public class OrdenServiciosService {
                 if( row.getCell(0) != null ){
                     ServicioTipoDia servicioActual = obtenerServicio(servicios, row.getCell(0).getStringCellValue());
                     if(servicioActual!=null){
-                        int nuevoOrden = (int) row.getCell(1).getNumericCellValue();
+                        int nuevoOrden = (int) ProcessorUtils.getNumericCellValue(row,1);
                         if(servicioActual.getOrden()!=nuevoOrden){
                             servicioActual.setOrden(nuevoOrden);
                             serviciosActualizar.add(servicioActual);
