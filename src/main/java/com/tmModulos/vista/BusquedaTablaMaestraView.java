@@ -365,6 +365,10 @@ public class BusquedaTablaMaestraView {
 
     }
 
+    public void postProcessXLS(Object document) {
+        ProcessorUtils.postProcessXLS(document);
+    }
+
     public void onRowCancel(RowEditEvent event) {
         System.out.println("sa");
     }

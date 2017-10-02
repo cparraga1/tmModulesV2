@@ -1,5 +1,7 @@
 package com.tmModulos.controlador.utils;
 
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
@@ -102,5 +104,47 @@ public class ProcessorUtils {
             return Double.parseDouble(date);
         }
         return 0.0;
+    }
+
+    public static void postProcessXLS(Object document) {
+        HSSFWorkbook book = (HSSFWorkbook) document;
+        HSSFSheet sheet = book.getSheetAt(0);
+        HSSFRow header = sheet.getRow(0);
+
+        HSSFCellStyle cellStyle = book.createCellStyle();
+        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+
+        HSSFCellStyle decStyle = book.createCellStyle();
+        decStyle.setDataFormat((short)2);
+
+
+
+        for(int rowInd = 1; rowInd < sheet.getPhysicalNumberOfRows(); rowInd++) {
+            HSSFRow row = sheet.getRow(rowInd);
+            for(int cellInd = 1; cellInd < header.getPhysicalNumberOfCells(); cellInd++) {
+                HSSFCell cell = row.getCell(cellInd);
+                String strVal = cell.getStringCellValue();
+                String headerName = header.getCell(cellInd).getStringCellValue();
+                if(headerName.equals("V-Pico AM") ||headerName.equals("V-Valle") ||headerName.equals("V-Pico PM") ||
+                        headerName.equals("I-Inicio") ||headerName.equals("I-Pico AM") ||headerName.equals("I-Valle") ||
+                        headerName.equals("I-Pico PM") ||headerName.equals("I-Cierre") ){
+                    //Double
+                    try {
+                        double dblVal = Double.valueOf(strVal);
+                        cell.setCellType(HSSFCell.CELL_TYPE_BLANK);
+                        cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+                        cell.setCellValue(dblVal);
+                        cell.setCellStyle(decStyle);
+                    }catch (Exception e){
+
+                    }
+                }
+
+
+
+            }
+        }
     }
 }
