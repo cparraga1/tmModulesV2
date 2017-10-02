@@ -86,8 +86,10 @@ public class TablaMaestraProcessor {
     }
 
     public List<LogDatos> calcularTablaMaestra(Date fechaDeProgramacion, String descripcion, String gisCarga, String matrizDistancia,Date fechaIntervalos,String tipoDia, String filename, InputStream in) {
+        long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
+        log.info("<<Inicio Calculo Tabla Maestra>>");
         processorUtils.copyFile(filename,in,destination);
         destination=destination+filename;
         // Copiar informacion intervalos
@@ -209,6 +211,9 @@ public class TablaMaestraProcessor {
         veriPreHorarios.deleteTablaHorario();
         horariosProvisionalServicio.deleteTablaHorarioFromFile();
         logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
+        log.info("<<Fin Calculo Tabla Maestra>>");
+        tiempoIncial = System.currentTimeMillis() - tiempoIncial;
+        log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
         return logDatos;
     }
 

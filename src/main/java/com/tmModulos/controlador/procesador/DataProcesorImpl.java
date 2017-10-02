@@ -57,6 +57,7 @@ public class DataProcesorImpl {
 
 
     public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgrmacion, Date fechaVigencia, String tipoDia, String descripcion) {
+        long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
         exitoso=true;
         log.info("<< GIS Carga Incio de Procesamiento >>");
@@ -76,6 +77,8 @@ public class DataProcesorImpl {
             logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
             exitoso =false;
         }
+        tiempoIncial = System.currentTimeMillis() - tiempoIncial;
+        log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
         return logDatos;
 
     }

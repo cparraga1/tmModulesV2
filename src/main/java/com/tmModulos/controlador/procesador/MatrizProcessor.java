@@ -105,7 +105,8 @@ public class MatrizProcessor {
 
 
     public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String numeracion, Date fechaHabil, Date fechaSabado, Date fechaFestivo,String desc){
-       logDatos = new ArrayList<>();
+        long tiempoIncial = System.currentTimeMillis();
+        logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Matriz Distancias con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Calculo Matriz Distancias con Archivo>>");
         processorUtils.copyFile(fileName,in,destination);
@@ -119,6 +120,9 @@ public class MatrizProcessor {
             logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
         }
         logDatos.add(new LogDatos("<<Fin Calculo Matriz Distancias con Archivo>>", TipoLog.INFO));
+        log.info("<<Fin Calculo Matriz Distancias con Archivo>>");
+        tiempoIncial = System.currentTimeMillis() - tiempoIncial;
+        log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
         return logDatos;
     }
 
