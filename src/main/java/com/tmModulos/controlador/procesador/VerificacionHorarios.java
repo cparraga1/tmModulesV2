@@ -368,68 +368,39 @@ public class VerificacionHorarios {
     private List<String> validarHorario(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
         System.out.println("Entre a validar horario");
         List<String> comparaciones = new ArrayList<>();
-        String compHoraIni="OK";
-        String compHoraIni2="OK";
-        String compHoraFin="OK";
-        String compHoraFin2="OK";
-        String compHoraDis="OK";
+        comparaciones.add("OK"); //Ini
+        comparaciones.add("OK"); //Fin
+        comparaciones.add("OK"); //IniB
+        comparaciones.add("OK"); //FinB
+        comparaciones.add("OK"); //Distancia;
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         for(ExpedicionesTemporal temporal: expedicionesTemporals){
             Date expInicio = processorUtils.convertirATime(temporal.getHoraInicio());
             Double km = Double.parseDouble(temporal.getKm().replaceAll("\\,","."))*1000;
             km = ProcessorUtils.round(km,0);
-
-            if( horaInicioB== null && horaFinB == null){
-                if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
-                }else{
-                    compHoraIni = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                }
-
-                if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
-                }else{
-                    compHoraFin = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                }
-            }else{
-                if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
-                        && (expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0)){
-
-                }else{
-                    if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
-
-                    }else{
-                        compHoraIni2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                    }
-
-                    if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
-
-                    }else{
-                        compHoraFin2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                    }
-                }
-
-            }
+            comparaciones = validarLimitesHorarios(comparaciones,horaInicio,horaInicioB,horaFin,horaFinB,expInicio);
 
 
             if(km==(double)distancia){
-                compHoraDis = "OK";
+                comparaciones.set(4,"OK");
             }else{
-                compHoraDis = km+"";
+                comparaciones.set(4, km+"");
             }
         }
+
+        comparaciones.add(comparaciones.get(0));
+        comparaciones.add(comparaciones.get(1));
+        comparaciones.add(comparaciones.get(2));
+        comparaciones.add(comparaciones.get(3));
+        comparaciones.add(comparaciones.get(4));
 
         List<String> resultadosLimites = validarLimites(expedicionesTemporals,horaInicio,horaInicioB,
                 horaFin,horaFinB);
 
-        if(compHoraIni.equals("OK")) compHoraIni = resultadosLimites.get(0);
-        if(compHoraFin.equals("OK")) compHoraFin = resultadosLimites.get(1);
-        if(compHoraIni2.equals("OK")) compHoraIni2 = resultadosLimites.get(2);
-        if(compHoraFin2.equals("OK")) compHoraFin2 = resultadosLimites.get(3);
-
-        comparaciones.add(compHoraIni);
-        comparaciones.add(compHoraFin);
-        comparaciones.add(compHoraIni2);
-        comparaciones.add(compHoraFin2);
-        comparaciones.add(compHoraDis);
+        if(comparaciones.get(0).equals("OK")) comparaciones.set(0, resultadosLimites.get(0));
+        if(comparaciones.get(1).equals("OK")) comparaciones.set(1, resultadosLimites.get(1));
+        if(comparaciones.get(2).equals("OK")) comparaciones.set(2, resultadosLimites.get(2));
+        if(comparaciones.get(3).equals("OK")) comparaciones.set(3, resultadosLimites.get(3));
 
         return comparaciones;
     }
@@ -437,67 +408,92 @@ public class VerificacionHorarios {
 
     private List<String> validarHorarioPost(List<TempPos> tempHorarios, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB, int distancia) {
         List<String> comparaciones = new ArrayList<>();
-        String compHoraIni="OK";
-        String compHoraIni2="OK";
-        String compHoraFin="OK";
-        String compHoraFin2="OK";
-        String compHoraDis="OK";
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        comparaciones.add("OK"); //Ini
+        comparaciones.add("OK"); //Fin
+        comparaciones.add("OK"); //IniB
+        comparaciones.add("OK"); //FinB
+        comparaciones.add("OK"); //Distancia
+
         for(TempPos temporal: tempHorarios){
             Date expInicio = processorUtils.convertirATime(temporal.getInstante().toString());
+            comparaciones = validarLimitesHorarios(comparaciones,horaInicio,horaInicioB,horaFin,horaFinB,expInicio);
+        }
 
-            if( horaInicioB== null && horaFinB == null){
-                if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
-                }else{
-                    compHoraIni = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                }
+        comparaciones.add(comparaciones.get(0));
+        comparaciones.add(comparaciones.get(1));
+        comparaciones.add(comparaciones.get(2));
+        comparaciones.add(comparaciones.get(3));
+        comparaciones.add(comparaciones.get(4));
 
-                if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
-                }else{
-                    compHoraFin = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
-                }
+        List<String> resultadosLimites = validarLimitesPos(tempHorarios,horaInicio,horaInicioB,
+                horaFin,horaFinB);
+
+        if(comparaciones.get(0).equals("OK")) comparaciones.set(0, resultadosLimites.get(0));
+        if(comparaciones.get(1).equals("OK")) comparaciones.set(1, resultadosLimites.get(1));
+        if(comparaciones.get(2).equals("OK")) comparaciones.set(2, resultadosLimites.get(2));
+        if(comparaciones.get(3).equals("OK")) comparaciones.set(3, resultadosLimites.get(3));
+
+
+        return comparaciones;
+    }
+
+    public List<String> validarLimitesHorarios( List<String> comparaciones, Date horaInicio, Date horaInicioB, Date horaFin, Date horaFinB,Date expInicio){
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        if( horaInicioB== null && horaFinB == null){
+            if(expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0 ){
             }else{
-                if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
-                        && (expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0)){
+                comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
+            }
 
-                }else{
+            if(expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0 ){
+            }else{
+                comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
+            }
+        }else{
+            if( (expInicio.after(horaInicio) || expInicio.compareTo(horaInicio)==0)
+                    && (expInicio.before(horaFin) || expInicio.compareTo(horaFin)==0)){
+                //Esta en el primer Horario
+            }else if((expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0)
+                    && (expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0)){
+                //Esta En el segundo Horario
+            }else{
+                Date horaFinExtendida = calcularExtensionHora(horaFin,60);
+                Date horaInicioExtendida = calcularExtensionHora(horaInicio,-60);
+                if((expInicio.after(horaInicioExtendida) || expInicio.compareTo(horaInicioExtendida)==0)
+                        && (expInicio.before(horaFinExtendida) || expInicio.compareTo(horaFinExtendida)==0)){
+                    // Mas cercano al Primer Horario
+                    if((expInicio.after(horaInicioExtendida) || expInicio.compareTo(horaInicioExtendida)==0)
+                            && (expInicio.before(horaInicio) || expInicio.compareTo(horaInicio)==0)){
+                        comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
+                    }else{
+                        comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
+                    }
+
+                } else{
                     if(expInicio.after(horaInicioB) || expInicio.compareTo(horaInicioB)==0 ){
 
                     }else{
-                        compHoraIni2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
+                        comparaciones.set(2, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
                     }
 
                     if(expInicio.before(horaFinB) || expInicio.compareTo(horaFinB)==0 ){
 
                     }else{
-                        compHoraFin2 = ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio);
+                        comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+parser.format(expInicio));
                     }
                 }
 
             }
+
         }
-
-        comparaciones.add(compHoraIni);
-        comparaciones.add(compHoraFin);
-        comparaciones.add(compHoraIni2);
-        comparaciones.add(compHoraFin2);
-        comparaciones.add(compHoraDis);
-
-        List<String> resultadosLimites = validarLimitesPos(tempHorarios,horaInicio,horaInicioB,
-                horaFin,horaFinB);
-
-        if(compHoraIni.equals("OK")) compHoraIni = resultadosLimites.get(0);
-        if(compHoraFin.equals("OK")) compHoraFin = resultadosLimites.get(1);
-        if(compHoraIni2.equals("OK")) compHoraIni2 = resultadosLimites.get(2);
-        if(compHoraFin2.equals("OK")) compHoraFin2 = resultadosLimites.get(3);
-
-        comparaciones.add(compHoraIni);
-        comparaciones.add(compHoraFin);
-        comparaciones.add(compHoraIni2);
-        comparaciones.add(compHoraFin2);
-        comparaciones.add(compHoraDis);
-
         return comparaciones;
+    }
+
+    private Date calcularExtensionHora(Date horaFin, int minutos) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(horaFin);
+        cal.add(Calendar.MINUTE, minutos);
+       return cal.getTime();
     }
 
     public List<VerificacionTipoDia> getTiposDiasDisponibles () {
