@@ -61,8 +61,8 @@
 
 
 
-                            <p:ajax event="rowEdit" listener="#{busquedaTabla.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{busquedaTabla.onRowCancel}" update=":form:msgs" />
+                            <p:ajax event="rowEdit" listener="#{busquedaTabla.onRowEdit}" update=":form:msgs" exportable="false"/>
+                            <p:ajax event="rowEditCancel" listener="#{busquedaTabla.onRowCancel}" update=":form:msgs" exportable="false"/>
 
                             <p:columnGroup type="header">
                                 <p:row>
@@ -83,8 +83,8 @@
 
                                 </p:row>
                                 <p:row>
-                                    <p:column style="width: 10%;table-layout: fixed" width="10%" rendered="#{loginBean.puedeEditar ()}"/>
-                                    <p:column style="width: 10%;table-layout: fixed" rendered="#{loginBean.puedeEditar ()}"/>
+                                    <p:column style="width: 10%;table-layout: fixed" width="10%" rendered="#{loginBean.puedeEditar ()}" exportable="false"/>
+                                    <p:column style="width: 10%;table-layout: fixed" rendered="#{loginBean.puedeEditar ()}" exportable="false"/>
                                     <p:column headerText="Id(L-SL-R-P)" filterBy="#{tservicio.identificador}"   filterStyle="width: 100px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.identificador}" style="width: 120px"/>
                                     <p:column headerText="Id(L-SL-ST-P)" filterBy="#{tservicio.identificadorb}"   filterStyle="width: 100px;"
@@ -868,29 +868,29 @@
                         </p:dialog>
 
 
-                        <p:dialog header="Servicio Tabla Maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog header="Servicio Temporal Para Tabla Maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="nuevoDialog" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.nuevaTabla}" columnClasses="label,value">
+                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.nuevaTabla}" columnClasses="value">
 
                                     <h:outputText value="Identificador:" style="color:black" />
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.identificador}"  />
 
-                                    <h:outputText value="Trayecto:" style="color:black"/>
-                                    <h:inputText value="#{busquedaTabla.nuevaTabla.trayecto}"  />
-
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Línea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="SubLínea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.linea}"  />
 
                                     <h:outputText value="Seccion:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.seccion}"  />
 
-                                    <h:outputText value="Punto I:" style="color:black"/>
+                                    <h:outputText value="Sentido:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.sentido}"  />
+
+                                    <h:outputText value="Punto Inicio:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.codigoInicio}"  />
 
-                                    <h:outputText value="Punto F:" style="color:black"/>
+                                    <h:outputText value="Punto Fin:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.codigoFin}"  />
 
                                     <h:outputText value="Nombre Generico:" style="color:black"/>
@@ -913,7 +913,6 @@
                                         <f:selectItem itemLabel="ARTICULADO" itemValue="ARTICULADO" />
                                         <f:selectItem itemLabel="BIARTICULADO" itemValue="BIARTICULADO" />
                                         <f:selectItem itemLabel="MIXTO" itemValue="MIXTO" />
-
                                     </p:selectOneMenu>
 
                                 </p:panelGrid>

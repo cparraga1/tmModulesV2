@@ -221,7 +221,7 @@ public class TablaMaestraServicios {
         this.linea = linea;
     }
 
-    public int getSeccion() {
+    public Integer getSeccion() {
         return seccion;
     }
 
