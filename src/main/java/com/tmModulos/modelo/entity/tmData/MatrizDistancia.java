@@ -42,6 +42,12 @@ public class MatrizDistancia {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "matrizDistancia",cascade = CascadeType.PERSIST)
     private Set<TablaMaestra> tablaMaestraRecords= new HashSet<TablaMaestra>(0);
 
+    @Column(name = "modo")
+    private String modo;
+
+    @Transient
+    private String modoFormatted;
+
     @Transient
     private String fechaCreacionFormato;
     @Transient
@@ -50,13 +56,14 @@ public class MatrizDistancia {
     public MatrizDistancia() {
     }
 
-    public MatrizDistancia(Date fechaCreacion, Date fechaAplicacion, Date fechaSabado, Date fechaFestivo, String numeracion, String descripcion) {
+    public MatrizDistancia(Date fechaCreacion, Date fechaAplicacion, Date fechaSabado, Date fechaFestivo, String numeracion, String descripcion, String modo) {
         this.fechaCreacion = fechaCreacion;
         this.fechaAplicacion = fechaAplicacion;
         this.fechaSabado = fechaSabado;
         this.fechaFestivo = fechaFestivo;
         this.numeracion = numeracion;
         this.descripcion = descripcion;
+        this.modo = modo;
     }
 
     public long getId() {
@@ -148,4 +155,19 @@ public class MatrizDistancia {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public String getModoFormatted() {
+        if(modo.equals("DUA")) return "DUAL";
+        return "TRONCAL";
+    }
+
+
 }

@@ -7,7 +7,6 @@ import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.TablaHorarioService;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.dao.saeBogota.GroupedHorario;
-import com.tmModulos.modelo.dao.saeBogota.NodosDao;
 import com.tmModulos.modelo.entity.tmData.*;
 import com.tmModulos.modelo.entity.saeBogota.*;
 import org.apache.log4j.Logger;
@@ -24,7 +23,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service("MatrizProcessor")
 public class MatrizProcessor {
@@ -55,27 +53,27 @@ public class MatrizProcessor {
     private String destination = PathFiles.PATH_FOR_FILES+"\\Migracion\\";
 
 
-    public List<LogDatos> calcularMatrizDistancia(Date fechaHabil,String numeracion,Date fechaFestivos, Date fechaSabado,String desc){
-        logDatos = new ArrayList<>();
-        logDatos.add(new LogDatos("<<Inicio Calculo Matriz Distancias>>", TipoLog.INFO));
-        log.info("<<Inicio Calculo Matriz Distancias>>");
-        MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion,fechaFestivos,fechaSabado,desc);
-        //List<DistanciaNodos> distanciaNodos= calcularMatrizPorFecha(fechaHabil, matrizDistancia);
-         NodosHilo nodoHiloHabil = new NodosHilo(fechaHabil,matrizDistancia);
-        taskExecutor.execute(nodoHiloHabil);
-
-      //  List<DistanciaNodos> distanciaNodosSabado= calcularMatrizPorFecha(fechaSabado, matrizDistancia);
-        taskExecutor.execute(new NodosHilo(fechaSabado,matrizDistancia));
-       // List<DistanciaNodos> distanciaNodosFestivo= calcularMatrizPorFecha(fechaFestivos, matrizDistancia);
-       taskExecutor.execute(new NodosHilo(fechaFestivos,matrizDistancia));
-       while(taskExecutor.getActiveCount()>0){
-
-       }
-        
-        logDatos.add(new LogDatos("<<Fin Calculo Matriz Distancias>>", TipoLog.INFO));
-        log.info("<<Fin Calculo Matriz Distancias>>");
-        return logDatos;
-    }
+//    public List<LogDatos> calcularMatrizDistancia(Date fechaHabil,String numeracion,Date fechaFestivos, Date fechaSabado,String desc){
+//        logDatos = new ArrayList<>();
+//        logDatos.add(new LogDatos("<<Inicio Calculo Matriz Distancias>>", TipoLog.INFO));
+//        log.info("<<Inicio Calculo Matriz Distancias>>");
+//        MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion,fechaFestivos,fechaSabado,desc);
+//        //List<DistanciaNodos> distanciaNodos= calcularMatrizPorFecha(fechaHabil, matrizDistancia);
+//         NodosHilo nodoHiloHabil = new NodosHilo(fechaHabil,matrizDistancia);
+//        taskExecutor.execute(nodoHiloHabil);
+//
+//      //  List<DistanciaNodos> distanciaNodosSabado= calcularMatrizPorFecha(fechaSabado, matrizDistancia);
+//        taskExecutor.execute(new NodosHilo(fechaSabado,matrizDistancia));
+//       // List<DistanciaNodos> distanciaNodosFestivo= calcularMatrizPorFecha(fechaFestivos, matrizDistancia);
+//       taskExecutor.execute(new NodosHilo(fechaFestivos,matrizDistancia));
+//       while(taskExecutor.getActiveCount()>0){
+//
+//       }
+//
+//        logDatos.add(new LogDatos("<<Fin Calculo Matriz Distancias>>", TipoLog.INFO));
+//        log.info("<<Fin Calculo Matriz Distancias>>");
+//        return logDatos;
+//    }
 
 
     private List<GroupedHorario> macroLineaEnHorario(int macro, int linea, List<GroupedHorario> horarioByTipoDia) {
@@ -104,14 +102,14 @@ public class MatrizProcessor {
     }
 
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String numeracion, Date fechaHabil, Date fechaSabado, Date fechaFestivo,String desc){
+    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgramacion,String numeracion, Date fechaHabil, Date fechaSabado, Date fechaFestivo,String desc,String modo){
         long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Matriz Distancias con Archivo>>", TipoLog.INFO));
         log.info("<<Inicio Calculo Matriz Distancias con Archivo>>");
         processorUtils.copyFile(fileName,in,destination);
         destination=destination+fileName;
-        MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion, fechaSabado,fechaFestivo,desc);
+        MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion, fechaSabado,fechaFestivo,desc,modo);
         try {
             readExcelAndSaveData(destination,matrizDistancia);
 
@@ -196,8 +194,8 @@ public class MatrizProcessor {
 
 
 
-    private MatrizDistancia guardarMatrizDistancia(Date fecha,String numeracion,Date fechaFestivos, Date fechaSabado, String desc){
-        MatrizDistancia matrizDistancia= new MatrizDistancia(new Date(),fecha,fechaSabado,fechaFestivos,numeracion,desc);
+    private MatrizDistancia guardarMatrizDistancia(Date fecha,String numeracion,Date fechaFestivos, Date fechaSabado, String desc,String modo){
+        MatrizDistancia matrizDistancia= new MatrizDistancia(new Date(),fecha,fechaSabado,fechaFestivos,numeracion,desc,modo);
         matrizDistanciaService.addMatrizDistancia(matrizDistancia);
         return matrizDistancia;
     }

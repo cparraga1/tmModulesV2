@@ -26,6 +26,13 @@ public class GisCarga {
     private boolean estaVigente;
     @Column(name = "descripcion")
     private String descripcion;
+
+    @Column(name = "modo")
+    private String modo;
+
+    @Transient
+    private String modoFormatted;
+
     @Transient
     private String fechaCreacionFormato;
     @Transient
@@ -44,13 +51,14 @@ public class GisCarga {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "gisCarga",cascade = CascadeType.PERSIST)
     private Set<TablaMaestra> tablaMaestraRecords= new HashSet<TablaMaestra>(0);
 
-    public GisCarga(Date fechaCreacion, Date fechaProgramacion, Date fechaVigencia, String descripcion,TipoDia tipoDia) {
+    public GisCarga(Date fechaCreacion, Date fechaProgramacion, Date fechaVigencia, String descripcion,TipoDia tipoDia,String modo) {
         this.fechaCreacion = fechaCreacion;
         this.fechaProgramacion = fechaProgramacion;
         this.fechaVigencia = fechaVigencia;
         this.descripcion = descripcion;
         this.estaVigente = false;
         this.tipoDia =tipoDia;
+        this.modo = modo;
     }
 
     public TipoDia getTipoDia() {
@@ -154,4 +162,19 @@ public class GisCarga {
     public void setTablaMaestraRecords(Set<TablaMaestra> tablaMaestraRecords) {
         this.tablaMaestraRecords = tablaMaestraRecords;
     }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public String getModoFormatted() {
+       if(modo.equals("DUA")) return "DUAL";
+       return "TRONCAL";
+    }
+
+
 }

@@ -56,7 +56,7 @@ public class DataProcesorImpl {
 
 
 
-    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgrmacion, Date fechaVigencia, String tipoDia, String descripcion) {
+    public List<LogDatos> processDataFromFile(String fileName, InputStream in, Date fechaProgrmacion, Date fechaVigencia, String tipoDia, String descripcion,String modo) {
         long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
         exitoso=true;
@@ -66,7 +66,7 @@ public class DataProcesorImpl {
         destination=PathFiles.PATH_FOR_FILES+"\\Migracion\\";
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\Migracion\\"+fileName;
-        GisCarga gisCarga = saveGisCarga(fechaProgrmacion,fechaVigencia,descripcion,tipoDia);
+        GisCarga gisCarga = saveGisCarga(fechaProgrmacion,fechaVigencia,descripcion,tipoDia,modo);
         try {
             readExcelAndSaveData(destination,gisCarga,tipoDia);
             log.info("<<GIS Carga Fin de Procesamiento>>");
@@ -83,9 +83,9 @@ public class DataProcesorImpl {
 
     }
 
-    public GisCarga saveGisCarga(Date fechaProgrmacion, Date fechaVigencia,String descripcion,String tipoDia){
+    public GisCarga saveGisCarga(Date fechaProgrmacion, Date fechaVigencia,String descripcion,String tipoDia,String modo){
        TipoDia dia= tipoDiaService.getTipoDia(tipoDia);
-       GisCarga gisCarga = new GisCarga(new Date(),fechaProgrmacion,fechaVigencia,descripcion,dia);
+       GisCarga gisCarga = new GisCarga(new Date(),fechaProgrmacion,fechaVigencia,descripcion,dia,modo);
        gisCargaService.addGisCarga(gisCarga);
        log.info("GIS Carga para día: "+tipoDia + " Descripción: "+descripcion);
        log.info("Fecha de Programación: "+fechaProgrmacion);

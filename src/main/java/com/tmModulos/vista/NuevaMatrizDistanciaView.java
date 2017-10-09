@@ -1,7 +1,9 @@
 package com.tmModulos.vista;
 
 import com.tmModulos.controlador.procesador.MatrizProcessor;
+import com.tmModulos.controlador.utils.ListObject;
 import com.tmModulos.controlador.utils.LogDatos;
+import com.tmModulos.controlador.utils.ModosUtil;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +35,11 @@ public class NuevaMatrizDistanciaView {
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
 
+    private String tipoDia;
+    private String modo;
+    private List<ListObject> modos;
+    private List<ListObject> tiposDia;
+
 
     @ManagedProperty("#{MatrizProcessor}")
     private MatrizProcessor matrizProcessor;
@@ -51,6 +58,8 @@ public class NuevaMatrizDistanciaView {
         fechaDeProgramacion=null;
         resultadosVisibles=false;
         numeracion="";
+        modos = ModosUtil.cargarListaModos();
+        tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
     }
 
     public void cambioTipoGeneracion(){
@@ -63,13 +72,22 @@ public class NuevaMatrizDistanciaView {
         }
     }
 
+    private void updateTipoDias(){
+        if(modo.equals("DUA")){
+            tiposDia = ModosUtil.cargarListaTipoDiaDual();
+        }else{
+            tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        }
+
+    }
+
     public void cargarArchivo(){
         if(isValid()){
             if(matrizDistancias.getSize()>0 && matrizDistancias.getContentType().equals("application/vnd.ms-excel")) {
                 try {
                     resultadosVisibles=true;
                     logDatos= matrizProcessor.processDataFromFile(matrizDistancias.getFileName(),matrizDistancias.getInputstream(), fechaDeProgramacion,numeracion,
-                            fechaDeVigencia,fechaSabado,fechaFestivos,descripcion);
+                            fechaDeVigencia,fechaSabado,fechaFestivos,descripcion,modo);
                     messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_MATRIZ_ALMACENADA);
                 } catch (IOException e) {
                     messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_FALLO_ARCHIVO);
@@ -99,24 +117,24 @@ public class NuevaMatrizDistanciaView {
 
 
 
-    public void calcularMatrizDistancias(){
-        if( numeracion!=null ){
-            if(fechaDeVigencia!=null && fechaFestivos!= null && fechaSabado!=null){
-                   resultadosVisibles=true;
-                   logDatos= matrizProcessor.calcularMatrizDistancia(fechaDeVigencia,numeracion,fechaFestivos,fechaSabado,descripcion);
-                   if(logDatos.size()==2){
-                       messagesView.info(Messages.MENSAJE_CALCULO_EXITOSO,Messages.ACCION_MATRIZ_ALMACENADA);
-                   }else{
-                       messagesView.info(Messages.MENSAJE_CALCULO_REVISION,"");
-                   }
-            }else {
-                messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS, Messages.ACCION_CAMPOS_INCOMPLETOS);
-            }
-        }else{
-            messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
-        }
-
-    }
+//    public void calcularMatrizDistancias(){
+//        if( numeracion!=null ){
+//            if(fechaDeVigencia!=null && fechaFestivos!= null && fechaSabado!=null){
+//                   resultadosVisibles=true;
+//                   logDatos= matrizProcessor.calcularMatrizDistancia(fechaDeVigencia,numeracion,fechaFestivos,fechaSabado,descripcion);
+//                   if(logDatos.size()==2){
+//                       messagesView.info(Messages.MENSAJE_CALCULO_EXITOSO,Messages.ACCION_MATRIZ_ALMACENADA);
+//                   }else{
+//                       messagesView.info(Messages.MENSAJE_CALCULO_REVISION,"");
+//                   }
+//            }else {
+//                messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS, Messages.ACCION_CAMPOS_INCOMPLETOS);
+//            }
+//        }else{
+//            messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
+//        }
+//
+//    }
 
 
     public String getTipoGeneracion() {
@@ -231,5 +249,37 @@ public class NuevaMatrizDistanciaView {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getTipoDia() {
+        return tipoDia;
+    }
+
+    public void setTipoDia(String tipoDia) {
+        this.tipoDia = tipoDia;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public List<ListObject> getTiposDia() {
+        return tiposDia;
+    }
+
+    public void setTiposDia(List<ListObject> tiposDia) {
+        this.tiposDia = tiposDia;
     }
 }

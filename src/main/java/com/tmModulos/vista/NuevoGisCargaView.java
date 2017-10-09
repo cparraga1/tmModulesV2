@@ -1,7 +1,9 @@
 package com.tmModulos.vista;
 
 import com.tmModulos.controlador.procesador.DataProcesorImpl;
+import com.tmModulos.controlador.utils.ListObject;
 import com.tmModulos.controlador.utils.LogDatos;
+import com.tmModulos.controlador.utils.ModosUtil;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -29,11 +31,15 @@ public class NuevoGisCargaView implements Serializable{
     private Date fechaVigencia;
     private UploadedFile gisCarga;
     private String tipoDia;
+    private String modo;
     private String descripcion;
     private boolean status;
     private double progress = 0d;
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
+
+    private List<ListObject> modos;
+    private List<ListObject> tiposDia;
 
 
     @ManagedProperty("#{MessagesView}")
@@ -45,6 +51,8 @@ public class NuevoGisCargaView implements Serializable{
         fechaProgramacion = null;
         fechaVigencia = null;
         descripcion = "";
+        modos = ModosUtil.cargarListaModos();
+        tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
     }
 
     public void upload() {
@@ -55,7 +63,7 @@ public class NuevoGisCargaView implements Serializable{
             try {
                 status = true;
                 if(descripcion.isEmpty()){ descripcion="Sin descripcion";}
-                logDatos= dataProcesor.processDataFromFile(gisCarga.getFileName(),gisCarga.getInputstream(), fechaProgramacion, fechaVigencia,tipoDia,descripcion);
+                logDatos= dataProcesor.processDataFromFile(gisCarga.getFileName(),gisCarga.getInputstream(), fechaProgramacion, fechaVigencia,tipoDia,descripcion,modo);
                status =false;
                 if(dataProcesor.isExitoso()){
                     messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_GIS_CARGA_ALMACENADA);
@@ -88,6 +96,15 @@ public class NuevoGisCargaView implements Serializable{
             }
         }
         return false;
+    }
+
+    private void updateTipoDias(){
+        if(modo.equals("DUA")){
+            tiposDia = ModosUtil.cargarListaTipoDiaDual();
+        }else{
+            tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        }
+
     }
 
     public boolean isResultadosVisibles() {
@@ -190,5 +207,29 @@ public class NuevoGisCargaView implements Serializable{
 
     public void setLogDatos(List<LogDatos> logDatos) {
         this.logDatos = logDatos;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getTiposDia() {
+        return tiposDia;
+    }
+
+    public void setTiposDia(List<ListObject> tiposDia) {
+        this.tiposDia = tiposDia;
     }
 }

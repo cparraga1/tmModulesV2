@@ -21,13 +21,16 @@
 							<p:calendar id="button" value="#{gisCarga.fechaProgramacion}" showOn="button" />
 							<p:outputLabel for="buttonV" value="Fecha Vigencia (DD-MM-AAAA):" />
 							<p:calendar id="buttonV" value="#{gisCarga.fechaVigencia}" showOn="button" />
-							<p:outputLabel for="tipoDia" value="Tipo Día:" />
-							<p:selectOneMenu id="tipoDia" value="#{gisCarga.tipoDia}" style="width:125px">
-								<f:selectItem itemLabel="Select One" itemValue="" />
-								<f:selectItem itemLabel="Habil" itemValue="HABIL" />
-								<f:selectItem itemLabel="Sabado" itemValue="SABADO" />
-								<f:selectItem itemLabel="Festivo" itemValue="FESTIVO" />
+							<p:outputLabel value="Modo:"  />
+							<p:selectOneMenu  value="#{gisCarga.modo}" style="width:90%">
+								<f:selectItems value="#{gisCarga.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+								<p:ajax update="@form" listener="#{gisCarga.updateTipoDias}"/>
 							</p:selectOneMenu>
+							<p:outputLabel value="Tipo Día:"  />
+							<p:selectOneMenu id="tipoDia" value="#{gisCarga.tipoDia}" style="width:90%">
+								<f:selectItems value="#{gisCarga.tiposDia}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+							</p:selectOneMenu>
+
 							<p:outputLabel value="Gis de Carga:" />
 							<p:fileUpload value="#{gisCarga.gisCarga}" label="Seleccionar"
 										  mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>

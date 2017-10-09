@@ -29,6 +29,11 @@
                             <p:inputText value="#{matrizDis.numeracion}" id="numeracion"/>
                             <p:outputLabel value="Descripción:"  />
                             <p:inputText value="#{matrizDis.descripcion}" />
+                            <p:outputLabel value="Modo:"  />
+                            <p:selectOneMenu  value="#{matrizDis.modo}" style="width:90%">
+                                <f:selectItems value="#{matrizDis.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                            </p:selectOneMenu>
+
                             <p:outputLabel for="buttonV" value="Fecha Hábil (DD-MM-AAAA):" />
                             <p:calendar id="buttonV" value="#{matrizDis.fechaDeVigencia}" showOn="button" />
                             <p:outputLabel for="buttonS" value="Fecha Sabado (DD-MM-AAAA):" />
