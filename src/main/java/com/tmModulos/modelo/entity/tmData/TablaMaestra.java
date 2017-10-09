@@ -25,6 +25,9 @@ public class TablaMaestra {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "modo")
+    private String modo;
+
     @Column(name = "tipo_dia")
     private String tipoDia;
 
@@ -50,16 +53,20 @@ public class TablaMaestra {
     private String fechaCreacionFormato;
     @Transient
     private String fechaProgramacionFormato;
+    @Transient
+    private String modoFormatted;
 
     public TablaMaestra() {
     }
 
-    public TablaMaestra(Date fechaCreacion, Date fechaVigencia, String descripcion, MatrizDistancia matrizDistancia, GisCarga gisCarga) {
+    public TablaMaestra(Date fechaCreacion, Date fechaVigencia, String descripcion, MatrizDistancia matrizDistancia, GisCarga gisCarga,String modo) {
         this.fechaCreacion = fechaCreacion;
         this.fechaVigencia = fechaVigencia;
         this.descripcion = descripcion;
         this.matrizDistancia = matrizDistancia;
         this.gisCarga = gisCarga;
+        this.modo = modo;
+
     }
 
     public long getId() {
@@ -158,5 +165,18 @@ public class TablaMaestra {
 
     public void setTipoDia(String tipoDia) {
         this.tipoDia = tipoDia;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public String getModoFormatted() {
+        if(modo.equals("DUA")) return "DUAL";
+        return "TRONCAL";
     }
 }

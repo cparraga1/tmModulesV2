@@ -49,6 +49,10 @@ public class MatrizDistanciaService {
         return matrizDistanciaDao.getMatrizDistanciaAll();
     }
 
+    public List<MatrizDistancia> getMatrizDistanciaByModo(String modo){
+        return matrizDistanciaDao.getMatrizDistanciaByModo(modo);
+    }
+
     public List<MatrizDistancia> getMatrizDistanciaByFecha(String tipoFecha,Date fecha){
         return matrizDistanciaDao.getMatrizDistanciaByFecha(tipoFecha,fecha);
     }

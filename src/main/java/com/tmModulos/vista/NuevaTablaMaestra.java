@@ -1,7 +1,9 @@
 package com.tmModulos.vista;
 
 import com.tmModulos.controlador.procesador.TablaMaestraProcessor;
+import com.tmModulos.controlador.utils.ListObject;
 import com.tmModulos.controlador.utils.LogDatos;
+import com.tmModulos.controlador.utils.ModosUtil;
 import com.tmModulos.modelo.entity.tmData.GisCarga;
 import com.tmModulos.modelo.entity.tmData.GisIntervalos;
 import com.tmModulos.modelo.entity.tmData.MatrizDistancia;
@@ -23,10 +25,12 @@ import java.util.List;
 public class NuevaTablaMaestra {
 
     private String tipoGeneracion;
+    private String tipoTablaMaestra;
     private String descripcion;
     private boolean archivoVisible;
     private boolean definitivaVisible;
     private boolean automaticoVisible;
+    private boolean infoBaseVisible;
     private Date fechaDeProgramacion;
     private Date fechaDeVigencia;
     private Date fechaDeCreacion;
@@ -37,7 +41,6 @@ public class NuevaTablaMaestra {
 
     private String gisCarga;
     private String selectedTipoDia;
-    private List<String> tipoDia;
 
     private List<GisCarga> gisCargaList;
     private List<GisCarga> filteredGisCargaList;
@@ -52,6 +55,11 @@ public class NuevaTablaMaestra {
     private boolean resultadosVisibles;
     private String tipoTabla;
 
+    private String tipoDia;
+    private String modo;
+    private List<ListObject> modos;
+    private List<ListObject> tiposDia;
+
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -64,19 +72,45 @@ public class NuevaTablaMaestra {
     public void init() {
         tipoGeneracion = "2";
         automaticoVisible=false;
+        definitivaVisible = false;
         archivoVisible=true;
-        gisCargaList = tablaMaestraProcessor.getGisCargaList();
-        matrizDistanciasList = tablaMaestraProcessor.getMatrizDistanciaAll();
-            tipoDia = new ArrayList<>();
-            tipoDia.add("HABIL");
-            tipoDia.add("SABADO");
-            tipoDia.add("FESTIVO");
+
+        modos= ModosUtil.cargarListaModos();
+        tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+    }
+
+    public void habilitarTipoTabla(){
+
+        infoBaseVisible = true;
+        if(tipoTablaMaestra.equals("Definitiva")){
+            definitivaVisible = true;
+        }else{
+            definitivaVisible = false;
+        }
+
+        updateTipoDias();
+        gisCargaList = tablaMaestraProcessor.getGisCargaList(modo);
+        matrizDistanciasList = tablaMaestraProcessor.getMatrizDistanciaAll(modo);
+
+    }
+
+    public void updateTipoDias(){
+        if(modo.equals("DUA")){
+            tiposDia = ModosUtil.cargarListaTipoDiaDual();
+        }else{
+            tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        }
+
+    }
+
+    public void reiniciar(){
+        infoBaseVisible = false;
     }
 
     public void copiarTablaMaestra(){
         if(descripcion!=null){
             if(fechaDeProgramacion!=null && fechaDeCreacion!=null){
-                logDatos = tablaMaestraProcessor.copiarUltimaTablaMaestra(fechaDeProgramacion,descripcion,selectedTipoDia,fechaDeCreacion);
+                logDatos = tablaMaestraProcessor.copiarUltimaTablaMaestra(fechaDeProgramacion,descripcion,tipoDia,fechaDeCreacion,modo);
                 resultadosVisibles=true;
                 if(logDatos.size()>2){
                     messagesView.error(Messages.MENSAJE_CALCULO_FALLA,Messages.ACCION_VERIFICACION);
@@ -92,7 +126,8 @@ public class NuevaTablaMaestra {
         if(valid()){
             try {
                 logDatos=tablaMaestraProcessor.calcularTablaMaestra(fechaDeProgramacion,
-                        descripcion,gisCarga,matrizDistancia,fechaDeVigencia,selectedTipoDia,intervalosTiempo.getFileName(),intervalosTiempo.getInputstream());
+                        descripcion,gisCarga,matrizDistancia,fechaDeVigencia,tipoDia,intervalosTiempo.getFileName(),
+                        intervalosTiempo.getInputstream(), modo);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -117,7 +152,7 @@ public class NuevaTablaMaestra {
 
     public boolean valid(){
         if(descripcion!=null){
-            if(fechaDeProgramacion!=null && selectedTipoDia != null){
+            if(fechaDeProgramacion!=null && tipoDia != null){
                 if(gisCarga!=null && matrizDistancia!=null && intervalosTiempo != null){
                     return true;
                 }
@@ -260,14 +295,6 @@ public class NuevaTablaMaestra {
         this.selectedTipoDia = selectedTipoDia;
     }
 
-    public List<String> getTipoDia() {
-        return tipoDia;
-    }
-
-    public void setTipoDia(List<String> tipoDia) {
-        this.tipoDia = tipoDia;
-    }
-
     public List<GisCarga> getFilteredGisCargaList() {
         return filteredGisCargaList;
     }
@@ -354,5 +381,53 @@ public class NuevaTablaMaestra {
 
     public void setIntervalosTiempo(UploadedFile intervalosTiempo) {
         this.intervalosTiempo = intervalosTiempo;
+    }
+
+    public String getTipoTablaMaestra() {
+        return tipoTablaMaestra;
+    }
+
+    public void setTipoTablaMaestra(String tipoTablaMaestra) {
+        this.tipoTablaMaestra = tipoTablaMaestra;
+    }
+
+    public boolean isInfoBaseVisible() {
+        return infoBaseVisible;
+    }
+
+    public void setInfoBaseVisible(boolean infoBaseVisible) {
+        this.infoBaseVisible = infoBaseVisible;
+    }
+
+    public String getTipoDia() {
+        return tipoDia;
+    }
+
+    public void setTipoDia(String tipoDia) {
+        this.tipoDia = tipoDia;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public List<ListObject> getTiposDia() {
+        return tiposDia;
+    }
+
+    public void setTiposDia(List<ListObject> tiposDia) {
+        this.tiposDia = tiposDia;
     }
 }

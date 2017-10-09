@@ -61,12 +61,12 @@ public class TablaMaestraProcessor {
     private Map serviciosIncluidos;
 
 
-    public List<GisCarga> getGisCargaList() {
-        return gisCargaService.getGisCargaAll();
+    public List<GisCarga> getGisCargaList(String modo) {
+        return gisCargaService.getGisCargaByModo(modo);
     }
 
-    public List<MatrizDistancia> getMatrizDistanciaAll() {
-        return matrizDistanciaService.getMatrizDistanciaAll();
+    public List<MatrizDistancia> getMatrizDistanciaAll(String modo) {
+        return matrizDistanciaService.getMatrizDistanciaByModo(modo);
     }
 
     public GisCargaService getGisCargaService() {
@@ -85,7 +85,8 @@ public class TablaMaestraProcessor {
         this.matrizDistanciaService = matrizDistanciaService;
     }
 
-    public List<LogDatos> calcularTablaMaestra(Date fechaDeProgramacion, String descripcion, String gisCarga, String matrizDistancia,Date fechaIntervalos,String tipoDia, String filename, InputStream in) {
+    public List<LogDatos> calcularTablaMaestra(Date fechaDeProgramacion, String descripcion, String gisCarga, String matrizDistancia,
+                                               Date fechaIntervalos,String tipoDia, String filename, InputStream in,String modo) {
         long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
@@ -102,53 +103,54 @@ public class TablaMaestraProcessor {
         MatrizDistancia matriz= matrizDistanciaService.getMatrizDistanciaById(matrizDistancia);
 
         //Crear tabla maestra con los parametros encontrados
-        TablaMaestra tablaMaestra = crearTablaMaestra(fechaDeProgramacion,new Date(),descripcion,gis,matriz);
+        TablaMaestra tablaMaestra = crearTablaMaestra(fechaDeProgramacion,new Date(),descripcion,gis,matriz,modo);
         tablaMaestra.setTipoDia(tipoDia);
         tablaMaestraService.addCustomer(tablaMaestra);
 
         // Traer servicios disponibles por tipo Dia
         TipoDia dia = tipoDiaService.getTipoDia(tipoDia);
-        List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
+        if(dia!=null){
+            List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
-        serviciosTipoDia = cleanServiciosTipoDia(serviciosTipoDia);
+            serviciosTipoDia = cleanServiciosTipoDia(serviciosTipoDia);
 
-       //Calcular intervalos
-        GisIntervalos gisIntervalos= generarIntervalosDeTiempo(fechaDeProgramacion,descripcion,tipoDia,tablaMaestra,dia);
-       // intervalosProcessor.precalcularIntervalosProgramacion();
+            //Calcular intervalos
+            GisIntervalos gisIntervalos= generarIntervalosDeTiempo(fechaDeProgramacion,descripcion,tipoDia,tablaMaestra,dia);
+            // intervalosProcessor.precalcularIntervalosProgramacion();
 
             for (ServicioTipoDia servicio: serviciosTipoDia) {
 
 
-            //Encontrar nodo Inicio del servicio por el codigo
-           // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
-            GisServicio gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
+                //Encontrar nodo Inicio del servicio por el codigo
+                // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
+                GisServicio gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
 
-            TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
-            tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
-
-
-            if(gisServicio!=null){
-
-                //Obtener información de los arco tiempo del GIS de carga
-                List<ArcoTiempo> arcoTiempoRecords = gisCargaService.getArcoTiempoByGisCargaAndServicio(gis,gisServicio);
-                if(arcoTiempoRecords.size()>0){
-
-                    ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
+                TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
+                tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
 
 
-                    //Obtener Nodo Inicio basado en la informacion del GIS de carga
-                    Nodo nodoInicio = getNodoInicio(arcoTiempoBase.getServicio().getNodoIncial());
-                    if(nodoInicio!=null){
-                        tablaMaestraServicios = agregarInfoNodo(servicio.getServicio(), tablaMaestraServicios, nodoInicio);
+                if(gisServicio!=null){
 
-                        Nodo nodoFinal = getNodoInicio(arcoTiempoBase.getServicio().getNodoFinal());
-                        if(nodoFinal!=null){
-                           tablaMaestraServicios =agregarInfoNodoFin(servicio.getServicio(),tablaMaestraServicios,nodoFinal);
+                    //Obtener información de los arco tiempo del GIS de carga
+                    List<ArcoTiempo> arcoTiempoRecords = gisCargaService.getArcoTiempoByGisCargaAndServicio(gis,gisServicio);
+                    if(arcoTiempoRecords.size()>0){
 
-                            //Calcular datos basicos matriz
-                            tablaMaestraServicios.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
-                            tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
-                            tablaMaestraServicios= calcularDistancia(tablaMaestraServicios,nodoInicio,nodoFinal,matriz);
+                        ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
+
+
+                        //Obtener Nodo Inicio basado en la informacion del GIS de carga
+                        Nodo nodoInicio = getNodoInicio(arcoTiempoBase.getServicio().getNodoIncial());
+                        if(nodoInicio!=null){
+                            tablaMaestraServicios = agregarInfoNodo(servicio.getServicio(), tablaMaestraServicios, nodoInicio);
+
+                            Nodo nodoFinal = getNodoInicio(arcoTiempoBase.getServicio().getNodoFinal());
+                            if(nodoFinal!=null){
+                                tablaMaestraServicios =agregarInfoNodoFin(servicio.getServicio(),tablaMaestraServicios,nodoFinal);
+
+                                //Calcular datos basicos matriz
+                                tablaMaestraServicios.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
+                                tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
+                                tablaMaestraServicios= calcularDistancia(tablaMaestraServicios,nodoInicio,nodoFinal,matriz);
 
                                 //Calcular ciclos
                                 CicloServicio cicloServicio = calcularCiclos(tablaMaestraServicios,arcoTiempoRecords);
@@ -163,13 +165,25 @@ public class TablaMaestraProcessor {
 
                                 //Calcular Intervalos de tiempo
                                 intervalosProcessor.precalcularIntervalosProgramacion();
-                                 List<Intervalos> intervaloses = intervalosProcessor.calcularIntervalos(tablaMaestraServicios, servicio);
+                                List<Intervalos> intervaloses = intervalosProcessor.calcularIntervalos(tablaMaestraServicios, servicio);
 //                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio,gisIntervalos);
 
 
+                            }else{
+                                log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado");
+                                logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado", TipoLog.WARN));
+                                tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
+                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                                tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                                tablaMaestraServicios.setIdentificadorb("0");
+                                tablaMaestraServicios.setIdentificadorc("0");
+                                tablaMaestraServicios.setSentido(1);
+                                tablaMaestraService.addTServicios(tablaMaestraServicios);
+                            }
+
                         }else{
-                            log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado");
-                            logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado", TipoLog.WARN));
+                            log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado");
+                            logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado", TipoLog.WARN));
                             tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
                             HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
                             tablaMaestraServicios.setHorariosServicio(horariosServicio);
@@ -179,35 +193,26 @@ public class TablaMaestraProcessor {
                             tablaMaestraService.addTServicios(tablaMaestraServicios);
                         }
 
+
                     }else{
-                        log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado");
-                        logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado", TipoLog.WARN));
-                        tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
-                        HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
-                        tablaMaestraServicios.setHorariosServicio(horariosServicio);
-                        tablaMaestraServicios.setIdentificadorb("0");
-                        tablaMaestraServicios.setIdentificadorc("0");
-                        tablaMaestraServicios.setSentido(1);
-                        tablaMaestraService.addTServicios(tablaMaestraServicios);
+                        servicioNoExisteEnGISCarga(servicio);
+
                     }
-
-
                 }else{
+                    tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
+
+                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                    tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                    tablaMaestraServicios.setIdentificadorb("0");
+                    tablaMaestraServicios.setIdentificadorc("0");
+                    tablaMaestraServicios.setSentido(1);
+                    tablaMaestraService.addTServicios(tablaMaestraServicios);
                     servicioNoExisteEnGISCarga(servicio);
-
                 }
-            }else{
-                tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
+            }
+        }
 
-                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
-                tablaMaestraServicios.setHorariosServicio(horariosServicio);
-                tablaMaestraServicios.setIdentificadorb("0");
-                tablaMaestraServicios.setIdentificadorc("0");
-                tablaMaestraServicios.setSentido(1);
-                tablaMaestraService.addTServicios(tablaMaestraServicios);
-                servicioNoExisteEnGISCarga(servicio);
-            }
-            }
+
         veriPreHorarios.deleteTablaHorario();
         horariosProvisionalServicio.deleteTablaHorarioFromFile();
         logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
@@ -633,8 +638,9 @@ public class TablaMaestraProcessor {
         return servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getSeccion()+"-"+codigo;
     }
 
-    private TablaMaestra crearTablaMaestra(Date fechaDeProgramacion, Date fechaCreacion, String descripcion, GisCarga gisCarga, MatrizDistancia matrizDistancia) {
-       TablaMaestra tablaMaestra = new TablaMaestra(fechaCreacion,fechaDeProgramacion,descripcion,matrizDistancia,gisCarga);
+    private TablaMaestra crearTablaMaestra(Date fechaDeProgramacion, Date fechaCreacion, String descripcion, GisCarga gisCarga,
+                                           MatrizDistancia matrizDistancia,String modo) {
+       TablaMaestra tablaMaestra = new TablaMaestra(fechaCreacion,fechaDeProgramacion,descripcion,matrizDistancia,gisCarga,modo);
         tablaMaestra.setEsDefinitiva(true);
         return tablaMaestra;
     }
@@ -647,8 +653,8 @@ public class TablaMaestraProcessor {
         this.logDatos = logDatos;
     }
 
-    public List<LogDatos> copiarUltimaTablaMaestra(Date fechaDeProgramacion, String descripcion,String tipoDia,Date fechaCreacion) {
-        TablaMaestra ultimaTablaMaestra = obtenerUltimaTablaMaestra(tipoDia,fechaCreacion);
+    public List<LogDatos> copiarUltimaTablaMaestra(Date fechaDeProgramacion, String descripcion,String tipoDia,Date fechaCreacion,String modo) {
+        TablaMaestra ultimaTablaMaestra = obtenerUltimaTablaMaestra(tipoDia,fechaCreacion,modo);
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
         if(ultimaTablaMaestra!=null){
@@ -669,6 +675,7 @@ public class TablaMaestraProcessor {
         nuevaTablaMaestra.setTipoDia(tipoDia);
         nuevaTablaMaestra.setGisCarga(ultimaTablaMaestra.getGisCarga());
         nuevaTablaMaestra.setMatrizDistancia(ultimaTablaMaestra.getMatrizDistancia());
+        nuevaTablaMaestra.setModo(ultimaTablaMaestra.getModo());
 
         tablaMaestraService.addCustomer(nuevaTablaMaestra);
 
@@ -770,8 +777,8 @@ public class TablaMaestraProcessor {
 
     }
 
-    private TablaMaestra obtenerUltimaTablaMaestra(String tipoDia,Date fechaCreacion) {
-        return tablaMaestraService.getUltimaTablaMaestraByaTipoDia(tipoDia,fechaCreacion);
+    private TablaMaestra obtenerUltimaTablaMaestra(String tipoDia,Date fechaCreacion,String modo) {
+        return tablaMaestraService.getUltimaTablaMaestraByaTipoDia(tipoDia,fechaCreacion,modo);
     }
 
     public ProcessorUtils getProcessorUtils() {

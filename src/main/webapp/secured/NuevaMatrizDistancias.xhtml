@@ -26,22 +26,22 @@
                 <p:panel id="basic" header="Generar Matriz de distancia"  style="margin-bottom:20px">
                         <p:panelGrid style="border:none" columns="4" >
                             <p:outputLabel value="Numeración:" />
-                            <p:inputText value="#{matrizDis.numeracion}" id="numeracion"/>
+                            <p:inputText value="#{matrizDis.numeracion}" id="numeracion" style="width:90%"/>
                             <p:outputLabel value="Descripción:"  />
-                            <p:inputText value="#{matrizDis.descripcion}" />
+                            <p:inputText value="#{matrizDis.descripcion}" style="width:90%"/>
                             <p:outputLabel value="Modo:"  />
                             <p:selectOneMenu  value="#{matrizDis.modo}" style="width:90%">
                                 <f:selectItems value="#{matrizDis.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel for="buttonV" value="Fecha Hábil (DD-MM-AAAA):" />
-                            <p:calendar id="buttonV" value="#{matrizDis.fechaDeVigencia}" showOn="button" />
+                            <p:calendar id="buttonV" value="#{matrizDis.fechaDeVigencia}" showOn="button" style="width:90%"/>
                             <p:outputLabel for="buttonS" value="Fecha Sabado (DD-MM-AAAA):" />
-                            <p:calendar id="buttonS" value="#{matrizDis.fechaSabado}" showOn="button" />
+                            <p:calendar id="buttonS" value="#{matrizDis.fechaSabado}" showOn="button" style="width:90%"/>
                             <p:outputLabel for="buttonF" value="Fecha Festivos (DD-MM-AAAA):" />
-                            <p:calendar id="buttonF" value="#{matrizDis.fechaFestivos}" showOn="button" />
+                            <p:calendar id="buttonF" value="#{matrizDis.fechaFestivos}" showOn="button" style="width:90%"/>
                             <p:outputLabel value="Archivo Matriz de Distancias (DD-MM-AAAA):" />
-                            <p:fileUpload  label="Seleccionar" value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
+                            <p:fileUpload  label="Seleccionar" value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/" style="width:90%"/>
 
                             <p:commandButton value="Guardar" action="#{matrizDis.cargarArchivo}" ajax="false"
                                              icon="ui-icon ui-icon-disk" id="withIcon"

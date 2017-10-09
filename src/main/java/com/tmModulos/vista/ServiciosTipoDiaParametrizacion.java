@@ -2,6 +2,8 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.OrdenServiciosService;
 import com.tmModulos.controlador.servicios.ServicioService;
+import com.tmModulos.controlador.utils.ListObject;
+import com.tmModulos.controlador.utils.ModosUtil;
 import com.tmModulos.modelo.entity.tmData.Servicio;
 import com.tmModulos.modelo.entity.tmData.ServicioTipoDia;
 import com.tmModulos.modelo.entity.tmData.TipoDia;
@@ -42,6 +44,11 @@ public class ServiciosTipoDiaParametrizacion {
     private String tipoDiaSeleccionado;
     private TipoDia tipoDia;
     private UploadedFile ordenServiciosFile;
+
+    private List<ListObject> modos;
+    private List<ListObject> tiposDia;
+    private String modo;
+
 
 
     public void inicio(){
@@ -117,7 +124,12 @@ public class ServiciosTipoDiaParametrizacion {
 
     public void habilitarNuevo(){
         nuevoServicio= new ServicioTipoDia();
-        nuevoServicio.setOrden(serviciosRecords.get(serviciosRecords.size()-1).getOrden()+1);
+        if(serviciosRecords.size()>0){
+            nuevoServicio.setOrden(serviciosRecords.get(serviciosRecords.size()-1).getOrden()+1);
+        }else{
+            nuevoServicio.setOrden(1);
+        }
+
     }
 
     public void actualizarOrdenServicios(){
@@ -159,6 +171,17 @@ public class ServiciosTipoDiaParametrizacion {
     @PostConstruct
     public void init() {
         serviciosPrincipalesRecords = servicioService.getServicioAll();
+        modos = ModosUtil.cargarListaModos();
+        tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+    }
+
+    public void updateTipoDias(){
+        if(modo.equals("DUA")){
+            tiposDia = ModosUtil.cargarListaTipoDiaDual();
+        }else{
+            tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        }
+
     }
 
 
@@ -256,5 +279,37 @@ public class ServiciosTipoDiaParametrizacion {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public TipoDia getTipoDia() {
+        return tipoDia;
+    }
+
+    public void setTipoDia(TipoDia tipoDia) {
+        this.tipoDia = tipoDia;
+    }
+
+    public List<ListObject> getModos() {
+        return modos;
+    }
+
+    public void setModos(List<ListObject> modos) {
+        this.modos = modos;
+    }
+
+    public List<ListObject> getTiposDia() {
+        return tiposDia;
+    }
+
+    public void setTiposDia(List<ListObject> tiposDia) {
+        this.tiposDia = tiposDia;
+    }
+
+    public String getModo() {
+        return modo;
+    }
+
+    public void setModo(String modo) {
+        this.modo = modo;
     }
 }

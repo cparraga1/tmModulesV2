@@ -52,6 +52,10 @@ public class GisCargaService {
     public List<GisCarga> getGisCargaAll() {
         return gisCargaDao.getGisCargaAll();
     }
+
+    public List<GisCarga> getGisCargaByModo(String modo){
+        return gisCargaDao.getGisCargaByModo(modo);
+    }
     public List<GisCarga> getGisCargaByFecha(String tipoFecha,Date fecha){ return  gisCargaDao.getGisCargaByFecha( tipoFecha, fecha);}
     public List<GisCarga> getGisCargaBetwenFechas(String tipoFecha,Date fechaIni,Date fechaFin){ return  gisCargaDao.getGisCargaBetwenFechas(tipoFecha,fechaIni,fechaFin);}
 

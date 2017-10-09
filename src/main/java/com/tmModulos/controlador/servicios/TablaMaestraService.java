@@ -118,8 +118,8 @@ public class TablaMaestraService {
         return tablaMaestraDao.getTablaMaestraBetwenFechas(tipoFecha,fechaIni,fechaFin);
     }
 
-    public TablaMaestra getUltimaTablaMaestraByaTipoDia(String tipoDia,Date fechaCreacion){
-        return tablaMaestraDao.getUltimaTablaMaestraByaTipoDia(tipoDia,fechaCreacion);
+    public TablaMaestra getUltimaTablaMaestraByaTipoDia(String tipoDia,Date fechaCreacion,String modo){
+        return tablaMaestraDao.getUltimaTablaMaestraByaTipoDia(tipoDia,fechaCreacion,modo);
     }
 
     public List<TablaMaestraServicios> getServiciosByTabla(TablaMaestra tablaMaestra){

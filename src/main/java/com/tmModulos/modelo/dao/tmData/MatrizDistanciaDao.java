@@ -54,6 +54,13 @@ public class MatrizDistanciaDao {
         return lista;
     }
 
+    public List<MatrizDistancia> getMatrizDistanciaByModo(String modo){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
+        criteria.add(Restrictions.eq("modo", modo));
+        List<MatrizDistancia> lista = criteria.list();
+        return lista;
+    }
+
     public List<MatrizDistancia> getMatrizDistanciaBetwenFechas(String tipoFecha,Date fechaIni,Date fechaFin){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
         criteria.add(  Restrictions.between(tipoFecha, fechaIni, fechaFin)  );

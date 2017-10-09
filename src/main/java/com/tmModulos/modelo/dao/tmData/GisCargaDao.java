@@ -67,4 +67,10 @@ public class GisCargaDao {
         criteria.add(Restrictions.eq("descripcion", id));
         return (GisCarga) criteria.uniqueResult();
     }
+
+    public List<GisCarga> getGisCargaByModo(String modo){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(GisCarga.class);
+        criteria.add(Restrictions.eq("modo", modo));
+        return criteria.list();
+    }
 }

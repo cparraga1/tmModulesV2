@@ -16,14 +16,16 @@
                 <p:growl id="message" showDetail="true" />
                 <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
-                        <p:panelGrid columns="3">
-                            <h:outputText value="Seleccione el tipo dia:" />
-                            <h:selectOneMenu value="#{serviciosTipoDiaP.tipoDiaSeleccionado}" style="width:100%" >
-                                <f:selectItem itemLabel="HABIL" itemValue="HABIL" />
-                                <f:selectItem itemLabel="SABADO" itemValue="SABADO" />
-                                <f:selectItem itemLabel="FESTIVO" itemValue="FESTIVO" />
-                                <f:selectItem itemLabel="TODOS" itemValue="TODOS" />
-                            </h:selectOneMenu>
+                        <p:panelGrid columns="5">
+                            <p:outputLabel value="Modo:"  />
+                            <p:selectOneMenu  value="#{serviciosTipoDiaP.modo}" style="width:90%">
+                                <f:selectItems value="#{serviciosTipoDiaP.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
+                                <p:ajax update="@form" listener="#{serviciosTipoDiaP.updateTipoDias}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Tipo Día:"  />
+                            <p:selectOneMenu id="tipoDia" value="#{serviciosTipoDiaP.tipoDiaSeleccionado}" style="width:90%">
+                                <f:selectItems value="#{serviciosTipoDiaP.tiposDia}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                            </p:selectOneMenu>
                             <p:commandButton value="Buscar" action="#{serviciosTipoDiaP.buscar}" ajax="false"
                                              icon="ui-icon ui-icon-disk" id="buscar"
                                              async="true" />

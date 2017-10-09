@@ -72,7 +72,7 @@ public class IntervalosProcessor {
     public GisIntervalos generarIntervalos(Date fechaVigencia, String descripcion,
                                            String tipoDia, TablaMaestra tablaMaestra,
                                            TipoDia servicio) {
-        GisIntervalos gisIntervalos = new GisIntervalos(new Date(),fechaVigencia,descripcion,"Habil",servicio,tablaMaestra);
+        GisIntervalos gisIntervalos = new GisIntervalos(new Date(),fechaVigencia,descripcion,tipoDia,servicio,tablaMaestra);
         horariosProvisionalServicio.addGisIntervalo(gisIntervalos);
         return gisIntervalos;
     }

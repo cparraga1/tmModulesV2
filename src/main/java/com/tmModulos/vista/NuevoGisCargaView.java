@@ -98,7 +98,7 @@ public class NuevoGisCargaView implements Serializable{
         return false;
     }
 
-    private void updateTipoDias(){
+    public void updateTipoDias(){
         if(modo.equals("DUA")){
             tiposDia = ModosUtil.cargarListaTipoDiaDual();
         }else{
