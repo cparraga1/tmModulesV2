@@ -94,7 +94,9 @@ public class MatrizProcessor {
             int config = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.CONFIG);
             int idSentido = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.ID_SENTIDO);
             String sentido = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.SENTIDO);
-            servicioDistancia = new ServicioDistancia(nombreMatriz,macro,linea,seccion,nombreLinea,sentido,config,idSentido);
+            String etiquetaLinea = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ETIQUETA_LINEA);
+            String tipoServicio = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.TIPO_SERVICIO);
+            servicioDistancia = new ServicioDistancia(nombreMatriz,macro,linea,seccion,nombreLinea,sentido,config,idSentido,etiquetaLinea,tipoServicio);
             servicioDistancia.setIdentificador(identificador);
             matrizDistanciaService.addServicioDistancia(servicioDistancia);
         }
@@ -141,12 +143,18 @@ public class MatrizProcessor {
                     int linea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.LINEA);
                     int sublinea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.SUBLINEA);
                     int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
+                    String operador = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.OPERADOR);
+                    String idParada = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ID_PARADA);
+                    String labelNodo = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.LABEL);
+                    String atributos = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ATRIBUTOS);
+                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_X);
+                    Double posY = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_Y);
                     String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
                     ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(
                             linea,sublinea,ruta,nombreRuta,codigoNodo,row);
                     guardarDistanciaNodos(matrizDistancia,
                             excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION),
-                            servicioDistancia,nodoNombre,codigoNodo+"");
+                            servicioDistancia,nodoNombre,codigoNodo+"",operador,idParada,labelNodo,atributos,posX,posY);
                 }else{
                     break;
                 }
@@ -200,12 +208,20 @@ public class MatrizProcessor {
         return matrizDistancia;
     }
 
-    private DistanciaNodos guardarDistanciaNodos(MatrizDistancia matrizDistancia, int distancia,ServicioDistancia servicioDistancia,String nodoNombre, String nodoCodigo){
+    private DistanciaNodos guardarDistanciaNodos(MatrizDistancia matrizDistancia, int distancia,ServicioDistancia servicioDistancia,String nodoNombre,
+                                                 String nodoCodigo,String operador,String idParada,String label,String atributos,
+                                                 Double posX, Double posY){
         DistanciaNodos distanciaNodosByServicioAndPunto = matrizDistanciaService.getDistanciaNodosByServicioAndPunto(servicioDistancia, matrizDistancia,nodoCodigo);
         if(distanciaNodosByServicioAndPunto==null){
             DistanciaNodos distanciaNodos=new DistanciaNodos(distancia,matrizDistancia,servicioDistancia);
             distanciaNodos.setNodoNombre(nodoNombre);
             distanciaNodos.setNodoCodigo(nodoCodigo);
+            distanciaNodos.setOperador(operador);
+            distanciaNodos.setIdParada(idParada);
+            distanciaNodos.setLabelNodo(label);
+            distanciaNodos.setAtributos(atributos);
+            distanciaNodos.setPosX(posX);
+            distanciaNodos.setPosY(posY);
             matrizDistanciaService.addDistanciaNodos(distanciaNodos);
             return distanciaNodos;
         }

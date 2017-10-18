@@ -21,6 +21,24 @@ public class DistanciaNodos {
     @Column(name = "nodo_codigo")
     private String nodoCodigo;
 
+    @Column(name = "operador")
+    private String operador;
+
+    @Column(name = "id_parada")
+    private String idParada;
+
+    @Column(name = "label_nodo")
+    private String labelNodo;
+
+    @Column(name = "atributos")
+    private String atributos;
+
+    @Column(name = "pos_x")
+    private Double posX;
+
+    @Column(name = "pos_y")
+    private Double posY;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "matriz_distancia", nullable = false)
@@ -85,5 +103,53 @@ public class DistanciaNodos {
 
     public void setNodoCodigo(String nodoCodigo) {
         this.nodoCodigo = nodoCodigo;
+    }
+
+    public String getOperador() {
+        return operador;
+    }
+
+    public void setOperador(String operador) {
+        this.operador = operador;
+    }
+
+    public String getIdParada() {
+        return idParada;
+    }
+
+    public void setIdParada(String idParada) {
+        this.idParada = idParada;
+    }
+
+    public String getLabelNodo() {
+        return labelNodo;
+    }
+
+    public void setLabelNodo(String labelNodo) {
+        this.labelNodo = labelNodo;
+    }
+
+    public String getAtributos() {
+        return atributos;
+    }
+
+    public void setAtributos(String atributos) {
+        this.atributos = atributos;
+    }
+
+    public Double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(Double posX) {
+        this.posX = posX;
+    }
+
+    public Double getPosY() {
+        return posY;
+    }
+
+    public void setPosY(Double posY) {
+        this.posY = posY;
     }
 }

@@ -34,4 +34,17 @@ public class ExcelExtract {
         return 0;
     }
 
+    public double getDoubleCellValue(Row row, int number) {
+        Cell cell = row.getCell(number);
+        switch (cell.getCellType()){
+            case Cell.CELL_TYPE_BLANK:
+                return 0.0;
+            case Cell.CELL_TYPE_NUMERIC:
+                return  cell.getNumericCellValue();
+            case Cell.CELL_TYPE_STRING:
+                return Double.parseDouble(cell.getStringCellValue());
+        }
+        return 0.0;
+    }
+
 }

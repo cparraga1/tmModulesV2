@@ -28,6 +28,13 @@ public class ServicioDistancia {
     @Column(name = "nombre_linea")
     private String nombreLinea;
 
+
+    @Column(name = "etiqueta_linea")
+    private String etiquetaLinea;
+
+    @Column(name = "tipo_servicio")
+    private String tipoServicio;
+
     @Column(name = "sentido")
     private String sentido;
 
@@ -53,7 +60,7 @@ public class ServicioDistancia {
         this.seccion = seccion;
     }
 
-    public ServicioDistancia(String ruta, int macro, int linea, int seccion, String nombreLinea, String sentido, int config, int id_sentido) {
+    public ServicioDistancia(String ruta, int macro, int linea, int seccion, String nombreLinea, String sentido, int config, int id_sentido,String etiqueta,String tipoServicio) {
         this.ruta = ruta;
         this.macro = macro;
         this.linea = linea;
@@ -62,6 +69,8 @@ public class ServicioDistancia {
         this.sentido = sentido;
         this.config = config;
         this.id_sentido = id_sentido;
+        this.etiquetaLinea = etiqueta;
+        this.tipoServicio = tipoServicio;
     }
 
     public long getId() {
@@ -151,5 +160,23 @@ public class ServicioDistancia {
 
     public void setId_sentido(Integer id_sentido) {
         this.id_sentido = id_sentido;
+    }
+
+
+
+    public String getEtiquetaLinea() {
+        return etiquetaLinea;
+    }
+
+    public void setEtiquetaLinea(String etiquetaLinea) {
+        this.etiquetaLinea = etiquetaLinea;
+    }
+
+    public String getTipoServicio() {
+        return tipoServicio;
+    }
+
+    public void setTipoServicio(String tipoServicio) {
+        this.tipoServicio = tipoServicio;
     }
 }

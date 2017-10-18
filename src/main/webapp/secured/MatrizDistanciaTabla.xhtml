@@ -47,6 +47,10 @@
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" rendered="#{loginBean.puedeEliminar()}"/>
 
+                            <p:column headerText="Operador"  visible="false">
+                                <h:outputText value="#{matriz.operador}" />
+                            </p:column>
+
                             <p:column filterBy="#{matriz.servicioDistancia.macro}" filterStyle="width: 65px;"
                                       headerText="Línea"  filterMatchMode="contains" sortBy="#{matriz.servicioDistancia.macro}"
                                       style="width: 70px">
@@ -55,6 +59,14 @@
 
                             <p:column headerText="Nombre Linea"  visible="false">
                                 <h:outputText value="#{matriz.servicioDistancia.nombreLinea}" />
+                            </p:column>
+
+                            <p:column headerText="Etiqueta Linea"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.etiquetaLinea}" />
+                            </p:column>
+
+                            <p:column headerText="Tipo Servicio"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.tipoServicio}" />
                             </p:column>
 
                             <p:column headerText="Config"  visible="false">
@@ -87,10 +99,18 @@
                                 <h:outputText value="#{matriz.servicioDistancia.sentido}" />
                             </p:column>
 
+                            <p:column headerText="Id Parada"  visible="false">
+                                <h:outputText value="#{matriz.idParada}" />
+                            </p:column>
+
                             <p:column filterBy="#{matriz.nodoCodigo}" headerText="Nodo" filterStyle="width: 65px;"
                                       filterMatchMode="contains" sortBy="#{matriz.nodoCodigo}"
                                       style="width: 70px">
                                 <h:outputText value="#{matriz.nodoCodigo}" />
+                            </p:column>
+
+                            <p:column headerText="Label"  visible="false">
+                                <h:outputText value="#{matriz.labelNodo}" />
                             </p:column>
 
                             <p:column filterBy="#{matriz.nodoNombre}" headerText="Nombre Nodo"  filterMatchMode="contains" sortBy="#{matriz.nodoNombre}"
@@ -98,10 +118,22 @@
                                 <h:outputText value="#{matriz.nodoNombre}" />
                             </p:column>
 
+                            <p:column headerText="Pos X"  visible="false">
+                                <h:outputText value="#{matriz.posX}" />
+                            </p:column>
+
+                            <p:column headerText="Pos Y"  visible="false">
+                                <h:outputText value="#{matriz.posY}" />
+                            </p:column>
+
                             <p:column filterBy="#{matriz.distancia}" headerText="Posición" filterStyle="width: 90px;"
                                       filterMatchMode="contains" sortBy="#{matriz.distancia}"
                                       style="width: 95px">
                                 <h:outputText value="#{matriz.distancia}" />
+                            </p:column>
+
+                            <p:column headerText="Atributos"  visible="false">
+                                <h:outputText value="#{matriz.atributos}" />
                             </p:column>
 
 
