@@ -15,15 +15,21 @@
             <h:form >
                 <p:panel id="basic" header="Matriz de distancia" style="margin-bottom:20px" visible="#{busquedaMatriz.visibleRecords}">
                     <div style="margin-top:20px">
-                        <p:panelGrid columns="4">
+                        <p:panelGrid columns="5">
                             <p:commandButton actionListener="#{busquedaMatriz.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
                             <p:commandButton actionListener="#{busquedaMatriz.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
 
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
-                                <p:graphicImage value="/resources/images/excel.png" width="24"/>
+                                <p:graphicImage value="/resources/images/excelAll.png" width="30" title="Formato Completo"/>
                                 <p:dataExporter type="xls"
                                                 target="matriz" fileName="#{busquedaMatriz.selectedMatriz.descripcion}"  />
+                            </h:commandLink>
+
+                            <h:commandLink>
+                                <p:graphicImage value="/resources/images/excel.png" width="30" title="Formato Reducido"/>
+                                <p:dataExporter type="xls"
+                                                target="matrizMinified" fileName="#{busquedaMatriz.selectedMatriz.descripcion}"  />
                             </h:commandLink>
                         </p:panelGrid>
                         <div class="tablaMTexto">
@@ -47,7 +53,7 @@
 
                             <p:column selectionMode="multiple" style="width:16px;text-align:center" exportable="false" rendered="#{loginBean.puedeEliminar()}"/>
 
-                            <p:column headerText="Operador"  visible="false">
+                            <p:column headerText="Operador"  visible="false" >
                                 <h:outputText value="#{matriz.operador}" />
                             </p:column>
 
@@ -153,6 +159,58 @@
                             </f:facet>
 
                         </p:dataTable>
+
+                        <p:panel visible="false">
+                        <p:dataTable id="matrizMinified" var="matriz" value="#{busquedaMatriz.distanciaNodosRecords}" widgetVar="matrizMinified"
+                                     emptyMessage="No hay registros relacionados a la busqueda"
+                                     scrollable="true" scrollWidth="100%" scrollHeight="510"
+                        >
+
+                            <p:column  headerText="Línea" >
+                                <h:outputText value="#{matriz.servicioDistancia.macro}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre Linea"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.nombreLinea}" />
+                            </p:column>
+
+                            <p:column headerText="Config"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.config}" />
+                            </p:column>
+
+                            <p:column  headerText="Sublinea" >
+                                <h:outputText value="#{matriz.servicioDistancia.linea}" />
+                            </p:column>
+
+                            <p:column headerText="Ruta" >
+                                <h:outputText value="#{matriz.servicioDistancia.seccion}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre Ruta">
+                                <h:outputText value="#{matriz.servicioDistancia.ruta}" />
+                            </p:column>
+
+                            <p:column headerText="Id Sentido"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.id_sentido}" />
+                            </p:column>
+
+                            <p:column headerText="Sentido"  visible="false">
+                                <h:outputText value="#{matriz.servicioDistancia.sentido}" />
+                            </p:column>
+
+                            <p:column  headerText="Nodo">
+                                <h:outputText value="#{matriz.nodoCodigo}" />
+                            </p:column>
+
+                            <p:column headerText="Nombre Nodo" >
+                                <h:outputText value="#{matriz.nodoNombre}" />
+                            </p:column>
+
+                            <p:column  headerText="Posición" >
+                                <h:outputText value="#{matriz.distancia}" />
+                            </p:column>
+                        </p:dataTable>
+                        </p:panel>
                         <p:confirmDialog message="Esta seguro de eliminar estos registro?"
                                          showEffect="fade"
                                          hideEffect="explode"
