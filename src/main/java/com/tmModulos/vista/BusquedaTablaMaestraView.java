@@ -330,7 +330,7 @@ public class BusquedaTablaMaestraView {
     private boolean existeTrayectoYNombreDeServicio(TablaMaestraServicios servicioSeleccionado) {
         int repeticiones=0;
         for( TablaMaestraServicios servicios: tServiciosRecords){
-            if(servicioSeleccionado.getTrayecto().equals(servicios.getTrayecto()) &&
+            if(servicioSeleccionado.getIdentificador().equals(servicios.getIdentificador()) &&
                     servicioSeleccionado.getNombreEspecial().equals(servicios.getNombreEspecial())){
                 repeticiones++;
             }

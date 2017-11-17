@@ -238,6 +238,8 @@ public class TablaMaestraProcessor {
         Tipologia tipologiaByNombre = tablaMaestraService.getTipologiaByNombre(tablaMaestraServicios.getTipologiaAux());
         tablaMaestraServicios.setTipologia(tipologiaByNombre);
         tablaMaestraServicios.setHorariosServicio(definirHorarioServiciosVacio());
+        tablaMaestraServicios.setEstado(true);
+        tablaMaestraServicios.setSecuencia(1);
         tablaMaestraService.addTServicios(tablaMaestraServicios);
         return true;
     }
