@@ -41,7 +41,7 @@ public class TempPosDao {
     }
 
 
-    public void addTablaHorarioFromFile(String filename) throws Exception {
+    public void addTablaHorarioFromFile(String filename,String delimiter) throws Exception {
         SessionFactory factory = getSessionFactory();
         Session session = factory.getCurrentSession();
         SessionImplementor sessImpl = (SessionImplementor) session;
@@ -52,7 +52,7 @@ public class TempPosDao {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
             copyManager.copyIn("COPY temp_pos (jornada,tipo,operador,inst,serbus,evento,linea,coche,sublinea,ruta,punto,nodo,viaje,ad1,ad2,ad3,ad4,ad5)\n" +
-                    " FROM STDIN DELIMITER ';' CSV HEADER", fileReader );
+                    " FROM STDIN DELIMITER '"+delimiter+"' CSV HEADER", fileReader );
         } catch (SQLException e) {
             throw new Exception(e.getMessage());
         } catch (FileNotFoundException e) {

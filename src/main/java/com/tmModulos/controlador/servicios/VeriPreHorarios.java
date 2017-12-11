@@ -71,9 +71,17 @@ public class VeriPreHorarios {
     }
 
     public void addTablaHorarioFromFile(String filename) throws Exception {
-
         try{
-            tempHorarioDao.addTablaHorarioFromFile(filename);
+            tempHorarioDao.addTablaHorarioFromFile(filename,";");
+        }catch (Exception e){
+           addTablaHorarioFormatoComa(filename);
+
+        }
+    }
+
+    private void addTablaHorarioFormatoComa(String filename) throws Exception {
+        try {
+            tempHorarioDao.addTablaHorarioFromFile(filename,",");
         }catch (Exception e){
             throw new Exception("Archivo con Informacion no esperada");
         }
@@ -99,6 +107,10 @@ public class VeriPreHorarios {
         return tempHorarioDao.getSumInstanteByFranjaHora(idServicio,inicio,fin);
     }
 
+    public String findDelimiterFromFile (String filename){
+//        filename.split(".")
+        return ";";
+    }
 
 }
 
