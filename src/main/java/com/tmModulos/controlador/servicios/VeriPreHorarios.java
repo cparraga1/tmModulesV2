@@ -83,7 +83,7 @@ public class VeriPreHorarios {
         try {
             tempHorarioDao.addTablaHorarioFromFile(filename,",");
         }catch (Exception e){
-            throw new Exception("Archivo con Informacion no esperada");
+            throw new Exception("Archivo con Informacion no esperada ");
         }
     }
 

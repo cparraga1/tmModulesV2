@@ -67,7 +67,8 @@ public class EquivalenciasDao {
         try {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
-            copyManager.copyIn("COPY temp_expediciones (evento,tipo,hora_inicio,punto_inicio,hora_fin,punto_fin,dur,bus,identificador,km,inferido,noo,frec,ser_bus,des_dur,des_frec) from  STDIN DELIMITER ';' CSV HEADER", fileReader );
+            copyManager.copyIn("COPY temp_expediciones (evento,tipo,hora_inicio,punto_inicio,hora_fin,punto_fin,dur,bus,identificador,km,inferido,noo,frec,ser_bus,des_dur,des_frec)" +
+                    " from  STDIN DELIMITER ';' CSV HEADER", fileReader );
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());
