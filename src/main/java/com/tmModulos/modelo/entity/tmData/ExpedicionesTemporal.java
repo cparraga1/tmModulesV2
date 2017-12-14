@@ -2,6 +2,7 @@ package com.tmModulos.modelo.entity.tmData;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.sql.Time;
 
 @Entity
 @Table(name="temp_expediciones")
@@ -19,8 +20,17 @@ public class ExpedicionesTemporal {
     @Column(name = "hora_fin")
     private String horaFin;
 
+    @Column(name = "inst_inicio")
+    private Time instInicio;
+
+    @Column(name = "inst_fin")
+    private Time instFin;
+
     @Column(name = "punto_inicio")
     private Integer puntoInicio;
+
+    @Column(name = "dia")
+    private Integer dia;
 
     @Column(name = "punto_fin")
     private Integer puntoFin;
@@ -81,5 +91,37 @@ public class ExpedicionesTemporal {
 
     public void setKm(String km) {
         this.km = km;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Time getInstInicio() {
+        return instInicio;
+    }
+
+    public void setInstInicio(Time instInicio) {
+        this.instInicio = instInicio;
+    }
+
+    public Time getInstFin() {
+        return instFin;
+    }
+
+    public void setInstFin(Time instFin) {
+        this.instFin = instFin;
+    }
+
+    public Integer getDia() {
+        return dia;
+    }
+
+    public void setDia(Integer dia) {
+        this.dia = dia;
     }
 }
