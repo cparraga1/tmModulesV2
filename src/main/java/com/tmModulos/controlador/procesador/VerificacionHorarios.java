@@ -34,6 +34,9 @@ public class VerificacionHorarios {
     @Autowired
     private IntervalosVerificacionHorarios intervalosVeri;
 
+    @Autowired
+    private CargaDatosIntervalosPre intervalosPre;
+
     private CellStyle cellStyle;
     private CellStyle generalStyle;
     private Font font;
@@ -52,12 +55,13 @@ public class VerificacionHorarios {
         getIntervalosComparacion(min, max);
 
         if(tipoValidacion.equals("Pre")){
-            veriPreHorarios.deleteEquivalencias();
-            veriPreHorarios.addEquivalenciasFromFile(destination);
+//            veriPreHorarios.deleteEquivalencias();
+//            veriPreHorarios.addEquivalenciasFromFile(destination);
+            HashMap<String,List<PreDatos>> expediciones = intervalosPre.getExpediciones(destination);
             System.out.println("Guarde en Base de Datos");
-            compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
+//            compareDataExcel(fileForTipoDia(tipoDia),tipoValidacion);
 
-            veriPreHorarios.deleteEquivalencias();
+//            veriPreHorarios.deleteEquivalencias();
 
         } else{
             veriPreHorarios.deleteTablaHorario();
