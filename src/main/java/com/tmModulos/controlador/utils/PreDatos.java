@@ -49,6 +49,18 @@ public class PreDatos{
 
     @Override
     public String toString() {
-        return hora+":"+minutos+":"+segundos;
+        String horaValor = ""+hora;
+        String minutoValor = ""+minutos;
+        String segundosValor = ""+segundos;
+        if(String.valueOf(minutos).length() == 1){
+            minutoValor = "0"+minutos;
+        }
+        if(String.valueOf(hora).length() == 1){
+            horaValor = "0"+hora;
+        }
+        if(String.valueOf(segundos).length() == 1){
+            segundosValor = "0"+segundos;
+        }
+        return horaValor+":"+minutoValor+":"+segundosValor;
     }
 }
