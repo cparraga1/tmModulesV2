@@ -12,7 +12,9 @@ import java.math.RoundingMode;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -159,5 +161,17 @@ public class ProcessorUtils {
 
             }
         }
+    }
+
+    public List<Integer> convertInt(String hora) {
+        if(!hora.equals("")){
+            List<Integer> valores = new ArrayList<>();
+            String[] horaSplit = hora.split(":");
+            valores.add(Integer.parseInt(horaSplit[0]));
+            valores.add(Integer.parseInt(horaSplit[1]));
+            valores.add(Integer.parseInt(horaSplit[2]));
+            return valores;
+        }
+        return null;
     }
 }

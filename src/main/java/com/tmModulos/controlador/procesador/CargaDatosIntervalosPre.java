@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class CargaDatosIntervalosPre {
@@ -45,33 +43,67 @@ public class CargaDatosIntervalosPre {
                     if(tipo.equals(tipoAceptado)){
                             String identificador = calcularIdentificador(row);
                             if(expediciones.containsKey(identificador)){
-                                List<PreDatos> datos = expediciones.get(identificador);
-                                datos.add(nuevoPreDatos(row));
+                                expediciones.get(identificador).add(nuevoPreDatos(row));
                             }else{
-
+                                List<PreDatos> datos = new ArrayList<>();
+                                datos.add(nuevoPreDatos(row));
+                                expediciones.put(identificador,datos);
                             }
                     }
 
                 }
             }
+            ordenarLista(expediciones);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return expediciones;
+    }
+
+    private void ordenarLista(HashMap<String, List<PreDatos>> expediciones) {
+        for (Map.Entry<String,List<PreDatos>> entry : expediciones.entrySet()) {
+            List<PreDatos> lista = entry.getValue();
+
+            Collections.sort(lista, new Comparator<PreDatos>() {
+                @Override
+                public int compare(PreDatos lhs, PreDatos rhs) {
+                    // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                    if( lhs.getHora() == rhs.getHora()){
+                        if(lhs.getMinutos() == rhs.getMinutos()){
+                            return lhs.getSegundos() < rhs.getSegundos() ? -1 : (lhs.getSegundos() > rhs.getSegundos()) ? 1 : 0;
+                        }else{
+                            return lhs.getMinutos() < rhs.getMinutos() ? -1 : (lhs.getMinutos() > rhs.getMinutos()) ? 1 : 0;
+                        }
+                    }
+                    return lhs.getHora() < rhs.getHora() ? -1 : (lhs.getHora() > rhs.getHora()) ? 1 : 0;
+                }
+            });
+        }
+
     }
 
     private PreDatos nuevoPreDatos(Row row) {
         PreDatos preDatos = new PreDatos();
-        String horaInicio = excelExtract.getStringCellValue(row,PreDatosDEF.INICIO);
+        String horaInicio = excelExtract.getStringCellDateValue(row,PreDatosDEF.INICIO);
+        String[] horaSplit = horaInicio.split(":");
+        if(horaSplit[0].equals("00")){
+            horaSplit[0] = "24";
+        }else if (horaSplit[0].equals("01")) {
+            horaSplit[0] = "25";
+        }
+        preDatos.setHora(Integer.parseInt(horaSplit[0]));
+        preDatos.setMinutos(Integer.parseInt(horaSplit[1]));
+        preDatos.setSegundos(Integer.parseInt(horaSplit[2]));
+        preDatos.setDistancia(excelExtract.getDoubleCellValue(row,PreDatosDEF.DISTANCIA));
         return preDatos;
     }
 
     private String calcularIdentificador(Row row) {
         String linea = excelExtract.getStringCellValue(row,PreDatosDEF.LINEA);
-        Integer punto = Integer.parseInt(excelExtract.getStringCellValue(row,PreDatosDEF.PUNTO));
+        Integer punto = excelExtract.getNumericCellValue(row,PreDatosDEF.PUNTO);
         punto = punto - 1000000;
         linea = linea+"-"+punto;
         return linea;

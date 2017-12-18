@@ -4,6 +4,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -21,6 +23,14 @@ public class ExcelExtract {
                 return cell.getStringCellValue();
         }
         return "";
+    }
+
+    public String getStringCellDateValue(Row row, int number) {
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        Cell cell = row.getCell(number);
+        Date date = cell.getDateCellValue();
+       return df.format(date);
+
     }
 
     public int getNumericCellValue(Row row, int number) {

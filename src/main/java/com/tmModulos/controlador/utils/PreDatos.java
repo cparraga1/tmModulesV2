@@ -1,9 +1,11 @@
 package com.tmModulos.controlador.utils;
 
+import java.util.Comparator;
+
 /**
  * Created by user on 14/12/2017.
  */
-public class PreDatos {
+public class PreDatos{
 
     private int hora;
     private int minutos;
@@ -43,5 +45,10 @@ public class PreDatos {
 
     public void setDistancia(Double distancia) {
         this.distancia = distancia;
+    }
+
+    @Override
+    public String toString() {
+        return hora+":"+minutos+":"+segundos;
     }
 }

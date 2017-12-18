@@ -2,6 +2,7 @@ package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.FranjaHorarioService;
 import com.tmModulos.controlador.utils.DateMap;
+import com.tmModulos.controlador.utils.PreDatos;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
 import com.tmModulos.modelo.entity.tmData.TempHorario;
@@ -10,9 +11,6 @@ import com.tmModulos.modelo.entity.tmData.TipoFranja;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -42,8 +40,13 @@ public class IntervalosVerificacionHorarios {
         }
     }
 
-    public List<String> calcularIntervalos(List<ExpedicionesTemporal> expedicionesTemporals, Date horaInicio, Date horaInicioB,
-                                           Date horaFin, Date horaFinB) {
+    public List<String> calcularIntervalos(List<PreDatos> expedicionesTemporals, List<Integer> inicio, List<Integer> inicioB,
+                                           List<Integer> fin, List<Integer> finB) {
+
+//        Date horaInicio = processorUtils.convertirATime(inicio.get(0)+":"+inicio.get(1)+":"+inicio.get(2));
+//        Date horaInicioB =  processorUtils.convertirATime(inicioB.get(0)+":"+inicioB.get(1)+":"+inicioB.get(2));
+//        Date horaFin = processorUtils.convertirATime(fin.get(0)+":"+fin.get(1)+":"+fin.get(2));
+//        Date horaFinB = processorUtils.convertirATime(finB.get(0)+":"+finB.get(1)+":"+finB.get(2));
 
         List<String> intervalosResultado = new ArrayList<>();
         List<Long> tiemposFranjaInicio = new ArrayList<>();
@@ -54,8 +57,8 @@ public class IntervalosVerificacionHorarios {
 
 
         if(franjas.size()>0){
-            for(ExpedicionesTemporal expediciones: expedicionesTemporals){
-                Date exp =  processorUtils.convertirATime(expediciones.getHoraInicio());
+            for(PreDatos expediciones: expedicionesTemporals){
+                Date exp =  processorUtils.convertirATime(expediciones.toString());
                 if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
                 }else if(estaEnelRango(exp,"Pico AM")){
