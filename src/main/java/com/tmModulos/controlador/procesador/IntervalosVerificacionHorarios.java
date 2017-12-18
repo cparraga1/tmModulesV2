@@ -82,8 +82,7 @@ public class IntervalosVerificacionHorarios {
 
     }
 
-    public List<String> calcularIntervalosPos(List<TempPos> tempHorarios, Date horaInicio, Date horaInicioB,
-                                           Date horaFin, Date horaFinB) {
+    public List<String> calcularIntervalosPos(List<PreDatos> tempHorarios) {
         cargarFranjas();
         List<String> intervalosResultado = new ArrayList<>();
         List<Long> tiemposFranjaInicio = new ArrayList<>();
@@ -94,9 +93,9 @@ public class IntervalosVerificacionHorarios {
 
 
         if(franjas.size()>0){
-            for(TempPos horario: tempHorarios){
+            for(PreDatos horario: tempHorarios){
 
-                Date exp =  processorUtils.convertirATime(horario.getInstante().toString());
+                Date exp =  processorUtils.convertirATime(horario.getHora()+":"+horario.getMinutos()+":"+horario.getSegundos());
                 if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
                 }else if(estaEnelRango(exp,"Pico AM")){

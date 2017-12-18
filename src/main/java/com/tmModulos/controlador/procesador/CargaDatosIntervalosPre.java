@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.utils.ExcelExtract;
+import com.tmModulos.controlador.utils.PosDatosDEF;
 import com.tmModulos.controlador.utils.PreDatos;
 import com.tmModulos.controlador.utils.PreDatosDEF;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -101,11 +102,73 @@ public class CargaDatosIntervalosPre {
         return preDatos;
     }
 
+    private PreDatos nuevoPosDatos(Row row) {
+        PreDatos preDatos = new PreDatos();
+        String horaInicio = excelExtract.getStringCellDateValue(row,PosDatosDEF.INICIO);
+        String[] horaSplit = horaInicio.split(":");
+        if(horaSplit[0].equals("00")){
+            horaSplit[0] = "24";
+        }else if (horaSplit[0].equals("01")) {
+            horaSplit[0] = "25";
+        }
+        preDatos.setHora(Integer.parseInt(horaSplit[0]));
+        preDatos.setMinutos(Integer.parseInt(horaSplit[1]));
+        preDatos.setSegundos(Integer.parseInt(horaSplit[2]));
+        return preDatos;
+    }
+
     private String calcularIdentificador(Row row) {
         String linea = excelExtract.getStringCellValue(row,PreDatosDEF.LINEA);
         Integer punto = excelExtract.getNumericCellValue(row,PreDatosDEF.PUNTO);
         punto = punto - 1000000;
         linea = linea+"-"+punto;
         return linea;
+    }
+
+    private String calcularIdentificadorPos(Row row) {
+        int linea = excelExtract.getNumericCellValue(row,PosDatosDEF.LINEA);
+        int sublinea = excelExtract.getNumericCellValue(row,PosDatosDEF.SUBLINEA);
+        int ruta = excelExtract.getNumericCellValue(row,PosDatosDEF.RUTA);
+        int punto = excelExtract.getNumericCellValue(row,PosDatosDEF.PUNTO);
+        return linea+"-"+sublinea+"-"+ruta+"-"+punto;
+    }
+
+    public HashMap<String, List<PreDatos>> getExpedicionesPos(String destination) {
+        HashMap<String, List<PreDatos>> expediciones = new HashMap<>();
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(destination);
+            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
+            HSSFSheet worksheet = workbook.getSheetAt(0);
+
+            Iterator<Row> rowIterator = worksheet.iterator();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+
+                Row row = rowIterator.next();
+                if (row.getCell(0) != null) {
+
+                    int tipo = excelExtract.getNumericCellValue(row, PosDatosDEF.EVENTO);
+                    if(tipo == 3 || tipo == 11){
+                        String identificador = calcularIdentificadorPos(row);
+                        if(expediciones.containsKey(identificador)){
+                            expediciones.get(identificador).add(nuevoPosDatos(row));
+                        }else{
+                            List<PreDatos> datos = new ArrayList<>();
+                            datos.add(nuevoPosDatos(row));
+                            expediciones.put(identificador,datos);
+                        }
+                    }
+
+                }
+            }
+            ordenarLista(expediciones);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return expediciones;
     }
 }
