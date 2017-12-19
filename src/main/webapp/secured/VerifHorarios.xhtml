@@ -25,6 +25,7 @@
                         <p:selectOneMenu id="tipoVerificacion" value="#{VerHorario.tipoVerificacion}" style="width:125px">
                             <f:selectItem itemLabel="Pre" itemValue="Pre" />
                             <f:selectItem itemLabel="Pos" itemValue="Pos" />
+                            <p:ajax update="@form" listener="#{VerHorario.updateFormato}"/>
                         </p:selectOneMenu>
                         <p:outputLabel  value="Intervalo Minimo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMin}"/>
@@ -34,6 +35,10 @@
                         <p:fileUpload value="#{VerHorario.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 
                     </h:panelGrid>
+                    <h:panelGrid columns="1" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                        <p:outputLabel value="#{VerHorario.formatoArchivo}" style="color: #f51111;font-style: italic;font-size: 12px;" />
+                    </h:panelGrid>
+
                     <p:commandButton value="Verificar" action="#{VerHorario.upload}" ajax="false"
                                      icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
                                      async="true" process="@form" onclick="PF('dlg2').show();" global="false"

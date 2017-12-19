@@ -35,6 +35,7 @@ public class VerificaHorarioView implements Serializable {
 
     private String boxIntervaloMin;
     private String boxIntervaloMax;
+    private String formatoArchivo;
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -45,6 +46,8 @@ public class VerificaHorarioView implements Serializable {
         boxIntervaloMin = "00:01:00";
         boxIntervaloMax = "00:07:00";
         tipoDiaRecords = verificacionHorarios.getTiposDiasDisponibles();
+        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx";
+
     }
 
 
@@ -108,6 +111,15 @@ public class VerificaHorarioView implements Serializable {
             FacesContext.getCurrentInstance().responseComplete();
         } catch (IOException e) {
 
+        }
+
+    }
+
+    public void updateFormato(){
+        if(tipoVerificacion.equals("Pre")){
+            formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx";
+        }else {
+            formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx (Solo con eventos 3 y 11)";
         }
 
     }
@@ -183,6 +195,14 @@ public class VerificaHorarioView implements Serializable {
 
     public void setTipoDiaRecords(List<VerificacionTipoDia> tipoDiaRecords) {
         this.tipoDiaRecords = tipoDiaRecords;
+    }
+
+    public String getFormatoArchivo() {
+        return formatoArchivo;
+    }
+
+    public void setFormatoArchivo(String formatoArchivo) {
+        this.formatoArchivo = formatoArchivo;
     }
 }
 
