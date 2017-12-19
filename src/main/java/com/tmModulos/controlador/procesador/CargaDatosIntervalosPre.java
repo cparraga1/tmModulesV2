@@ -7,6 +7,8 @@ import com.tmModulos.controlador.utils.PreDatosDEF;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +32,8 @@ public class CargaDatosIntervalosPre {
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(destination);
-            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            HSSFSheet worksheet = workbook.getSheetAt(0);
+            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+            XSSFSheet worksheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = worksheet.iterator();
             rowIterator.next();
@@ -138,8 +140,8 @@ public class CargaDatosIntervalosPre {
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(destination);
-            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            HSSFSheet worksheet = workbook.getSheetAt(0);
+            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+            XSSFSheet worksheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = worksheet.iterator();
             rowIterator.next();
