@@ -31,6 +31,7 @@ public class TempHorario {
     @Column(name = "evento")
     private int evento;
 
+
     @Column(name = "identificador")
     private String identificador;
 
@@ -94,4 +95,13 @@ public class TempHorario {
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }

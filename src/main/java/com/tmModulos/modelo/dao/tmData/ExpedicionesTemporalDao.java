@@ -52,8 +52,9 @@ public class ExpedicionesTemporalDao {
     public List<ExpedicionesTemporal> getExpedicionesTemporalsData(String id){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(ExpedicionesTemporal.class);
         criteria.add(Restrictions.eq("identificador", id));
-        criteria.addOrder(Order.asc("dia"));
-        criteria.addOrder(Order.asc("instInicio"));
+        criteria.addOrder(Order.asc("hora"));
+        criteria.addOrder(Order.asc("minutos"));
+        criteria.addOrder(Order.asc("segundos"));
         return criteria.list();
     }
 

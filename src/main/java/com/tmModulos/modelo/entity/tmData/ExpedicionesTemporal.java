@@ -41,6 +41,19 @@ public class ExpedicionesTemporal {
     @Column(name = "identificador")
     private String identificador;
 
+    @Column(name = "id_c")
+    private String idC;
+
+    @Column(name = "hora")
+    private Integer hora;
+
+    @Column(name = "minutos")
+    private Integer minutos;
+
+    @Column(name = "segundos")
+    private Integer segundos;
+
+
     public ExpedicionesTemporal() {
     }
 
@@ -123,5 +136,37 @@ public class ExpedicionesTemporal {
 
     public void setDia(Integer dia) {
         this.dia = dia;
+    }
+
+    public Integer getHora() {
+        return hora;
+    }
+
+    public void setHora(Integer hora) {
+        this.hora = hora;
+    }
+
+    public Integer getMinutos() {
+        return minutos;
+    }
+
+    public void setMinutos(Integer minutos) {
+        this.minutos = minutos;
+    }
+
+    public Integer getSegundos() {
+        return segundos;
+    }
+
+    public void setSegundos(Integer segundos) {
+        this.segundos = segundos;
+    }
+
+    public String getIdC() {
+        return idC;
+    }
+
+    public void setIdC(String idC) {
+        this.idC = idC;
     }
 }

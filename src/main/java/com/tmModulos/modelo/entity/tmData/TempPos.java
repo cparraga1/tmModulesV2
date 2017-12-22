@@ -31,8 +31,20 @@ public class TempPos {
     @Column(name = "evento")
     private int evento;
 
+    @Column(name = "hora")
+    private int hora;
+
+    @Column(name = "minutos")
+    private int minutos;
+
+    @Column(name = "segundos")
+    private int segundos;
+
     @Column(name = "identificador")
     private String identificador;
+
+    @Column(name = "inst")
+    private String inst;
 
 
     public void TempHorario(){
@@ -93,5 +105,45 @@ public class TempPos {
 
     public void setIdentificador(String identificador) {
         this.identificador = identificador;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+
+    public int getMinutos() {
+        return minutos;
+    }
+
+    public void setMinutos(int minutos) {
+        this.minutos = minutos;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
+
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    public String getInst() {
+        return inst;
+    }
+
+    public void setInst(String inst) {
+        this.inst = inst;
     }
 }

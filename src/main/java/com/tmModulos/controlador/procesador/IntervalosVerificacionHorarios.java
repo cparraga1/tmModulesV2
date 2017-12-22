@@ -40,7 +40,7 @@ public class IntervalosVerificacionHorarios {
         }
     }
 
-    public List<String> calcularIntervalos(List<PreDatos> expedicionesTemporals, List<Integer> inicio, List<Integer> inicioB,
+    public List<String> calcularIntervalos(List<ExpedicionesTemporal> expedicionesTemporals, List<Integer> inicio, List<Integer> inicioB,
                                            List<Integer> fin, List<Integer> finB) {
 
 //        Date horaInicio = processorUtils.convertirATime(inicio.get(0)+":"+inicio.get(1)+":"+inicio.get(2));
@@ -57,8 +57,8 @@ public class IntervalosVerificacionHorarios {
 
 
         if(franjas.size()>0){
-            for(PreDatos expediciones: expedicionesTemporals){
-                Date exp =  processorUtils.convertirATime(expediciones.toString());
+            for(ExpedicionesTemporal expediciones: expedicionesTemporals){
+                Date exp =  processorUtils.convertirATime(expediciones.getHoraInicio());
                 if(estaEnelRango(exp,"Inicio")){
                     tiemposFranjaInicio.add(exp.getTime());
                 }else if(estaEnelRango(exp,"Pico AM")){
@@ -82,7 +82,7 @@ public class IntervalosVerificacionHorarios {
 
     }
 
-    public List<String> calcularIntervalosPos(List<PreDatos> tempHorarios) {
+    public List<String> calcularIntervalosPos(List<TempPos> tempHorarios) {
         cargarFranjas();
         List<String> intervalosResultado = new ArrayList<>();
         List<Long> tiemposFranjaInicio = new ArrayList<>();
@@ -93,7 +93,7 @@ public class IntervalosVerificacionHorarios {
 
 
         if(franjas.size()>0){
-            for(PreDatos horario: tempHorarios){
+            for(TempPos horario: tempHorarios){
 
                 Date exp =  processorUtils.convertirATime(horario.getHora()+":"+horario.getMinutos()+":"+horario.getSegundos());
                 if(estaEnelRango(exp,"Inicio")){
