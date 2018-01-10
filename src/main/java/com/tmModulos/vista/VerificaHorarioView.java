@@ -46,7 +46,7 @@ public class VerificaHorarioView implements Serializable {
         boxIntervaloMin = "00:01:00";
         boxIntervaloMax = "00:07:00";
         tipoDiaRecords = verificacionHorarios.getTiposDiasDisponibles();
-        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx";
+        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato csv";
 
     }
 
@@ -116,11 +116,6 @@ public class VerificaHorarioView implements Serializable {
     }
 
     public void updateFormato(){
-        if(tipoVerificacion.equals("Pre")){
-            formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx";
-        }else {
-            formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato xlsx (Solo con eventos 3 y 11)";
-        }
 
     }
 
