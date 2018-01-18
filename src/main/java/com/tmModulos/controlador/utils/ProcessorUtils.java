@@ -1,5 +1,6 @@
 package com.tmModulos.controlador.utils;
 
+import com.tmModulos.modelo.entity.tmData.Expediciones;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -92,6 +93,7 @@ public class ProcessorUtils {
 
 
 
+
     public static String convertLongToTime(long tiempo) {
         return  String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(tiempo),
                 TimeUnit.MILLISECONDS.toMinutes(tiempo) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(tiempo)),
@@ -173,5 +175,19 @@ public class ProcessorUtils {
             return valores;
         }
         return null;
+    }
+
+    public Integer converInteger(String stringCellValue) {
+        try{
+            return Integer.parseInt(stringCellValue);
+        }catch (Exception e){
+
+        }
+        try{
+            return (int) Double.parseDouble(stringCellValue);
+        }catch (Exception e){
+
+        }
+        return 0;
     }
 }

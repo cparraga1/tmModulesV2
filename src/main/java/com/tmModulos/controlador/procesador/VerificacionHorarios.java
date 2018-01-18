@@ -192,6 +192,8 @@ public class VerificacionHorarios {
 
             incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), "N/A");
 
+
+
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPos(horarios);
             incluirResultadosIntervalos(row, intervalosExpediciones);
 
@@ -259,13 +261,55 @@ public class VerificacionHorarios {
 
             incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), validacion.get(4));
 
+            List<String> validacionPuntos = validarPuntosExpediciones(expediciones,id,row);
+            incluirResultadosValidacionPuntos (validacionPuntos,row);
+
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalos(expediciones,horaInicio,horaInicioB,
                     horaFin,horaFinB);
+
             incluirResultadosIntervalos(row, intervalosExpediciones);
 
         }else{
             registrosNoEncontrados(row,id);
         }
+    }
+
+    private void incluirResultadosValidacionPuntos(List<String> validacionPuntos, Row row) {
+        createCellResultados(row, validacionPuntos.get(0), ComparadorHorarioIndex.RESULTADO_NODO_I);
+        createCellResultados(row, validacionPuntos.get(1), ComparadorHorarioIndex.RESULTADO_NODO_F);
+    }
+
+    private List<String> validarPuntosExpediciones(List<ExpedicionesTemporal> expediciones, String id, Row row) {
+        Boolean salida = false;
+        Integer puntoInicio = obtenerPuntoPre(id);
+        Integer puntoFinal = processorUtils.converInteger(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.NODO_FIN));
+        List<String> validacion = new ArrayList<>();
+        validacion.add("OK");
+        validacion.add("OK");
+        for(ExpedicionesTemporal expedicion: expediciones){
+            if(!salida){
+                if(!expedicion.getPuntoInicio().equals(puntoInicio) ){
+                    validacion.set(0,expedicion.getPuntoInicio()+"");
+                    salida = true;
+                }
+                if(!expedicion.getPuntoFin().equals(puntoFinal) ){
+                    validacion.set(1,expedicion.getPuntoFin()+"");
+                    salida = true;
+                }
+            }else{
+                break;
+            }
+
+        }
+        return validacion;
+    }
+
+    private Integer obtenerPuntoPre(String id) {
+        String[] split = id.split("-");
+        if(split.length==3){
+            return Integer.parseInt(split[2]);
+        }
+        return 0;
     }
 
     private void incluirResultadosValidacionHorario(Row row, String valor, String valor2, String valor3, String valor4, String valor5) {
@@ -279,6 +323,10 @@ public class VerificacionHorarios {
     private void registrosNoEncontrados(Row row,String id) {
         String info = "N/A";
         incluirResultadosValidacionHorario(row, info, info, info, info, info);
+        List<String> listaNA=new ArrayList<>();
+        listaNA.add(info);
+        listaNA.add(info);
+        incluirResultadosValidacionPuntos (listaNA,row);
     }
 
     private List<String> validarLimites(List<ExpedicionesTemporal> expedicionesTemporals, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB) {
