@@ -17,9 +17,9 @@
                 <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
                         <p:panelGrid columns="4">
-                            <p:commandButton actionListener="#{serviciosP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
-                            <p:commandButton actionListener="#{serviciosP.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
-                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
+                            <p:commandButton actionListener="#{serviciosP.habilitarNuevo}" update="@form" value="Crear"
+                                             oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View"
+                                             rendered="#{loginBean.puedeEditar ()}" >
                             </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
@@ -79,9 +79,9 @@
                                 <h:outputText value="#{ser.tipologia.nombre}" />
                             </p:column>
 
-                            <p:column filterBy="#{ser.estado}" headerText="¿Activo?"  filterMatchMode="contains" sortBy="#{ser.estado}"
+                            <p:column filterBy="#{ser.estado}" headerText="Estado"  filterMatchMode="contains" sortBy="#{ser.estado}"
                             >
-                                <h:selectBooleanCheckbox value="#{ser.estado}" disabled="true" />
+                                <h:outputText value="#{ser.estadoFormato}" />
                             </p:column>
 
 
@@ -110,7 +110,7 @@
 
                         </p:dataTable>
 
-                        <p:confirmDialog message="¿Esta seguro de eliminar este servicio?. Recuerd que se eliminaran las asociaciones del servicio y los tipo días."
+                        <p:confirmDialog message="¿Esta seguro de desactivar este servicio?. Recuerde que se eliminaran las asociaciones del servicio y los tipo días."
                                          showEffect="fade"
                                          hideEffect="explode"
                                          widgetVar="groupDeleteConfirm">

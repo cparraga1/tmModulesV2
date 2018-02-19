@@ -40,7 +40,7 @@ public class ServicioDao {
 
 
     public List<Servicio> getServicioAll() {
-        List list = getSessionFactory().getCurrentSession().createQuery("from  Servicio  where estado is TRUE").list();
+        List list = getSessionFactory().getCurrentSession().createQuery("from  Servicio").list();
         return list;
     }
 
