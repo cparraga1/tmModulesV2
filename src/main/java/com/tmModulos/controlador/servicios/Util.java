@@ -3,8 +3,13 @@ package com.tmModulos.controlador.servicios;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 public class Util {
@@ -38,5 +43,19 @@ public class Util {
         tipoGrafica.add("Con Saltos");
         tipoGrafica.add("Con Repeticiones");
         return tipoGrafica;
+    }
+
+    public static String md5(String data) {
+        // Get the algorithm:
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // Calculate Message Digest as bytes:
+        byte[] digest = md5.digest(data.getBytes(UTF_8));
+        // Convert to 32-char long String:
+        return DatatypeConverter.printHexBinary(digest);
     }
 }

@@ -51,6 +51,7 @@
                         <p:dataTable id="matriz" var="ser" value="#{serviciosTipoDiaP.serviciosRecords}" widgetVar="MatrizTable"
                                      emptyMessage="No hay registros relacionados a la busqueda"
                                      scrollable="true" scrollWidth="100%" scrollHeight="510"
+                                     filteredValue="#{serviciosTipoDiaP.filteredServiciosRecords}"
                                      editable="true"
                                      rowKey="#{ser.id}"
                                      selection="#{serviciosTipoDiaP.selectedServicio}"

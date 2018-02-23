@@ -56,19 +56,6 @@ public class ServiciosTipoDiaParametrizacion {
 
     }
 
-    private boolean ordenNoExiste() {
-
-        int ordenNuevo = selectedServicio.getOrden();
-        for(ServicioTipoDia servicioTipoDia: serviciosRecords){
-            if(servicioTipoDia.getOrden()==ordenNuevo){
-                if(servicioTipoDia.getIdentificador()!=selectedServicio.getIdentificador()){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public String concatenarValorServicio(Servicio servicio){
 
         if(servicio != null ){
@@ -96,18 +83,32 @@ public class ServiciosTipoDiaParametrizacion {
     public void crear(){
         if(nombreEspecialServicio!=null && nuevoServicio!=null){
                 Servicio servicio = servicioService.getServicioByIdentificadorGIS(nombreEspecialServicio);
-                nuevoServicio.setServicio(servicio);
-                nuevoServicio.setIdentificador(servicio.getIdentificador());
-                nuevoServicio.setTipoDia(tipoDia);
-                servicioService.addServicio(nuevoServicio);
-                addMessage(FacesMessage.SEVERITY_INFO,"Servicio Creado", "");
-                serviciosRecords = servicioService.getServiciosByTipoDia(tipoDia);
+                if(noEstaAsociadoElServicio(servicio)){
+                    nuevoServicio.setServicio(servicio);
+                    nuevoServicio.setIdentificador(servicio.getIdentificador());
+                    nuevoServicio.setTipoDia(tipoDia);
+                    servicioService.addServicio(nuevoServicio);
+                    addMessage(FacesMessage.SEVERITY_INFO,"Servicio Creado", "");
+                    serviciosRecords = servicioService.getServiciosByTipoDia(tipoDia);
+                }else{
+                    messagesView.error("Error","El servicio ya se encuentra asociado");
+                }
+
 
         }else{
-            System.out.println("Error");
+            messagesView.error("Error","Complete la información solicitada");
         }
 
 
+    }
+
+    private boolean noEstaAsociadoElServicio(Servicio servicio) {
+        for(ServicioTipoDia serTipoDia: serviciosRecords){
+            if(serTipoDia.getServicio().getIdentificador().equals(servicio.getIdentificador())){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void buscar(){

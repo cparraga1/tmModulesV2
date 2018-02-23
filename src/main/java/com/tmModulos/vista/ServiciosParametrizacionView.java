@@ -194,13 +194,21 @@ public class ServiciosParametrizacionView {
 
     public void crearHorarioServicio(){
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
-        nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
-        nuevoHorario.setServicio(selectedServicio);
-        TipoDia tipoDiaObj = servicioService.getTipoDia(tipoDia);
-        nuevoHorario.setTipoDia(tipoDiaObj);
-        servicioService.addHorarios(nuevoHorario);
-        horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
+        if(horaInicioNuevoHorario!=null && horaFinNuevoHorario!= null){
+            if(horaInicioNuevoHorario.after(horaFinNuevoHorario)){
+                messagesView.error("Error","El horario Inicio debe ser mayor que el horario Fin");
+            }else{
+                nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
+                nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
+                nuevoHorario.setServicio(selectedServicio);
+                TipoDia tipoDiaObj = servicioService.getTipoDia(tipoDia);
+                nuevoHorario.setTipoDia(tipoDiaObj);
+                servicioService.addHorarios(nuevoHorario);
+                horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
+            }
+
+        }
+
 
     }
 
