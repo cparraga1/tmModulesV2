@@ -133,4 +133,12 @@ public class NodoService {
         return vagonDao.getVagonbyEstacion(estacion);
     }
 
+    public boolean existeElCodigoDeEstacion(Integer codigo) {
+        List<Estacion> estacionbyCodigo = estacionDao.getEstacionbyCodigo(codigo);
+        if(estacionbyCodigo.size()>0){
+            return true;
+        }
+
+        return false;
+    }
 }

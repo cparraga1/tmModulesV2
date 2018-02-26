@@ -236,6 +236,22 @@ public class ServiciosParametrizacionView {
         this.nuevoServicio = nuevoServicio;
     }
 
+    public ServicioService getServicioService() {
+        return servicioService;
+    }
+
+    public void setServicioService(ServicioService servicioService) {
+        this.servicioService = servicioService;
+    }
+
+    public List<String> getTipologias() {
+        return tipologias;
+    }
+
+    public void setTipologias(List<String> tipologias) {
+        this.tipologias = tipologias;
+    }
+
     public List<String> getSelectedtipoDia() {
         return selectedtipoDia;
     }

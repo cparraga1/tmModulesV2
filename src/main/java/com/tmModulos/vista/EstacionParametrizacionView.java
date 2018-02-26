@@ -196,18 +196,27 @@ public class EstacionParametrizacionView implements Serializable {
 
     public void nuevo(){
         if(nuevaEstacion.getCodigo()!=null && nuevaEstacion.getNombre()!=null){
-            Zona zonaP = nodoService.getZonaByName(auxNombreZonaP,"P");
-            nuevaEstacion.setZonaProgramacion(zonaP);
-            Zona zonaU = nodoService.getZonaByName(auxNombreZonaU,"U");
-            nuevaEstacion.setZonaUsuario(zonaU);
-            nodoService.addEstacion(nuevaEstacion);
-            addMessage(FacesMessage.SEVERITY_INFO,"Estacion Creado", "");
-            estacionRecords= nodoService.getEstacionAll();
-            selectedestacionRecords=new ArrayList<>();
+            if(!existeElCodigoDeLaEstacion(nuevaEstacion.getCodigo())){
+                Zona zonaP = nodoService.getZonaByName(auxNombreZonaP,"P");
+                nuevaEstacion.setZonaProgramacion(zonaP);
+                Zona zonaU = nodoService.getZonaByName(auxNombreZonaU,"U");
+                nuevaEstacion.setZonaUsuario(zonaU);
+                nodoService.addEstacion(nuevaEstacion);
+                addMessage(FacesMessage.SEVERITY_INFO,"Estación Creada", "");
+                estacionRecords= nodoService.getEstacionAll();
+                selectedestacionRecords=new ArrayList<>();
+            }else{
+                addMessage(FacesMessage.SEVERITY_ERROR,"La estación no fue creada", "Ya existe una estación con ese codigo");
+            }
+
         }else{
-            addMessage(FacesMessage.SEVERITY_ERROR,"La estacion no fue creado", "Complete los campos");
+            addMessage(FacesMessage.SEVERITY_ERROR,"La estación no fue creada", "Complete los campos");
         }
 
+    }
+
+    private boolean existeElCodigoDeLaEstacion(Integer codigo) {
+        return nodoService.existeElCodigoDeEstacion(codigo);
     }
 
     public void cancelar(){
