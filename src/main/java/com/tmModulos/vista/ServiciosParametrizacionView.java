@@ -166,9 +166,12 @@ public class ServiciosParametrizacionView {
     }
 
     public void verDetalleFranjaHorario(){
-        horarioPorServicio = obtenerHorariosPorServicioSeleccionado();
+
+
+
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
+            ec.getFlash().put("servicio",selectedServicio);
             ec.redirect(ec.getRequestContextPath()
                     + "/secured/HorarioServicioParametrizacion.xhtml");
         } catch (IOException e) {
@@ -177,77 +180,12 @@ public class ServiciosParametrizacionView {
         }
     }
 
-    public void atras(){
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(ec.getRequestContextPath()
-                    + "/secured/ServiciosParametrizacion.xhtml");
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void crearNuevoHorario(){
-        nuevoHorario = new Horario();
-    }
-
-    public void crearHorarioServicio(){
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
-        if(horaInicioNuevoHorario!=null && horaFinNuevoHorario!= null){
-            if(horaInicioNuevoHorario.after(horaFinNuevoHorario)){
-                messagesView.error("Error","El horario Inicio debe ser mayor que el horario Fin");
-            }else{
-                nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
-                nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
-                nuevoHorario.setServicio(selectedServicio);
-                TipoDia tipoDiaObj = servicioService.getTipoDia(tipoDia);
-                nuevoHorario.setTipoDia(tipoDiaObj);
-                servicioService.addHorarios(nuevoHorario);
-                horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
-            }
-
-        }
-
-
-    }
-
-    public void actualizarHorarioServicio(){
-        servicioService.updateHorarios(selectedHorario);
-    }
-
-    public void eliminarHorario(){
-        if(selectedHorario!= null){
-            servicioService.deleteHorarios(selectedHorario);
-            verDetalleFranjaHorario();
-        }
-    }
-
-
-    public void cancelarHorarioServicio(){
-            nuevoHorario = new Horario();
-            horaInicioNuevoHorario = null;
-            horaFinNuevoHorario = null;
-    }
-
-    private List<Horario> obtenerHorariosPorServicioSeleccionado() {
-
-        if(selectedServicio!= null) return servicioService.getHorariosByServicio(selectedServicio);
-
-        return new ArrayList<Horario>();
-    }
 
     public void cancelar(){
 
     }
 
-    public ServicioService getServicioService() {
-        return servicioService;
-    }
 
-    public void setServicioService(ServicioService servicioService) {
-        this.servicioService = servicioService;
-    }
 
     public List<Servicio> getServiciosRecords() {
         return serviciosRecords;
@@ -273,13 +211,6 @@ public class ServiciosParametrizacionView {
         this.selectedServicio = selectedServicio;
     }
 
-    public List<String> getTipologias() {
-        return tipologias;
-    }
-
-    public void setTipologias(List<String> tipologias) {
-        this.tipologias = tipologias;
-    }
 
     public String getConsole() {
         return console;
