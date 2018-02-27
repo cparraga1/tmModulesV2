@@ -74,4 +74,10 @@ public class NodoDao {
         }
         return nodo;
     }
+
+    public List<Nodo> getNodoByCodigoAndVagon(String codigo) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Nodo.class);
+        criteria.add(Restrictions.eq("codigo", codigo));
+        return criteria.list();
+    }
 }

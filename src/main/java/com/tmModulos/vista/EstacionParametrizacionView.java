@@ -188,12 +188,35 @@ public class EstacionParametrizacionView implements Serializable {
 
     public void añadirNodoVagon(){
         if(nuevoNodoVagon.getCodigo()!=null && nuevoNodoVagon.getNombre()!=null){
-           nodoService.addNodo(nuevoNodoVagon);
-           addMessage(FacesMessage.SEVERITY_INFO,"Nodo Creado", "");
-           vagonesPorEstacion = calcularVagonesyNodos();
+            if(esValorNumerico(nuevoNodoVagon.getCodigo())){
+                if(!existeNombreNodo(nuevoNodoVagon.getCodigo())){
+                    nodoService.addNodo(nuevoNodoVagon);
+                    addMessage(FacesMessage.SEVERITY_INFO,"Nodo Creado", "");
+                    vagonesPorEstacion = calcularVagonesyNodos();
+                }else{
+                    addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "Ya existe un nodo con el codigo ingresado");
+                }
+            }else{
+                addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "El codigo debe ser un valor numerico");
+            }
+
         }else{
             addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "Complete los campos");
         }
+    }
+
+    private boolean existeNombreNodo(String codigo) {
+        return nodoService.existeElNombreNodo(codigo);
+    }
+
+    private boolean esValorNumerico(String codigo) {
+        try{
+            Integer.parseInt(codigo);
+            return true;
+        }catch (Exception e){
+
+        }
+        return false;
     }
 
     public void eliminarNodo(){
