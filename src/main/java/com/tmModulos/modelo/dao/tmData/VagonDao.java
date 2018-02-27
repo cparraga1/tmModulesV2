@@ -56,4 +56,11 @@ public class VagonDao {
         criteria.add(Restrictions.eq("id", id));
         return (Vagon) criteria.uniqueResult();
     }
+
+    public List<Vagon> getVagonNombreEnEstacion(String nombre, Estacion selectedestacion) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Vagon.class);
+        criteria.add(Restrictions.eq("estacion", selectedestacion));
+        criteria.add(Restrictions.eq("nombre", nombre));
+        return criteria.list();
+    }
 }

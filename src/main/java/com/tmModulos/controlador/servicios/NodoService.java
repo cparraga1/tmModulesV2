@@ -141,4 +141,12 @@ public class NodoService {
 
         return false;
     }
+
+    public boolean existeElCodigoVagon(String nombre, Estacion selectedestacion) {
+        List<Vagon> vagones = vagonDao.getVagonNombreEnEstacion(nombre,selectedestacion);
+        if(vagones.size()>0){
+            return true;
+        }
+        return false;
+    }
 }

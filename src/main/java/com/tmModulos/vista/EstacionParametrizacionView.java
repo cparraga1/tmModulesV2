@@ -130,6 +130,7 @@ public class EstacionParametrizacionView implements Serializable {
 
     public void añadirVagon(){
         nuevoVagon = new Vagon();
+        nuevoVagon.setNumeracion(vagonesPorEstacion.size()+1);
     }
 
 
@@ -147,13 +148,21 @@ public class EstacionParametrizacionView implements Serializable {
 
     public void añadirNuevoVagon(){
         if(nuevoVagon!=null){
-            nuevoVagon.setEstacion(selectedestacion);
-            nodoService.addVagon(nuevoVagon);
-            addMessage(FacesMessage.SEVERITY_INFO,"Vagon Creado", "");
-            vagonesPorEstacion = calcularVagonesyNodos();
+            if(!existeElVagon(nuevoVagon,selectedestacion)){
+                nuevoVagon.setEstacion(selectedestacion);
+                nodoService.addVagon(nuevoVagon);
+                addMessage(FacesMessage.SEVERITY_INFO,"Vagon Creado", "");
+                vagonesPorEstacion = calcularVagonesyNodos();
+            }else{
+                addMessage(FacesMessage.SEVERITY_ERROR,"El Vagón no fue creado", "Ya existe un vagón con el nombre ingresado");
+            }
         }else{
-            addMessage(FacesMessage.SEVERITY_ERROR,"El Vagon no fue creado", "Complete los campos");
+            addMessage(FacesMessage.SEVERITY_ERROR,"El Vagón no fue creado", "Complete los campos");
         }
+    }
+
+    private boolean existeElVagon(Vagon nuevoVagon, Estacion selectedestacion) {
+        return nodoService.existeElCodigoVagon(nuevoVagon.getNombre(),selectedestacion);
     }
 
     public void atras(){

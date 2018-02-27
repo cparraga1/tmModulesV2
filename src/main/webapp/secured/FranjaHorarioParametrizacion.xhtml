@@ -51,7 +51,7 @@
 
                         <p:dialog header="Franja Detalles" widgetVar="franjaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
                             <p:outputPanel id="franjaDetail" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty franjaParametrizacion.franjaSelected}" columnClasses="label" >
+                                <p:panelGrid  columns="4" rendered="#{not empty franjaParametrizacion.franjaSelected}"  >
 
                                     <h:outputText value="Nombre:" style="color:black" />
                                     <h:inputText value="#{franjaParametrizacion.franjaSelected.nombre}" />

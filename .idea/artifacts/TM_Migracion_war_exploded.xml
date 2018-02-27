@@ -10,7 +10,7 @@
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: com.sun.faces:jsf-impl:2.2.4" />
           <element id="library" level="project" name="Maven: com.sun.faces:jsf-api:2.2.4" />
-          <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.0" />
+          <element id="library" level="project" name="Maven: org.primefaces:primefaces:6.1" />
           <element id="library" level="project" name="Maven: org.primefaces.extensions:primefaces-extensions:1.2.1" />
           <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.2.4" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.1" />

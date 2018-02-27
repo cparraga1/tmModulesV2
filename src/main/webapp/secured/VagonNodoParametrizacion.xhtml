@@ -116,7 +116,7 @@
 
                 <p:dialog header="Nodo Informacion" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="nuevoDialog" style="text-align:center;">
-                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoNodoVagon}" columnClasses="label">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoNodoVagon}" >
 
                             <h:outputText value="Codigo:" style="color:black" />
                             <h:inputText value="#{nodosP.nuevoNodoVagon.codigo}"/>
@@ -139,7 +139,7 @@
 
                 <p:dialog header="Nodo Informacion" widgetVar="editDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="editDialog" style="text-align:center;">
-                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.selectedNodo}" columnClasses="label">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.selectedNodo}">
 
                             <h:outputText value="Codigo:" style="color:black" />
                             <h:inputText value="#{nodosP.selectedNodo.codigo}"/>
@@ -164,10 +164,10 @@
 
                 <p:dialog header="Añadir Vagon" widgetVar="nuevoVagon" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="nuevoVagon" style="text-align:center;">
-                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoVagon}" columnClasses="label">
+                        <p:panelGrid  columns="4" rendered="#{not empty nodosP.nuevoVagon}" >
 
-                            <h:outputText value="Numeración:" style="color:black" />
-                            <h:inputText value="#{nodosP.nuevoVagon.numeracion}"/>
+                            <h:outputText value="Numero de Vagón:" style="color:black" />
+                            <h:inputText value="#{nodosP.nuevoVagon.numeracion}" disabled="true"/>
 
                             <h:outputText value="Nombre:" style="color:black"/>
                             <h:inputText value="#{nodosP.nuevoVagon.nombre}"  />
@@ -187,7 +187,7 @@
 
                 <p:dialog header="Eliminar Vagon" widgetVar="eliminarVagon" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="eliminarVagon" style="text-align:center;">
-                        <p:panelGrid  columns="4"  columnClasses="label">
+                        <p:panelGrid  columns="4" >
 
                             <h:outputText value="Seleccione vagon a eliminar:" style="color:black" />
                             <h:selectOneMenu value="#{nodosP.vagonAEliminar}" style="width:100%" >
