@@ -49,7 +49,7 @@
 
                             <p:outputLabel for="button" value="Fecha Programación (DD-MM-AAAA):" />
                             <p:calendar id="button" value="#{tablaMaestra.fechaDeProgramacion}" showOn="button"
-                                        title="Formato: Dia-Mes-Año"/>
+                                        title="Formato: Dia-Mes-Año" pattern="dd-MM-yyyy" locale="es"/>
                             <p:tooltip id="toolTipButton1" for="button" showEvent="focus" hideEvent="blur" />
 
 
@@ -117,7 +117,7 @@
                     <p:panelGrid id="display" columns="2" columnClasses="label,value">
                         <h:outputText value="Button:" />
                         <h:outputText value="#{tablaMaestra.fechaDeProgramacion}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </p:panelGrid>
                 </p:dialog>

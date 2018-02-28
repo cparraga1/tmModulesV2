@@ -34,9 +34,9 @@
 										  mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/" style="width:90%"/>
 
 							<p:outputLabel for="button" value="Fecha Programación (DD-MM-AAAA):" />
-							<p:calendar id="button" value="#{gisCarga.fechaProgramacion}" showOn="button" style="width:90%" />
+							<p:calendar id="button" value="#{gisCarga.fechaProgramacion}" showOn="button" style="width:90%" pattern="dd-MM-yyyy" locale="es"/>
 							<p:outputLabel for="buttonV" value="Fecha Vigencia (DD-MM-AAAA):" />
-							<p:calendar id="buttonV" value="#{gisCarga.fechaVigencia}" showOn="button" style="width:90%"/>
+							<p:calendar id="buttonV" value="#{gisCarga.fechaVigencia}" showOn="button" style="width:90%" pattern="dd-MM-yyyy" locale="es"/>
 						</h:panelGrid>
 						<p:commandButton value="Guardar" action="#{gisCarga.upload}" ajax="false"
 										 icon="ui-icon ui-icon-disk" id="withIcon" styleClass="boton"
@@ -64,7 +64,7 @@
 							<p:panelGrid id="display" columns="2" columnClasses="label,value">
 								<h:outputText value="Button:" />
 								<h:outputText value="#{gisCarga.fechaProgramacion}">
-									<f:convertDateTime pattern="MM/dd/yyyy" />
+									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:panelGrid>
 					</p:dialog>

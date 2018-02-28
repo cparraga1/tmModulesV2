@@ -58,7 +58,8 @@ public class NuevoGisCargaView implements Serializable{
     public void upload() {
         resultadosVisibles=false;
         if(isValid()){
-        if(gisCarga.getSize()>0 && gisCarga.getContentType().equals("application/vnd.ms-excel")) {
+        if(gisCarga.getSize()>0) {
+//        if(gisCarga.getSize()>0 && gisCarga.getContentType().equals("application/vnd.ms-excel")) {
             progress=20;
             try {
                 status = true;

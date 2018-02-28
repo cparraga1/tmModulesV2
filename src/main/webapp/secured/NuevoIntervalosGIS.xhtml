@@ -18,7 +18,7 @@
                 <p:panel id="basic" header="Nuevos Intervalos de Tiempo"  style="margin-bottom:20px">
                     <h:panelGrid columns="5" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="buttonV" value="Fecha Vigencia (DD-MM-AAAA):" />
-                        <p:calendar id="buttonV" value="#{nuevoIntervalos.fechaVigencia}" showOn="button" pattern="dd-MM-yyyy" mask="true"
+                        <p:calendar id="buttonV" value="#{nuevoIntervalos.fechaVigencia}" showOn="button" pattern="dd-MM-yyyy" locale="es" mask="true"
                                     title="Formato: Dia-Mes-Año"
                                     alt="Descripcion" pages="1" />
                         <p:tooltip id="toolTipFocus" for="buttonV" showEvent="focus" hideEvent="blur" />
@@ -42,7 +42,7 @@
                     <p:panelGrid id="display" columns="2" columnClasses="label,value">
                         <h:outputText value="Button:" />
                         <h:outputText value="#{nuevoIntervalos.fechaProgramacion}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </p:panelGrid>
                 </p:dialog>

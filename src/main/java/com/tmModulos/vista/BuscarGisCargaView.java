@@ -107,12 +107,22 @@ public class BuscarGisCargaView implements Serializable {
             }else { messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);}
         }else if (busqueda.equals("2")){
             if( fechaInicial!= null && fechaFinal!=null && !tipoFecha.equals("")){
-                gisCargaRecords = busquedaService.busquedaRangos( fechaInicial,fechaFinal,tipoFecha );
+                if(validarFechas()){
+                    gisCargaRecords = busquedaService.busquedaRangos( fechaInicial,fechaFinal,tipoFecha );
+                }else{
+                    messagesView.error("Error en busqueda","Valide la fecha Inicio y Fecha Fin ");
+                }
+
             }else { messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);}
         }else{
             messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
         }
 
+    }
+
+    private boolean validarFechas() {
+        if(fechaFinal.after(fechaInicial)) return true;
+        return false;
     }
 
     public void atras(){

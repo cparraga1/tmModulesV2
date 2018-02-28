@@ -126,7 +126,7 @@ public class TablaMaestra {
     }
 
     public String getFechaCreacionFormato() {
-        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
         return dt1.format(fechaCreacion);
     }
 
@@ -135,7 +135,7 @@ public class TablaMaestra {
     }
 
     public String getFechaProgramacionFormato() {
-        SimpleDateFormat dt1 = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/yyyy");
         return dt1.format(fechaVigencia);
     }
 

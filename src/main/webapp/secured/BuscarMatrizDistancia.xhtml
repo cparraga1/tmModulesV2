@@ -29,12 +29,12 @@
                         </p:selectOneRadio>
                         <p:outputLabel for="button" value="Fecha Inicial (DD-MM-AAAA):" />
                         <p:panel  style="border:none">
-                            <p:calendar id="button" value="#{busquedaMatriz.fechaInicial}" showOn="button" />
+                            <p:calendar id="button" value="#{busquedaMatriz.fechaInicial}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                         </p:panel>
 
                         <p:outputLabel for="buttonF" value="Fecha Final (DD-MM-AAAA):" />
                         <p:panel visible="#{busquedaMatriz.fechaFinalVisible}" style="border:none">
-                            <p:calendar id="buttonF" value="#{busquedaMatriz.fechaFinal}" showOn="button" />
+                            <p:calendar id="buttonF" value="#{busquedaMatriz.fechaFinal}" showOn="button" pattern="dd-MM-yyyy" locale="es"/>
                         </p:panel>
 
                     </h:panelGrid>
@@ -103,7 +103,7 @@
                     <p:panelGrid id="display" columns="2" columnClasses="label,value">
                         <h:outputText value="Button:" />
                         <h:outputText value="#{busquedaMatriz.fechaInicial}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
                         </h:outputText>
                     </p:panelGrid>
                 </p:dialog>
