@@ -32,7 +32,6 @@
                         </p:panelGrid>
                         <p:panel visible="#{serviciosTipoDiaP.tablaVisible}">
                         <p:panelGrid columns="5" >
-                            <p:commandButton actionListener="#{serviciosTipoDiaP.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{serviciosTipoDiaP.habilitarNuevo}" update=":form:nuevoDialog" value="Asociar"
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>

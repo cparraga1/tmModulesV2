@@ -309,7 +309,7 @@ public class TablaMaestraServicioHilo implements Runnable{
 
     private void serviciosNoEncontradosMatriz(int macro, int linea, int seccion) {
         log.warn("Servicio no encontrado en la Matriz de Distancias con Macro "+macro+" Linea "+linea+" Seccion "+seccion);
-        logDatos.add(new LogDatos("Servicio no encontrado en en la Matriz de Distancias con Macro "+macro+" Linea "+linea+" Seccion "+seccion, TipoLog.WARN));
+        logDatos.add(new LogDatos("Servicio no encontrado en en la Matriz de Distancias con Línea "+macro+" Sublínea "+linea+" Ruta "+seccion, TipoLog.WARN));
     }
 
     private int calcularDistanciaEspecial(int seccion, DistanciaNodos distanciaNodosA, DistanciaNodos distanciaNodosB,ServicioDistancia servicioDistancia, ServicioDistancia servicioDistanciaAux,MatrizDistancia matrizDistancia ) {

@@ -617,8 +617,8 @@ public class TablaMaestraProcessor {
     }
 
     private void serviciosNoEncontradosMatriz(int macro, int linea, int seccion) {
-        log.warn("Servicio no encontrado en la Matriz de Distancias con Macro "+macro+" Linea "+linea+" Seccion "+seccion);
-        logDatos.add(new LogDatos("Servicio no encontrado en en la Matriz de Distancias con Macro "+macro+" Linea "+linea+" Seccion "+seccion, TipoLog.WARN));
+        log.warn("Servicio no encontrado en la Matriz de Distancias con Línea "+macro+" Sublinea "+linea+" Ruta "+seccion);
+        logDatos.add(new LogDatos("Servicio no encontrado en en la Matriz de Distancias con Línea "+macro+" Sublinea "+linea+" Ruta "+seccion, TipoLog.WARN));
     }
 
     private int getSeccionAux(int seccion) {

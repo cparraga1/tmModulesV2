@@ -17,7 +17,6 @@
                 <p:panel id="basic" header="Tabla Maestra" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
                         <p:panelGrid columns="4">
-                            <p:commandButton actionListener="#{busquedaTabla.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{busquedaTabla.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
                             </p:commandButton>
@@ -61,14 +60,14 @@
 
 
 
-                            <p:ajax event="rowEdit" listener="#{busquedaTabla.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{busquedaTabla.onRowCancel}" update=":form:msgs" />
+                            <p:ajax event="rowEdit" listener="#{busquedaTabla.onRowEdit}" update=":form:msgs" exportable="false"/>
+                            <p:ajax event="rowEditCancel" listener="#{busquedaTabla.onRowCancel}" update=":form:msgs" exportable="false"/>
 
                             <p:columnGroup type="header">
                                 <p:row>
                                     <p:column colspan="3" headerText="Id" style="width: 360px" />
                                     <p:column colspan="10" headerText="Servicio" style="width: 950px"/>
-                                    <p:column colspan="10" headerText="Matriz D" style="width: 1070px"/>
+                                    <p:column colspan="11" headerText="Matriz D" style="width: 1070px"/>
                                     <p:column colspan="4" headerText="Horarios Programados" style="width:380px"/>
                                     <p:column colspan="4" headerText="Horarios Usuarios" style="width: 380px"/>
                                     <p:column colspan="5" headerText="Ciclo" style="width: 520px"/>
@@ -250,12 +249,12 @@
                                 </p:row>
                             </p:columnGroup>
 
-                            <p:column selectionMode="multiple" style="width:32px;text-align:center"/>
-                            <p:column style="width:32px">
+                            <p:column selectionMode="multiple" style="width:32px;text-align:center" exportable="false"/>
+                            <p:column style="width:32px" exportable="false">
                                 <p:rowEditor />
                             </p:column>
 
-                            <p:column
+                            <p:column headerText="Identificador"
                                     style="width: 120px" styleClass="idCol">
                                 <p:cellEditor>
                                     <f:facet name="output">
@@ -285,7 +284,7 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{tservicio.macro}" headerText="Macro" filterStyle="width: 70px;"
+                            <p:column filterBy="#{tservicio.macro}" headerText="Linea" filterStyle="width: 70px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.macro}"
                                       style="width: 90px" styleClass="firstCol">
 
@@ -315,10 +314,18 @@
                             <p:column filterBy="#{tservicio.sentido}" headerText="Sentido" filterStyle="width: 70px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.sentido}"
                                       style="width: 100px" styleClass="seccionCol">
-                                <h:outputText value="#{tservicio.sentido}" style="width: 102px"/>
+
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.sentido}" style="width: 102px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.sentido}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.seccion}" headerText="Seccion" filterStyle="width: 70px;"
+                            <p:column filterBy="#{tservicio.seccion}" headerText="Ruta" filterStyle="width: 70px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.seccion}"
                                       style="width: 100px" styleClass="seccionCol">
                                 <p:cellEditor>
@@ -1072,13 +1079,13 @@
                                     <h:outputText value="Identificador:" style="color:black" />
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.identificador}"/>
 
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Linea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="Sublinea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.linea}"  />
 
-                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:outputText value="Ruta:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.seccion}"  />
 
                                     <h:outputText value="Punto Inicio:" style="color:black"/>
@@ -1118,13 +1125,13 @@
                                     <h:outputText value="Trayecto:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.trayecto}"  />
 
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Linea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="Sublinea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.linea}"  />
 
-                                    <h:outputText value="Seccion:" style="color:black"/>
+                                    <h:outputText value="Ruta:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.seccion}"  />
 
                                     <h:outputText value="Punto I:" style="color:black"/>

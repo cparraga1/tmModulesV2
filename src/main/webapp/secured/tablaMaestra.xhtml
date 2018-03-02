@@ -17,7 +17,6 @@
                 <p:panel id="basic" header="Tabla Maestra" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
                         <p:panelGrid columns="4">
-                            <p:commandButton actionListener="#{busquedaTabla.inicio}" id="inicio"  icon="ui-icon ui-icon-home" title="inicio" />
                             <p:commandButton actionListener="#{busquedaTabla.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
@@ -111,8 +110,8 @@
                                     <p:column filterBy="#{tservicio.matrizNombre}"
                                               headerText="Matriz" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.matrizNombre}" />
-                                    <p:column headerText="Id(L-S-R-P)" filterBy="#{tservicio.identificadorc}"   filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.identificadorc}" style="width: 70px"/>
+                                    <p:column headerText="Id(L-S-R-P)" filterBy="#{tservicio.identificadorb}"   filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.identificadorb}" style="width: 70px"/>
                                     <p:column filterBy="#{tservicio.nombreInicio}" headerText="Punto Inicio" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.nombreInicio}" />
                                     <p:column filterBy="#{tservicio.zonaTInicio}" headerText="Zona T Inicio" filterStyle="width: 70px;"
@@ -254,12 +253,12 @@
                                 </p:row>
                             </p:columnGroup>
 
-                            <p:column selectionMode="multiple" style="width:5px;text-align:center" rendered="#{loginBean.puedeEliminar()}"/>
-                            <p:column style="width:5px;text-align:center" rendered="#{loginBean.puedeEditar ()}">
+                            <p:column selectionMode="multiple" style="width:5px;text-align:center" rendered="#{loginBean.puedeEliminar()}" exportable="false"/>
+                            <p:column style="width:5px;text-align:center" rendered="#{loginBean.puedeEditar ()}" exportable="false">
                                 <p:rowEditor style="width:5px;text-align:center"/>
                             </p:column>
 
-                            <p:column
+                            <p:column headerText="Identificador"
                                       style="width: 120px" styleClass="idCol">
                                 <p:cellEditor>
                                     <f:facet name="output">
@@ -289,13 +288,13 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{tservicio.macro}" headerText="Macro" filterStyle="width: 70px;"
+                            <p:column filterBy="#{tservicio.macro}" headerText="Línea" filterStyle="width: 70px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.macro}"
                                       style="width: 80px" styleClass="firstCol">
                                 <h:outputText value="#{tservicio.macro}" style="width: 96px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.linea}" headerText="Linea" filterStyle="width: 50px;"
+                            <p:column filterBy="#{tservicio.linea}" headerText="Sublinea" filterStyle="width: 50px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.linea}"
                                       style="width: 80px" styleClass="secondCol">
                                 <h:outputText value="#{tservicio.linea}" style="width: 82px"/>
@@ -372,14 +371,14 @@
                                 <h:outputText value="#{tservicio.matrizNombre}" style="width: 132px"/>
                             </p:column>
 
-                            <p:column
+                            <p:column headerText="Id(L-S-R-P)"
                                     style="width: 120px" styleClass="idCol">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.identificadorc}" style="width: 122px"/>
+                                        <h:outputText value="#{tservicio.identificadorb}" style="width: 122px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText id="nombreInputc" value="#{tservicio.identificadorc}" style="width:100%"/>
+                                        <p:inputText id="nombreInputc" value="#{tservicio.identificadorb}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
 
@@ -808,10 +807,10 @@
                                     <h:outputText value="Identificador:" style="color:black" />
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.identificador}"/>
 
-                                    <h:outputText value="Macro:" style="color:black"/>
+                                    <h:outputText value="Línea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.macro}"  />
 
-                                    <h:outputText value="Linea:" style="color:black"/>
+                                    <h:outputText value="Sublinea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.serviciosSelected.linea}"  />
 
                                     <h:outputText value="Seccion:" style="color:black"/>
