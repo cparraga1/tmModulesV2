@@ -28,6 +28,9 @@ public class Servicio {
     @Column(name = "sentido")
     private int sentido;
 
+    @Column(name = "cuarto_franja")
+    private Integer cuartoFranja;
+
     @Column(name = "config")
     private int config;
 
@@ -304,5 +307,13 @@ public class Servicio {
 
     public void setPuntoFin(int puntoFin) {
         this.puntoFin = puntoFin;
+    }
+
+    public Integer getCuartoFranja() {
+        return cuartoFranja;
+    }
+
+    public void setCuartoFranja(Integer cuartoFranja) {
+        this.cuartoFranja = cuartoFranja;
     }
 }

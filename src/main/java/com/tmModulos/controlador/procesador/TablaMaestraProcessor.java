@@ -384,13 +384,13 @@ public class TablaMaestraProcessor {
         tablaMaestraServicios.setMacro(servicio.getServicio().getMacro());
         tablaMaestraServicios.setLinea(servicio.getServicio().getLinea());
         tablaMaestraServicios.setSeccion(servicio.getServicio().getSeccion());
+        tablaMaestraServicios.setFranjaCuartos(servicio.getServicio().getCuartoFranja());
         tablaMaestraServicios.setSentido(1);
         tablaMaestraServicios.setTipoServicio(servicio.getServicio().getTipoServicio());
         tablaMaestraServicios.setNombreEspecial(servicio.getServicio().getNombreEspecial());
         tablaMaestraServicios.setNombreGeneral(servicio.getServicio().getNombreGeneral());
         tablaMaestraServicios.setEstado(servicio.getServicio().isEstado());
         tablaMaestraServicios.setIdentificador(servicio.getServicio().getIdentificador());
-
         tablaMaestraServicios.setTablaMeestra(tablaMaestra);
         tablaMaestraServicios.setTipologia(servicio.getServicio().getTipologia());
         tablaMaestraServicios.setDistancia(-1);
@@ -701,6 +701,7 @@ public class TablaMaestraProcessor {
         nuevaTablaMaestraServicios.setTrayecto(tablaMaestraServicios.getTrayecto());
         nuevaTablaMaestraServicios.setMacro(tablaMaestraServicios.getMacro());
         nuevaTablaMaestraServicios.setLinea(tablaMaestraServicios.getLinea());
+        nuevaTablaMaestraServicios.setFranjaCuartos(tablaMaestraServicios.getFranjaCuartos());
         nuevaTablaMaestraServicios.setSeccion(tablaMaestraServicios.getSeccion());
         nuevaTablaMaestraServicios.setTipoServicio(tablaMaestraServicios.getTipoServicio());
         nuevaTablaMaestraServicios.setNombreGeneral(tablaMaestraServicios.getNombreGeneral());

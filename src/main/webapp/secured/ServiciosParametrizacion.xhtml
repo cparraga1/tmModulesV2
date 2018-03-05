@@ -161,6 +161,9 @@
                                     <h:outputText value="Nombre Especifico:" />
                                     <h:inputText value="#{serviciosP.selectedServicio.nombreEspecial}"  />
 
+                                    <h:outputText value="Franja Cuartos:" />
+                                    <h:inputText value="#{serviciosP.selectedServicio.cuartoFranja}"  />
+
 
                                     <h:outputText value="TipoServicio:" />
                                     <h:selectOneMenu value="#{serviciosP.selectedServicio.tipoServicio}" style="width:100%" >
@@ -227,7 +230,8 @@
                                     <h:outputText value="Nombre Especifico:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.nombreEspecial}"  />
 
-
+                                    <h:outputText value="Franja Cuartos:" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.cuartoFranja}"  />
 
                                     <h:outputText value="Estado:" style="color:black"/>
                                     <p:selectBooleanCheckbox value="#{serviciosP.nuevoServicio.estado}" />
