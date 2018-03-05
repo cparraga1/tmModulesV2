@@ -136,6 +136,8 @@ public class ProcessorUtils {
         HSSFCellStyle decStyle = book.createCellStyle();
         decStyle.setDataFormat((short)2);
 
+        HSSFCellStyle numStyle = book.createCellStyle();
+
 
 
         for(int rowInd = 1; rowInd < sheet.getPhysicalNumberOfRows(); rowInd++) {
@@ -157,6 +159,11 @@ public class ProcessorUtils {
                     }catch (Exception e){
 
                     }
+                }else if(headerName.equals("Línea")){
+                    int number = Integer.parseInt(strVal);
+                    cell.setCellType(HSSFCell.CELL_TYPE_BLANK);
+                    cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
+                    cell.setCellValue(number);
                 }
 
 

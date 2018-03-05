@@ -1117,13 +1117,10 @@
 
                         <p:dialog header="Servicio Tabla Maestra" widgetVar="nuevoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="nuevoDialog" style="text-align:center;">
-                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.nuevaTabla}" columnClasses="label,value">
+                                <p:panelGrid  columns="4" rendered="#{not empty busquedaTabla.nuevaTabla}" >
 
                                     <h:outputText value="Identificador:" style="color:black" />
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.identificador}"  />
-
-                                    <h:outputText value="Trayecto:" style="color:black"/>
-                                    <h:inputText value="#{busquedaTabla.nuevaTabla.trayecto}"  />
 
                                     <h:outputText value="Linea:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.macro}"  />
@@ -1133,6 +1130,9 @@
 
                                     <h:outputText value="Ruta:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.seccion}"  />
+
+                                    <h:outputText value="Sentido:" style="color:black"/>
+                                    <h:inputText value="#{busquedaTabla.nuevaTabla.sentido}" />
 
                                     <h:outputText value="Punto I:" style="color:black"/>
                                     <h:inputText value="#{busquedaTabla.nuevaTabla.codigoInicio}"  />
