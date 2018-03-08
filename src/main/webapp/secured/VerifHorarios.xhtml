@@ -27,9 +27,9 @@
                             <f:selectItem itemLabel="Pos" itemValue="Pos" />
                             <p:ajax update="@form" listener="#{VerHorario.updateFormato}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel  value="Intervalo Minimo" />
+                        <p:outputLabel  value="Intervalo Mínimo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMin}"/>
-                        <p:outputLabel  value="Intervalo Maximo" />
+                        <p:outputLabel  value="Intervalo Máximo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMax}"/>
                         <p:outputLabel value="Archivo Verificación:" />
                         <p:fileUpload value="#{VerHorario.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
