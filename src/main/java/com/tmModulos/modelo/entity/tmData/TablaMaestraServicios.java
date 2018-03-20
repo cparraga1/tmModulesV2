@@ -133,6 +133,12 @@ public class TablaMaestraServicios {
     private Intervalos intervaloPromedio;
 
     @Transient
+    private Intervalos intervaloMinimo;
+
+    @Transient
+    private Intervalos intervaloMaximo;
+
+    @Transient
     private String tipoIntervalo;
 
     @Transient
@@ -385,12 +391,23 @@ public class TablaMaestraServicios {
     }
 
     public Intervalos getIntervaloPromedio() {
+
+        return intervaloPromedio;
+    }
+
+    public Intervalos getIntervalo (String valor){
         for(Intervalos interva:serviciosRecords){
-            if(interva.getTipoCalculo().equals(tipoIntervalo)){
+            if(interva.getTipoCalculo().equals(valor)){
                 return interva;
             }
         }
-        return intervaloPromedio;
+        return null;
+    }
+
+    public void updateIntervalos(){
+            intervaloPromedio = getIntervalo("Promedio");
+            intervaloMinimo = getIntervalo("Minimo");
+            intervaloMaximo = getIntervalo("Maximo");
     }
 
     public void setIntervaloPromedio(Intervalos intervaloPromedio) {
@@ -463,5 +480,21 @@ public class TablaMaestraServicios {
 
     public void setIdentificadorc(String identificadorc) {
         this.identificadorc = identificadorc;
+    }
+
+    public Intervalos getIntervaloMinimo() {
+        return intervaloMinimo;
+    }
+
+    public void setIntervaloMinimo(Intervalos intervaloMinimo) {
+        this.intervaloMinimo = intervaloMinimo;
+    }
+
+    public Intervalos getIntervaloMaximo() {
+        return intervaloMaximo;
+    }
+
+    public void setIntervaloMaximo(Intervalos intervaloMaximo) {
+        this.intervaloMaximo = intervaloMaximo;
     }
 }

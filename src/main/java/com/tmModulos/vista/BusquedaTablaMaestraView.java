@@ -32,13 +32,18 @@ public class BusquedaTablaMaestraView {
     private String tipoFecha;
     private boolean visibleRecords;
     private boolean fechaFinalVisible;
+
     private boolean visibleOptimos;
     private boolean visibleMinimos;
     private boolean visibleMaximos;
+
+    private boolean visibleInterPromedio;
+    private boolean visibleInterMinimo;
+    private boolean visibleInterMaximo;
+
     private boolean mensajeVisible;
 
 
-//    private String tipologiaCiclo;
     private String tipoCiclo;
     private String tipoIntervalo;
     private String textoGeneracionMatrix;
@@ -183,7 +188,8 @@ public class BusquedaTablaMaestraView {
         tServiciosRecords = tablaMaestraService.getServiciosByTabla(selectedTabla);
 
         for(TablaMaestraServicios tServicio:tServiciosRecords){
-            tServicio.setTipoIntervalo(tipoIntervalo);
+//            tServicio.setTipoIntervalo(tipoIntervalo);
+            tServicio.updateIntervalos();
             auxiliar.add(tServicio);
         }
 
@@ -199,6 +205,21 @@ public class BusquedaTablaMaestraView {
             visibleOptimos=false;
             visibleMaximos=true;
             visibleMinimos=false;
+        }
+
+
+        if(tipoIntervalo.equals("Promedio")){
+                visibleInterPromedio = true;
+                visibleInterMinimo = false;
+                visibleInterMaximo = false;
+        }else if (tipoIntervalo.equals("Minimo")){
+                visibleInterPromedio = false;
+                visibleInterMinimo = true;
+                visibleInterMaximo = false;
+        }else{
+                visibleInterPromedio = false;
+                visibleInterMinimo = false;
+                visibleInterMaximo = true;
         }
 
         tServiciosRecords=auxiliar;
@@ -571,5 +592,29 @@ public class BusquedaTablaMaestraView {
 
     public void setMensajeVisible(boolean mensajeVisible) {
         this.mensajeVisible = mensajeVisible;
+    }
+
+    public boolean isVisibleInterPromedio() {
+        return visibleInterPromedio;
+    }
+
+    public void setVisibleInterPromedio(boolean visibleInterPromedio) {
+        this.visibleInterPromedio = visibleInterPromedio;
+    }
+
+    public boolean isVisibleInterMinimo() {
+        return visibleInterMinimo;
+    }
+
+    public void setVisibleInterMinimo(boolean visibleInterMinimo) {
+        this.visibleInterMinimo = visibleInterMinimo;
+    }
+
+    public boolean isVisibleInterMaximo() {
+        return visibleInterMaximo;
+    }
+
+    public void setVisibleInterMaximo(boolean visibleInterMaximo) {
+        this.visibleInterMaximo = visibleInterMaximo;
     }
 }

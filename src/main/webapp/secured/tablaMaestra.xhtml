@@ -193,28 +193,108 @@
                                     <p:column filterBy="#{tservicio.cicloServicio.maximoCierre}" headerText="Cierre" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCierre}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
-                                    <!--//Intervalo-->
+
+                                    <!--//Intervalo Promedio-->
                                     <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}" />
-                                    <!--//Buses hora-->
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <!--//Buses hora Promedio-->
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}" />
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+
+                                    <!--//Intervalo Minimo-->
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorInicio}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorAM}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorValle }" headerText="Valle" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorValle}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPM}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCierre}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <!--//Buses hora Minimo-->
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesInicio}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesAM}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesValle }" headerText="Valle" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesValle}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPM}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCierre}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+
+
+                                    <!--//Intervalo Maximo-->
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorInicio}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorAM}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorValle }" headerText="Valle" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorValle}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPM}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCierre}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <!--//Buses hora Maximo-->
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesInicio}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesAM}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesValle }" headerText="Valle" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesValle}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPM}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCierre}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+
+
                                     <!--//Capacidad-->
                                     <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}" />
@@ -647,7 +727,7 @@
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.valorInicio}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
@@ -655,19 +735,19 @@
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}"
-                                      style="width: 120px" >
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.valorAM}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.valorValle}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.valorPM}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
@@ -675,39 +755,173 @@
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.valorCierre}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.busesInicio}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.busesAM}" style="width: 129px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.busesValle}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.busesPM}" style="width: 129px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}"
-                                      style="width: 120px">
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
                                 <h:outputText value="#{tservicio.intervaloPromedio.busesCierre}" style="width: 122px"/>
                             </p:column>
+
+
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorInicio}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorAM}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorPM}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorCierre}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesInicio}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesAM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesPM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesCierre}" style="width: 122px"/>
+                            </p:column>
+
+
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorInicio}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorAM}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorPM}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorCierre}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesInicio}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesInicio}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesAM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesAM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesValle}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesValle}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPM}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesPM}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCierre}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesCierre}" style="width: 122px"/>
+                            </p:column>
+
+
 
                             <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}"
