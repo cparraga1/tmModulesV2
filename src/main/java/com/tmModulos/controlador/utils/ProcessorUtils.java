@@ -5,6 +5,7 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -123,6 +124,59 @@ public class ProcessorUtils {
         return 0.0;
     }
 
+    public static void crearRowsHeader(HSSFSheet worksheet) {
+
+        worksheet.shiftRows(0, worksheet.getLastRowNum(), 1);
+        Row rowInfo1 = worksheet.createRow(0);
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_SERVICIO_BASE,TablaMaestraDEF.COL_SERVICIO_BASE);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_SERVICIO_BASE));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_MATRIZ_DISTANCIA,TablaMaestraDEF.COL_MATRIZ_DISTANCIA);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_MATRIZ_DISTANCIA));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_CAPACIDAD,TablaMaestraDEF.COL_CAPACIDAD);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_CAPACIDAD));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_HORARIO_PROGRAMACION,TablaMaestraDEF.COL_HORARIO_PROGRAMACION);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_HORARIO_PROGRAMACION));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_HORARIO_USUARIO,TablaMaestraDEF.COL_HORARIO_USUARIO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_HORARIO_USUARIO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_CICLO_OPTIMO,TablaMaestraDEF.COL_CICLO_OPTIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_CICLO_OPTIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_CICLO_MINIMO,TablaMaestraDEF.COL_CICLO_MINIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_CICLO_MINIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_CICLO_MAXIMO,TablaMaestraDEF.COL_CICLO_MAXIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_CICLO_MAXIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_INTERVALO_PROMEDIO,TablaMaestraDEF.COL_INTERVALO_PROMEDIO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_INTERVALO_PROMEDIO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_INTERVALO_MINIMO,TablaMaestraDEF.COL_INTERVALO_MINIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_INTERVALO_MINIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_INTERVALO_MAXIMO,TablaMaestraDEF.COL_INTERVALO_MAXIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_INTERVALO_MAXIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_BUSES_HORA_PROMEDIO,TablaMaestraDEF.COL_BUSES_HORA_PROMEDIO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_BUSES_HORA_PROMEDIO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_BUSES_HORA_MINIMO,TablaMaestraDEF.COL_BUSES_HORA_MINIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_BUSES_HORA_MINIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_BUSES_HORA_MAXIMO,TablaMaestraDEF.COL_BUSES_HORA_MAXIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_BUSES_HORA_MAXIMO));
+
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_VELOCIDAD_TEORICA,TablaMaestraDEF.COL_VELOCIDAD_TEORICA);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_VELOCIDAD_TEORICA));
+
+
+    }
+
+
     public static void postProcessXLS(Object document) {
         HSSFWorkbook book = (HSSFWorkbook) document;
         HSSFSheet sheet = book.getSheetAt(0);
@@ -138,7 +192,7 @@ public class ProcessorUtils {
 
         HSSFCellStyle numStyle = book.createCellStyle();
 
-
+        crearRowsHeader(sheet);
 
         for(int rowInd = 1; rowInd < sheet.getPhysicalNumberOfRows(); rowInd++) {
             HSSFRow row = sheet.getRow(rowInd);
@@ -170,6 +224,13 @@ public class ProcessorUtils {
 
             }
         }
+    }
+
+    public static void createCellResultados(Row row, String valor, int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
+        resultadoHoraIni.setCellValue(valor);
     }
 
     public List<Integer> convertInt(String hora) {

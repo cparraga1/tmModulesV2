@@ -24,7 +24,7 @@
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
                                 <p:dataExporter type="xls"
-                                                target="tservicio" fileName="Servicios"  />
+                                                target="tservicio" fileName="Servicios"  postProcessor="#{busquedaTabla.postProcessXLS}"/>
                             </h:commandLink>
 
                         </p:panelGrid>
@@ -67,14 +67,13 @@
                                 <p:row>
                                     <p:column colspan="3" headerText="Id" style="width: 360px" />
                                     <p:column colspan="10" headerText="Servicio" style="width: 950px"/>
-                                    <p:column colspan="11" headerText="Matriz D" style="width: 1070px"/>
+                                    <p:column colspan="10" headerText="Matriz D" style="width: 1070px"/>
+                                    <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
                                     <p:column colspan="4" headerText="Horarios Programados" style="width:380px"/>
                                     <p:column colspan="4" headerText="Horarios Usuarios" style="width: 380px"/>
                                     <p:column colspan="5" headerText="Ciclo" style="width: 520px"/>
-
                                     <p:column colspan="5" headerText="Intervalos" style="width: 520px"/>
                                     <p:column colspan="5" headerText="Buses Hora" style="width: 520px"/>
-                                    <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
                                     <p:column colspan="3" headerText="Velocidades Teoricas" style="width: 380px"/>
 
 
@@ -125,8 +124,14 @@
                                               filterMatchMode="contains" sortBy="#{tservicio.tipoServicio}" />
                                     <p:column filterBy="#{tservicio.distancia}" headerText="Distancia" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.distancia}" />
-                                    <p:column filterBy="#{tservicio.estadoFormato}" headerText="Estado" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.estadoFormato}" />
+
+
+                                    <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}" />
+                                    <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Picos" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}" />
+                                    <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Valle" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}" />
 
                                     <p:column filterBy="#{tservicio.horariosServicio.horaInicioProgA}" headerText="Inicio" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaInicioProgA}" />
@@ -295,14 +300,6 @@
 
 
 
-
-
-                                    <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}" />
-                                    <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Picos" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}" />
-                                    <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}" />
 
                                     <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="Pico AM" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
@@ -625,17 +622,29 @@
                                 </p:cellEditor>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.estadoFormato}" headerText="Estado" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.estadoFormato}"
+                            <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}"
                                       style="width: 120px">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{tservicio.estadoFormato}" style="width: 96px"/>
+                                        <h:outputText value="#{tservicio.franjaCuartos}" style="width: 104px"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.estadoFormato}" style="width:100%"/>
+                                        <p:inputText  value="#{tservicio.franjaCuartos}" style="width:100%"/>
                                     </f:facet>
                                 </p:cellEditor>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Capacidad Picos" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.tipologia.capacidadPicos}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Capacidad Valle" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}"
+                                      style="width: 120px">
+                                <h:outputText value="#{tservicio.tipologia.capacidadValle}" style="width: 122px"/>
                             </p:column>
 
 
@@ -1139,30 +1148,7 @@
                             </p:column>
 
 
-                            <p:column filterBy="#{tservicio.franjaCuartos}" headerText="Franja Cuartos" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.franjaCuartos}"
-                                      style="width: 120px">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{tservicio.franjaCuartos}" style="width: 104px"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText  value="#{tservicio.franjaCuartos}" style="width:100%"/>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
 
-                            <p:column filterBy="#{tservicio.tipologia.capacidadPicos}" headerText="Capacidad Picos" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadPicos}"
-                                      style="width: 120px">
-                                <h:outputText value="#{tservicio.tipologia.capacidadPicos}" style="width: 122px"/>
-                            </p:column>
-
-                            <p:column filterBy="#{tservicio.tipologia.capacidadValle}" headerText="Capacidad Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.tipologia.capacidadValle}"
-                                      style="width: 120px">
-                                <h:outputText value="#{tservicio.tipologia.capacidadValle}" style="width: 122px"/>
-                            </p:column>
 
                             <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
