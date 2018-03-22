@@ -68,7 +68,7 @@
                                 <p:row>
                                     <p:column colspan="3" headerText="Id" style="width: 300px" />
                                     <p:column colspan="10" headerText="Servicio" style="width: 950px"/>
-                                    <p:column colspan="10" headerText="Matriz D" style="width: 1040px"/>
+                                    <p:column colspan="9" headerText="Matriz D" style="width: 1040px"/>
                                     <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
                                     <p:column colspan="4" headerText="Horarios Programados" style="width:380px"/>
                                     <p:column colspan="4" headerText="Horarios Usuarios" style="width: 380px"/>
@@ -110,8 +110,6 @@
                                     <p:column filterBy="#{tservicio.matrizNombre}"
                                               headerText="Matriz" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.matrizNombre}" />
-                                    <p:column headerText="Id(L-S-R-P)" filterBy="#{tservicio.identificadorb}"   filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.identificadorb}" style="width: 70px"/>
                                     <p:column filterBy="#{tservicio.nombreInicio}" headerText="Punto Inicio" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.nombreInicio}" />
                                     <p:column filterBy="#{tservicio.zonaTInicio}" headerText="Zona T Inicio" filterStyle="width: 70px;"
@@ -456,20 +454,6 @@
                                       style="width: 130px" styleClass="matrizCol">
                                 <h:outputText value="#{tservicio.matrizNombre}" style="width: 132px"/>
                             </p:column>
-
-                            <p:column headerText="Id(L-S-R-P)"
-                                    style="width: 120px" styleClass="idCol">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{tservicio.identificadorb}" style="width: 122px"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:inputText id="nombreInputc" value="#{tservicio.identificadorb}" style="width:100%"/>
-                                    </f:facet>
-                                </p:cellEditor>
-
-                            </p:column>
-
 
 
                             <p:column filterBy="#{tservicio.nombreInicio}" headerText="Punto Inicio" filterStyle="width: 110px;"

@@ -434,7 +434,7 @@ public class TablaMaestraProcessor {
     private void servicioNoExisteEnGISCarga(ServicioTipoDia servicio) {
         log.warn("Servicio no encontrado en el GIS de carga ");
         log.warn("No es posible encontrar valores para "+servicio.getServicio().getNombreEspecial()+" "+servicio.getServicio().getMacro()+"-"
-                +servicio.getServicio().getLinea()+"-"+servicio.getServicio().getSeccion()+" nodo: "+servicio.getServicio().getPunto());
+                +servicio.getServicio().getSentido()+"-"+servicio.getServicio().getLinea()+" nodo: "+servicio.getServicio().getPunto());
         logDatos.add(new LogDatos("Servicio no encontrado en el GIS de carga ", TipoLog.WARN));
         logDatos.add(new LogDatos("No es posible encontrar valores para "+servicio.getServicio().getNombreEspecial()+" "+servicio.getServicio().getMacro()+"-"
                 +servicio.getServicio().getLinea()+"-"+servicio.getServicio().getSeccion()+" nodo: "+servicio.getServicio().getPunto(), TipoLog.WARN));
