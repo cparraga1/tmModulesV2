@@ -437,7 +437,7 @@ public class TablaMaestraProcessor {
                 +servicio.getServicio().getSentido()+"-"+servicio.getServicio().getLinea()+" nodo: "+servicio.getServicio().getPunto());
         logDatos.add(new LogDatos("Servicio no encontrado en el GIS de carga ", TipoLog.WARN));
         logDatos.add(new LogDatos("No es posible encontrar valores para "+servicio.getServicio().getNombreEspecial()+" "+servicio.getServicio().getMacro()+"-"
-                +servicio.getServicio().getLinea()+"-"+servicio.getServicio().getSeccion()+" nodo: "+servicio.getServicio().getPunto(), TipoLog.WARN));
+                +servicio.getServicio().getSentido()+"-"+servicio.getServicio().getLinea()+" nodo: "+servicio.getServicio().getPunto(), TipoLog.WARN));
     }
 
     // Obtener el servicio asociado en el GIS de Carga a partir de la linea, trayecto y nodo
