@@ -689,7 +689,7 @@ public class VerificacionHorarios {
 
     private String fileForTipoDia(String tipoDia) {
 
-        return PathFiles.PATH_FOR_FILES+"\\Migracion\\VerificaHorario\\"+tipoDia+".xls";
+        return PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls";
     }
 
     public ConfVeriHorario getConfVeriHorario() {
