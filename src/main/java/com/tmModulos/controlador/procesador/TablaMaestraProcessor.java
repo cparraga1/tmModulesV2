@@ -5,16 +5,12 @@ import com.tmModulos.controlador.utils.LogDatos;
 import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.controlador.utils.ProcessorUtils;
 import com.tmModulos.controlador.utils.TipoLog;
-import com.tmModulos.modelo.dao.tmData.GisCargaDao;
-import com.tmModulos.modelo.dao.tmData.IntervalosDao;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import javax.faces.bean.ManagedProperty;
-import javax.xml.bind.SchemaOutputResolver;
 import java.io.InputStream;
 import java.util.*;
 
@@ -158,7 +154,7 @@ public class TablaMaestraProcessor {
                                 VelocidadProgramada  velocidadProgramada = calcularVelocidadProgramada(cicloServicio,tablaMaestraServicios.getDistancia());
                                 tablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
 
-                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(),dia);
                                 tablaMaestraServicios.setHorariosServicio(horariosServicio);
 
                                 tablaMaestraService.addTServicios(tablaMaestraServicios);
@@ -173,7 +169,7 @@ public class TablaMaestraProcessor {
                                 log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado");
                                 logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado", TipoLog.WARN));
                                 tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
-                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
                                 tablaMaestraServicios.setHorariosServicio(horariosServicio);
                                 tablaMaestraServicios.setIdentificadorb("0");
                                 tablaMaestraServicios.setIdentificadorc("0");
@@ -185,7 +181,7 @@ public class TablaMaestraProcessor {
                             log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado");
                             logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado", TipoLog.WARN));
                             tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
-                            HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                            HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
                             tablaMaestraServicios.setHorariosServicio(horariosServicio);
                             tablaMaestraServicios.setIdentificadorb("0");
                             tablaMaestraServicios.setIdentificadorc("0");
@@ -201,7 +197,7 @@ public class TablaMaestraProcessor {
                 }else{
                     tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
 
-                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio());
+                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
                     tablaMaestraServicios.setHorariosServicio(horariosServicio);
                     tablaMaestraServicios.setIdentificadorb("0");
                     tablaMaestraServicios.setIdentificadorc("0");
@@ -251,9 +247,9 @@ public class TablaMaestraProcessor {
         return horario;
     }
 
-    public HorariosServicio calcularHorarioServicios(Servicio servicio) {
+    public HorariosServicio calcularHorarioServicios(Servicio servicio, TipoDia dia) {
 
-        List<Horario> horariosByServicio = tablaMaestraService.getHorariosByServicio(servicio);
+        List<Horario> horariosByServicio = tablaMaestraService.getHorariosByServicioAndTipoDia(servicio,dia);
         HorariosServicio horario = getHorariosServicio(horariosByServicio);
         tablaMaestraService.addHorariosServicios(horario);
         return horario;

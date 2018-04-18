@@ -250,4 +250,8 @@ public class TablaMaestraService {
     public Tipologia getTipologiaByNombre(String nombre){
         return tipologiaDao.getTipologiaByNombre(nombre);
     }
+
+    public List<Horario> getHorariosByServicioAndTipoDia(Servicio servicio, TipoDia dia) {
+        return horarioDao.getHorariosByServicioAndTipoDio(servicio,dia);
+    }
 }

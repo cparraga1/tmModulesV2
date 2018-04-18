@@ -67,7 +67,7 @@
                                 <p:row>
                                     <p:column colspan="3" headerText="Id" style="width: 360px" />
                                     <p:column colspan="10" headerText="Servicio" style="width: 950px"/>
-                                    <p:column colspan="9" headerText="Matriz D" style="width: 1070px"/>
+                                    <p:column colspan="10" headerText="Matriz D" style="width: 1070px"/>
                                     <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
                                     <p:column colspan="4" headerText="Horarios Programados" style="width:380px"/>
                                     <p:column colspan="4" headerText="Horarios Usuarios" style="width: 380px"/>
@@ -118,6 +118,8 @@
                                               filterMatchMode="contains" sortBy="#{tservicio.nombreIFin}" />
                                     <p:column filterBy="#{tservicio.zonaTFin}" headerText="Zona T Fin" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.zonaTFin}" />
+                                    <p:column filterBy="#{tservicio.zonaPFin}" headerText="Zona P Fin" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.zonaPFin}" />
                                     <p:column filterBy="#{tservicio.tipoServicio}" headerText="Tipo" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.tipoServicio}" />
                                     <p:column filterBy="#{tservicio.distancia}" headerText="Distancia" filterStyle="width: 70px;"
@@ -579,6 +581,20 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
+
+                            <p:column filterBy="#{tservicio.zonaPFin}" headerText="Zona P Fin" filterStyle="width: 110px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.zonaPFin}"
+                                      style="width: 130px" styleClass="nFinCol">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{tservicio.zonaPFin}" style="width: 96px"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{tservicio.zonaPFin}" style="width:100%"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
 
                             <p:column filterBy="#{tservicio.tipoServicio}" headerText="Tipo Servicio" filterStyle="width: 110px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.tipoServicio}"
