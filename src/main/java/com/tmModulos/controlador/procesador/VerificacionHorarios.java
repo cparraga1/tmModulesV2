@@ -568,15 +568,20 @@ public class VerificacionHorarios {
                                                    List<Integer> horaFinB,TempPos expInicio){
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         if( horaInicioB== null && horaFinB == null){
-            if(estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
-            }else{
-                comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+            if(comparaciones.get(0).equals("OK")){
+                if(estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                }else{
+                    comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                }
             }
 
-            if(estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
-            }else{
-                comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+            if(comparaciones.get(1).equals("OK")){
+                if(estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                }else{
+                    comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                }
             }
+
         }else{
             if( estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
                     && estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
@@ -592,22 +597,31 @@ public class VerificacionHorarios {
                     // Mas cercano al Primer Horario
                     if( estaDespuesDeLaHoraInicio(horaInicioExtendida,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
                             && estaAntesDelaHoraFin(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
-                        comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        if(comparaciones.get(0).equals("OK")){
+                            comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        }
                     }else{
-                        comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        if(comparaciones.get(1).equals("OK")){
+                            comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        }
                     }
 
                 } else{
                     if(estaDespuesDeLaHoraInicio(horaInicioB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
 
                     }else{
-                        comparaciones.set(2, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        if(comparaciones.get(2).equals("OK")){
+                            comparaciones.set(2, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        }
                     }
 
                     if(estaAntesDelaHoraFin(horaFinB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
 
                     }else{
-                        comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        if(comparaciones.get(3).equals("OK")){
+                            comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
+                        }
+
                     }
                 }
 
