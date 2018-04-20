@@ -62,7 +62,7 @@
                                             </p:cellEditor>
                                         </p:column>
 
-                                        <p:column  headerText="Codigo"
+                                        <p:column  headerText="Nombre"
                                                    sortBy="#{nod.nombre}"
                                                    style="width: 120px">
                                             <p:cellEditor>
@@ -71,6 +71,19 @@
                                                 </f:facet>
                                                 <f:facet name="input">
                                                     <p:inputText id="modelInputw" value="#{nod.nombre}" style="width:100%"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+                                        <p:column  headerText="Nombre Corto"
+                                                   sortBy="#{nod.nombreCorto}"
+                                                   style="width: 120px">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{nod.nombreCorto}" />
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputText  value="#{nod.nombreCorto}" style="width:100%"/>
                                                 </f:facet>
                                             </p:cellEditor>
                                         </p:column>
@@ -123,6 +136,9 @@
 
                             <h:outputText value="Nombre:" style="color:black"/>
                             <h:inputText value="#{nodosP.nuevoNodoVagon.nombre}"  />
+
+                            <h:outputText value="Nombre Corto:" style="color:black"/>
+                            <h:inputText value="#{nodosP.nuevoNodoVagon.nombreCorto}"  />
 
                         </p:panelGrid>
                         <p:panelGrid columns="2">

@@ -1,5 +1,7 @@
 package com.tmModulos.controlador.servicios;
 
+import com.tmModulos.controlador.utils.FormatoArchivo;
+
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -57,5 +59,13 @@ public class Util {
         byte[] digest = md5.digest(data.getBytes(UTF_8));
         // Convert to 32-char long String:
         return DatatypeConverter.printHexBinary(digest);
+    }
+
+    public static List<String> listaFormatosCSV() {
+
+        List<String> formatoArchivos = new ArrayList<>();
+        formatoArchivos.add(FormatoArchivo.CSV_COMMA);
+        formatoArchivos.add(FormatoArchivo.CSV_PUNTO_COMMA);
+        return formatoArchivos;
     }
 }

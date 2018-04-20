@@ -17,6 +17,9 @@ public class Nodo {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "nombre_corto")
+    private String nombreCorto;
+
     @Column(name = "codigo")
     private String codigo;
 
@@ -68,5 +71,13 @@ public class Nodo {
 
     public void setVagon(Vagon vagon) {
         this.vagon = vagon;
+    }
+
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
+
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
     }
 }

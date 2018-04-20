@@ -94,6 +94,13 @@
 			<version>3.6.10.Final</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>3.8</version>
+		</dependency>
+
 		<!--<dependency>-->
 		<!--<groupId>org.hibernate</groupId>-->
 		<!--<artifactId>ejb3-persistence</artifactId>-->

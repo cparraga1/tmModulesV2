@@ -80,4 +80,10 @@ public class NodoDao {
         criteria.add(Restrictions.eq("codigo", codigo));
         return criteria.list();
     }
+
+    public Nodo getNodoByNombreCorto(String nombreCorto) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Nodo.class);
+        criteria.add(Restrictions.eq("nombreCorto", nombreCorto));
+        return (Nodo) criteria.uniqueResult();
+    }
 }

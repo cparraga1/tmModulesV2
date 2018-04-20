@@ -21,6 +21,16 @@ public class MenuView {
         }
     }
 
+    public void refreshExpedicionesConvertor(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ConversorExpediciones.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshFranjaHoraria () {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
