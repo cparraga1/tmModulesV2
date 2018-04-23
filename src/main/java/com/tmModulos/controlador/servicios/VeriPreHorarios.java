@@ -1,5 +1,6 @@
 package com.tmModulos.controlador.servicios;
 
+import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.modelo.dao.tmData.EquivalenciasDao;
 import com.tmModulos.modelo.dao.tmData.ExpedicionesTemporalDao;
 import com.tmModulos.modelo.dao.tmData.TempHorarioDao;
@@ -112,6 +113,24 @@ public class VeriPreHorarios {
         return ";";
     }
 
+    public void addExpedicionesConversion(String destination,char delimiter) throws Exception {
+        try{
+            equivalenciasDao.addExpedicionesConversion(destination,delimiter);
+        }catch (Exception e){
+            throw new Exception("Archivo con Informacion no esperada");
+        }
+
+    }
+
+    public void deleteExpedicionesConversion() {
+        equivalenciasDao.deleteExpedicionesConversion();
+    }
+
+    public String getNewExpediciones() {
+        String filename = PathFiles.PATH_FOR_FILES_CONVERSION;
+        return equivalenciasDao.getNewExpediciones(filename);
+
+    }
 }
 
 

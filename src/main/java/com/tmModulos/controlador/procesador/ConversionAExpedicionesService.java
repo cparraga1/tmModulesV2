@@ -2,6 +2,7 @@ package com.tmModulos.controlador.procesador;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.FormatoArchivo;
 import com.tmModulos.controlador.utils.PathFiles;
 import com.tmModulos.controlador.utils.ProcessorUtils;
@@ -27,14 +28,28 @@ public class ConversionAExpedicionesService {
     @Autowired
     private NodoDao nodoDao;
 
+    @Autowired
+    private VeriPreHorarios veriPreHorarios;
+
     public String convertirAExpediciones(String fileName, InputStream inputstream,String tipoArchivo) {
         String destination= PathFiles.PATH_FOR_FILES_CONVERSION;
         processorUtils.copyFile(fileName,inputstream,destination);
+        destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
+
+
+        try {
         if(tipoArchivo.equals(FormatoArchivo.CSV_COMMA)){
-            return  incluirFilasArchivo(fileName,',');
+                veriPreHorarios.addExpedicionesConversion(destination,',');
         }else{
-          return  incluirFilasArchivo(fileName,';');
+            veriPreHorarios.addExpedicionesConversion(destination,';');
         }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        destination = veriPreHorarios.getNewExpediciones();
+
+        veriPreHorarios.deleteExpedicionesConversion();
+        return destination;
     }
 
 
