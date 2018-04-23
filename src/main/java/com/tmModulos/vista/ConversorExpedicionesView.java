@@ -60,12 +60,12 @@ public class ConversorExpedicionesView {
     public void download() throws IOException {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
-        File file = new File(PathFiles.PATH_FOR_FILES_CONVERSION);
+        File file = new File(archivoResultado);
         file.createNewFile();
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=conversion.csv");
+        response.setHeader("Content-Disposition", "attachment; filename=conversion.xls");
         byte[] outputByte = new byte[4096];
         while(fileIn.read(outputByte, 0, 4096) != -1)
         {

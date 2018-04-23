@@ -127,7 +127,7 @@ public class VeriPreHorarios {
     }
 
     public String getNewExpediciones() {
-        String filename = PathFiles.PATH_FOR_FILES_CONVERSION;
+        String filename = PathFiles.PATH_FOR_FILES_CONVERSION+"ejemploRes.xls";
         return equivalenciasDao.getNewExpediciones(filename);
 
     }

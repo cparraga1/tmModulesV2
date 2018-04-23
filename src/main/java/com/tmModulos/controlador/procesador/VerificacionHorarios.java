@@ -523,9 +523,7 @@ public class VerificacionHorarios {
 
             if(estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
             }else{
-                if(comparaciones.get(1).equals("OK")){
                     comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
-                }
             }
         }else{
             if( estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
@@ -547,9 +545,7 @@ public class VerificacionHorarios {
                             comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
                         }
                     }else{
-                        if(comparaciones.get(1).equals("OK")){
                             comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
-                        }
                     }
 
                 } else{
@@ -564,9 +560,7 @@ public class VerificacionHorarios {
                     if(estaAntesDelaHoraFin(horaFinB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
 
                     }else{
-                        if(comparaciones.get(3).equals("OK")){
                             comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
-                        }
                     }
                 }
 
@@ -588,12 +582,11 @@ public class VerificacionHorarios {
                 }
             }
 
-            if(comparaciones.get(1).equals("OK")){
+
                 if(estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
                 }else{
                     comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
                 }
-            }
 
         }else{
             if( estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
@@ -614,9 +607,7 @@ public class VerificacionHorarios {
                             comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
                         }
                     }else{
-                        if(comparaciones.get(1).equals("OK")){
                             comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
-                        }
                     }
 
                 } else{
@@ -631,10 +622,7 @@ public class VerificacionHorarios {
                     if(estaAntesDelaHoraFin(horaFinB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
 
                     }else{
-                        if(comparaciones.get(3).equals("OK")){
                             comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+expInicio.getInst());
-                        }
-
                     }
                 }
 

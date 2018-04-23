@@ -34,7 +34,7 @@ public class ConversionAExpedicionesService {
     public String convertirAExpediciones(String fileName, InputStream inputstream,String tipoArchivo) {
         String destination= PathFiles.PATH_FOR_FILES_CONVERSION;
         processorUtils.copyFile(fileName,inputstream,destination);
-        destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
+        destination=PathFiles.PATH_FOR_FILES_CONVERSION+fileName;
 
 
         try {

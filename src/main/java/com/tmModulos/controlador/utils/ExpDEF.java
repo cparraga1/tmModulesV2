@@ -20,4 +20,23 @@ public class ExpDEF {
     public static int DESVIACION_B = 15;
 
 
+    public static String EVENTO_TXT = "Evento";
+    public static String TIPO_TXT = "Tipo";
+    public static String INICIO_TXT = "Inicio";
+    public static String DE_TXT = "De";
+    public static String FIN_TXT = "Fin";
+    public static String A_TXT = "A";
+    public static String DUR_TXT = "Dur";
+    public static String BUS_TXT = "Bus";
+    public static String LINEA_TXT = "Linea";
+    public static String KM_TXT = "Km";
+    public static String V_INFERIDO_TXT = "V.Inferido";
+    public static String ID_TXT = "Id";
+    public static String FRECUENCIA_TXT = "Frec";
+    public static String SERVBUS_TXT = "Servbus";
+    public static String DESVIACION_A_TXT = "Des Frec";
+    public static String DESVIACION_B_TXT = "Des Hor";
+
+
+
 }
