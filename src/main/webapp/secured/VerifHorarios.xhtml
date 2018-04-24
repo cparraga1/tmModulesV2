@@ -27,11 +27,24 @@
                             <f:selectItem itemLabel="Pos" itemValue="Pos" />
                             <p:ajax update="@form" listener="#{VerHorario.updateFormato}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="Verificación servicios Principales:" />
+                        <p:outputLabel value="" />
+                        <p:outputLabel value="" />
+                        <p:outputLabel value="" />
                         <p:outputLabel  value="Intervalo Mínimo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMin}"/>
                         <p:outputLabel  value="Intervalo Máximo" />
                         <p:inputText value="#{VerHorario.boxIntervaloMax}"/>
+                        <p:outputLabel value="Verificación servicios Refuerzos:" />
+                        <p:outputLabel value="" />
+                        <p:outputLabel value="" />
+                        <p:outputLabel value="" />
+                        <p:outputLabel  value="Intervalo Mínimo" />
+                        <p:inputText value="#{VerHorario.boxIntervaloMinRef}"/>
+                        <p:outputLabel  value="Intervalo Máximo" />
+                        <p:inputText value="#{VerHorario.boxIntervaloMaxRef}"/>
                         <p:outputLabel value="Archivo Verificación:" />
+
                         <p:fileUpload value="#{VerHorario.file}" label="Seleccionar" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/"/>
 
                     </h:panelGrid>

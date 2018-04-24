@@ -2,6 +2,7 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.MatrizDistanciaService;
 import com.tmModulos.controlador.servicios.NodoService;
+import com.tmModulos.controlador.servicios.Util;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -41,6 +42,8 @@ public class EstacionParametrizacionView implements Serializable {
     private String auxNombreZonaU;
     private List<Zona> zonasUsuariosRecords;
 
+    private List<String>  tiposEstaciones;
+
     private Nodo nuevoNodo;
     private String zonaProgramacion;
     private String zonaUsuario;
@@ -65,6 +68,7 @@ public class EstacionParametrizacionView implements Serializable {
         selectedestacionRecords=new ArrayList<>();
         zonasProgramadasRecords = nodoService.getZonaByTipoZona("P");
         zonasUsuariosRecords = nodoService.getZonaByTipoZona("U");
+        tiposEstaciones = Util.listaTiposEstaciones();
     }
 
     public void inicio(){
@@ -446,5 +450,21 @@ public class EstacionParametrizacionView implements Serializable {
 
     public void setEliminar(String eliminar) {
         this.eliminar = eliminar;
+    }
+
+    public List<String> getTiposEstaciones() {
+        return tiposEstaciones;
+    }
+
+    public void setTiposEstaciones(List<String> tiposEstaciones) {
+        this.tiposEstaciones = tiposEstaciones;
+    }
+
+    public String getHabilitarNuevo() {
+        return habilitarNuevo;
+    }
+
+    public void setHabilitarNuevo(String habilitarNuevo) {
+        this.habilitarNuevo = habilitarNuevo;
     }
 }

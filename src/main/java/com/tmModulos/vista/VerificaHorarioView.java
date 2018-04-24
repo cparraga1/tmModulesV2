@@ -34,6 +34,8 @@ public class VerificaHorarioView implements Serializable {
     private boolean visibleDescarga;
 
     private String boxIntervaloMin;
+    private String boxIntervaloMinRef;
+    private String boxIntervaloMaxRef;
     private String boxIntervaloMax;
     private String formatoArchivo;
 
@@ -45,6 +47,8 @@ public class VerificaHorarioView implements Serializable {
         visibleDescarga = false;
         boxIntervaloMin = "00:01:00";
         boxIntervaloMax = "00:07:00";
+        boxIntervaloMinRef = "00:01:00";
+        boxIntervaloMaxRef = "00:07:00";
         tipoDiaRecords = verificacionHorarios.getTiposDiasDisponibles();
         formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato csv";
 
@@ -54,7 +58,8 @@ public class VerificaHorarioView implements Serializable {
     public void upload() {
             if(file!=null){
                 try {
-                    verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax);
+                    verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax,
+                            boxIntervaloMinRef,boxIntervaloMaxRef);
                     messagesView.info("Verificación Terminada","");
                     visibleDescarga = true;
                 } catch (IOException e) {
@@ -198,6 +203,22 @@ public class VerificaHorarioView implements Serializable {
 
     public void setFormatoArchivo(String formatoArchivo) {
         this.formatoArchivo = formatoArchivo;
+    }
+
+    public String getBoxIntervaloMinRef() {
+        return boxIntervaloMinRef;
+    }
+
+    public void setBoxIntervaloMinRef(String boxIntervaloMinRef) {
+        this.boxIntervaloMinRef = boxIntervaloMinRef;
+    }
+
+    public String getBoxIntervaloMaxRef() {
+        return boxIntervaloMaxRef;
+    }
+
+    public void setBoxIntervaloMaxRef(String boxIntervaloMaxRef) {
+        this.boxIntervaloMaxRef = boxIntervaloMaxRef;
     }
 }
 

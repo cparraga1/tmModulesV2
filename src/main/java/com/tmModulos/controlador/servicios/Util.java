@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.servicios;
 
 import com.tmModulos.controlador.utils.FormatoArchivo;
+import com.tmModulos.controlador.utils.TiposEstaciones;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -67,5 +68,13 @@ public class Util {
         formatoArchivos.add(FormatoArchivo.CSV_COMMA);
         formatoArchivos.add(FormatoArchivo.CSV_PUNTO_COMMA);
         return formatoArchivos;
+    }
+
+    public static List<String> listaTiposEstaciones() {
+        List<String> tiposEstaciones = new ArrayList<>();
+        tiposEstaciones.add(TiposEstaciones.TRONCAL);
+        tiposEstaciones.add(TiposEstaciones.PATIO);
+        tiposEstaciones.add(TiposEstaciones.REJA);
+        return tiposEstaciones;
     }
 }

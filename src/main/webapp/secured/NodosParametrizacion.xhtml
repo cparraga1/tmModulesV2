@@ -137,6 +137,11 @@
                             <h:outputText value="Nombre:" style="color:black"/>
                             <h:inputText value="#{nodosP.nuevaEstacion.nombre}"  />
 
+                            <h:outputText value="Tipo:" style="color:black"/>
+                            <h:selectOneMenu value="#{nodosP.nuevaEstacion.tipo}" style="width:100%" >
+                                <f:selectItems value="#{nodosP.tiposEstaciones}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                            </h:selectOneMenu>
+
                             <h:outputText value="Zona Usuario:" style="color:black"/>
                             <h:selectOneMenu value="#{nodosP.auxNombreZonaU}" style="width:100%" >
                                 <f:selectItems value="#{nodosP.zonasUsuariosRecords}" var="zona" itemLabel="#{zona.nombre}" itemValue="#{zona}" />

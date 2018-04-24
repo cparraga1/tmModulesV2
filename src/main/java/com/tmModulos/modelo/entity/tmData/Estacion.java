@@ -17,6 +17,9 @@ public class Estacion {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "tipo")
+    private String tipo;
+
     @Column(name = "codigo")
     private Integer codigo;
 
@@ -83,5 +86,13 @@ public class Estacion {
 
     public void setEstacionRecords(Set<Vagon> estacionRecords) {
         this.estacionRecords = estacionRecords;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

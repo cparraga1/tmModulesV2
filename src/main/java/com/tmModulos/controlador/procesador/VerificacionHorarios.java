@@ -41,11 +41,13 @@ public class VerificacionHorarios {
     private CellStyle generalStyle;
     private Font font;
     private Date intervaloMinimo;
+    private Date intervaloMinimoRef;
     private Date intervaloMaximo;
+    private Date intervaloMaximoRef;
 
     public VerificacionHorarios() {}
 
-    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max) throws Exception {
+    public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max,String minRef,String maxRef) throws Exception {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
         processorUtils.copyFile(fileName,in,destination);
@@ -53,7 +55,7 @@ public class VerificacionHorarios {
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
 
-        getIntervalosComparacion(min, max);
+        getIntervalosComparacion(min, max,minRef,maxRef);
 
         if(tipoValidacion.equals("Pre")){
             veriPreHorarios.deleteEquivalencias();
@@ -100,15 +102,14 @@ public class VerificacionHorarios {
         }
     }
 
-    private void getIntervalosComparacion(String min, String max) throws Exception {
+    private void getIntervalosComparacion(String min, String max,String minRef,String maxRef) throws Exception {
             intervaloMinimo = processorUtils.convertirATime(min);
+            intervaloMinimoRef = processorUtils.convertirATime(minRef);
             intervaloMaximo = processorUtils.convertirATime(max);
-            if(intervaloMinimo== null || intervaloMaximo == null){
+            intervaloMaximoRef = processorUtils.convertirATime(maxRef);
+            if(intervaloMinimo== null || intervaloMaximo == null || intervaloMinimoRef== null || intervaloMaximoRef == null){
                 throw new Exception("Formato de Tiempo Invalido");
             }
-
-
-
     }
 
     private void compareDataExcelHorario(String file,String tipo) throws Exception {
@@ -137,15 +138,16 @@ public class VerificacionHorarios {
                     List<Integer> horaInicioB = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO_2));
                     List<Integer> horaFin = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
                     List<Integer> horaFinB = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
+                    String tipoServicio = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.TIPO_SERVICIO);
                     int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
                     intervalosVeri.cargarFranjas();
 
                     if(tipo.equals("Pre")){
                         String identificador = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.iD_PRE);
                         List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
-                        verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,expedicionesTemporalsData,identificador);
+                        verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,expedicionesTemporalsData,identificador,tipoServicio);
                     }else{
-                        verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia);
+                        verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
                     }
 
                 }
@@ -176,7 +178,7 @@ public class VerificacionHorarios {
     }
 
     private void verificacionPostHorario(Row row, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB,
-                                         int distancia) {
+                                         int distancia,String tipoServicio) {
         String id = row.getCell(ComparadorHorarioIndex.iD).getStringCellValue();
 
         String[] valores = id.split("-");
@@ -195,7 +197,7 @@ public class VerificacionHorarios {
 
 
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPos(horarios);
-            incluirResultadosIntervalos(row, intervalosExpediciones);
+            incluirResultadosIntervalos(row, intervalosExpediciones,tipoServicio);
 
         }else{
             registrosNoEncontrados(row,id);
@@ -233,26 +235,26 @@ public class VerificacionHorarios {
         return comparaciones;
     }
 
-    private void incluirResultadosIntervalos(Row row, List<String> intervalosExpediciones) {
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(0), ComparadorHorarioIndex.INT_PROMEDIO_INI);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI);
-        createCellResultadosIntervalos(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI);
+    private void incluirResultadosIntervalos(Row row, List<String> intervalosExpediciones,String tipoServicio) {
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(0), ComparadorHorarioIndex.INT_PROMEDIO_INI,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(2),ComparadorHorarioIndex.INT_MAXIMO_INI,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(3),ComparadorHorarioIndex.INT_PROMEDIO_PAM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(4),ComparadorHorarioIndex.INT_MINIMO_PAM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(5),ComparadorHorarioIndex.INT_MAXIMO_PAM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(6),ComparadorHorarioIndex.INT_PROMEDIO_VALLE,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(7),ComparadorHorarioIndex.INT_MINIMO_VALLE,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(8),ComparadorHorarioIndex.INT_MAXIMO_VALLE,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(9),ComparadorHorarioIndex.INT_PROMEDIO_PPM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(10),ComparadorHorarioIndex.INT_MINIMO_PPM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(11),ComparadorHorarioIndex.INT_MAXIMO_PPM,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(12),ComparadorHorarioIndex.INT_PROMEDIO_CI,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(13),ComparadorHorarioIndex.INT_MINIMO_CI,tipoServicio);
+        createCellResultadosIntervalos(row, intervalosExpediciones.get(14),ComparadorHorarioIndex.INT_MAXIMO_CI,tipoServicio);
     }
 
     private void verificacionPreHorario(Row row, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB,
-                                        int distancia,List<ExpedicionesTemporal> expediciones, String id) {
+                                        int distancia,List<ExpedicionesTemporal> expediciones, String id,String tipoServicio) {
 
         if(expediciones.size()>0){
             serviciosEncontrados.add(id);
@@ -267,7 +269,7 @@ public class VerificacionHorarios {
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalos(expediciones,horaInicio,horaInicioB,
                     horaFin,horaFinB);
 
-            incluirResultadosIntervalos(row, intervalosExpediciones);
+            incluirResultadosIntervalos(row, intervalosExpediciones,tipoServicio);
 
         }else{
             registrosNoEncontrados(row,id);
@@ -446,7 +448,16 @@ public class VerificacionHorarios {
 
     }
 
-    private void createCellResultadosIntervalos(Row row, String valor,int num) {
+    private void createCellResultadosIntervalos(Row row, String valor,int num,String tipoServicio) {
+        Date comparacionIntMinimo = intervaloMinimo;
+        Date comparacionIntMaximo = intervaloMaximo;
+
+        if(tipoServicio.equals(TipoServicioDEF.servicioRefuerzo)){
+            comparacionIntMinimo = intervaloMinimoRef;
+            comparacionIntMaximo = intervaloMaximoRef;
+        }
+
+
         Cell resultadoHoraIni= row.createCell(num);
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
@@ -454,7 +465,7 @@ public class VerificacionHorarios {
 
         if(!valor.equals("")){
             Date tiempoIntervalo = processorUtils.convertirATime(valor);
-            if(tiempoIntervalo.before(intervaloMinimo) || tiempoIntervalo.after(intervaloMaximo)){
+            if(tiempoIntervalo.before(comparacionIntMinimo) || tiempoIntervalo.after(comparacionIntMaximo)){
                 font.setColor(IndexedColors.RED.getIndex());
                 cellStyle.setFont(font);
                 resultadoHoraIni.setCellStyle(cellStyle);
@@ -464,7 +475,6 @@ public class VerificacionHorarios {
         }else{
             resultadoHoraIni.setCellStyle(generalStyle);
         }
-
 
     }
 
