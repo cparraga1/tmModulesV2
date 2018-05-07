@@ -1,16 +1,23 @@
 package com.tmModulos.controlador.servicios;
 
-import com.tmModulos.controlador.utils.PathFiles;
+import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.dao.tmData.EquivalenciasDao;
 import com.tmModulos.modelo.dao.tmData.ExpedicionesTemporalDao;
 import com.tmModulos.modelo.dao.tmData.TempHorarioDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
 import com.tmModulos.modelo.entity.tmData.*;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Iterator;
 import java.util.List;
 
 @Service("VeriPreHorarios")
@@ -25,6 +32,13 @@ public class VeriPreHorarios {
 
     @Autowired
     public TempPosDao tempHorarioDao;
+
+    @Autowired
+    public ExpedicionesTempConv expedicionesTempConv;
+
+
+    @Autowired
+    private ExcelExtract excelExtract;
 
 
     public void addExpTemporal(ExpedicionesTemporal temporal) {
@@ -130,6 +144,65 @@ public class VeriPreHorarios {
         String filename = PathFiles.PATH_FOR_FILES_CONVERSION+"ejemploRes.xls";
         return equivalenciasDao.getNewExpediciones(filename);
 
+    }
+
+    public void addDatosExpediciones(String destination) {
+        try {
+
+            FileInputStream fileInputStream = new FileInputStream(destination);
+            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
+            HSSFSheet worksheet = workbook.getSheetAt(0);
+
+            Iterator<Row> rowIterator = worksheet.iterator();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                if( row.getCell(0) != null ){
+
+                    ExpedicionesTempConv exp = new ExpedicionesTempConv();
+                    exp.setEvento(excelExtract.getStringCellValue(row,ExpDEF.EVENTO));
+                    exp.setTipo(excelExtract.getStringCellValue(row,ExpDEF.TIPO));
+                    exp.setHoraInicio(excelExtract.getStringCellValue(row,ExpDEF.INICIO));
+                    exp.setPuntoInicio(excelExtract.getStringCellValue(row,ExpDEF.DE));
+                    exp.setHoraFin(excelExtract.getStringCellValue(row,ExpDEF.FIN));
+                    exp.setPuntoFin(excelExtract.getStringCellValue(row,ExpDEF.A));
+                    exp.setDur(excelExtract.getStringCellValue(row,ExpDEF.DUR));
+                    exp.setBus(excelExtract.getStringCellValue(row,ExpDEF.BUS));
+                    exp.setLinea(excelExtract.getStringCellValue(row,ExpDEF.LINEA));
+                    exp.setKm(excelExtract.getStringCellValue(row,ExpDEF.KM));
+                    exp.setIdentificador(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
+                    exp.setInferido(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
+                    exp.setInferido(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
+
+                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
+                    String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
+                    int linea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.LINEA);
+                    int sublinea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.SUBLINEA);
+                    int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
+                    String operador = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.OPERADOR);
+                    String idParada = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ID_PARADA);
+                    String labelNodo = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.LABEL);
+                    String atributos = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ATRIBUTOS);
+                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_X);
+                    Double posY = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_Y);
+                    String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
+                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(
+                            linea,sublinea,ruta,nombreRuta,codigoNodo,row);
+                    guardarDistanciaNodos(matrizDistancia,
+                            excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION),
+                            servicioDistancia,nodoNombre,codigoNodo+"",operador,idParada,labelNodo,atributos,posX,posY);
+                }else{
+                    break;
+                }
+            }
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            log.error( e.getMessage());
+            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
+        } catch (IOException e) {
+            log.error( e.getMessage());
+            logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
+        }
     }
 }
 

@@ -83,6 +83,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.TempPos</value>
                 <value>com.tmModulos.modelo.entity.tmData.VerificacionTipoDia</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempBusesHora</value>
+                <value>com.tmModulos.modelo.entity.tmData.ExpedicionesTempConv</value>
 
             </list>
         </property>

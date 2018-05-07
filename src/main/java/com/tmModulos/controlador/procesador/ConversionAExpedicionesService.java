@@ -38,17 +38,19 @@ public class ConversionAExpedicionesService {
 
 
         try {
-        if(tipoArchivo.equals(FormatoArchivo.CSV_COMMA)){
-                veriPreHorarios.addExpedicionesConversion(destination,',');
-        }else{
-            veriPreHorarios.addExpedicionesConversion(destination,';');
-        }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+//        if(tipoArchivo.equals(FormatoArchivo.CSV_COMMA)){
+//                veriPreHorarios.addExpedicionesConversion(destination,',');
+//        }else{
+//            veriPreHorarios.addExpedicionesConversion(destination,';');
+//        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+          veriPreHorarios.addDatosExpediciones(destination);
         destination = veriPreHorarios.getNewExpediciones();
 
-        veriPreHorarios.deleteExpedicionesConversion();
+       // veriPreHorarios.deleteExpedicionesConversion();
         return destination;
     }
 

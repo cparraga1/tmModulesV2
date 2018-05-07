@@ -116,7 +116,7 @@ public class EquivalenciasDao {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(destination);
             copyManager.copyIn("COPY temp_expediciones_comp (evento,tipo,hora_inicio,punto_inicio,hora_fin,punto_fin,dur,bus,identificador,km,inferido,noo,frec,ser_bus,des_dur,des_frec)" +
-                    " from  STDIN DELIMITER '"+delimiter+"' CSV HEADER ", fileReader );
+                    " from  STDIN DELIMITER '"+delimiter+"' CSV HEADER encoding 'windows-1251'", fileReader );
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());
@@ -193,21 +193,21 @@ public class EquivalenciasDao {
 
     private void crearHeader(Sheet personSheet) {
         Row rowInfo1 = personSheet.createRow(0);
-//        createCellResultados(rowInfo1,ExpDEF.EVENTO_TXT,ExpDEF.EVENTO);
-//        createCellResultados(rowInfo1,ExpDEF.TIPO_TXT,ExpDEF.TIPO);
-//        createCellResultados(rowInfo1,ExpDEF.INICIO_TXT,ExpDEF.INICIO);
-//        createCellResultados(rowInfo1,ExpDEF.DE_TXT,ExpDEF.DE);
-//        createCellResultados(rowInfo1,ExpDEF.FIN_TXT,ExpDEF.FIN);
-//        createCellResultados(rowInfo1,ExpDEF.A_TXT,ExpDEF.A);
-//        createCellResultados(rowInfo1,ExpDEF.DUR_TXT,ExpDEF.DUR);
-//        createCellResultados(rowInfo1,ExpDEF.BUS_TXT,ExpDEF.BUS);
-//        createCellResultados(rowInfo1,ExpDEF.LINEA_TXT,ExpDEF.LINEA);
-//        createCellResultados(rowInfo1,ExpDEF.KM_TXT,ExpDEF.KM);
-//        createCellResultados(rowInfo1,ExpDEF.V_INFERIDO_TXT,ExpDEF.V_INFERIDO);
-//        createCellResultados(rowInfo1,ExpDEF.ID_TXT,ExpDEF.ID);
-//        createCellResultados(rowInfo1,ExpDEF.FRECUENCIA_TXT,ExpDEF.FRECUENCIA);
-//        createCellResultados(rowInfo1,ExpDEF.SERVBUS_TXT,ExpDEF.SERVBUS);
-//        createCellResultados(rowInfo1,ExpDEF.DESVIACION_A_TXT,ExpDEF.DESVIACION_A);
-//        createCellResultados(rowInfo1,ExpDEF.DESVIACION_B_TXT,ExpDEF.DESVIACION_B);
+        createCellResultados(rowInfo1,ExpDEF.EVENTO_TXT,ExpDEF.EVENTO);
+        createCellResultados(rowInfo1,ExpDEF.TIPO_TXT,ExpDEF.TIPO);
+        createCellResultados(rowInfo1,ExpDEF.INICIO_TXT,ExpDEF.INICIO);
+        createCellResultados(rowInfo1,ExpDEF.DE_TXT,ExpDEF.DE);
+        createCellResultados(rowInfo1,ExpDEF.FIN_TXT,ExpDEF.FIN);
+        createCellResultados(rowInfo1,ExpDEF.A_TXT,ExpDEF.A);
+        createCellResultados(rowInfo1,ExpDEF.DUR_TXT,ExpDEF.DUR);
+        createCellResultados(rowInfo1,ExpDEF.BUS_TXT,ExpDEF.BUS);
+        createCellResultados(rowInfo1,ExpDEF.LINEA_TXT,ExpDEF.LINEA);
+        createCellResultados(rowInfo1,ExpDEF.KM_TXT,ExpDEF.KM);
+        createCellResultados(rowInfo1,ExpDEF.V_INFERIDO_TXT,ExpDEF.V_INFERIDO);
+        createCellResultados(rowInfo1,ExpDEF.ID_TXT,ExpDEF.ID);
+        createCellResultados(rowInfo1,ExpDEF.FRECUENCIA_TXT,ExpDEF.FRECUENCIA);
+        createCellResultados(rowInfo1,ExpDEF.SERVBUS_TXT,ExpDEF.SERVBUS);
+        createCellResultados(rowInfo1,ExpDEF.DESVIACION_A_TXT,ExpDEF.DESVIACION_A);
+        createCellResultados(rowInfo1,ExpDEF.DESVIACION_B_TXT,ExpDEF.DESVIACION_B);
     }
 }
