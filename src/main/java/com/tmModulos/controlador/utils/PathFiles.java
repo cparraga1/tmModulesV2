@@ -9,7 +9,7 @@ public class PathFiles {
 // public static final String PATH_FOR_FILES_VERIFICACION = "C:\\temp\\Migracion\\VerificaHorario\\";
 
     public static final String PATH_FOR_FILES = "/usr/local/temp";
-// public static final String PATH_FOR_FILES = "M:\\temp";
+// public static final String PATH_FOR_FILES = "C:\\temp";
 
    public static final String BUSES_HORA_FILE = "busesHora.xls";
 }

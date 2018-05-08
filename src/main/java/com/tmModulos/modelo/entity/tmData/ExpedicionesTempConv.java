@@ -20,7 +20,7 @@ public class ExpedicionesTempConv {
     @Column(name = "hora_fin")
     private String horaFin;
 
-    @Column(name = "linea")
+    @Column(name = "identificador")
     private String linea;
 
     @Column(name = "punto_inicio")
@@ -41,8 +41,7 @@ public class ExpedicionesTempConv {
     @Column(name = "km")
     private String km;
 
-    @Column(name = "identificador")
-    private String identificador;
+
 
     @Column(name = "bus")
     private String bus;
@@ -140,13 +139,6 @@ public class ExpedicionesTempConv {
         this.km = km;
     }
 
-    public String getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
-    }
 
     public String getBus() {
         return bus;

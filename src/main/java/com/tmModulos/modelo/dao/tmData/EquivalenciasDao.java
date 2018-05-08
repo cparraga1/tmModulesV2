@@ -116,7 +116,7 @@ public class EquivalenciasDao {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(destination);
             copyManager.copyIn("COPY temp_expediciones_comp (evento,tipo,hora_inicio,punto_inicio,hora_fin,punto_fin,dur,bus,identificador,km,inferido,noo,frec,ser_bus,des_dur,des_frec)" +
-                    " from  STDIN DELIMITER '"+delimiter+"' CSV HEADER encoding 'windows-1251'", fileReader );
+                    " from  STDIN DELIMITER '"+delimiter+"' CSV HEADER encoding 'utf-8'", fileReader );
         } catch (SQLException e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());

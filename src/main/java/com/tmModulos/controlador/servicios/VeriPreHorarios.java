@@ -1,10 +1,7 @@
 package com.tmModulos.controlador.servicios;
 
 import com.tmModulos.controlador.utils.*;
-import com.tmModulos.modelo.dao.tmData.EquivalenciasDao;
-import com.tmModulos.modelo.dao.tmData.ExpedicionesTemporalDao;
-import com.tmModulos.modelo.dao.tmData.TempHorarioDao;
-import com.tmModulos.modelo.dao.tmData.TempPosDao;
+import com.tmModulos.modelo.dao.tmData.*;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -34,7 +31,7 @@ public class VeriPreHorarios {
     public TempPosDao tempHorarioDao;
 
     @Autowired
-    public ExpedicionesTempConv expedicionesTempConv;
+    public ExpedicionesTempConvDao expedicionesTempConvDao;
 
 
     @Autowired
@@ -170,38 +167,24 @@ public class VeriPreHorarios {
                     exp.setBus(excelExtract.getStringCellValue(row,ExpDEF.BUS));
                     exp.setLinea(excelExtract.getStringCellValue(row,ExpDEF.LINEA));
                     exp.setKm(excelExtract.getStringCellValue(row,ExpDEF.KM));
-                    exp.setIdentificador(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
+                    exp.setNoo(excelExtract.getStringCellValue(row,ExpDEF.ID));
                     exp.setInferido(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
-                    exp.setInferido(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
+                    exp.setFrec(excelExtract.getStringCellValue(row,ExpDEF.FRECUENCIA));
+                    exp.setSerBus(excelExtract.getStringCellValue(row,ExpDEF.SERVBUS));
+                    exp.setDesDur(excelExtract.getStringCellValue(row,ExpDEF.DESVIACION_A));
+                    exp.setDesFrec(excelExtract.getStringCellValue(row,ExpDEF.DESVIACION_B));
 
-                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
-                    String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
-                    int linea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.LINEA);
-                    int sublinea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.SUBLINEA);
-                    int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
-                    String operador = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.OPERADOR);
-                    String idParada = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ID_PARADA);
-                    String labelNodo = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.LABEL);
-                    String atributos = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ATRIBUTOS);
-                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_X);
-                    Double posY = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_Y);
-                    String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
-                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(
-                            linea,sublinea,ruta,nombreRuta,codigoNodo,row);
-                    guardarDistanciaNodos(matrizDistancia,
-                            excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION),
-                            servicioDistancia,nodoNombre,codigoNodo+"",operador,idParada,labelNodo,atributos,posX,posY);
+                    expedicionesTempConvDao.addExpTemporal(exp);
+
                 }else{
                     break;
                 }
             }
             fileInputStream.close();
         } catch (FileNotFoundException e) {
-            log.error( e.getMessage());
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
+
         } catch (IOException e) {
-            log.error( e.getMessage());
-            logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
+
         }
     }
 }

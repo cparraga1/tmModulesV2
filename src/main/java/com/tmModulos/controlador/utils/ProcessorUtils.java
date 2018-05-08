@@ -1,6 +1,7 @@
 package com.tmModulos.controlador.utils;
 
 import com.tmModulos.modelo.entity.tmData.Expediciones;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +48,33 @@ public class ProcessorUtils {
             out.flush();
             out.close();
 
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void copyFileUTF8(String fileName, InputStream in, String destination) {
+        try {
+
+            destination= destination+fileName;
+            // write the inputStream to a FileOutputStream
+            Writer out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(destination)));
+//            IOUtils.copy(in, out, "UTF-8");
+            IOUtils.copy(in, out, "ISO-8859-1");
+            IOUtils.closeQuietly(out);
+
+//            StringBuilder inputStringBuilder = new StringBuilder();
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in,"8859_1"));
+//            String line = bufferedReader.readLine();
+//            while(line != null){
+//                inputStringBuilder.append(line);inputStringBuilder.append('\n');
+//                out.write(line);
+//                line = bufferedReader.readLine();
+//            }
+////            out.flush();
+//            out.close();
             System.out.println("New file created!");
         } catch (IOException e) {
             System.out.println(e.getMessage());

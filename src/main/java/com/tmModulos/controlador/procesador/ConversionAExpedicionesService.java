@@ -33,24 +33,24 @@ public class ConversionAExpedicionesService {
 
     public String convertirAExpediciones(String fileName, InputStream inputstream,String tipoArchivo) {
         String destination= PathFiles.PATH_FOR_FILES_CONVERSION;
-        processorUtils.copyFile(fileName,inputstream,destination);
+        processorUtils.copyFileUTF8(fileName,inputstream,destination);
         destination=PathFiles.PATH_FOR_FILES_CONVERSION+fileName;
 
 
         try {
 
-//        if(tipoArchivo.equals(FormatoArchivo.CSV_COMMA)){
-//                veriPreHorarios.addExpedicionesConversion(destination,',');
-//        }else{
-//            veriPreHorarios.addExpedicionesConversion(destination,';');
-//        }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-          veriPreHorarios.addDatosExpediciones(destination);
-        destination = veriPreHorarios.getNewExpediciones();
+        if(tipoArchivo.equals(FormatoArchivo.CSV_COMMA)){
+                veriPreHorarios.addExpedicionesConversion(destination,',');
+        }else{
+            veriPreHorarios.addExpedicionesConversion(destination,';');
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//    //      veriPreHorarios.addDatosExpediciones(destination);
+       destination = veriPreHorarios.getNewExpediciones();
 
-       // veriPreHorarios.deleteExpedicionesConversion();
+       veriPreHorarios.deleteExpedicionesConversion();
         return destination;
     }
 
