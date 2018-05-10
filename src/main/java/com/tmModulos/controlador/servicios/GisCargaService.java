@@ -98,7 +98,7 @@ public class GisCargaService {
       return  gisCargaDao.getGisCargaById(id);
     }
 
-    public List<ArcoTiempo> getArcoTiempoByGisCargaAndServicio(GisCarga gisCarga,GisServicio servicio){
+    public List<ArcoTiempo> getArcoTiempoByGisCargaAndServicio(GisCarga gisCarga,List<GisServicio> servicio){
         return arcoTiempoDao.getArcoTiempoByGisCargaAndServicio(gisCarga,servicio);
     }
 
@@ -122,9 +122,12 @@ public class GisCargaService {
       return gisServicioDao.getGisServicioAll();
     }
 
-    public GisServicio getGisServicioByTrayectoLinea(String identificador){
+    public List<GisServicio> getGisServicioByTrayectoLinea(String identificador){
         return gisServicioDao.getGisServicioByTrayectoLinea(identificador);
     }
 
 
+    public GisServicio getGisServicioByTrayectoLineaAndSecuencia(String identificador, int secuencia) {
+        return gisServicioDao.getGisServicioByTrayectoLineaAndSecuencia(identificador,secuencia);
+    }
 }

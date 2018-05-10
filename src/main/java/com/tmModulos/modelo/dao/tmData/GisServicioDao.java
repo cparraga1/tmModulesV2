@@ -5,6 +5,7 @@ import com.tmModulos.modelo.entity.tmData.GisCarga;
 import com.tmModulos.modelo.entity.tmData.GisServicio;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -45,11 +46,18 @@ public class GisServicioDao {
         return list;
     }
 
-    public GisServicio getGisServicioByTrayectoLinea(String identificador){
+    public List<GisServicio> getGisServicioByTrayectoLinea(String identificador){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(GisServicio.class);
         criteria.add(Restrictions.eq("identificador", identificador));
-        return (GisServicio) criteria.uniqueResult();
+        criteria.addOrder(Order.asc("secuencia"));
+        return  criteria.list();
     }
 
 
+    public GisServicio getGisServicioByTrayectoLineaAndSecuencia(String identificador, int secuencia) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(GisServicio.class);
+        criteria.add(Restrictions.eq("identificador", identificador));
+        criteria.add(Restrictions.eq("secuencia", secuencia));
+        return (GisServicio) criteria.uniqueResult();
+    }
 }

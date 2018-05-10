@@ -52,10 +52,11 @@ public class ArcoTiempoDao {
         return criteria.list();
     }
 
-    public List<ArcoTiempo> getArcoTiempoByGisCargaAndServicio(GisCarga gisCarga,GisServicio servicio){
+    public List<ArcoTiempo> getArcoTiempoByGisCargaAndServicio(GisCarga gisCarga,List<GisServicio> servicio){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(ArcoTiempo.class);
         criteria.add(Restrictions.eq("gisCargaArco", gisCarga));
-        criteria.add(Restrictions.eq("servicio", servicio));
+        criteria.add(Restrictions.in("servicio", servicio));
+        //TODO filtar por tipo dia
         return criteria.list();
     }
 

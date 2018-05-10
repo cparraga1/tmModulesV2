@@ -304,48 +304,48 @@ public class BusquedaTablaMaestraView {
     }
 
     private void cambiosPorIdentificador(TablaMaestraServicios servicioSeleccionado) {
-        String identificador = servicioSeleccionado.getIdentificador();
-        Servicio nuevoServicio = tablaMaestraService.getServicioByIdentificador(identificador);
-        if(nuevoServicio!=null){
-               // servicioSeleccionado.setTrayecto(nuevoServicio.getTrayecto()+"");
-                servicioSeleccionado.setMacro(nuevoServicio.getMacro());
-                servicioSeleccionado.setLinea(nuevoServicio.getLinea());
-                servicioSeleccionado.setSeccion(nuevoServicio.getSeccion());
-                servicioSeleccionado.setNombreGeneral(nuevoServicio.getNombreGeneral());
-               // servicioSeleccionado.setNombreEspecial(nuevoServicio.getNombreEspecial());
-                servicioSeleccionado.setCodigoInicio(nuevoServicio.getPunto()+"");
-
-          GisServicio  gisServicio=tablaMaestraEdicion.getGisServicioByTrayectoLinea(identificador);
-          if(gisServicio!=null){
-              List<ArcoTiempo> arcoTiempoRecords = tablaMaestraEdicion.getArcoTiempoByGisCargaAndServicio(servicioSeleccionado.getTablaMeestra().getGisCarga(),gisServicio);
-              if(arcoTiempoRecords.size()>0){
-                  ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
-                  Nodo nodoInicio = tablaMaestraProcessor.getNodoInicio(arcoTiempoBase.getServicio().getNodoIncial());
-                  if(nodoInicio!=null){
-                      servicioSeleccionado =tablaMaestraProcessor.agregarInfoNodo(nuevoServicio,servicioSeleccionado,nodoInicio);
-                      Nodo nodoFinal = tablaMaestraProcessor.getNodoInicio(arcoTiempoBase.getServicio().getNodoFinal());
-                      if(nodoFinal!=null){
-                          servicioSeleccionado =tablaMaestraProcessor.agregarInfoNodoFin(nuevoServicio,servicioSeleccionado,nodoFinal);
-                          servicioSeleccionado.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
-                          servicioSeleccionado.setSecuencia(arcoTiempoBase.getSecuencia());
-                          servicioSeleccionado= tablaMaestraProcessor.calcularDistancia(servicioSeleccionado,nodoInicio,nodoFinal,servicioSeleccionado.getTablaMeestra().getMatrizDistancia());
-
-                           tablaMaestraProcessor.actualizarCicloServicio(servicioSeleccionado,arcoTiempoRecords);
-                           tablaMaestraProcessor.actualizarVelocidadProgramada(servicioSeleccionado, servicioSeleccionado.getCicloServicio(),servicioSeleccionado.getDistancia());
-
-                          tablaMaestraProcessor.actualizarHorarioServicios(nuevoServicio,servicioSeleccionado);
-
-
-                      }
-
-                  }
-              }
-          }
-
-        }else{
-            tServiciosRecords=tablaMaestraService.getServiciosByTabla(selectedTabla);
-            messagesView.error(Messages.MENSAJE_FALLO,Messages.ACCION_REVISAR_ID);
-        }
+//        String identificador = servicioSeleccionado.getIdentificador();
+//        Servicio nuevoServicio = tablaMaestraService.getServicioByIdentificador(identificador);
+//        if(nuevoServicio!=null){
+//               // servicioSeleccionado.setTrayecto(nuevoServicio.getTrayecto()+"");
+//                servicioSeleccionado.setMacro(nuevoServicio.getMacro());
+//                servicioSeleccionado.setLinea(nuevoServicio.getLinea());
+//                servicioSeleccionado.setSeccion(nuevoServicio.getSeccion());
+//                servicioSeleccionado.setNombreGeneral(nuevoServicio.getNombreGeneral());
+//               // servicioSeleccionado.setNombreEspecial(nuevoServicio.getNombreEspecial());
+//                servicioSeleccionado.setCodigoInicio(nuevoServicio.getPunto()+"");
+//
+//          GisServicio  gisServicio=tablaMaestraEdicion.getGisServicioByTrayectoLinea(identificador);
+//          if(gisServicio!=null){
+//              List<ArcoTiempo> arcoTiempoRecords = tablaMaestraEdicion.getArcoTiempoByGisCargaAndServicio(servicioSeleccionado.getTablaMeestra().getGisCarga(),gisServicio);
+//              if(arcoTiempoRecords.size()>0){
+//                  ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
+//                  Nodo nodoInicio = tablaMaestraProcessor.getNodoInicio(arcoTiempoBase.getServicio().getNodoIncial());
+//                  if(nodoInicio!=null){
+//                      servicioSeleccionado =tablaMaestraProcessor.agregarInfoNodo(nuevoServicio,servicioSeleccionado,nodoInicio);
+//                      Nodo nodoFinal = tablaMaestraProcessor.getNodoInicio(arcoTiempoBase.getServicio().getNodoFinal());
+//                      if(nodoFinal!=null){
+//                          servicioSeleccionado =tablaMaestraProcessor.agregarInfoNodoFin(nuevoServicio,servicioSeleccionado,nodoFinal);
+//                          servicioSeleccionado.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
+//                          servicioSeleccionado.setSecuencia(arcoTiempoBase.getSecuencia());
+//                          servicioSeleccionado= tablaMaestraProcessor.calcularDistancia(servicioSeleccionado,nodoInicio,nodoFinal,servicioSeleccionado.getTablaMeestra().getMatrizDistancia());
+//
+//                           tablaMaestraProcessor.actualizarCicloServicio(servicioSeleccionado,arcoTiempoRecords);
+//                           tablaMaestraProcessor.actualizarVelocidadProgramada(servicioSeleccionado, servicioSeleccionado.getCicloServicio(),servicioSeleccionado.getDistancia());
+//
+//                          tablaMaestraProcessor.actualizarHorarioServicios(nuevoServicio,servicioSeleccionado);
+//
+//
+//                      }
+//
+//                  }
+//              }
+//          }
+//
+//        }else{
+//            tServiciosRecords=tablaMaestraService.getServiciosByTabla(selectedTabla);
+//            messagesView.error(Messages.MENSAJE_FALLO,Messages.ACCION_REVISAR_ID);
+//        }
     }
 
     private boolean existeTrayectoYNombreDeServicio(TablaMaestraServicios servicioSeleccionado) {

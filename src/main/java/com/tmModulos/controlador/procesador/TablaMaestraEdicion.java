@@ -29,11 +29,13 @@ public class TablaMaestraEdicion {
     }
 
     public GisServicio getGisServicioByTrayectoLinea(String identificador){
-        return gisCargaService.getGisServicioByTrayectoLinea(identificador);
+//        return gisCargaService.getGisServicioByTrayectoLinea(identificador);
+        return null;
     }
 
     public List<ArcoTiempo> getArcoTiempoByGisCargaAndServicio(GisCarga gisCarga, GisServicio servicio){
-        return gisCargaService.getArcoTiempoByGisCargaAndServicio(gisCarga,servicio);
+//        return gisCargaService.getArcoTiempoByGisCargaAndServicio(gisCarga,servicio);
+        return null;
     }
 
 }

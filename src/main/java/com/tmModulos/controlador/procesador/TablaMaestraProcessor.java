@@ -119,13 +119,13 @@ public class TablaMaestraProcessor {
 
                 //Encontrar nodo Inicio del servicio por el codigo
                 // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
-                GisServicio gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
+               List<GisServicio> gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
 
                 TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
                 tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
 
 
-                if(gisServicio!=null){
+                if(gisServicio.size()>0){
 
                     //Obtener información de los arco tiempo del GIS de carga
                     List<ArcoTiempo> arcoTiempoRecords = gisCargaService.getArcoTiempoByGisCargaAndServicio(gis,gisServicio);
@@ -135,16 +135,16 @@ public class TablaMaestraProcessor {
 
 
                         //Obtener Nodo Inicio basado en la informacion del GIS de carga
-                        Nodo nodoInicio = getNodoInicio(arcoTiempoBase.getServicio().getNodoIncial());
+                        Nodo nodoInicio = getNodoInicio(servicio.getServicio().getPunto()+"");
                         if(nodoInicio!=null){
                             tablaMaestraServicios = agregarInfoNodo(servicio.getServicio(), tablaMaestraServicios, nodoInicio);
 
-                            Nodo nodoFinal = getNodoInicio(arcoTiempoBase.getServicio().getNodoFinal());
+                            Nodo nodoFinal = getNodoInicio(servicio.getServicio().getPuntoFin()+"");
                             if(nodoFinal!=null){
                                 tablaMaestraServicios =agregarInfoNodoFin(servicio.getServicio(),tablaMaestraServicios,nodoFinal);
 
                                 //Calcular datos basicos matriz
-                                tablaMaestraServicios.setTipoDia(arcoTiempoBase.getTipoDiaByArco().getTipoDia().getNombre());
+                                tablaMaestraServicios.setTipoDia(tipoDia);
                                 tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
                                 tablaMaestraServicios= calcularDistancia(tablaMaestraServicios,nodoInicio,nodoFinal,matriz);
 
@@ -381,7 +381,7 @@ public class TablaMaestraProcessor {
         tablaMaestraServicios.setLinea(servicio.getServicio().getLinea());
         tablaMaestraServicios.setSeccion(servicio.getServicio().getSeccion());
         tablaMaestraServicios.setFranjaCuartos(servicio.getServicio().getCuartoFranja());
-        tablaMaestraServicios.setSentido(1);
+        tablaMaestraServicios.setSentido(servicio.getServicio().getSentido());
         tablaMaestraServicios.setTipoServicio(servicio.getServicio().getTipoServicio());
         tablaMaestraServicios.setNombreEspecial(servicio.getServicio().getNombreEspecial());
         tablaMaestraServicios.setNombreGeneral(servicio.getServicio().getNombreGeneral());
@@ -437,10 +437,13 @@ public class TablaMaestraProcessor {
     }
 
     // Obtener el servicio asociado en el GIS de Carga a partir de la linea, trayecto y nodo
-    private GisServicio obtenerGisServicio(ServicioTipoDia servicio, String identificador) {
-        GisServicio gisServicio=null;
+    private List<GisServicio> obtenerGisServicio(ServicioTipoDia servicio, String identificador) {
+
+        List<GisServicio> gisServicio= new ArrayList<>();
         if(identificador!=null){
             gisServicio=gisCargaService.getGisServicioByTrayectoLinea(identificador);
+            gisServicio = validarPuntosServicio(gisServicio,servicio.getServicio().getPunto()+"");
+            gisServicio = validarPuntosServicioFin(gisServicio,servicio.getServicio().getPuntoFin()+"");
         }else{
             log.error("El nodo "+servicio.getServicio().getPunto()+" No existe para el servicio: "+servicio.getIdentificador());
             logDatos.add(new LogDatos("El nodo "+servicio.getServicio().getPunto()+" No existe para el servicio: "+servicio.getIdentificador(), TipoLog.ERROR));
@@ -448,8 +451,44 @@ public class TablaMaestraProcessor {
         return gisServicio;
     }
 
+    private List<GisServicio> validarPuntosServicio(List<GisServicio> gisServicio, String punto) {
+        List<Integer> remover = new ArrayList<>();
+        for (int x=0;x<gisServicio.size();x++){
+            if(!gisServicio.get(x).getPuntoInicial().equals(punto)){
+                remover.add(x);
+            } else {
+                break;
+            }
+        }
+
+        gisServicio=removerDatos(gisServicio,remover);
+
+        return gisServicio;
+    }
+
+    private List<GisServicio> removerDatos(List<GisServicio> gisServicio, List<Integer> remover) {
+        for (int num:remover){
+            gisServicio.remove(num);
+        }
+        return gisServicio;
+    }
+
+    private List<GisServicio> validarPuntosServicioFin(List<GisServicio> gisServicio, String punto) {
+        List<Integer> remover = new ArrayList<>();
+        for (int x=gisServicio.size()-1;x>0;x++){
+            if(!gisServicio.get(x).getPuntoFinal().equals(punto)){
+                remover.add(x);
+            } else {
+                break;
+            }
+        }
+        gisServicio=removerDatos(gisServicio,remover);
+
+        return gisServicio;
+    }
+
     public Nodo getNodoInicio(String nodoIncial) {
-       Nodo nodo = nodoService.getNodo(nodoIncial);
+       Nodo nodo = nodoService.getNodoByCodigo(nodoIncial);
        return nodo;
     }
 
@@ -495,29 +534,29 @@ public class TablaMaestraProcessor {
             TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(horaInicio,horaFin);
             if(tipoFranja!=null){
                 if(tipoFranja.getNombre().equals("Inicio")){
-                    cicloServicio.setMinimoInicio(arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoInicio(arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoInicio(arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoInicio(cicloServicio.getMinimoInicio()+arcoTiempo.getTiempoMinimo());
+                    cicloServicio.setMaximoInicio(cicloServicio.getMaximoInicio()+arcoTiempo.getTiempoMaximo());
+                    cicloServicio.setOptimoInicio(cicloServicio.getOptimoInicio()+arcoTiempo.getTiempoOptimo());
                 }else if(tipoFranja.getNombre().equals("Pico AM")){
-                    cicloServicio.setMinimoAM(arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoAM(arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoAM(arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoAM(cicloServicio.getMinimoAM()+arcoTiempo.getTiempoMinimo());
+                    cicloServicio.setMaximoAM(cicloServicio.getMaximoAM()+arcoTiempo.getTiempoMaximo());
+                    cicloServicio.setOptimoAM(cicloServicio.getOptimoAM()+arcoTiempo.getTiempoOptimo());
                 }else if(tipoFranja.getNombre().equals("Pico PM")){
-                    cicloServicio.setMinimoPM(arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoPM(arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoPM(arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoPM(cicloServicio.getMinimoPM()+arcoTiempo.getTiempoMinimo());
+                    cicloServicio.setMaximoPM(cicloServicio.getMaximoPM()+arcoTiempo.getTiempoMaximo());
+                    cicloServicio.setOptimoPM(cicloServicio.getOptimoPM()+arcoTiempo.getTiempoOptimo());
                 }else if(tipoFranja.getNombre().equals("Valle")){
-                    cicloServicio.setMinimoValle(arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoValle(arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoValle(arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoValle(cicloServicio.getMinimoValle()+arcoTiempo.getTiempoMinimo());
+                    cicloServicio.setMaximoValle(cicloServicio.getMaximoValle()+arcoTiempo.getTiempoMaximo());
+                    cicloServicio.setOptimoValle(cicloServicio.getOptimoValle()+arcoTiempo.getTiempoOptimo());
                 }else {
-                    cicloServicio.setMinimoCierre(arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoCierre(arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoCierre(arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoCierre(cicloServicio.getMinimoCierre()+arcoTiempo.getTiempoMinimo());
+                    cicloServicio.setMaximoCierre(cicloServicio.getMaximoCierre()+arcoTiempo.getTiempoMaximo());
+                    cicloServicio.setOptimoCierre(cicloServicio.getOptimoCierre()+arcoTiempo.getTiempoOptimo());
                 }
 
             }else{
-                System.out.println("Tipo de franja no existente");
+                System.out.println("Tipo de franja no existente: "+horaInicio+"-"+horaFin);
             }
 
         }

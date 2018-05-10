@@ -96,12 +96,14 @@ public class DataProcesorImpl {
         Integer sublinea =0;
         int linea=0;
         int sentido=0;
+        int secuencia = 0;
         String identificador=null;
         try{
             sublinea = excelExtract.getNumericCellValue(row,GisCargaDefinition.TRAYECTO);
             linea = excelExtract.getNumericCellValue(row,GisCargaDefinition.LINEA);
             sentido = excelExtract.getNumericCellValue(row,GisCargaDefinition.SENTIDO);
-            identificador = calclularIdentificador(sublinea,linea,sentido,nodoInicial);
+            secuencia = excelExtract.getNumericCellValue(row,GisCargaDefinition.SECUENCIA);
+            identificador = calclularIdentificador(sublinea,linea,sentido);
         }catch (Exception e){
             log.error("Error en la extracion de datos excel");
             log.error(e.getMessage());
@@ -110,11 +112,15 @@ public class DataProcesorImpl {
             exitoso =false;
         }
 
-        if( identificador!= null && linea!=0 && sentido!=0 && sublinea!=0){
-            GisServicio servicio = gisCargaService.getGisServicioByTrayectoLinea(identificador);
+        if( identificador!= null && linea!=0 && sentido!=0 && sublinea!=0 && secuencia!=0){
+            GisServicio servicio = gisCargaService.getGisServicioByTrayectoLineaAndSecuencia(identificador,secuencia);
             if( servicio== null ){
                 servicio = new GisServicio(sublinea,linea,nodoInicial,nodoFinal);
                 servicio.setIdentificador(identificador);
+                servicio.setSentido(sentido);
+                servicio.setSecuencia(secuencia);
+                servicio.setPuntoInicial(calcularPunto(nodoInicial));
+                servicio.setPuntoFinal(calcularPunto(nodoFinal));
                 try{
                     gisCargaService.addGisServicio(servicio);
                 }catch (Exception e){
@@ -133,18 +139,18 @@ public class DataProcesorImpl {
 
     }
 
-    private String calclularIdentificador(Integer sublinea, Integer linea, int sentido, String nodoInicial) {
-        String identificador= linea+"-"+sentido+"-"+sublinea;
+    private String calcularPunto(String nodoInicial) {
         Nodo nodo= nodoService.getNodo(nodoInicial);
         if(nodo!=null){
-            identificador= identificador+"-"+nodo.getCodigo();
-            return identificador;
-        }else{
-            Nodo nodoNuevo = new Nodo();
+            return nodo.getCodigo();
         }
-        identificador= identificador+"-000";
         log.error("El nodo: "+nodoInicial+" No existe en la BD de nodos, a este se le ha asignado el numero 000");
         logDatos.add(new LogDatos("El nodo: "+nodoInicial+" No existe en la BD de nodos, a este se le ha asignado el numero 000", TipoLog.ERROR));
+        return "000";
+    }
+
+    private String calclularIdentificador(Integer sublinea, Integer linea, int sentido) {
+        String identificador= linea+"-"+sentido+"-"+sublinea;
         return identificador;
     }
 
@@ -199,6 +205,10 @@ public class DataProcesorImpl {
             exitoso =false;
         } catch (IOException e) {
            log.equals(e.getMessage());
+            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
+            exitoso =false;
+        }catch (Exception e){
+            log.equals(e.getMessage());
             logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
             exitoso =false;
         }

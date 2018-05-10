@@ -23,6 +23,15 @@ public class GisServicio {
     @Column(name = "sentido")
     private int sentido;
 
+    @Column(name = "secuencia")
+    private int secuencia;
+
+    @Column(name = "punto_inicial")
+    private String puntoInicial;
+
+    @Column(name = "punto_final")
+    private String puntoFinal;
+
     @Column(name = "nodo_inicial")
     private String nodoIncial;
 
@@ -109,5 +118,29 @@ public class GisServicio {
 
     public void setSentido(int sentido) {
         this.sentido = sentido;
+    }
+
+    public int getSecuencia() {
+        return secuencia;
+    }
+
+    public void setSecuencia(int secuencia) {
+        this.secuencia = secuencia;
+    }
+
+    public String getPuntoInicial() {
+        return puntoInicial;
+    }
+
+    public void setPuntoInicial(String puntoInicial) {
+        this.puntoInicial = puntoInicial;
+    }
+
+    public String getPuntoFinal() {
+        return puntoFinal;
+    }
+
+    public void setPuntoFinal(String puntoFinal) {
+        this.puntoFinal = puntoFinal;
     }
 }
