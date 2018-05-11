@@ -12,6 +12,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service("TablaMaestraProcessor")
@@ -452,10 +455,10 @@ public class TablaMaestraProcessor {
     }
 
     private List<GisServicio> validarPuntosServicio(List<GisServicio> gisServicio, String punto) {
-        List<Integer> remover = new ArrayList<>();
+        List<GisServicio> remover = new ArrayList<>();
         for (int x=0;x<gisServicio.size();x++){
             if(!gisServicio.get(x).getPuntoInicial().equals(punto)){
-                remover.add(x);
+                remover.add(gisServicio.get(x));
             } else {
                 break;
             }
@@ -466,18 +469,18 @@ public class TablaMaestraProcessor {
         return gisServicio;
     }
 
-    private List<GisServicio> removerDatos(List<GisServicio> gisServicio, List<Integer> remover) {
-        for (int num:remover){
+    private List<GisServicio> removerDatos(List<GisServicio> gisServicio, List<GisServicio> remover) {
+        for (GisServicio num:remover){
             gisServicio.remove(num);
         }
         return gisServicio;
     }
 
     private List<GisServicio> validarPuntosServicioFin(List<GisServicio> gisServicio, String punto) {
-        List<Integer> remover = new ArrayList<>();
+        List<GisServicio> remover = new ArrayList<>();
         for (int x=gisServicio.size()-1;x>0;x++){
             if(!gisServicio.get(x).getPuntoFinal().equals(punto)){
-                remover.add(x);
+                remover.add(gisServicio.get(x));
             } else {
                 break;
             }
@@ -534,25 +537,25 @@ public class TablaMaestraProcessor {
             TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(horaInicio,horaFin);
             if(tipoFranja!=null){
                 if(tipoFranja.getNombre().equals("Inicio")){
-                    cicloServicio.setMinimoInicio(cicloServicio.getMinimoInicio()+arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoInicio(cicloServicio.getMaximoInicio()+arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoInicio(cicloServicio.getOptimoInicio()+arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoInicio(sumaValores(cicloServicio.getMinimoInicio(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoInicio(sumaValores(cicloServicio.getMaximoInicio(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoInicio(sumaValores(cicloServicio.getOptimoInicio(),arcoTiempo.getTiempoOptimo()));
                 }else if(tipoFranja.getNombre().equals("Pico AM")){
-                    cicloServicio.setMinimoAM(cicloServicio.getMinimoAM()+arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoAM(cicloServicio.getMaximoAM()+arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoAM(cicloServicio.getOptimoAM()+arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoAM(sumaValores(cicloServicio.getMinimoAM(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoAM(sumaValores(cicloServicio.getMaximoAM(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoAM(sumaValores(cicloServicio.getOptimoAM(),arcoTiempo.getTiempoOptimo()));
                 }else if(tipoFranja.getNombre().equals("Pico PM")){
-                    cicloServicio.setMinimoPM(cicloServicio.getMinimoPM()+arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoPM(cicloServicio.getMaximoPM()+arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoPM(cicloServicio.getOptimoPM()+arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoPM(sumaValores(cicloServicio.getMinimoPM(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoPM(sumaValores(cicloServicio.getMaximoPM(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoPM(sumaValores(cicloServicio.getOptimoPM(),arcoTiempo.getTiempoOptimo()));
                 }else if(tipoFranja.getNombre().equals("Valle")){
-                    cicloServicio.setMinimoValle(cicloServicio.getMinimoValle()+arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoValle(cicloServicio.getMaximoValle()+arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoValle(cicloServicio.getOptimoValle()+arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoValle(sumaValores(cicloServicio.getMinimoValle(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoValle(sumaValores(cicloServicio.getMaximoValle(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoValle(sumaValores(cicloServicio.getOptimoValle(),arcoTiempo.getTiempoOptimo()));
                 }else {
-                    cicloServicio.setMinimoCierre(cicloServicio.getMinimoCierre()+arcoTiempo.getTiempoMinimo());
-                    cicloServicio.setMaximoCierre(cicloServicio.getMaximoCierre()+arcoTiempo.getTiempoMaximo());
-                    cicloServicio.setOptimoCierre(cicloServicio.getOptimoCierre()+arcoTiempo.getTiempoOptimo());
+                    cicloServicio.setMinimoCierre(sumaValores(cicloServicio.getMinimoCierre(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoCierre(sumaValores(cicloServicio.getMaximoCierre(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoCierre(sumaValores(cicloServicio.getOptimoCierre(),arcoTiempo.getTiempoOptimo()));
                 }
 
             }else{
@@ -561,6 +564,67 @@ public class TablaMaestraProcessor {
 
         }
         return cicloServicio;
+    }
+
+    private String sumaValores(String anterior, String nuevo) {
+        if(anterior!=null){
+            try {
+            String pt = "1970-01-01-";
+            final DateFormat dt = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+            final Calendar sum = Calendar.getInstance();
+            sum.setTimeInMillis(0);
+
+            long tm0 = 0;
+            tm0 = new SimpleDateFormat("yyyy-MM-dd").parse(pt).getTime();
+
+                Date x = dt.parse(pt + anterior);
+                // System.out.println(x.getTime());
+                sum.add(Calendar.MILLISECOND, (int)x.getTime());
+                sum.add(Calendar.MILLISECOND, (int)-tm0);
+
+                x = dt.parse(pt + nuevo);
+                // System.out.println(x.getTime());
+                sum.add(Calendar.MILLISECOND, (int)x.getTime());
+                sum.add(Calendar.MILLISECOND, (int)-tm0);
+
+            long tm = sum.getTime().getTime();
+            System.out.println("tm = " + tm);
+
+            tm = tm / 1000;
+
+            long hh = tm / 3600;
+            tm %= 3600;
+            long mm = tm / 60;
+            tm %= 60;
+            long ss = tm;
+            nuevo = format(hh) + ":" + format(mm) + ":" + format(ss);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return nuevo;
+    }
+    private static String format(long s){
+        if (s < 10) return "0" + s;
+        else return "" + s;
+    }
+
+
+    private String convertirAFormatoFecha(Double horaNueva) {
+
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        long myLong = System.currentTimeMillis() + ((long) (horaNueva * 1000));
+        Date itemDate = new Date(myLong);
+        return parser.format(itemDate);
+    }
+
+    private Double getHoraArray(String nuevo) {
+        String[] datos = nuevo.split(":");
+        double horasNueva= Integer.parseInt(datos[0]);
+        double minutosNueva= Integer.parseInt(datos[1]);
+        double segundosNueva= Integer.parseInt(datos[2]);
+        horasNueva=horasNueva + (minutosNueva/60) + ( segundosNueva/3600 );
+        return horasNueva;
     }
 
     private String validarHoraFin(String horaFin) {
