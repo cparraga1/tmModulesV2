@@ -118,7 +118,7 @@ public class TablaMaestraProcessor {
             // intervalosProcessor.precalcularIntervalosProgramacion();
 
             for (ServicioTipoDia servicio: serviciosTipoDia) {
-
+                System.out.println(servicio.getServicio().getIdentificador());
 
                 //Encontrar nodo Inicio del servicio por el codigo
                 // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
@@ -477,8 +477,9 @@ public class TablaMaestraProcessor {
     }
 
     private List<GisServicio> validarPuntosServicioFin(List<GisServicio> gisServicio, String punto) {
+
         List<GisServicio> remover = new ArrayList<>();
-        for (int x=gisServicio.size()-1;x>0;x++){
+        for (int x=gisServicio.size()-1;x>0;x--){
             if(!gisServicio.get(x).getPuntoFinal().equals(punto)){
                 remover.add(gisServicio.get(x));
             } else {
@@ -588,7 +589,6 @@ public class TablaMaestraProcessor {
                 sum.add(Calendar.MILLISECOND, (int)-tm0);
 
             long tm = sum.getTime().getTime();
-            System.out.println("tm = " + tm);
 
             tm = tm / 1000;
 
