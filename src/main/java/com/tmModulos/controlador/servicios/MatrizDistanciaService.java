@@ -170,4 +170,9 @@ public class MatrizDistanciaService {
         return distanciaNodosDao.getUltimoDistanciaNodosByServicioAndPunto(servicioDistancia,matrizDistancia);
     }
 
+    public boolean existeMatrizDistancia(String modo, String numeracion) {
+        MatrizDistancia matrizDistancia = matrizDistanciaDao.getMatrizDistancia(modo,numeracion);
+        if(matrizDistancia!=null) return true;
+        return false;
+    }
 }
