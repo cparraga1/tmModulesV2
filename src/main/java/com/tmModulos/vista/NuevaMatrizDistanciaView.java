@@ -88,7 +88,12 @@ public class NuevaMatrizDistanciaView {
                     resultadosVisibles=true;
                     logDatos= matrizProcessor.processDataFromFile(matrizDistancias.getFileName(),matrizDistancias.getInputstream(), fechaDeProgramacion,numeracion,
                             fechaDeVigencia,fechaSabado,fechaFestivos,descripcion,modo);
-                    messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_MATRIZ_ALMACENADA);
+                    if(matrizProcessor.isExitoso()){
+                        messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_MATRIZ_ALMACENADA);
+                    }else{
+                        messagesView.error(Messages.MENSAJE_CALCULO_FALLA,Messages.ACCION_VERIFICACION);
+                    }
+
                 } catch (IOException e) {
                     messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_FALLO_ARCHIVO);
                 }

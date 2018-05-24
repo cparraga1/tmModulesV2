@@ -130,4 +130,10 @@ public class GisCargaService {
     public GisServicio getGisServicioByTrayectoLineaAndSecuencia(String identificador, int secuencia) {
         return gisServicioDao.getGisServicioByTrayectoLineaAndSecuencia(identificador,secuencia);
     }
+
+    public boolean existeGisDeCarga(String descripcion, String modo) {
+        GisCarga gisCarga = gisCargaDao.getGisDeCarga(descripcion,modo);
+        if(gisCarga!=null) return true;
+        return false;
+    }
 }

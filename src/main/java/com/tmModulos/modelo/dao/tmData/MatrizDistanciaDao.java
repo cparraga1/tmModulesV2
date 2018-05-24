@@ -77,4 +77,11 @@ public class MatrizDistanciaDao {
         }
         return null;
     }
+
+    public MatrizDistancia getMatrizDistancia(String modo, String numeracion) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(MatrizDistancia.class);
+        criteria.add(Restrictions.eq("modo", modo));
+        criteria.add(Restrictions.eq("numeracion", numeracion));
+        return (MatrizDistancia) criteria.uniqueResult();
+    }
 }

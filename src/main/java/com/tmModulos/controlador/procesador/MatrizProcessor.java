@@ -51,29 +51,7 @@ public class MatrizProcessor {
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(MatrizProcessor.class);
     private String destination = PathFiles.PATH_FOR_FILES+"\\Migracion\\";
-
-
-//    public List<LogDatos> calcularMatrizDistancia(Date fechaHabil,String numeracion,Date fechaFestivos, Date fechaSabado,String desc){
-//        logDatos = new ArrayList<>();
-//        logDatos.add(new LogDatos("<<Inicio Calculo Matriz Distancias>>", TipoLog.INFO));
-//        log.info("<<Inicio Calculo Matriz Distancias>>");
-//        MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion,fechaFestivos,fechaSabado,desc);
-//        //List<DistanciaNodos> distanciaNodos= calcularMatrizPorFecha(fechaHabil, matrizDistancia);
-//         NodosHilo nodoHiloHabil = new NodosHilo(fechaHabil,matrizDistancia);
-//        taskExecutor.execute(nodoHiloHabil);
-//
-//      //  List<DistanciaNodos> distanciaNodosSabado= calcularMatrizPorFecha(fechaSabado, matrizDistancia);
-//        taskExecutor.execute(new NodosHilo(fechaSabado,matrizDistancia));
-//       // List<DistanciaNodos> distanciaNodosFestivo= calcularMatrizPorFecha(fechaFestivos, matrizDistancia);
-//       taskExecutor.execute(new NodosHilo(fechaFestivos,matrizDistancia));
-//       while(taskExecutor.getActiveCount()>0){
-//
-//       }
-//
-//        logDatos.add(new LogDatos("<<Fin Calculo Matriz Distancias>>", TipoLog.INFO));
-//        log.info("<<Fin Calculo Matriz Distancias>>");
-//        return logDatos;
-//    }
+    private boolean exitoso;
 
 
     private List<GroupedHorario> macroLineaEnHorario(int macro, int linea, List<GroupedHorario> horarioByTipoDia) {
@@ -112,13 +90,20 @@ public class MatrizProcessor {
         processorUtils.copyFile(fileName,in,destination);
         destination=destination+fileName;
         MatrizDistancia matrizDistancia = guardarMatrizDistancia(fechaHabil,numeracion, fechaSabado,fechaFestivo,desc,modo);
-        try {
-            readExcelAndSaveData(destination,matrizDistancia);
-
-        } catch (IOException e) {
-           log.error( e.getMessage());
-            logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
+        if(matrizDistancia!=null){
+            try {
+                readExcelAndSaveData(destination,matrizDistancia);
+                exitoso =true;
+            } catch (IOException e) {
+                log.error( e.getMessage());
+                logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
+                exitoso =false;
+            }
+        }else{
+            logDatos.add(new LogDatos("Ya existe una Matriz de Distancia con ese identificador", TipoLog.ERROR));
+            exitoso =false;
         }
+
         logDatos.add(new LogDatos("<<Fin Calculo Matriz Distancias con Archivo>>", TipoLog.INFO));
         log.info("<<Fin Calculo Matriz Distancias con Archivo>>");
         tiempoIncial = System.currentTimeMillis() - tiempoIncial;
@@ -203,9 +188,16 @@ public class MatrizProcessor {
 
 
     private MatrizDistancia guardarMatrizDistancia(Date fecha,String numeracion,Date fechaFestivos, Date fechaSabado, String desc,String modo){
-        MatrizDistancia matrizDistancia= new MatrizDistancia(new Date(),fecha,fechaSabado,fechaFestivos,numeracion,desc,modo);
-        matrizDistanciaService.addMatrizDistancia(matrizDistancia);
-        return matrizDistancia;
+        if(!existeMatrizDistancia(modo,numeracion)){
+            MatrizDistancia matrizDistancia= new MatrizDistancia(new Date(),fecha,fechaSabado,fechaFestivos,numeracion,desc,modo);
+            matrizDistanciaService.addMatrizDistancia(matrizDistancia);
+            return matrizDistancia;
+        }
+       return null;
+    }
+
+    private boolean existeMatrizDistancia(String modo, String numeracion) {
+        return matrizDistanciaService.existeMatrizDistancia(modo,numeracion);
     }
 
     private DistanciaNodos guardarDistanciaNodos(MatrizDistancia matrizDistancia, int distancia,ServicioDistancia servicioDistancia,String nodoNombre,
@@ -264,5 +256,13 @@ public class MatrizProcessor {
 
     public void setProcessorUtils(ProcessorUtils processorUtils) {
         this.processorUtils = processorUtils;
+    }
+
+    public boolean isExitoso() {
+        return exitoso;
+    }
+
+    public void setExitoso(boolean exitoso) {
+        this.exitoso = exitoso;
     }
 }

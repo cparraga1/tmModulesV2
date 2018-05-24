@@ -67,16 +67,21 @@ public class DataProcesorImpl {
         processorUtils.copyFile(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\Migracion\\"+fileName;
         GisCarga gisCarga = saveGisCarga(fechaProgrmacion,fechaVigencia,descripcion,tipoDia,modo);
-        try {
-            readExcelAndSaveData(destination,gisCarga,tipoDia);
-            log.info("<<GIS Carga Fin de Procesamiento>>");
-            logDatos.add(new LogDatos("GIS Carga Fin de Procesamiento", TipoLog.INFO));
-        } catch (IOException e) {
-            log.error("Error al leer el archivo");
-            log.equals(e.getMessage());
-            logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
-            exitoso =false;
+        if(gisCarga!=null){
+            try {
+                readExcelAndSaveData(destination,gisCarga,tipoDia);
+                log.info("<<GIS Carga Fin de Procesamiento>>");
+                logDatos.add(new LogDatos("GIS Carga Fin de Procesamiento", TipoLog.INFO));
+            } catch (IOException e) {
+                log.error("Error al leer el archivo");
+                logDatos.add(new LogDatos(e.getMessage(), TipoLog.ERROR));
+                exitoso =false;
+            }
+        }else{
+            logDatos.add(new LogDatos("Ya existe un Gis de Carga con esa Descripción", TipoLog.ERROR));
+            exitoso = false;
         }
+
         tiempoIncial = System.currentTimeMillis() - tiempoIncial;
         log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
         return logDatos;
@@ -84,12 +89,19 @@ public class DataProcesorImpl {
     }
 
     public GisCarga saveGisCarga(Date fechaProgrmacion, Date fechaVigencia,String descripcion,String tipoDia,String modo){
-       TipoDia dia= tipoDiaService.getTipoDia(tipoDia);
-       GisCarga gisCarga = new GisCarga(new Date(),fechaProgrmacion,fechaVigencia,descripcion,dia,modo);
-       gisCargaService.addGisCarga(gisCarga);
-       log.info("GIS Carga para día: "+tipoDia + " Descripción: "+descripcion);
-       log.info("Fecha de Programación: "+fechaProgrmacion);
-       return gisCarga;
+        if(!existeGisCarga(descripcion,modo)){
+            TipoDia dia= tipoDiaService.getTipoDia(tipoDia);
+            GisCarga gisCarga = new GisCarga(new Date(),fechaProgrmacion,fechaVigencia,descripcion,dia,modo);
+            gisCargaService.addGisCarga(gisCarga);
+            log.info("GIS Carga para día: "+tipoDia + " Descripción: "+descripcion);
+            log.info("Fecha de Programación: "+fechaProgrmacion);
+            return gisCarga;
+        }
+       return null;
+    }
+
+    private boolean existeGisCarga(String descripcion, String modo) {
+        return gisCargaService.existeGisDeCarga(descripcion,modo);
     }
 
     public GisServicio findOrSaveServicio(Row row,String nodoInicial,String nodoFinal){
