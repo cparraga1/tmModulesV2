@@ -61,6 +61,16 @@ public class MenuView {
         }
     }
 
+    public void refreshZonas(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ParametrizarZonas.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void refreshNuevaTablaMaestra(){
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

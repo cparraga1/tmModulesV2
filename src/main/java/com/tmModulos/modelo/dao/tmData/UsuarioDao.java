@@ -50,6 +50,7 @@ public class UsuarioDao {
     public Usuario encontrarUsuarioByNombreUsuario(String user){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Usuario.class);
         criteria.add(Restrictions.eq("usuario", user));
+        criteria.add(Restrictions.eq("activo", true));
         return (Usuario) criteria.uniqueResult();
     }
 
