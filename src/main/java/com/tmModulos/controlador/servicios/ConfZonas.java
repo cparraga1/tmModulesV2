@@ -24,14 +24,17 @@ public class ConfZonas {
         return zonaDao.getZonaAll();
     }
 
+    @Transactional(readOnly = false)
     public void deleteZona(Zona zonaSeleccionada) {
         zonaDao.deleteZona(zonaSeleccionada);
     }
 
+    @Transactional(readOnly = false)
     public void updateZona(Zona zonaSeleccionada) {
         zonaDao.updateZona(zonaSeleccionada);
     }
 
+    @Transactional(readOnly = false)
     public void addZona(Zona nuevaZona) {
         zonaDao.addZona(nuevaZona);
     }

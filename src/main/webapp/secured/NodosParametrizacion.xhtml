@@ -20,6 +20,9 @@
                             <p:commandButton actionListener="#{nodosP.habilitarNuevo}" update=":form:nuevaEstacion" value="Crear"
                                              oncomplete="PF('nuevaEstacion').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar ()}">
                             </p:commandButton>
+                            <p:commandButton actionListener="#{nodosP.actualizarEstaciones}"
+                                              icon="ui-icon-refresh" value="Actualizar" >
+                            </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>

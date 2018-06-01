@@ -165,6 +165,14 @@ public class EstacionParametrizacionView implements Serializable {
         }
     }
 
+    public void actualizarEstaciones(){
+        estacionRecords= nodoService.getEstacionAll();
+        selectedestacionRecords=new ArrayList<>();
+        zonasProgramadasRecords = nodoService.getZonaByTipoZona("P");
+        zonasUsuariosRecords = nodoService.getZonaByTipoZona("U");
+        tiposEstaciones = Util.listaTiposEstaciones();
+    }
+
     private boolean existeElVagon(Vagon nuevoVagon, Estacion selectedestacion) {
         return nodoService.existeElCodigoVagon(nuevoVagon.getNombre(),selectedestacion);
     }

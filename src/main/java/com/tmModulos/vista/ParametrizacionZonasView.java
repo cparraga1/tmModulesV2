@@ -7,6 +7,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.util.List;
 
 @ManagedBean(name="confZonas")
@@ -39,18 +42,31 @@ public class ParametrizacionZonasView
     public void eliminar(){
 
         if(zonaSeleccionada!= null){
-            confZonas.deleteZona(zonaSeleccionada);
-            messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ELIMINADO);
-            zonas = confZonas.getAllZonas();
+            try{
+                confZonas.deleteZona(zonaSeleccionada);
+                messagesView.info(Messages.MENSAJE_EXITOSO,"Zona Eliminada");
+                zonas = confZonas.getAllZonas();
+                reload();
+            }catch (Exception e){
+                messagesView.error(Messages.MENSAJE_FALLO,"Verifique que la zona no este asociada a ninguna estación");
+            }
+
+
         }
 
     }
 
     public void actualizar (){
         if(zonaSeleccionada!= null){
-            confZonas.updateZona(zonaSeleccionada);
-            messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ACTUALIZADO);
-            zonas = confZonas.getAllZonas();
+            if (!zonaSeleccionada.getNombre().equals("") && (zonaSeleccionada.getTipoZona().equals("P")||
+                    zonaSeleccionada.getTipoZona().equals("U"))){
+                confZonas.updateZona(zonaSeleccionada);
+                messagesView.info(Messages.MENSAJE_EXITOSO,"Zona actualizada");
+                zonas = confZonas.getAllZonas();
+            }else{
+                messagesView.error(Messages.MENSAJE_FALLO,"Verifique los datos y vuelva a intentarlo");
+            }
+
         }
 
     }
@@ -62,9 +78,26 @@ public class ParametrizacionZonasView
 
     public void crearNuevaZona(){
         if(nuevaZona!=null){
-            confZonas.addZona(nuevaZona);
-            messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ALMACENADA);
-            zonas = confZonas.getAllZonas();
+            if (!nuevaZona.getNombre().equals("") && (nuevaZona.getTipoZona().equals("P")||
+                    nuevaZona.getTipoZona().equals("U"))){
+                confZonas.addZona(nuevaZona);
+                messagesView.info(Messages.MENSAJE_EXITOSO,"Nueva Zona Almacenada");
+                zonas = confZonas.getAllZonas();
+            }else{
+                messagesView.error(Messages.MENSAJE_FALLO,"Verifique los datos y vuelva a intentarlo");
+            }
+
+        }
+    }
+
+    public void reload(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ParametrizarZonas.xhtml");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
