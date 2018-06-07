@@ -3,6 +3,7 @@ package com.tmModulos.modelo.dao.tmData;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -52,4 +53,12 @@ public class HorarioDao {
         return criteria.list();
     }
 
+    public List<Horario> getHorariosByServicio(Servicio servicio, TipoDia dia) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Horario.class);
+        criteria.add(Restrictions.eq("servicio", servicio));
+        criteria.add(Restrictions.eq("tipoDia", dia));
+        criteria.add(Restrictions.eq("tipoHorario", "P"));
+        criteria.addOrder(Order.asc("config"));
+        return criteria.list();
+    }
 }

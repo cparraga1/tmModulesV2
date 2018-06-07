@@ -22,6 +22,9 @@ public class HorariosProvisionalServicio {
     TemporalHorariosDao temporalHorariosDao;
 
     @Autowired
+    HorarioDao horarioDao;
+
+    @Autowired
     IntervalosProgramacionDao intervalosProgramacionDao;
 
     @Autowired
@@ -171,5 +174,9 @@ public class HorariosProvisionalServicio {
     @Transactional(readOnly = false)
     public void deleteTablaHorarioFromFile() {
         tempHorarioDao.deleteTablaHorario();
+    }
+
+    public List<Horario> getHorariosByServicioAndTipoDia(Servicio servicio, TipoDia dia) {
+        return horarioDao.getHorariosByServicio(servicio,dia);
     }
 }

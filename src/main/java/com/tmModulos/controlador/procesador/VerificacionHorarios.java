@@ -1,6 +1,8 @@
 package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.ConfVeriHorario;
+import com.tmModulos.controlador.servicios.HorariosProvisionalServicio;
+import com.tmModulos.controlador.servicios.TipoDiaService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static java.lang.System.in;
 
 @Service("VerificacionHorario")
 public class VerificacionHorarios {
@@ -33,6 +37,12 @@ public class VerificacionHorarios {
 
     @Autowired
     private IntervalosVerificacionHorarios intervalosVeri;
+
+    @Autowired
+    private HorariosProvisionalServicio horariosProvisionalServicio;
+
+    @Autowired
+    private TipoDiaService tipoDiaService;
 
     @Autowired
     private CargaDatosIntervalosPre intervalosPre;
@@ -723,5 +733,81 @@ public class VerificacionHorarios {
 
     public void setConfVeriHorario(ConfVeriHorario confVeriHorario) {
         this.confVeriHorario = confVeriHorario;
+    }
+
+    public void verificarHorarios(String fileName, InputStream inputstream, String tipoVerificacion, String tipoDia, String boxIntervaloMin, String boxIntervaloMax, String boxIntervaloMinRef, String boxIntervaloMaxRef) throws Exception {
+        logDatos = new ArrayList<>();
+        destination=PathFiles.PATH_FOR_FILES + "\\";
+        processorUtils.copyFile(fileName,in,destination);
+        destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
+        serviciosEncontrados = new ArrayList<String>();
+        String id = generarID();
+
+        getIntervalosComparacion(boxIntervaloMin, boxIntervaloMax,boxIntervaloMinRef,boxIntervaloMaxRef);
+
+        if(tipoVerificacion.equals("Pre")){
+            veriPreHorarios.deleteEquivalencias();
+            veriPreHorarios.addEquivalenciasFromFile(destination);
+            verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
+            veriPreHorarios.deleteEquivalencias();
+
+
+        } else{
+            veriPreHorarios.deleteTablaHorario();
+            veriPreHorarios.addTablaHorarioFromFile(destination);
+            compareDataExcelHorario (fileForTipoDia(tipoDia),tipoValidacion);
+            veriPreHorarios.deleteTablaHorario();
+
+//            HashMap<String,List<PreDatos>> expediciones = intervalosPre.getExpedicionesPos(destination);
+//            compareDataExcelHorario(fileForTipoDia(tipoDia),tipoValidacion);
+//            veriPreHorarios.deleteTablaHorario();
+
+        }
+
+       // return logDatos;
+
+    }
+
+    private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
+        HSSFSheet worksheet = workbook.getSheetAt(0);
+
+        cellStyle = workbook.createCellStyle();
+        generalStyle = workbook.createCellStyle();
+        addGeneralStyle(cellStyle);
+        addGeneralStyle(generalStyle);
+        font = workbook.createFont();
+
+        //LISTA DE SERVICIOS POR TIPO DIA
+        TipoDia dia = tipoDiaService.getTipoDia(tipoDia);
+        List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
+
+        for(ServicioTipoDia servicio: serviciosTipoDia){
+            List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(),dia);
+            List<Integer> horaInicioB = null;
+            List<Integer> horaFinB = null;
+            if(horariosByServicio.size()>0){
+                List<Integer> horaInicio = processorUtils.convertInt(horariosByServicio.get(0).getHoraInicio());
+                List<Integer> horaFin = processorUtils.convertInt(horariosByServicio.get(0).getHoraFin());
+                if(horariosByServicio.size()>1){
+                    horaInicioB = processorUtils.convertInt(horariosByServicio.get(1).getHoraInicio());
+                    horaFinB = processorUtils.convertInt(horariosByServicio.get(1).getHoraFin());
+                }
+            }
+            String tipoServicio = servicio.getServicio().getTipoServicio();
+            int distancia = 0;
+
+            intervalosVeri.cargarFranjas();
+
+            if(tipoVerificacion.equals("Pre")){
+               // String identificador = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.iD_PRE);
+               // List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
+                //verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,expedicionesTemporalsData,identificador,tipoServicio);
+            }else{
+               // verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+            }
+        }
+
     }
 }
