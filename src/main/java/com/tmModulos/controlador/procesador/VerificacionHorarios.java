@@ -753,10 +753,10 @@ public class VerificacionHorarios {
 
 
         } else{
-            veriPreHorarios.deleteTablaHorario();
-            veriPreHorarios.addTablaHorarioFromFile(destination);
-            compareDataExcelHorario (fileForTipoDia(tipoDia),tipoValidacion);
-            veriPreHorarios.deleteTablaHorario();
+//            veriPreHorarios.deleteTablaHorario();
+//            veriPreHorarios.addTablaHorarioFromFile(destination);
+//            compareDataExcelHorario (fileForTipoDia(tipoDia),tipoValidacion);
+//            veriPreHorarios.deleteTablaHorario();
 
 //            HashMap<String,List<PreDatos>> expediciones = intervalosPre.getExpedicionesPos(destination);
 //            compareDataExcelHorario(fileForTipoDia(tipoDia),tipoValidacion);
@@ -771,7 +771,7 @@ public class VerificacionHorarios {
     private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(file);
         HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-        HSSFSheet worksheet = workbook.getSheetAt(0);
+        HSSFSheet worksheet = workbook.createSheet("Verificacion");
 
         cellStyle = workbook.createCellStyle();
         generalStyle = workbook.createCellStyle();
@@ -779,18 +779,26 @@ public class VerificacionHorarios {
         addGeneralStyle(generalStyle);
         font = workbook.createFont();
 
+        //CREAR HEADER
+        createHeaderVerificacionExpediciones(worksheet);
+        int filas = 1;
+
         //LISTA DE SERVICIOS POR TIPO DIA
         TipoDia dia = tipoDiaService.getTipoDia(tipoDia);
         List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
-        for(ServicioTipoDia servicio: serviciosTipoDia){
-            List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(),dia);
+        for(ServicioTipoDia servicio: serviciosTipoDia) {
+            Row row = worksheet.createRow(filas);
+            List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
+            incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio);
             List<Integer> horaInicioB = null;
+            List<Integer> horaInicio = null ;
             List<Integer> horaFinB = null;
-            if(horariosByServicio.size()>0){
-                List<Integer> horaInicio = processorUtils.convertInt(horariosByServicio.get(0).getHoraInicio());
-                List<Integer> horaFin = processorUtils.convertInt(horariosByServicio.get(0).getHoraFin());
-                if(horariosByServicio.size()>1){
+            List<Integer> horaFin = null;
+            if (horariosByServicio.size() > 0) {
+                horaInicio = processorUtils.convertInt(horariosByServicio.get(0).getHoraInicio());
+                horaFin = processorUtils.convertInt(horariosByServicio.get(0).getHoraFin());
+                if (horariosByServicio.size() > 1) {
                     horaInicioB = processorUtils.convertInt(horariosByServicio.get(1).getHoraInicio());
                     horaFinB = processorUtils.convertInt(horariosByServicio.get(1).getHoraFin());
                 }
@@ -800,14 +808,36 @@ public class VerificacionHorarios {
 
             intervalosVeri.cargarFranjas();
 
-            if(tipoVerificacion.equals("Pre")){
-               // String identificador = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.iD_PRE);
-               // List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
-                //verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,expedicionesTemporalsData,identificador,tipoServicio);
-            }else{
-               // verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+            if (tipoVerificacion.equals("Pre")) {
+                String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
+                List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
+                verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
+            } else {
+                // verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+            }
+        filas++;
+        }
+
+    }
+
+    private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {
+        createCellResultados(row, "", ComparadorHorarioIndex.NODO_INICIO);
+        createCellResultados(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
+        createCellResultados(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
+        createCellResultados(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);
+        createCellResultados(row, servicio.getNombreEspecial(), ComparadorHorarioIndex.SERVICIO_E);
+        createCellResultados(row, servicio.getNombreGeneral(), ComparadorHorarioIndex.SERVICIO_G);
+        if(horariosByServicio.size()>0){
+            createCellResultados(row, horariosByServicio.get(0).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO);
+            createCellResultados(row, horariosByServicio.get(0).getHoraFin(), ComparadorHorarioIndex.HORA_FIN);
+            if(horariosByServicio.size()>1){
+                createCellResultados(row, horariosByServicio.get(1).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO_2);
+                createCellResultados(row, horariosByServicio.get(1).getHoraFin(), ComparadorHorarioIndex.HORA_FIN_2);
             }
         }
+    }
+
+    private void createHeaderVerificacionExpediciones(HSSFSheet worksheet) {
 
     }
 }

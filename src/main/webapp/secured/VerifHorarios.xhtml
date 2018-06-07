@@ -19,7 +19,7 @@
                     <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel for="tipoDia" value="Tipo Día:" />
                         <p:selectOneMenu id="tipoDia" value="#{VerHorario.tipoDia}" style="width:125px">
-                            <f:selectItems value="#{VerHorario.tipoDiaRecords}" var="tipo" itemLabel="#{tipo.tipoDia}" itemValue="#{tipo.archivo}" />
+                            <f:selectItems value="#{VerHorario.tipoDiaRecords}" var="tipo" itemLabel="#{tipo.tipoDia}" itemValue="#{tipo.tipoDia}" />
                         </p:selectOneMenu>
                         <p:outputLabel for="tipoVerificacion" value="Tipo Verificación:" />
                         <p:selectOneMenu id="tipoVerificacion" value="#{VerHorario.tipoVerificacion}" style="width:125px">
