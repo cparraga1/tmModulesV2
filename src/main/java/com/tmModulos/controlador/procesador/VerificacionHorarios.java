@@ -769,8 +769,11 @@ public class VerificacionHorarios {
     }
 
     private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
-        FileInputStream fileInputStream = new FileInputStream(file);
-        HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
+
+//        File archivo = new File(file);
+//        archivo.createNewFile();
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet worksheet = workbook.createSheet("Verificacion");
 
         cellStyle = workbook.createCellStyle();
@@ -816,6 +819,16 @@ public class VerificacionHorarios {
                 // verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
             }
         filas++;
+        }
+
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            workbook.write(outputStream);
+            workbook.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

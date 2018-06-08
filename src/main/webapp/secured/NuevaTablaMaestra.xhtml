@@ -77,6 +77,10 @@
                                 </p:selectOneMenu>
 
                             </p:panelGrid>
+
+                            <h:panelGrid columns="1" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
+                                <p:outputLabel value="#{tablaMaestra.formatoArchivo}" style="color: #f51111;font-style: italic;font-size: 12px;" />
+                            </h:panelGrid>
                             <p:commandButton value="Calcular"  ajax="false"
                                              icon="ui-icon ui-icon-calculator" id="calcular" action="#{tablaMaestra.calcularTablaMaestra}"
                                              async="true" process="@form" onclick="PF('dlg2').show();" global="false"

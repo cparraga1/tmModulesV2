@@ -36,6 +36,7 @@ public class NuevaTablaMaestra {
     private Date fechaDeCreacion;
     private UploadedFile tablaMaestra;
     private String seleccionGIS;
+    private String formatoArchivo;
 
     private UploadedFile intervalosTiempo;
 
@@ -77,6 +78,7 @@ public class NuevaTablaMaestra {
 
         modos= ModosUtil.cargarListaModos();
         tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato CSV";
     }
 
     public void habilitarTipoTabla(){
@@ -429,5 +431,13 @@ public class NuevaTablaMaestra {
 
     public void setTiposDia(List<ListObject> tiposDia) {
         this.tiposDia = tiposDia;
+    }
+
+    public String getFormatoArchivo() {
+        return formatoArchivo;
+    }
+
+    public void setFormatoArchivo(String formatoArchivo) {
+        this.formatoArchivo = formatoArchivo;
     }
 }

@@ -37,6 +37,7 @@ public class NuevoGisCargaView implements Serializable{
     private double progress = 0d;
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
+    private String formatoArchivo;
 
     private List<ListObject> modos;
     private List<ListObject> tiposDia;
@@ -53,6 +54,7 @@ public class NuevoGisCargaView implements Serializable{
         descripcion = "";
         modos = ModosUtil.cargarListaModos();
         tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato XLS (Excel 97-2003)";
     }
 
     public void upload() {
@@ -231,5 +233,13 @@ public class NuevoGisCargaView implements Serializable{
 
     public void setTiposDia(List<ListObject> tiposDia) {
         this.tiposDia = tiposDia;
+    }
+
+    public String getFormatoArchivo() {
+        return formatoArchivo;
+    }
+
+    public void setFormatoArchivo(String formatoArchivo) {
+        this.formatoArchivo = formatoArchivo;
     }
 }

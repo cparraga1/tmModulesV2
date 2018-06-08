@@ -34,6 +34,7 @@ public class NuevaMatrizDistanciaView {
     private UploadedFile matrizDistancias;
     private List<LogDatos> logDatos;
     private boolean resultadosVisibles;
+    private String formatoArchivo;
 
     private String tipoDia;
     private String modo;
@@ -60,6 +61,7 @@ public class NuevaMatrizDistanciaView {
         numeracion="";
         modos = ModosUtil.cargarListaModos();
         tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato XLS (Excel 97-2003)";
     }
 
     public void cambioTipoGeneracion(){
@@ -286,5 +288,13 @@ public class NuevaMatrizDistanciaView {
 
     public void setTiposDia(List<ListObject> tiposDia) {
         this.tiposDia = tiposDia;
+    }
+
+    public String getFormatoArchivo() {
+        return formatoArchivo;
+    }
+
+    public void setFormatoArchivo(String formatoArchivo) {
+        this.formatoArchivo = formatoArchivo;
     }
 }
