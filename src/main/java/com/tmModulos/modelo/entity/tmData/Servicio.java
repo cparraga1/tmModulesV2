@@ -25,6 +25,9 @@ public class Servicio {
     @Column(name = "seccion")
     private int seccion;
 
+    @Column(name = "distancia_base")
+    private Integer distanciaBase;
+
     @Column(name = "sentido")
     private int sentido;
 
@@ -315,5 +318,13 @@ public class Servicio {
 
     public void setCuartoFranja(Integer cuartoFranja) {
         this.cuartoFranja = cuartoFranja;
+    }
+
+    public Integer getDistanciaBase() {
+        return distanciaBase;
+    }
+
+    public void setDistanciaBase(Integer distanciaBase) {
+        this.distanciaBase = distanciaBase;
     }
 }

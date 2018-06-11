@@ -37,4 +37,40 @@ public class ComparadorHorarioIndex {
     public static final int INT_PROMEDIO_CI     = 31 ;
     public static final int INT_MINIMO_CI       = 32 ;
     public static final int INT_MAXIMO_CI       = 33 ;
+
+
+    public static final String NODO_INICIO_TX         = "Nodo" ;
+    public static final String RESULTADO_NODO_I_TX     = "Resultado" ;
+    public static final String NODO_FIN_TX            = "Punto Final" ;
+    public static final String RESULTADO_NODO_F_TX     = "Resultado"  ;
+    public static final String iD_TX                   = "ID" ;
+    public static final String iD_PRE_TX               = "ID_PRE";
+    public static final String SERVICIO_E_TX           = "Servicio E" ;
+    public static final String SERVICIO_G_TX           = "Servicio G";
+    public static final String TIPO_SERVICIO_TX        = "Tipo Servicio" ;
+    public static final String HORA_INICIO_TX          = "Hora Ini"  ;
+    public static final String RES_HORA_INI_TX         = "Resultado" ;
+    public static final String HORA_FIN_TX             = "Hora Fin"  ;
+    public static final String RES_HORA_FIN_TX         = "Resultado"  ;
+    public static final String HORA_INICIO_2_TX        = "Hora Ini 2"  ;
+    public static final String RES_HORA_INI_2_TX       = "Resultado" ;
+    public static final String HORA_FIN_2_TX           = "Hora Fin 2"  ;
+    public static final String RES_HORA_FIN_2_TX       = "Resultado" ;
+    public static final String DISTANCIA_TX            = "Distancia"  ;
+    public static final String RES_DISTANCIA_TX        = "Resultado";
+    public static final String INT_PROMEDIO_INI_TX     = "Promedio Inicio" ;
+    public static final String INT_MINIMO_INI_TX       = "Minimo Inicio" ;
+    public static final String INT_MAXIMO_INI_TX       = "Máximo Inicio" ;
+    public static final String INT_PROMEDIO_PAM_TX     = "Promedio AM" ;
+    public static final String INT_MINIMO_PAM_TX       = "Minimo AM" ;
+    public static final String INT_MAXIMO_PAM_TX      = "Máximo AM" ;
+    public static final String INT_PROMEDIO_VALLE_TX   = "Promedio Valle" ;
+    public static final String INT_MINIMO_VALLE_TX     = "Minimo Valle" ;
+    public static final String INT_MAXIMO_VALLE_TX     = "Máximo Valle" ;
+    public static final String INT_PROMEDIO_PPM_TX     = "Promedio PM" ;
+    public static final String INT_MINIMO_PPM_TX       = "Minimo PM" ;
+    public static final String INT_MAXIMO_PPM_TX       = "Máximo PM" ;
+    public static final String INT_PROMEDIO_CI_TX      = "Promedio Cierre" ;
+    public static final String INT_MINIMO_CI_TX        = "Minimo Cierre" ;
+    public static final String INT_MAXIMO_CI_TX        = "Máximo Cierre" ;
 }

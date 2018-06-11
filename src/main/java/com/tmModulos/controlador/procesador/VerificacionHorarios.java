@@ -1,9 +1,6 @@
 package com.tmModulos.controlador.procesador;
 
-import com.tmModulos.controlador.servicios.ConfVeriHorario;
-import com.tmModulos.controlador.servicios.HorariosProvisionalServicio;
-import com.tmModulos.controlador.servicios.TipoDiaService;
-import com.tmModulos.controlador.servicios.VeriPreHorarios;
+import com.tmModulos.controlador.servicios.*;
 import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -34,6 +31,9 @@ public class VerificacionHorarios {
 
     @Autowired
     private VeriPreHorarios veriPreHorarios;
+
+    @Autowired
+    private NodoService nodoService;
 
     @Autowired
     private IntervalosVerificacionHorarios intervalosVeri;
@@ -203,8 +203,6 @@ public class VerificacionHorarios {
                     horaFin,horaFinB,distancia);
 
             incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), "N/A");
-
-
 
             List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPos(horarios);
             incluirResultadosIntervalos(row, intervalosExpediciones,tipoServicio);
@@ -441,7 +439,13 @@ public class VerificacionHorarios {
 
 
 
-
+    private void createCellBase(Row row, String valor,int num) {
+        Cell resultadoHoraIni= row.createCell(num);
+        resultadoHoraIni.setCellValue(valor);
+        resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
+        resultadoHoraIni.setCellValue(valor);
+            resultadoHoraIni.setCellStyle(generalStyle);
+    }
 
     private void createCellResultados(Row row, String valor,int num) {
         Cell resultadoHoraIni= row.createCell(num);
@@ -738,7 +742,7 @@ public class VerificacionHorarios {
     public void verificarHorarios(String fileName, InputStream inputstream, String tipoVerificacion, String tipoDia, String boxIntervaloMin, String boxIntervaloMax, String boxIntervaloMinRef, String boxIntervaloMaxRef) throws Exception {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
-        processorUtils.copyFile(fileName,in,destination);
+        processorUtils.copyFile(fileName,inputstream,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
@@ -751,17 +755,11 @@ public class VerificacionHorarios {
             verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
             veriPreHorarios.deleteEquivalencias();
 
-
         } else{
-//            veriPreHorarios.deleteTablaHorario();
-//            veriPreHorarios.addTablaHorarioFromFile(destination);
-//            compareDataExcelHorario (fileForTipoDia(tipoDia),tipoValidacion);
-//            veriPreHorarios.deleteTablaHorario();
-
-//            HashMap<String,List<PreDatos>> expediciones = intervalosPre.getExpedicionesPos(destination);
-//            compareDataExcelHorario(fileForTipoDia(tipoDia),tipoValidacion);
-//            veriPreHorarios.deleteTablaHorario();
-
+            veriPreHorarios.deleteTablaHorario();
+            veriPreHorarios.addTablaHorarioFromFile(destination);
+             verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
+            veriPreHorarios.deleteTablaHorario();
         }
 
        // return logDatos;
@@ -770,8 +768,6 @@ public class VerificacionHorarios {
 
     private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
 
-//        File archivo = new File(file);
-//        archivo.createNewFile();
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet worksheet = workbook.createSheet("Verificacion");
@@ -791,6 +787,7 @@ public class VerificacionHorarios {
         List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
         for(ServicioTipoDia servicio: serviciosTipoDia) {
+            System.out.println("Servicio: "+filas);
             Row row = worksheet.createRow(filas);
             List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
             incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio);
@@ -807,7 +804,7 @@ public class VerificacionHorarios {
                 }
             }
             String tipoServicio = servicio.getServicio().getTipoServicio();
-            int distancia = 0;
+            int distancia = servicio.getServicio().getDistanciaBase();
 
             intervalosVeri.cargarFranjas();
 
@@ -816,7 +813,7 @@ public class VerificacionHorarios {
                 List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
                 verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
             } else {
-                // verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+                verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
             }
         filas++;
         }
@@ -834,23 +831,74 @@ public class VerificacionHorarios {
     }
 
     private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {
-        createCellResultados(row, "", ComparadorHorarioIndex.NODO_INICIO);
-        createCellResultados(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
-        createCellResultados(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
-        createCellResultados(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);
-        createCellResultados(row, servicio.getNombreEspecial(), ComparadorHorarioIndex.SERVICIO_E);
-        createCellResultados(row, servicio.getNombreGeneral(), ComparadorHorarioIndex.SERVICIO_G);
+        createCellBase(row, obtenerNombreNodo(servicio.getPunto()), ComparadorHorarioIndex.NODO_INICIO);
+        createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
+        createCellBase(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
+        createCellBase(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
+        createCellBase(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);
+        createCellBase(row, servicio.getNombreEspecial(), ComparadorHorarioIndex.SERVICIO_E);
+        createCellBase(row, servicio.getNombreGeneral(), ComparadorHorarioIndex.SERVICIO_G);
+        createCellBase(row, servicio.getTipoServicio(), ComparadorHorarioIndex.TIPO_SERVICIO);
         if(horariosByServicio.size()>0){
-            createCellResultados(row, horariosByServicio.get(0).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO);
-            createCellResultados(row, horariosByServicio.get(0).getHoraFin(), ComparadorHorarioIndex.HORA_FIN);
+            createCellBase(row, horariosByServicio.get(0).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO);
+            createCellBase(row, horariosByServicio.get(0).getHoraFin(), ComparadorHorarioIndex.HORA_FIN);
             if(horariosByServicio.size()>1){
-                createCellResultados(row, horariosByServicio.get(1).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO_2);
-                createCellResultados(row, horariosByServicio.get(1).getHoraFin(), ComparadorHorarioIndex.HORA_FIN_2);
+                createCellBase(row, horariosByServicio.get(1).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO_2);
+                createCellBase(row, horariosByServicio.get(1).getHoraFin(), ComparadorHorarioIndex.HORA_FIN_2);
             }
         }
     }
 
-    private void createHeaderVerificacionExpediciones(HSSFSheet worksheet) {
+    private String obtenerNombreNodo(int punto) {
+        Nodo nodoByCodigo = nodoService.getNodoByCodigo(punto + "");
+        if(nodoByCodigo!=null){
+            return nodoByCodigo.getNombre();
+        }
+        return "";
+    }
 
+    private void createHeaderVerificacionExpediciones(HSSFSheet worksheet) {
+        Row row = worksheet.createRow(0);
+        createCellBase(row, ComparadorHorarioIndex.NODO_INICIO_TX, ComparadorHorarioIndex.NODO_INICIO);
+        createCellBase(row, ComparadorHorarioIndex.RESULTADO_NODO_I_TX, ComparadorHorarioIndex.RESULTADO_NODO_I);
+        createCellBase(row, ComparadorHorarioIndex.NODO_FIN_TX, ComparadorHorarioIndex.NODO_FIN);
+        createCellBase(row, ComparadorHorarioIndex.RESULTADO_NODO_F_TX, ComparadorHorarioIndex.RESULTADO_NODO_F);
+        createCellBase(row, ComparadorHorarioIndex.iD_TX, ComparadorHorarioIndex.iD);
+        createCellBase(row, ComparadorHorarioIndex.iD_PRE_TX, ComparadorHorarioIndex.iD_PRE);
+        createCellBase(row, ComparadorHorarioIndex.SERVICIO_E_TX, ComparadorHorarioIndex.SERVICIO_E);
+        createCellBase(row, ComparadorHorarioIndex.SERVICIO_G_TX, ComparadorHorarioIndex.SERVICIO_G);
+        createCellBase(row, ComparadorHorarioIndex.TIPO_SERVICIO_TX, ComparadorHorarioIndex.TIPO_SERVICIO);
+        createCellBase(row, ComparadorHorarioIndex.HORA_INICIO_TX, ComparadorHorarioIndex.HORA_INICIO);
+        createCellBase(row, ComparadorHorarioIndex.RES_HORA_INI_TX, ComparadorHorarioIndex.RES_HORA_INI);
+        createCellBase(row, ComparadorHorarioIndex.HORA_FIN_TX, ComparadorHorarioIndex.HORA_FIN);
+        createCellBase(row, ComparadorHorarioIndex.RES_HORA_FIN_TX, ComparadorHorarioIndex.RES_HORA_FIN);
+        createCellBase(row, ComparadorHorarioIndex.HORA_INICIO_2_TX, ComparadorHorarioIndex.HORA_INICIO_2);
+        createCellBase(row, ComparadorHorarioIndex.RES_HORA_INI_2_TX, ComparadorHorarioIndex.RES_HORA_INI_2);
+        createCellBase(row, ComparadorHorarioIndex.HORA_FIN_2_TX, ComparadorHorarioIndex.HORA_FIN_2);
+        createCellBase(row, ComparadorHorarioIndex.DISTANCIA_TX, ComparadorHorarioIndex.DISTANCIA);
+        createCellBase(row, ComparadorHorarioIndex.RES_DISTANCIA_TX, ComparadorHorarioIndex.RES_DISTANCIA);
+        createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_INI_TX, ComparadorHorarioIndex.INT_PROMEDIO_INI);
+        createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_INI_TX, ComparadorHorarioIndex.INT_MINIMO_INI);
+        createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_INI_TX, ComparadorHorarioIndex.INT_MAXIMO_INI);
+        createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_PAM_TX, ComparadorHorarioIndex.INT_PROMEDIO_PAM);
+        createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_PAM_TX, ComparadorHorarioIndex.INT_MINIMO_PAM);
+        createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_PAM_TX, ComparadorHorarioIndex.INT_MAXIMO_PAM);
+        createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_VALLE_TX, ComparadorHorarioIndex.INT_PROMEDIO_VALLE);
+        createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_VALLE_TX, ComparadorHorarioIndex.INT_MINIMO_VALLE);
+        createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_VALLE_TX, ComparadorHorarioIndex.INT_MAXIMO_VALLE);
+        createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_PPM_TX, ComparadorHorarioIndex.INT_PROMEDIO_PPM);
+        createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_PPM_TX, ComparadorHorarioIndex.INT_MINIMO_PPM);
+        createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_PPM_TX, ComparadorHorarioIndex.INT_MAXIMO_PPM);
+        createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_CI_TX, ComparadorHorarioIndex.INT_PROMEDIO_CI);
+        createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_CI_TX, ComparadorHorarioIndex.INT_MINIMO_CI);
+        createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_CI_TX, ComparadorHorarioIndex.INT_MAXIMO_CI);
+    }
+
+    public NodoService getNodoService() {
+        return nodoService;
+    }
+
+    public void setNodoService(NodoService nodoService) {
+        this.nodoService = nodoService;
     }
 }

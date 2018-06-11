@@ -84,12 +84,12 @@ public class VerificaHorarioView implements Serializable {
 
 
 
-        File file = new File(PathFiles.PATH_FOR_FILES+"\\update.xls");
+        File file = new File(PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls");
         file.createNewFile();
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment; filename=revisionHorario"+tipoDia+".xls");
+        response.setHeader("Content-Disposition", "attachment; filename="+tipoDia+".xls");
 
 
         byte[] outputByte = new byte[4096];
