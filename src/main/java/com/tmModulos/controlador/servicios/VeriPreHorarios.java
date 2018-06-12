@@ -33,6 +33,9 @@ public class VeriPreHorarios {
     @Autowired
     public ExpedicionesTempConvDao expedicionesTempConvDao;
 
+    @Autowired
+    public TempOfertaComercialDao tempOfertaComercialDao;
+
 
     @Autowired
     private ExcelExtract excelExtract;
@@ -143,49 +146,29 @@ public class VeriPreHorarios {
 
     }
 
-    public void addDatosExpediciones(String destination) {
-        try {
 
-            FileInputStream fileInputStream = new FileInputStream(destination);
-            HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream);
-            HSSFSheet worksheet = workbook.getSheetAt(0);
+    public void deleteOfertaComercial() {
+        tempOfertaComercialDao.deleteOfertaComercial();
+    }
 
-            Iterator<Row> rowIterator = worksheet.iterator();
-            rowIterator.next();
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                if( row.getCell(0) != null ){
-
-                    ExpedicionesTempConv exp = new ExpedicionesTempConv();
-                    exp.setEvento(excelExtract.getStringCellValue(row,ExpDEF.EVENTO));
-                    exp.setTipo(excelExtract.getStringCellValue(row,ExpDEF.TIPO));
-                    exp.setHoraInicio(excelExtract.getStringCellValue(row,ExpDEF.INICIO));
-                    exp.setPuntoInicio(excelExtract.getStringCellValue(row,ExpDEF.DE));
-                    exp.setHoraFin(excelExtract.getStringCellValue(row,ExpDEF.FIN));
-                    exp.setPuntoFin(excelExtract.getStringCellValue(row,ExpDEF.A));
-                    exp.setDur(excelExtract.getStringCellValue(row,ExpDEF.DUR));
-                    exp.setBus(excelExtract.getStringCellValue(row,ExpDEF.BUS));
-                    exp.setLinea(excelExtract.getStringCellValue(row,ExpDEF.LINEA));
-                    exp.setKm(excelExtract.getStringCellValue(row,ExpDEF.KM));
-                    exp.setNoo(excelExtract.getStringCellValue(row,ExpDEF.ID));
-                    exp.setInferido(excelExtract.getStringCellValue(row,ExpDEF.V_INFERIDO));
-                    exp.setFrec(excelExtract.getStringCellValue(row,ExpDEF.FRECUENCIA));
-                    exp.setSerBus(excelExtract.getStringCellValue(row,ExpDEF.SERVBUS));
-                    exp.setDesDur(excelExtract.getStringCellValue(row,ExpDEF.DESVIACION_A));
-                    exp.setDesFrec(excelExtract.getStringCellValue(row,ExpDEF.DESVIACION_B));
-
-                    expedicionesTempConvDao.addExpTemporal(exp);
-
-                }else{
-                    break;
-                }
-            }
-            fileInputStream.close();
-        } catch (FileNotFoundException e) {
-
-        } catch (IOException e) {
-
+    public void addOfertaComercial(String destination) throws Exception {
+        try{
+            tempOfertaComercialDao.addOfertaComercialFromFile(destination,";");
+        }catch (Exception e){
+            addOfertaComercialComma(destination);
         }
+    }
+
+    private void addOfertaComercialComma(String destination) throws Exception {
+        try{
+            tempOfertaComercialDao.addOfertaComercialFromFile(destination,",");
+        }catch (Exception e){
+            throw new Exception("Archivo con Informacion no esperada");
+        }
+    }
+
+    public List<TempOfertaComercial> getOfertaComercial(int sublinea, int sentido, String tipoServicio, String nodo) {
+        return tempOfertaComercialDao.getOfertaComercial(sublinea,sentido,tipoServicio,nodo);
     }
 }
 

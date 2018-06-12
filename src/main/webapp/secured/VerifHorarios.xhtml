@@ -25,6 +25,7 @@
                         <p:selectOneMenu id="tipoVerificacion" value="#{VerHorario.tipoVerificacion}" style="width:125px">
                             <f:selectItem itemLabel="Pre" itemValue="Pre" />
                             <f:selectItem itemLabel="Pos" itemValue="Pos" />
+                            <f:selectItem itemLabel="Pso" itemValue="Pso" />
                             <p:ajax update="@form" listener="#{VerHorario.updateFormato}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Verificación servicios Principales:" />

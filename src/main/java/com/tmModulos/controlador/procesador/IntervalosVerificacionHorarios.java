@@ -4,10 +4,7 @@ import com.tmModulos.controlador.servicios.FranjaHorarioService;
 import com.tmModulos.controlador.utils.DateMap;
 import com.tmModulos.controlador.utils.PreDatos;
 import com.tmModulos.controlador.utils.ProcessorUtils;
-import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
-import com.tmModulos.modelo.entity.tmData.TempHorario;
-import com.tmModulos.modelo.entity.tmData.TempPos;
-import com.tmModulos.modelo.entity.tmData.TipoFranja;
+import com.tmModulos.modelo.entity.tmData.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -250,5 +247,41 @@ public class IntervalosVerificacionHorarios {
 
     public void setFranjaHorarioService(FranjaHorarioService franjaHorarioService) {
         this.franjaHorarioService = franjaHorarioService;
+    }
+
+    public List<String> calcularIntervalosPSO(List<TempOfertaComercial> oferta) {
+        cargarFranjas();
+        List<String> intervalosResultado = new ArrayList<>();
+        List<Long> tiemposFranjaInicio = new ArrayList<>();
+        List<Long> tiemposFranjaPicoAM = new ArrayList<>();
+        List<Long> tiemposFranjaValle = new ArrayList<>();
+        List<Long> tiemposFranjaPicoPM = new ArrayList<>();
+        List<Long> tiemposFranjaCierre = new ArrayList<>();
+
+
+        if(franjas.size()>0){
+            for(TempOfertaComercial horario: oferta){
+
+                Date exp =  processorUtils.convertirATime(horario.getHora()+":"+horario.getMinutos()+":"+horario.getSegundos());
+                if(estaEnelRango(exp,"Inicio")){
+                    tiemposFranjaInicio.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Pico AM")){
+                    tiemposFranjaPicoAM.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Valle")){
+                    tiemposFranjaValle.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Pico PM")){
+                    tiemposFranjaPicoPM.add(exp.getTime());
+                }else{
+                    tiemposFranjaCierre.add(exp.getTime());
+                }
+            }
+        }
+
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaInicio);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoAM);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaValle);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoPM);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaCierre);
+        return intervalosResultado;
     }
 }

@@ -755,11 +755,16 @@ public class VerificacionHorarios {
             verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
             veriPreHorarios.deleteEquivalencias();
 
-        } else{
+        } else if (tipoVerificacion.equals("Pos")){
             veriPreHorarios.deleteTablaHorario();
             veriPreHorarios.addTablaHorarioFromFile(destination);
              verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
             veriPreHorarios.deleteTablaHorario();
+        }else if (tipoVerificacion.equals("Pso")){
+            veriPreHorarios.deleteOfertaComercial();
+            veriPreHorarios.addOfertaComercial(destination);
+            verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
+            veriPreHorarios.deleteOfertaComercial();
         }
 
        // return logDatos;
@@ -812,8 +817,10 @@ public class VerificacionHorarios {
                 String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
                 List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
                 verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
-            } else {
+            } else if(tipoVerificacion.equals("Pos")){
                 verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+            }else if(tipoVerificacion.equals("Pso")){
+                verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
             }
         filas++;
         }
@@ -828,6 +835,167 @@ public class VerificacionHorarios {
             e.printStackTrace();
         }
 
+    }
+
+    private void verificacionPSO(Row row, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB,Servicio servicio) {
+
+        String nodo = "";
+        //Obtener nodo cuando es un refuerzo
+        if(servicio.getTipoServicio().equals("2")){
+            Nodo nodoByCodigo = nodoService.getNodoByCodigo(servicio.getPunto() + "");
+            if(nodoByCodigo!=null){
+                nodo = nodoByCodigo.getNombre();
+            }else{
+                //Error No existe un nodo con ese codigo
+            }
+        }
+
+        List<TempOfertaComercial> oferta = veriPreHorarios.getOfertaComercial(servicio.getLinea(),servicio.getSentido(),servicio.getTipoServicio(),nodo);
+
+        if(oferta.size()>0){
+            serviciosEncontrados.add(servicio.getIdentificador());
+            List< String> validacion = validarOfertaComecial(oferta,horaInicio,horaInicioB,
+                    horaFin,horaFinB);
+
+            incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), "N/A");
+
+            List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPSO(oferta);
+            incluirResultadosIntervalos(row, intervalosExpediciones,servicio.getTipoServicio());
+
+        }else{
+            registrosNoEncontrados(row,servicio.getIdentificador());
+        }
+    }
+
+    private List<String> validarOfertaComecial(List<TempOfertaComercial> oferta, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB) {
+        List<String> comparaciones = new ArrayList<>();
+        comparaciones.add("OK"); //Ini
+        comparaciones.add("OK"); //Fin
+        comparaciones.add("OK"); //IniB
+        comparaciones.add("OK"); //FinB
+        comparaciones.add("OK"); //Distancia
+
+        for(TempOfertaComercial temporal: oferta){
+            comparaciones = validarLimitesOfertaComercial(comparaciones,horaInicio,horaInicioB,horaFin,horaFinB,temporal);
+        }
+
+        comparaciones.add(comparaciones.get(0));
+        comparaciones.add(comparaciones.get(1));
+        comparaciones.add(comparaciones.get(2));
+        comparaciones.add(comparaciones.get(3));
+        comparaciones.add(comparaciones.get(4));
+
+        List<String> resultadosLimites = validarLimitesOfertaC(oferta,horaInicio,horaInicioB,
+                horaFin,horaFinB);
+
+        if(comparaciones.get(0).equals("OK")) comparaciones.set(0, resultadosLimites.get(0));
+        if(comparaciones.get(1).equals("OK")) comparaciones.set(1, resultadosLimites.get(1));
+        if(comparaciones.get(2).equals("OK")) comparaciones.set(2, resultadosLimites.get(2));
+        if(comparaciones.get(3).equals("OK")) comparaciones.set(3, resultadosLimites.get(3));
+
+
+        return comparaciones;
+    }
+
+    private List<String> validarLimitesOfertaC(List<TempOfertaComercial> oferta, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB) {
+        List<String> limites = new ArrayList<>();
+        String compHoraInicio = "OK";
+        String compHoraInicioB = "OK";
+        String compHoraFin = "OK";
+        String compHoraFinB = "OK";
+        int maxSize=oferta.size()-1;
+        if(horaInicioB==null && horaFinB==null){
+            if(!horaIgual(horaInicio,oferta.get(0).getHora(),oferta.get(0).getMinutos(),oferta.get(0).getSegundos())) compHoraInicio = ErrorMessage.ERROR_INICIO+""+oferta.get(0).getInstInicio();
+            if(!horaIgual(horaFin,oferta.get(maxSize).getHora(),oferta.get(maxSize).getMinutos(),oferta.get(maxSize).getSegundos())) compHoraFin = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getInstFin();
+        }else{
+            TempOfertaComercial horarioFin = oferta.get(0);
+            TempOfertaComercial horarioInicioB = null;
+
+            for(int i=1;i<oferta.size();i++){
+                TempOfertaComercial exp = oferta.get(i);
+                if(estaSoloDespuesDeLaHoraInicio(horaFin,exp.getHora(),exp.getMinutos(),exp.getSegundos())){
+                    horarioInicioB = exp;
+                    break;
+                }else {
+                    horarioFin = exp;
+                }
+            }
+
+            if(!horaIgual(horaInicio,oferta.get(0).getHora(),oferta.get(0).getMinutos(),oferta.get(0).getSegundos())) compHoraInicio = ErrorMessage.ERROR_INICIO+""+oferta.get(0).getInstInicio();
+            if(!horaIgual(horaFin,horarioFin.getHora(),horarioFin.getMinutos(),horarioFin.getSegundos())) compHoraFin = ErrorMessage.ERROR_FIN+""+horarioFin.getInstFin();
+            if(!horaIgual(horaFinB,oferta.get(maxSize).getHora(),oferta.get(maxSize).getMinutos(),oferta.get(maxSize).getSegundos())) compHoraFinB = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getInstFin();
+            if(horarioInicioB!=null){
+                if(!horaIgual(horaInicioB,horarioInicioB.getHora(),horarioInicioB.getMinutos(),horarioInicioB.getSegundos())) compHoraInicioB = ErrorMessage.ERROR_INICIO+""+horarioInicioB.getInstInicio();
+            }else {
+                compHoraInicioB = ErrorMessage.ERROR_INICIO+""+oferta.get(oferta.size()-1).getInstInicio();
+            }
+        }
+
+        limites.add(compHoraInicio);
+        limites.add(compHoraFin);
+        limites.add(compHoraInicioB);
+        limites.add(compHoraFinB);
+
+        return limites;
+    }
+
+    private List<String> validarLimitesOfertaComercial(List<String> comparaciones, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB, TempOfertaComercial temporal) {
+        SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
+        if( horaInicioB== null && horaFinB == null){
+            if(estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+            }else{
+                if(comparaciones.get(0).equals("OK")){
+                    comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+                }
+            }
+
+            if(estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+            }else{
+                comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+            }
+        }else{
+            if( estaDespuesDeLaHoraInicio(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
+                    && estaAntesDelaHoraFin(horaFin,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                //Esta en el primer Horario
+            }else if(estaDespuesDeLaHoraInicio(horaInicioB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
+                    && estaAntesDelaHoraFin(horaFinB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                //Esta En el segundo Horario
+            }else{
+                List<Integer> horaFinExtendida = calcularExtensionHora(horaFin,1);
+                List<Integer> horaInicioExtendida = calcularExtensionHora(horaInicio,-1);
+                if( estaDespuesDeLaHoraInicio(horaInicioExtendida,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
+                        && estaAntesDelaHoraFin(horaFinExtendida,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                    // Mas cercano al Primer Horario
+                    if( estaDespuesDeLaHoraInicio(horaInicioExtendida,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())
+                            && estaAntesDelaHoraFin(horaInicio,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+                        if(comparaciones.get(0).equals("OK")){
+
+                            comparaciones.set(0, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+                        }
+                    }else{
+                        comparaciones.set(1, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+                    }
+
+                } else{
+                    if(estaDespuesDeLaHoraInicio(horaInicioB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+
+                    }else{
+                        if(comparaciones.get(2).equals("OK")){
+                            comparaciones.set(2, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+                        }
+                    }
+
+                    if(estaAntesDelaHoraFin(horaFinB,expInicio.getHora(),expInicio.getMinutos(),expInicio.getSegundos())){
+
+                    }else{
+                        comparaciones.set(3, ErrorMessage.ERROR_LIMITE+""+expInicio.getHoraInicio());
+                    }
+                }
+
+            }
+
+        }
+        return comparaciones;
     }
 
     private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {

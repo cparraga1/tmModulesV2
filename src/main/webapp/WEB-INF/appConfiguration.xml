@@ -84,6 +84,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.VerificacionTipoDia</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempBusesHora</value>
                 <value>com.tmModulos.modelo.entity.tmData.ExpedicionesTempConv</value>
+                <value>com.tmModulos.modelo.entity.tmData.TempOfertaComercial</value>
 
             </list>
         </property>
