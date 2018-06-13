@@ -49,12 +49,6 @@ public class TempOfertaComercial {
     @Column(name = "refuerzo")
     private String refuerzo;
 
-    @Column(name = "inst_inicio")
-    private Time instInicio;
-
-    @Column(name = "inst_fin")
-    private Time instFin;
-
     @Column(name = "hora")
     private Integer hora;
 
@@ -63,6 +57,15 @@ public class TempOfertaComercial {
 
     @Column(name = "segundos")
     private Integer segundos;
+
+    @Column(name = "hora_fin")
+    private Integer horaFin;
+
+    @Column(name = "minutos_fin")
+    private Integer minutosFin;
+
+    @Column(name = "segundos_fin")
+    private Integer segundosFin;
 
 
     public TempOfertaComercial() {
@@ -172,22 +175,6 @@ public class TempOfertaComercial {
         this.refuerzo = refuerzo;
     }
 
-    public Time getInstInicio() {
-        return instInicio;
-    }
-
-    public void setInstInicio(Time instInicio) {
-        this.instInicio = instInicio;
-    }
-
-    public Time getInstFin() {
-        return instFin;
-    }
-
-    public void setInstFin(Time instFin) {
-        this.instFin = instFin;
-    }
-
     public Integer getHora() {
         return hora;
     }
@@ -210,5 +197,29 @@ public class TempOfertaComercial {
 
     public void setSegundos(Integer segundos) {
         this.segundos = segundos;
+    }
+
+    public Integer getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(Integer horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public Integer getMinutosFin() {
+        return minutosFin;
+    }
+
+    public void setMinutosFin(Integer minutosFin) {
+        this.minutosFin = minutosFin;
+    }
+
+    public Integer getSegundosFin() {
+        return segundosFin;
+    }
+
+    public void setSegundosFin(Integer segundosFin) {
+        this.segundosFin = segundosFin;
     }
 }
