@@ -45,7 +45,7 @@ public class TempOfertaComercialDao {
         try {
             copyManager = new CopyManager((BaseConnection) conn);
             FileReader fileReader = new FileReader(filename);
-            copyManager.copyIn("COPY temp_oferta_comercial (trayecto,tipo_dia, sentido, incio_intervalo, fin_intervalo, frecuencia_objetiva, frecuencia_minima, frecuencia_maxima, capacidad_maxima, tipo_viaje, nodo, refuerzo)\n" +
+            copyManager.copyIn("COPY temp_oferta_comercial (trayecto,tipo_dia, sentido, inicio_intervalo, fin_intervalo, frecuencia_objetiva, frecuencia_minima, frecuencia_maxima,capacidad_objetiva, capacidad_minima, capacidad_maxima, tipo_viaje, nodo, refuerzo)\n" +
                     " FROM STDIN DELIMITER '"+delimiter+"' CSV HEADER", fileReader );
         } catch (SQLException e) {
             throw new Exception(e.getMessage());
@@ -62,10 +62,10 @@ public class TempOfertaComercialDao {
 
     public List<TempOfertaComercial> getOfertaComercial(int sublinea, int sentido, String tipoServicio, String nodo) {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempOfertaComercial.class);
-        criteria.add(Restrictions.eq("trayecto", sublinea));
-        criteria.add(Restrictions.eq("sentido", sentido));
+        criteria.add(Restrictions.eq("trayecto", sublinea+""));
+        criteria.add(Restrictions.eq("sentido", sentido+""));
         if(tipoServicio.equals("2")){
-            criteria.add(Restrictions.eq("refuerzo", 1));
+            criteria.add(Restrictions.eq("refuerzo", "1"));
             criteria.add(Restrictions.eq("nodo", nodo));
         }
         return criteria.list();

@@ -49,23 +49,24 @@ public class TempOfertaComercial {
     @Column(name = "refuerzo")
     private String refuerzo;
 
-    @Column(name = "hora")
-    private Integer hora;
+   @Column(name = "hora")
+    private int hora;
 
     @Column(name = "minutos")
-    private Integer minutos;
+    private int minutos;
 
     @Column(name = "segundos")
-    private Integer segundos;
+    private int segundos;
 
     @Column(name = "hora_fin")
-    private Integer horaFin;
+    private int horaFin;
 
     @Column(name = "minutos_fin")
-    private Integer minutosFin;
+    private int minutosFin;
 
     @Column(name = "segundos_fin")
-    private Integer segundosFin;
+    private int segundosFin;
+
 
 
     public TempOfertaComercial() {
@@ -175,51 +176,51 @@ public class TempOfertaComercial {
         this.refuerzo = refuerzo;
     }
 
-    public Integer getHora() {
+    public int getHora() {
         return hora;
     }
 
-    public void setHora(Integer hora) {
+    public void setHora(int hora) {
         this.hora = hora;
     }
 
-    public Integer getMinutos() {
+    public int getMinutos() {
         return minutos;
     }
 
-    public void setMinutos(Integer minutos) {
+    public void setMinutos(int minutos) {
         this.minutos = minutos;
     }
 
-    public Integer getSegundos() {
+    public int getSegundos() {
         return segundos;
     }
 
-    public void setSegundos(Integer segundos) {
+    public void setSegundos(int segundos) {
         this.segundos = segundos;
     }
 
-    public Integer getHoraFin() {
+    public int getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Integer horaFin) {
+    public void setHoraFin(int horaFin) {
         this.horaFin = horaFin;
     }
 
-    public Integer getMinutosFin() {
+    public int getMinutosFin() {
         return minutosFin;
     }
 
-    public void setMinutosFin(Integer minutosFin) {
+    public void setMinutosFin(int minutosFin) {
         this.minutosFin = minutosFin;
     }
 
-    public Integer getSegundosFin() {
+    public int getSegundosFin() {
         return segundosFin;
     }
 
-    public void setSegundosFin(Integer segundosFin) {
+    public void setSegundosFin(int segundosFin) {
         this.segundosFin = segundosFin;
     }
 }
