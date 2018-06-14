@@ -67,6 +67,9 @@ public class TempOfertaComercialDao {
         if(tipoServicio.equals("2")){
             criteria.add(Restrictions.eq("refuerzo", "1"));
             criteria.add(Restrictions.eq("nodo", nodo));
+        }else{
+            criteria.add(Restrictions.isNull("refuerzo"));
+            criteria.add(Restrictions.isNull("nodo"));
         }
         return criteria.list();
     }

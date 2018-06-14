@@ -906,7 +906,7 @@ public class VerificacionHorarios {
         int maxSize=oferta.size()-1;
         if(horaInicioB==null && horaFinB==null){
             if(!horaIgual(horaInicio,oferta.get(0).getHora(),oferta.get(0).getMinutos(),oferta.get(0).getSegundos())) compHoraInicio = ErrorMessage.ERROR_INICIO+""+oferta.get(0).getInicioIntervalo();
-            if(!horaIgual(horaFin,oferta.get(maxSize).getHora(),oferta.get(maxSize).getMinutos(),oferta.get(maxSize).getSegundos())) compHoraFin = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getFinIntervalor();
+            if(!horaIgual(horaFin,oferta.get(maxSize).getHoraFin(),oferta.get(maxSize).getMinutosFin(),oferta.get(maxSize).getSegundosFin())) compHoraFin = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getFinIntervalor();
         }else{
             TempOfertaComercial horarioFin = oferta.get(0);
             TempOfertaComercial horarioInicioB = null;
@@ -922,8 +922,8 @@ public class VerificacionHorarios {
             }
 
             if(!horaIgual(horaInicio,oferta.get(0).getHora(),oferta.get(0).getMinutos(),oferta.get(0).getSegundos())) compHoraInicio = ErrorMessage.ERROR_INICIO+""+oferta.get(0).getInicioIntervalo();
-            if(!horaIgual(horaFin,horarioFin.getHora(),horarioFin.getMinutos(),horarioFin.getSegundos())) compHoraFin = ErrorMessage.ERROR_FIN+""+horarioFin.getFinIntervalor();
-            if(!horaIgual(horaFinB,oferta.get(maxSize).getHora(),oferta.get(maxSize).getMinutos(),oferta.get(maxSize).getSegundos())) compHoraFinB = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getFinIntervalor();
+            if(!horaIgual(horaFin,horarioFin.getHoraFin(),horarioFin.getMinutosFin(),horarioFin.getSegundosFin())) compHoraFin = ErrorMessage.ERROR_FIN+""+horarioFin.getFinIntervalor();
+            if(!horaIgual(horaFinB,oferta.get(maxSize).getHoraFin(),oferta.get(maxSize).getMinutosFin(),oferta.get(maxSize).getSegundosFin())) compHoraFinB = ErrorMessage.ERROR_FIN+""+oferta.get(oferta.size()-1).getFinIntervalor();
             if(horarioInicioB!=null){
                 if(!horaIgual(horaInicioB,horarioInicioB.getHora(),horarioInicioB.getMinutos(),horarioInicioB.getSegundos())) compHoraInicioB = ErrorMessage.ERROR_INICIO+""+horarioInicioB.getInicioIntervalo();
             }else {
@@ -942,7 +942,7 @@ public class VerificacionHorarios {
     private List<String> validarLimitesOfertaComercial(List<String> comparaciones, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB, TempOfertaComercial temporal) {
         //Validación Intervalo Inincio
        comparaciones = validarIntervalo(comparaciones,temporal.getHora(),temporal.getMinutos(),temporal.getSegundos(),temporal.getInicioIntervalo(),horaInicio,horaFin,horaInicioB,horaFinB);
-       comparaciones = validarIntervalo(comparaciones,temporal.getHoraFin(),temporal.getMinutosFin(),temporal.getSegundosFin(),temporal.getFinIntervalor(),horaInicio,horaFin,horaInicioB,horaFinB);
+//       comparaciones = validarIntervalo(comparaciones,temporal.getHoraFin(),temporal.getMinutosFin(),temporal.getSegundosFin(),temporal.getFinIntervalor(),horaInicio,horaFin,horaInicioB,horaFinB);
         return comparaciones;
     }
 
