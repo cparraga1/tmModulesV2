@@ -150,11 +150,11 @@ public class NodoService {
         return false;
     }
 
-    public boolean existeElNombreNodo(String codigo) {
+    public String existeElNombreNodo(String codigo) {
         List<Nodo> nodos = nodoDao.getNodoByCodigoAndVagon(codigo);
         if(nodos.size()>0){
-            return true;
+            return nodos.get(0).getNombre();
         }
-        return false;
+        return null;
     }
 }

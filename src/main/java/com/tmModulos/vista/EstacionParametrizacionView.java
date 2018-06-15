@@ -15,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -201,12 +202,13 @@ public class EstacionParametrizacionView implements Serializable {
     public void añadirNodoVagon(){
         if(nuevoNodoVagon.getCodigo()!=null && nuevoNodoVagon.getNombre()!=null){
             if(esValorNumerico(nuevoNodoVagon.getCodigo())){
-                if(!existeNombreNodo(nuevoNodoVagon.getCodigo())){
+                String nodoExistente = existeNombreNodo(nuevoNodoVagon.getCodigo());
+                if(nodoExistente==null){
                     nodoService.addNodo(nuevoNodoVagon);
                     addMessage(FacesMessage.SEVERITY_INFO,"Nodo Creado", "");
                     vagonesPorEstacion = calcularVagonesyNodos();
                 }else{
-                    addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "Ya existe un nodo con el codigo ingresado");
+                    addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "Ya existe un nodo con el codigo ingresado ("+nodoExistente+")");
                 }
             }else{
                 addMessage(FacesMessage.SEVERITY_ERROR,"El nodo no fue creado", "El codigo debe ser un valor numerico");
@@ -217,7 +219,7 @@ public class EstacionParametrizacionView implements Serializable {
         }
     }
 
-    private boolean existeNombreNodo(String codigo) {
+    private String existeNombreNodo(String codigo) {
         return nodoService.existeElNombreNodo(codigo);
     }
 
