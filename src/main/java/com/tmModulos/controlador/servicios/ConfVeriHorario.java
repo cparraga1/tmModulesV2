@@ -40,4 +40,8 @@ public class ConfVeriHorario {
     public List<VerificacionTipoDia> getTipoDiaAll() {
        return verificacionTipoDiaDao.getTipoDiaAll();
     }
+
+    public VerificacionTipoDia getTipoDia(String tipoDia) {
+        return verificacionTipoDiaDao.getTipoDia(tipoDia);
+    }
 }

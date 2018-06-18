@@ -58,10 +58,10 @@ public class VerificaHorarioView implements Serializable {
     public void upload() {
             if(file!=null){
                 try {
-                   /* verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax,
-                            boxIntervaloMinRef,boxIntervaloMaxRef);*/
-                    verificacionHorarios.verificarHorarios(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax,
+                    verificacionHorarios.compararExpediciones(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax,
                             boxIntervaloMinRef,boxIntervaloMaxRef);
+                   /* verificacionHorarios.verificarHorarios(file.getFileName(),file.getInputstream(),tipoVerificacion,tipoDia,boxIntervaloMin,boxIntervaloMax,
+                            boxIntervaloMinRef,boxIntervaloMaxRef);*/
                     messagesView.info("Verificación Terminada","");
                     visibleDescarga = true;
                 } catch (IOException e) {

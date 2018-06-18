@@ -727,8 +727,9 @@ public class VerificacionHorarios {
 
 
     private String fileForTipoDia(String tipoDia) {
+       VerificacionTipoDia verificacionTipoDia = confVeriHorario.getTipoDia(tipoDia);
 
-        return PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls";
+        return PathFiles.PATH_FOR_FILES_VERIFICACION+verificacionTipoDia.getArchivo()+".xls";
     }
 
     public ConfVeriHorario getConfVeriHorario() {
