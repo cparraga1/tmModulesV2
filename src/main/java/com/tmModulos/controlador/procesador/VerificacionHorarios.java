@@ -60,7 +60,7 @@ public class VerificacionHorarios {
     public List<LogDatos> compararExpediciones (String fileName, InputStream in, String tipoValidacion, String tipoDia,String min,String max,String minRef,String maxRef) throws Exception {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
-        processorUtils.copyFile(fileName,in,destination);
+        processorUtils.copyFileUTF8(fileName,in,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
@@ -148,7 +148,8 @@ public class VerificacionHorarios {
                     List<Integer> horaInicioB = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_INICIO_2));
                     List<Integer> horaFin = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN));
                     List<Integer> horaFinB = processorUtils.convertInt(processorUtils.getStringCellValue(row,ComparadorHorarioIndex.HORA_FIN_2));
-                    String tipoServicio = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.TIPO_SERVICIO);
+                    String tipoServicio = "1";
+//                    String tipoServicio = processorUtils.getStringCellValue(row,ComparadorHorarioIndex.TIPO_SERVICIO);
                     int distancia = (int) row.getCell(ComparadorHorarioIndex.DISTANCIA).getNumericCellValue();
                     intervalosVeri.cargarFranjas();
 
@@ -164,7 +165,7 @@ public class VerificacionHorarios {
             }
             validarServiciosEncontrados(tipo,worksheet);
             fileInputStream.close();
-            FileOutputStream outFile =new FileOutputStream(new File(PathFiles.PATH_FOR_FILES+"\\update.xls"));
+            FileOutputStream outFile =new FileOutputStream(new File(PathFiles.PATH_FOR_FILES_VERIFICACION+"update.xls"));
             workbook.write(outFile);
             outFile.close();
             System.out.println("Fin");
@@ -724,10 +725,10 @@ public class VerificacionHorarios {
     public List<VerificacionTipoDia> getTiposDiasDisponibles () {
         return confVeriHorario.getTipoDiaAll();
     }
-
+    VerificacionTipoDia verificacionTipoDia;
 
     private String fileForTipoDia(String tipoDia) {
-       VerificacionTipoDia verificacionTipoDia = confVeriHorario.getTipoDia(tipoDia);
+       verificacionTipoDia = confVeriHorario.getTipoDia(tipoDia);
 
         return PathFiles.PATH_FOR_FILES_VERIFICACION+verificacionTipoDia.getArchivo()+".xls";
     }
@@ -772,7 +773,15 @@ public class VerificacionHorarios {
 
     }
 
-    private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
+    public VerificacionTipoDia getVerificacionTipoDia() {
+        return verificacionTipoDia;
+    }
+
+    public void setVerificacionTipoDia(VerificacionTipoDia verificacionTipoDia) {
+        this.verificacionTipoDia = verificacionTipoDia;
+    }
+
+    private void verificarExpediciones(String tipoVerificacion, String file, String tipoDia) throws IOException {
 
 
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -1015,7 +1024,7 @@ public class VerificacionHorarios {
         createCellBase(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);
         createCellBase(row, servicio.getNombreEspecial(), ComparadorHorarioIndex.SERVICIO_E);
         createCellBase(row, servicio.getNombreGeneral(), ComparadorHorarioIndex.SERVICIO_G);
-        createCellBase(row, servicio.getTipoServicio(), ComparadorHorarioIndex.TIPO_SERVICIO);
+//        createCellBase(row, servicio.getTipoServicio(), ComparadorHorarioIndex.TIPO_SERVICIO);
         if(horariosByServicio.size()>0){
             createCellBase(row, horariosByServicio.get(0).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO);
             createCellBase(row, horariosByServicio.get(0).getHoraFin(), ComparadorHorarioIndex.HORA_FIN);
@@ -1044,7 +1053,7 @@ public class VerificacionHorarios {
         createCellBase(row, ComparadorHorarioIndex.iD_PRE_TX, ComparadorHorarioIndex.iD_PRE);
         createCellBase(row, ComparadorHorarioIndex.SERVICIO_E_TX, ComparadorHorarioIndex.SERVICIO_E);
         createCellBase(row, ComparadorHorarioIndex.SERVICIO_G_TX, ComparadorHorarioIndex.SERVICIO_G);
-        createCellBase(row, ComparadorHorarioIndex.TIPO_SERVICIO_TX, ComparadorHorarioIndex.TIPO_SERVICIO);
+//        createCellBase(row, ComparadorHorarioIndex.TIPO_SERVICIO_TX, ComparadorHorarioIndex.TIPO_SERVICIO);
         createCellBase(row, ComparadorHorarioIndex.HORA_INICIO_TX, ComparadorHorarioIndex.HORA_INICIO);
         createCellBase(row, ComparadorHorarioIndex.RES_HORA_INI_TX, ComparadorHorarioIndex.RES_HORA_INI);
         createCellBase(row, ComparadorHorarioIndex.HORA_FIN_TX, ComparadorHorarioIndex.HORA_FIN);

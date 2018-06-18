@@ -84,7 +84,7 @@ public class VerificaHorarioView implements Serializable {
 
 
 
-        File file = new File(PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls");
+        File file = new File(PathFiles.PATH_FOR_FILES_VERIFICACION+"update.xls");
         file.createNewFile();
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();
