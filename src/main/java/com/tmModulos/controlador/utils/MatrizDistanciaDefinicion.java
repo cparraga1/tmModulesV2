@@ -5,7 +5,7 @@ public class MatrizDistanciaDefinicion {
 
 
 
-    public static final int OPERADOR = 0;
+    /*public static final int OPERADOR = 0;
     public static final int LINEA = 1;
     public static final int NOMBRE_LINEA = 2;
     public static final int ETIQUETA_LINEA = 3;
@@ -23,5 +23,13 @@ public class MatrizDistanciaDefinicion {
     public static final int POS_X = 15;
     public static final int POS_Y = 16;
     public static final int POSICION = 17;
-    public static final int ATRIBUTOS = 18;
+    public static final int ATRIBUTOS = 18;*/
+
+    public static final int LINEA = 0;
+    public static final int SUBLINEA = 1;
+    public static final int RUTA = 2;
+    public static final int NOMBRE_RUTA = 3;
+    public static final int NODO = 4;
+    public static final int NOMBRE_NODO = 5;
+    public static final int POSICION = 6;
 }

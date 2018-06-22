@@ -727,9 +727,9 @@ public class VerificacionHorarios {
 
 
     private String fileForTipoDia(String tipoDia) {
-       VerificacionTipoDia verificacionTipoDia = confVeriHorario.getTipoDia(tipoDia);
-
-        return PathFiles.PATH_FOR_FILES_VERIFICACION+verificacionTipoDia.getArchivo()+".xls";
+       /* VerificacionTipoDia verificacionTipoDia = confVeriHorario.getTipoDia(tipoDia);
+        return PathFiles.PATH_FOR_FILES_VERIFICACION+verificacionTipoDia.getArchivo()+".xls";*/
+        return PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls";
     }
 
     public ConfVeriHorario getConfVeriHorario() {
@@ -798,9 +798,9 @@ public class VerificacionHorarios {
             List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
             incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio);
             List<Integer> horaInicioB = null;
-            List<Integer> horaInicio = null ;
+            List<Integer> horaInicio = new ArrayList<>();
             List<Integer> horaFinB = null;
-            List<Integer> horaFin = null;
+            List<Integer> horaFin = new ArrayList<>();
             if (horariosByServicio.size() > 0) {
                 horaInicio = processorUtils.convertInt(horariosByServicio.get(0).getHoraInicio());
                 horaFin = processorUtils.convertInt(horariosByServicio.get(0).getHoraFin());
@@ -810,19 +810,26 @@ public class VerificacionHorarios {
                 }
             }
             String tipoServicio = servicio.getServicio().getTipoServicio();
-            int distancia = servicio.getServicio().getDistanciaBase();
+            int distancia = 0;
+//            int distancia = servicio.getServicio().getDistanciaBase();
 
             intervalosVeri.cargarFranjas();
 
-            if (tipoVerificacion.equals("Pre")) {
-                String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
-                List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
-                verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
-            } else if(tipoVerificacion.equals("Pos")){
-                verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
-            }else if(tipoVerificacion.equals("Pso")){
-                verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
+            if(horaInicio.size()>0 && horaFin.size()>0){
+                if (tipoVerificacion.equals("Pre")) {
+                    String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
+                    List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
+                    verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
+                } else if(tipoVerificacion.equals("Pos")){
+                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+                }else if(tipoVerificacion.equals("Pso")){
+                    verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
+                }
+            }else{
+                System.out.println("Servicio con falla "+servicio.getIdentificador());
             }
+
+
         filas++;
         }
 

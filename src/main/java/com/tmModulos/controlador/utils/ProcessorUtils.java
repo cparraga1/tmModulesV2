@@ -272,7 +272,7 @@ public class ProcessorUtils {
             valores.add(Integer.parseInt(horaSplit[2]));
             return valores;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public Integer converInteger(String stringCellValue) {
