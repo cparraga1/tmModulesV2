@@ -1,6 +1,8 @@
 package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.ConfVeriHorario;
+import com.tmModulos.modelo.entity.tmData.Horario;
+import com.tmModulos.modelo.entity.tmData.TipoDia;
 import com.tmModulos.modelo.entity.tmData.VerificacionTipoDia;
 
 import javax.annotation.PostConstruct;
@@ -22,9 +24,11 @@ public class ParametrizacionVerificacionHorarioView {
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
 
-    private List<VerificacionTipoDia> tipoDiaRecords;
-    private VerificacionTipoDia nuevoTipoDia;
-    private VerificacionTipoDia selectedTipoDia;
+    private List<TipoDia> tipoDiaRecords;
+    private TipoDia nuevoTipoDia;
+    private TipoDia selectedTipoDia;
+    private TipoDia duplicadoTipoDia;
+    private String aDuplicar;
 
     public ParametrizacionVerificacionHorarioView() {
     }
@@ -45,17 +49,38 @@ public class ParametrizacionVerificacionHorarioView {
     }
 
     public void habilitarNuevo(){
-        nuevoTipoDia = new VerificacionTipoDia();
+        nuevoTipoDia = new TipoDia();
+    }
+
+    public void habilitarDuplicado(){
+        duplicadoTipoDia = new TipoDia();
     }
 
     public void eliminar(){
 
         if(selectedTipoDia!= null){
-            confVeriHorario.deleteVerificacionTipoDia(selectedTipoDia);
-            messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ELIMINADO);
-            tipoDiaRecords = confVeriHorario.getTipoDiaAll();
+            List<Horario> horarios = confVeriHorario.getHorariosTipoDia(selectedTipoDia);
+            if(horarios.size()>0){
+                messagesView.error(Messages.MENSAJE_FALLO,"No se puede eliminar, el tipo día se encuentra asociado a uno o varios horarios");
+
+            }else{
+                confVeriHorario.deleteVerificacionTipoDia(selectedTipoDia);
+                messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ELIMINADO);
+                tipoDiaRecords = confVeriHorario.getTipoDiaAll();
+            }
+
         }
 
+    }
+
+    public void reiniciar(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/ParametrizacionVerificacionHorario.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void actualizar (){
@@ -67,16 +92,39 @@ public class ParametrizacionVerificacionHorarioView {
 
     }
 
+    public void duplicar(){
+        if(aDuplicar!=null && duplicadoTipoDia.getNombre()!=null){
+            TipoDia nuevoTipoDia = confVeriHorario.getTipoDia(duplicadoTipoDia.getNombre());
+            if(nuevoTipoDia==null){
+                TipoDia tipoDia = confVeriHorario.getTipoDia(aDuplicar);
+                if(tipoDia!=null){
+                    confVeriHorario.duplicarTipoDia(duplicadoTipoDia,tipoDia);
+                    messagesView.info(Messages.MENSAJE_EXITOSO,"Tipo Dia duplicado");
+                }
+            }else{
+                messagesView.error(Messages.MENSAJE_FALLO,"Existe un tipo día con el mismo nombre");
+            }
+
+        }
+    }
+
     public void cancelar (){
-        nuevoTipoDia = new VerificacionTipoDia();
+        nuevoTipoDia = new TipoDia();
         selectedTipoDia = null;
+        duplicadoTipoDia = new TipoDia();
     }
 
     public void nuevoTipo(){
             if(nuevoTipoDia!=null){
-                confVeriHorario.addVerificacionTipoDia(nuevoTipoDia);
-                messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ALMACENADA);
-                tipoDiaRecords = confVeriHorario.getTipoDiaAll();
+                TipoDia tipoDia = confVeriHorario.getTipoDia(nuevoTipoDia.getNombre());
+                if(tipoDia==null){
+                    confVeriHorario.addVerificacionTipoDia(nuevoTipoDia);
+                    messagesView.info(Messages.MENSAJE_EXITOSO,Messages.ACCION_TIPO_DIA_ALMACENADA);
+                    tipoDiaRecords = confVeriHorario.getTipoDiaAll();
+                }else{
+                    messagesView.error(Messages.MENSAJE_FALLO,"Existe un tipo día con el mismo nombre");
+                }
+
             }
     }
 
@@ -88,27 +136,27 @@ public class ParametrizacionVerificacionHorarioView {
         this.confVeriHorario = confVeriHorario;
     }
 
-    public List<VerificacionTipoDia> getTipoDiaRecords() {
+    public List<TipoDia> getTipoDiaRecords() {
         return tipoDiaRecords;
     }
 
-    public void setTipoDiaRecords(List<VerificacionTipoDia> tipoDiaRecords) {
+    public void setTipoDiaRecords(List<TipoDia> tipoDiaRecords) {
         this.tipoDiaRecords = tipoDiaRecords;
     }
 
-    public VerificacionTipoDia getNuevoTipoDia() {
+    public TipoDia getNuevoTipoDia() {
         return nuevoTipoDia;
     }
 
-    public void setNuevoTipoDia(VerificacionTipoDia nuevoTipoDia) {
+    public void setNuevoTipoDia(TipoDia nuevoTipoDia) {
         this.nuevoTipoDia = nuevoTipoDia;
     }
 
-    public VerificacionTipoDia getSelectedTipoDia() {
+    public TipoDia getSelectedTipoDia() {
         return selectedTipoDia;
     }
 
-    public void setSelectedTipoDia(VerificacionTipoDia selectedTipoDia) {
+    public void setSelectedTipoDia(TipoDia selectedTipoDia) {
         this.selectedTipoDia = selectedTipoDia;
     }
 
@@ -118,5 +166,21 @@ public class ParametrizacionVerificacionHorarioView {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public TipoDia getDuplicadoTipoDia() {
+        return duplicadoTipoDia;
+    }
+
+    public void setDuplicadoTipoDia(TipoDia duplicadoTipoDia) {
+        this.duplicadoTipoDia = duplicadoTipoDia;
+    }
+
+    public String getaDuplicar() {
+        return aDuplicar;
+    }
+
+    public void setaDuplicar(String aDuplicar) {
+        this.aDuplicar = aDuplicar;
     }
 }

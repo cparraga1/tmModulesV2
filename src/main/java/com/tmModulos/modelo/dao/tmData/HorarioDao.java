@@ -7,6 +7,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class HorarioDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
 
     public void addHorarios(Horario horariosServicio) {
         getSessionFactory().getCurrentSession().save(horariosServicio);
@@ -59,6 +61,13 @@ public class HorarioDao {
         criteria.add(Restrictions.eq("tipoDia", dia));
         criteria.add(Restrictions.eq("tipoHorario", "P"));
         criteria.addOrder(Order.asc("config"));
+        return criteria.list();
+    }
+
+    public List<Horario> getHorarioByTipoDia(TipoDia aDuplicar) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Horario.class);
+        criteria.add(Restrictions.eq("tipoDia", aDuplicar));
+        criteria.add(Restrictions.eq("tipoHorario", "P"));
         return criteria.list();
     }
 }

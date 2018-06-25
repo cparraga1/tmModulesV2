@@ -17,14 +17,9 @@
                 <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
                         <p:panelGrid columns="5">
-                            <p:outputLabel value="Modo:"  />
-                            <p:selectOneMenu  value="#{serviciosTipoDiaP.modo}" style="width:90%">
-                                <f:selectItems value="#{serviciosTipoDiaP.modos}" var="modo" itemLabel="#{modo.label}" itemValue="#{modo.value}"/>
-                                <p:ajax update="@form" listener="#{serviciosTipoDiaP.updateTipoDias}"/>
-                            </p:selectOneMenu>
                             <p:outputLabel value="Tipo Día:"  />
-                            <p:selectOneMenu id="tipoDia" value="#{serviciosTipoDiaP.tipoDiaSeleccionado}" style="width:90%">
-                                <f:selectItems value="#{serviciosTipoDiaP.tiposDia}" var="tip" itemLabel="#{tip.label}" itemValue="#{tip.value}"/>
+                            <p:selectOneMenu id="tipoDia" value="#{serviciosTipoDiaP.tipoDiaSeleccionado}" style="width:200px">
+                                <f:selectItems value="#{serviciosTipoDiaP.tiposDia}" var="tip" itemLabel="#{tip.nombre}" itemValue="#{tip.nombre}"/>
                             </p:selectOneMenu>
                             <p:commandButton value="Buscar" action="#{serviciosTipoDiaP.buscar}" ajax="false"
                                              icon="ui-icon ui-icon-disk" id="buscar"

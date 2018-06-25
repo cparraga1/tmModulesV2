@@ -20,19 +20,27 @@
                             <p:commandButton actionListener="#{confVerif.habilitarNuevo}" update=":form:nuevoDialog" value="Crear"
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View">
                             </p:commandButton>
+
+                            <p:commandButton actionListener="#{confVerif.habilitarDuplicado}" update=":form:duplicarDialog" value="Duplicar"
+                                             oncomplete="PF('duplicarDialog').show()" icon="ui-icon-plus" title="View">
+                            </p:commandButton>
+
+                            <p:commandButton actionListener="#{confVerif.reiniciar}"  value="Reiniciar" icon="ui-icon ui-icon-arrowrefresh-1-s" >
+                            </p:commandButton>
+
                         </p:panelGrid>
                         <div style="height: 10px"></div>
                         <p:dataTable id="tipoDiaVer" var="tipo" value="#{confVerif.tipoDiaRecords}" widgetVar="TipoDiaTable"
                                      emptyMessage="No hay registros relacionados a la busqueda">
 
-                            <p:column headerText="Tipo Dia"  sortBy="#{tipo.tipoDia}"
+                            <p:column headerText="Tipo Dia"  sortBy="#{tipo.nombre}"
                                       style="width: 70px">
-                                <h:outputText value="#{tipo.tipoDia}" style="width: 75px" />
+                                <h:outputText value="#{tipo.nombre}" style="width: 75px" />
                             </p:column>
 
-                            <p:column headerText="Archivo"  sortBy="#{tipo.archivo}"
+                            <p:column headerText="Descripción"  sortBy="#{tipo.descripcion}"
                                       style="width: 70px">
-                                <h:outputText value="#{tipo.archivo}" style="width: 75px" />
+                                <h:outputText value="#{tipo.descripcion}" style="width: 75px" />
                             </p:column>
 
 
@@ -74,11 +82,11 @@
                             <p:outputPanel id="tipoDetail" style="text-align:center;">
                                 <p:panelGrid  columns="4" rendered="#{not empty confVerif.selectedTipoDia}" columnClasses="label,value" >
 
-                                    <h:outputText value="Tipo Dia:" style="color:black"/>
-                                    <h:inputText value="#{confVerif.selectedTipoDia.tipoDia}"  />
+                                    <h:outputText value="Nombre:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.selectedTipoDia.nombre}"  />
 
-                                    <h:outputText value="Archivo:" style="color:black"/>
-                                    <h:inputText value="#{confVerif.selectedTipoDia.archivo}"  />
+                                    <h:outputText value="Descripción:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.selectedTipoDia.descripcion}"  />
 
                                 </p:panelGrid>
                                 <p:panelGrid columns="2">
@@ -98,11 +106,11 @@
                             <p:outputPanel id="nuevoDialog" style="text-align:center;">
                                 <p:panelGrid  columns="4" rendered="#{not empty confVerif.nuevoTipoDia}" columnClasses="label,value">
 
-                                    <h:outputText value="Tipo Dia:" style="color:black"/>
-                                    <h:inputText value="#{confVerif.nuevoTipoDia.tipoDia}"  />
+                                    <h:outputText value="Nombre:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.nuevoTipoDia.nombre}"  />
 
-                                    <h:outputText value="Archivo:" style="color:black"/>
-                                    <h:inputText value="#{confVerif.nuevoTipoDia.archivo}"  />
+                                    <h:outputText value="Descripción:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.nuevoTipoDia.descripcion}"  />
                                 </p:panelGrid>
                                 <p:panelGrid columns="2">
                                     <p:commandButton value="Nuevo" action="#{confVerif.nuevoTipo}" ajax="false"
@@ -115,6 +123,41 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                         </p:dialog>
+
+                        <p:dialog header="Duplicar Tipo Dia" widgetVar="duplicarDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="duplicarDialog" style="text-align:center;">
+                                <p:panelGrid  columns="4" rendered="#{not empty confVerif.duplicadoTipoDia}" columnClasses="label,value">
+
+                                    <h:outputText value="Tipo día a duplicar:" style="color:black"/>
+                                    <h:selectOneMenu value="#{confVerif.aDuplicar}" style="width:100%" >
+                                        <f:selectItems value="#{confVerif.tipoDiaRecords}" var="tipo" itemLabel="#{tipo.nombre}" itemValue="#{tipo.nombre}" />
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="Nombre:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.duplicadoTipoDia.nombre}"  />
+
+                                    <h:outputText value="Descripción:" style="color:black"/>
+                                    <h:inputText value="#{confVerif.duplicadoTipoDia.descripcion}"  />
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">
+                                    <p:commandButton value="Duplicar" action="#{confVerif.duplicar}"
+                                                     icon="ui-icon ui-icon-disk" ajax="false"
+                                                     async="true" process="@form" onclick="PF('dlg2').show();" global="false"
+                                                     oncomplete="PF('dlg2').hide()" />
+
+                                    <p:commandButton value="Cancelar" action="#{confVerif.cancelar}" ajax="false"
+                                                     icon="ui-icon ui-icon-disk"
+                                                     async="true" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                        <p:dialog  widgetVar="dlg2" modal="true" height="100" closable="false" resizable="false"
+                                   minHeight="40" style="height: 40px">
+                            <h:outputText value="En Proceso.." />
+                            <p:graphicImage name="images/ajaxloadingbar.gif" />
+                        </p:dialog>
+
 
                     </div>
                 </p:panel>

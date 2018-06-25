@@ -3,6 +3,7 @@ package com.tmModulos.vista;
 import com.tmModulos.controlador.procesador.DataProcesorImpl;
 import com.tmModulos.controlador.procesador.VerificacionHorarios;
 import com.tmModulos.controlador.utils.PathFiles;
+import com.tmModulos.modelo.entity.tmData.TipoDia;
 import com.tmModulos.modelo.entity.tmData.VerificacionTipoDia;
 import org.primefaces.model.UploadedFile;
 
@@ -27,7 +28,7 @@ public class VerificaHorarioView implements Serializable {
     private VerificacionHorarios verificacionHorarios;
 
     private UploadedFile file;
-    private List<VerificacionTipoDia> tipoDiaRecords;
+    private List<TipoDia> tipoDiaRecords;
     private String tipoDia;
     private String tipoVerificacion;
 
@@ -84,7 +85,7 @@ public class VerificaHorarioView implements Serializable {
 
 
 
-        File file = new File(PathFiles.PATH_FOR_FILES_VERIFICACION+"update.xls");
+        File file = new File(PathFiles.PATH_FOR_FILES_VERIFICACION+tipoDia+".xls");
         file.createNewFile();
         FileInputStream fileIn = new FileInputStream(file);
         ServletOutputStream out = response.getOutputStream();
@@ -122,9 +123,6 @@ public class VerificaHorarioView implements Serializable {
 
     }
 
-    public void updateFormato(){
-
-    }
 
 
     public boolean isVisibleDescarga() {
@@ -191,11 +189,11 @@ public class VerificaHorarioView implements Serializable {
         this.boxIntervaloMax = boxIntervaloMax;
     }
 
-    public List<VerificacionTipoDia> getTipoDiaRecords() {
+    public List<TipoDia> getTipoDiaRecords() {
         return tipoDiaRecords;
     }
 
-    public void setTipoDiaRecords(List<VerificacionTipoDia> tipoDiaRecords) {
+    public void setTipoDiaRecords(List<TipoDia> tipoDiaRecords) {
         this.tipoDiaRecords = tipoDiaRecords;
     }
 

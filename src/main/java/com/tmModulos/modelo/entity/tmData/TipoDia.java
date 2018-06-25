@@ -17,6 +17,9 @@ public class TipoDia {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     public TipoDia() {
     }
 
@@ -89,6 +92,14 @@ public class TipoDia {
 
     public void setHorario(Set<Horario> horario) {
         this.horario = horario;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

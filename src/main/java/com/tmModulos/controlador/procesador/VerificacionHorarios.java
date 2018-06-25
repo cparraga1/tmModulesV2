@@ -535,6 +535,7 @@ public class VerificacionHorarios {
     }
 
 
+
     public List<String> validarLimitesHorarios( List<String> comparaciones, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB,ExpedicionesTemporal expInicio){
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         if( horaInicioB== null && horaFinB == null){
@@ -721,7 +722,7 @@ public class VerificacionHorarios {
        return horaNueva;
     }
 
-    public List<VerificacionTipoDia> getTiposDiasDisponibles () {
+    public List<TipoDia> getTiposDiasDisponibles () {
         return confVeriHorario.getTipoDiaAll();
     }
 
@@ -834,6 +835,8 @@ public class VerificacionHorarios {
         }
 
         try {
+
+            validarServiciosEncontrados(tipoVerificacion,worksheet);
             FileOutputStream outputStream = new FileOutputStream(file);
             workbook.write(outputStream);
             workbook.close();

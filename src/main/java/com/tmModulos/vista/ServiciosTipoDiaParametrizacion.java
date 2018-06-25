@@ -45,9 +45,8 @@ public class ServiciosTipoDiaParametrizacion {
     private TipoDia tipoDia;
     private UploadedFile ordenServiciosFile;
 
-    private List<ListObject> modos;
-    private List<ListObject> tiposDia;
-    private String modo;
+
+    private List<TipoDia> tiposDia;
 
 
 
@@ -172,18 +171,9 @@ public class ServiciosTipoDiaParametrizacion {
     @PostConstruct
     public void init() {
         serviciosPrincipalesRecords = servicioService.getServicioAll();
-        modos = ModosUtil.cargarListaModos();
-        tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
+        tiposDia = servicioService.getTipoDiaAll();
     }
 
-    public void updateTipoDias(){
-        if(modo.equals("DUA")){
-            tiposDia = ModosUtil.cargarListaTipoDiaDual();
-        }else{
-            tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
-        }
-
-    }
 
 
     public List<Servicio> getServiciosPrincipalesRecords() {
@@ -290,27 +280,11 @@ public class ServiciosTipoDiaParametrizacion {
         this.tipoDia = tipoDia;
     }
 
-    public List<ListObject> getModos() {
-        return modos;
-    }
-
-    public void setModos(List<ListObject> modos) {
-        this.modos = modos;
-    }
-
-    public List<ListObject> getTiposDia() {
+    public List<TipoDia> getTiposDia() {
         return tiposDia;
     }
 
-    public void setTiposDia(List<ListObject> tiposDia) {
+    public void setTiposDia(List<TipoDia> tiposDia) {
         this.tiposDia = tiposDia;
-    }
-
-    public String getModo() {
-        return modo;
-    }
-
-    public void setModo(String modo) {
-        this.modo = modo;
     }
 }
