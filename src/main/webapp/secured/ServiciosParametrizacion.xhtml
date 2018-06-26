@@ -21,6 +21,9 @@
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View"
                                              rendered="#{loginBean.puedeEditar ()}" >
                             </p:commandButton>
+                            <p:commandButton actionListener="#{serviciosP.actualizarServicios}"  value="Actualizar"
+                                              icon="ui-icon ui-icon-arrowrefresh-1-s" title="Actualizar Grupo de Servicios" >
+                            </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
@@ -79,9 +82,8 @@
                                 <h:outputText value="#{ser.tipologia.nombre}" />
                             </p:column>
 
-                            <p:column filterBy="#{ser.estado}" headerText="Estado"  filterMatchMode="contains" sortBy="#{ser.estado}"
-                            >
-                                <h:outputText value="#{ser.estadoFormato}" />
+                            <p:column filterBy="#{ser.referencia}" headerText="ID único"  filterMatchMode="contains" sortBy="#{ser.referencia}">
+                                <h:outputText value="#{ser.referencia}" />
                             </p:column>
 
 
@@ -205,6 +207,9 @@
 
                                     <h:outputText value="Identificador (L-SL-S-PInicio):"  />
                                     <h:inputText value="#{serviciosP.nuevoServicio.identificadorGIS}" disabled="true" style="background-color: #d6d7d8"/>
+
+                                    <h:outputText value="ID único:" />
+                                    <h:inputText value="#{serviciosP.nuevoServicio.referencia}"  />
 
                                     <h:outputText value="Línea:" />
                                     <h:inputText value="#{serviciosP.nuevoServicio.macro}"  />

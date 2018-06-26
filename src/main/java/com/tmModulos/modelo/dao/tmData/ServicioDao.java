@@ -97,4 +97,14 @@ public class ServicioDao {
         }
         return list.get(0);
     }
+
+    public Servicio getServicioByIdUnico(String id_unico) {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Servicio.class);
+        criteria.add(Restrictions.eq("referencia", id_unico));
+        List<Servicio> list = criteria.list();
+        if(list.size()<1){
+            return null;
+        }
+        return list.get(0);
+    }
 }

@@ -219,4 +219,7 @@ public class ServicioService {
         horarioDao.deleteHorarios(horariosServicio);
     }
 
+    public Servicio getServicioByIdUnico(String id_unico) {
+        return servicioDao.getServicioByIdUnico(id_unico);
+    }
 }

@@ -71,6 +71,9 @@ public class Servicio {
     @JoinColumn(name = "tipologia", nullable = false)
     private Tipologia tipologia;
 
+    @Column(name = "referencia")
+    private String referencia;
+
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "servicio")
 //    private Set<ServicioFranjaHorario> servicioFranjaRecords= new HashSet<ServicioFranjaHorario>(0);
@@ -326,5 +329,13 @@ public class Servicio {
 
     public void setDistanciaBase(Integer distanciaBase) {
         this.distanciaBase = distanciaBase;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 }

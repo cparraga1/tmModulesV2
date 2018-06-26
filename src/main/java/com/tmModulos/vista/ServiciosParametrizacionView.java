@@ -148,6 +148,17 @@ public class ServiciosParametrizacionView {
         selectedtipoDia= new ArrayList<>();
     }
 
+    public void actualizarServicios(){
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(ec.getRequestContextPath()
+                    + "/secured/actualizarInfoBaseServicios.xhtml");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     public void nuevo(){
         if(console==null || console.equals("")){
             console="ARTICULADO";
