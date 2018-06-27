@@ -3,14 +3,19 @@ package com.tmModulos.vista;
 import com.tmModulos.controlador.procesador.ActualizarServiciosImpl;
 import com.tmModulos.controlador.procesador.DataProcesorImpl;
 import com.tmModulos.controlador.utils.LogDatos;
+import com.tmModulos.controlador.utils.PathFiles;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import java.io.IOException;
-import java.io.Serializable;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +25,7 @@ public class ActualizarServiciosBaseView implements Serializable {
 
     private UploadedFile serviciosFile;
     private String formatoArchivo;
+
 
     @ManagedProperty("#{MessagesView}")
     private MessagesView messagesView;
@@ -52,6 +58,39 @@ public class ActualizarServiciosBaseView implements Serializable {
         }else{
             messagesView.error(Messages.MENSAJE_CALCULO_FALLA,"Cargue el archivo correspondiente");
         }
+    }
+
+    public void  download ()throws IOException {
+
+
+        String filename = "resultado.xls";
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+        File file = new File("../webapp/resources/docs/Base_Actualizacion _Servicios.xls");
+        file.createNewFile();
+        FileInputStream fileIn = new FileInputStream(file);
+        ServletOutputStream out = response.getOutputStream();
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=Base_Actualizacion _Servicios.xls");
+        byte[] outputByte = new byte[4096];
+        while(fileIn.read(outputByte, 0, 4096) != -1)
+        {
+            out.write(outputByte, 0, 4096);
+        }
+        fileIn.close();
+        out.flush();
+        out.close();
+        out.flush();
+        try {
+            if (out != null) {
+                out.close();
+            }
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (IOException e) {
+
+        }
+
     }
 
     public UploadedFile getServiciosFile() {
@@ -101,4 +140,5 @@ public class ActualizarServiciosBaseView implements Serializable {
     public void setActualizarServicios(ActualizarServiciosImpl actualizarServicios) {
         this.actualizarServicios = actualizarServicios;
     }
+
 }

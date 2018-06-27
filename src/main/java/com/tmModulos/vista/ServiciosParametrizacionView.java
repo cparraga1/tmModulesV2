@@ -163,17 +163,46 @@ public class ServiciosParametrizacionView {
         if(console==null || console.equals("")){
             console="ARTICULADO";
         }
-        Tipologia tipologia = servicioService.getTipologiaByNombre(console);
-        nuevoServicio.setTipologia(tipologia);
-        String identificador = nuevoServicio.getMacro()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getSeccion()+"-"+nuevoServicio.getPunto();
-        String identificadorGIS = nuevoServicio.getMacro()+"-"+nuevoServicio.getSentido()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getPunto();
-        nuevoServicio.setIdentificador(identificador);
-        nuevoServicio.setLineaCompuesta(0);
-        nuevoServicio.setTrayecto(0);
-        nuevoServicio.setIdentificadorGIS(identificadorGIS);
-        servicioService.addServicio(nuevoServicio);
-        serviciosRecords= servicioService.getServicioAll();
-        messagesView.info("Servicio Creado","");
+
+        //VALIDAR QUE NO SE REPITA ID UNICO
+        if(datosCompletos()){
+            if(idUnicoNoExiste()){
+                Tipologia tipologia = servicioService.getTipologiaByNombre(console);
+                nuevoServicio.setTipologia(tipologia);
+                String identificador = nuevoServicio.getMacro()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getSeccion()+"-"+nuevoServicio.getPunto();
+                String identificadorGIS = nuevoServicio.getMacro()+"-"+nuevoServicio.getSentido()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getPunto();
+                nuevoServicio.setIdentificador(identificador);
+                nuevoServicio.setLineaCompuesta(0);
+                nuevoServicio.setTrayecto(0);
+                nuevoServicio.setIdentificadorGIS(identificadorGIS);
+                servicioService.addServicio(nuevoServicio);
+                serviciosRecords= servicioService.getServicioAll();
+                messagesView.info("Servicio Creado","");
+            }else{
+                messagesView.error("Servicio No Creado","Ya existe un servicio con el Id único ingresado");
+            }
+
+        }else{
+            messagesView.error("Servicio No Creado","Complete los campos");
+        }
+
+    }
+
+    private boolean idUnicoNoExiste() {
+        Servicio servicioByIdUnico = servicioService.getServicioByIdUnico(nuevoServicio.getReferencia());
+        if(servicioByIdUnico!=null){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean datosCompletos() {
+
+        if(!nuevoServicio.getReferencia().equals("")){
+            return true;
+        }
+
+       return false;
     }
 
     public void verDetalleFranjaHorario(){

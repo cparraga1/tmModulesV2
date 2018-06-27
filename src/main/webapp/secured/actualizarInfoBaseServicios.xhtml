@@ -16,11 +16,11 @@
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
                 <p:panel id="basic" header="Actualizar Servicios"  style="margin-bottom:20px">
-                    <h:panelGrid columns="4" style="margin-bottom:10px;margin-top: 10px" cellpadding="10" cellspacing="10">
+                    <h:panelGrid columns="2" style="margin-bottom:10px;margin-top: 10px" cellpadding="10" cellspacing="10">
 
                         <p:outputLabel value="Cargue el archivo de actualización:" />
                         <p:fileUpload value="#{actualizarServicios.serviciosFile}" label="Seleccionar"
-                                      mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/" style="width:90%"/>
+                                      mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/" style="width:100%"/>
                     </h:panelGrid>
                     <h:panelGrid columns="1" style="margin-bottom:10px;margin-top: 10px" cellpadding="5">
                         <p:outputLabel value="#{actualizarServicios.formatoArchivo}" style="color: #f51111;font-style: italic;font-size: 12px;" />
