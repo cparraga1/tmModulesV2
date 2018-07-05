@@ -1,10 +1,12 @@
 package com.tmModulos.modelo.dao.tmData;
 
+import com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal;
 import com.tmModulos.modelo.entity.tmData.TempOfertaComercial;
 import com.tmModulos.modelo.entity.tmData.TempPos;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.engine.SessionImplementor;
 import org.postgresql.copy.CopyManager;
@@ -71,6 +73,14 @@ public class TempOfertaComercialDao {
             criteria.add(Restrictions.isNull("refuerzo"));
             criteria.add(Restrictions.isNull("nodo"));
         }
+        return criteria.list();
+    }
+
+    public List<String> getOfertaComercialNoReferenciada(List<String> serviciosEncontrados) {
+
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TempOfertaComercial.class);
+        criteria.add(Restrictions.not(Restrictions.in("trayecto",serviciosEncontrados)));
+        criteria.setProjection(Projections.projectionList().add(Projections.groupProperty("trayecto")));
         return criteria.list();
     }
 }

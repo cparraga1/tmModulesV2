@@ -67,7 +67,7 @@ public class ServiciosParametrizacionView {
         tipologias.add("MIXTO");
         tipoServicio= new ArrayList<>();
         tipoServicio.add("1");
-        tipoServicio.add("1-1");
+        tipoServicio.add("2");
         updateTipoDias();
     }
 
@@ -164,7 +164,6 @@ public class ServiciosParametrizacionView {
             console="ARTICULADO";
         }
 
-        //VALIDAR QUE NO SE REPITA ID UNICO
         if(datosCompletos()){
             if(idUnicoNoExiste()){
                 Tipologia tipologia = servicioService.getTipologiaByNombre(console);

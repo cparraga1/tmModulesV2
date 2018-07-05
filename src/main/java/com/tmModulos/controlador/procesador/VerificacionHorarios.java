@@ -101,8 +101,10 @@ public class VerificacionHorarios {
             lastRow ++ ;
             if(tipoValidacion.equals("Pre")){
                 serviciosNoEncontrados = veriPreHorarios.getExpedicionesNoReferenciadas(serviciosEncontrados);
-            }else{
+            }else if(tipoValidacion.equals("Pos")){
                 serviciosNoEncontrados = veriPreHorarios.getTempPosNoReferenciadas(serviciosEncontrados);
+            }else if (tipoValidacion.equals("Pso")){
+                serviciosNoEncontrados = veriPreHorarios.getTempOfertaComercialNoReferenciada(serviciosEncontrados);
             }
 
             for(int i=0; i< serviciosNoEncontrados.size(); i++){
@@ -864,14 +866,14 @@ public class VerificacionHorarios {
         List<TempOfertaComercial> oferta = veriPreHorarios.getOfertaComercial(servicio.getLinea(),servicio.getSentido(),servicio.getTipoServicio(),nodo);
 
         if(oferta.size()>0){
-            serviciosEncontrados.add(servicio.getIdentificador());
+            serviciosEncontrados.add(servicio.getLinea()+"");
             List< String> validacion = validarOfertaComecial(oferta,horaInicio,horaInicioB,
                     horaFin,horaFinB);
 
             incluirResultadosValidacionHorario(row, validacion.get(0), validacion.get(1), validacion.get(2), validacion.get(3), "N/A");
 
-            List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPSO(oferta);
-            incluirResultadosIntervalos(row, intervalosExpediciones,servicio.getTipoServicio());
+          //  List<String> intervalosExpediciones = intervalosVeri.calcularIntervalosPSO(oferta);
+          //  incluirResultadosIntervalos(row, intervalosExpediciones,servicio.getTipoServicio());
 
         }else{
             registrosNoEncontrados(row,servicio.getIdentificador());

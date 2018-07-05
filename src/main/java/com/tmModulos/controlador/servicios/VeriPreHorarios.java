@@ -170,6 +170,10 @@ public class VeriPreHorarios {
     public List<TempOfertaComercial> getOfertaComercial(int sublinea, int sentido, String tipoServicio, String nodo) {
         return tempOfertaComercialDao.getOfertaComercial(sublinea,sentido,tipoServicio,nodo);
     }
+
+    public List<String> getTempOfertaComercialNoReferenciada(List<String> serviciosEncontrados) {
+        return tempOfertaComercialDao.getOfertaComercialNoReferenciada(serviciosEncontrados);
+    }
 }
 
 

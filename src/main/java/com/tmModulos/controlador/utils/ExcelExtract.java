@@ -41,7 +41,8 @@ public class ExcelExtract {
             case Cell.CELL_TYPE_NUMERIC:
                 return (int) cell.getNumericCellValue();
             case Cell.CELL_TYPE_STRING:
-                return Integer.parseInt(cell.getStringCellValue());
+                String valor = cell.getStringCellValue().trim();
+                return Integer.parseInt(valor);
         }
         return 0;
     }
