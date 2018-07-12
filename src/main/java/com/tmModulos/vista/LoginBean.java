@@ -3,6 +3,8 @@ package com.tmModulos.vista;
 
 import com.tmModulos.controlador.servicios.UsuarioServicios;
 import com.tmModulos.controlador.servicios.Util;
+import com.tmModulos.modelo.entity.tmData.Aplicacion;
+import com.tmModulos.modelo.entity.tmData.RolAplicacion;
 import com.tmModulos.modelo.entity.tmData.Role;
 import com.tmModulos.modelo.entity.tmData.Usuario;
 
@@ -42,6 +44,7 @@ public class LoginBean implements Serializable {
     @ManagedProperty(value="#{UsuariosService}")
     private UsuarioServicios usuarioServicios;
 
+    private static  int ID_APLICACION = 1;
 
     @PostConstruct
     public void init(){
@@ -71,11 +74,20 @@ public class LoginBean implements Serializable {
             if (usuario.getContrasena().equals(Util.md5(password))) {
                 HttpSession session = Util.getSession();
                 session.setAttribute("user", uname);
-                this.role =usuario.getRole();
-                this.nombreUsuario = usuario.getNombre();
-                this.area = usuario.getArea();
-                this.usuario = usuario;
-                return navigationBean.redirectToWelcome();
+                this.role =obtenerRol(usuario);
+                if(role!=null){
+                    this.nombreUsuario = usuario.getNombre();
+                    this.area = usuario.getArea();
+                    this.usuario = usuario;
+                    return navigationBean.redirectToWelcome();
+                }else{
+                    FacesContext.getCurrentInstance().addMessage(
+                            null,
+                            new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                    "Inicio de sesion invalido",
+                                    "Usted no tiene permisos sobre esta aplicación, contacte al administrador"));
+                }
+
             } else {
                 FacesContext.getCurrentInstance().addMessage(
                         null,
@@ -94,6 +106,17 @@ public class LoginBean implements Serializable {
         }
         return navigationBean.toLogin();
 
+    }
+
+    private Role obtenerRol(Usuario usuario) {
+
+        // Obtener aplicacion
+        Aplicacion aplicacion = usuarioServicios.getAplicacion(ID_APLICACION);
+        RolAplicacion rolAplicacion = usuarioServicios.getRolUsuarioAplicacion(aplicacion,usuario);
+        if(rolAplicacion!=null){
+            return rolAplicacion.getRole();
+        }
+        return null;
     }
 
     public String logout() {

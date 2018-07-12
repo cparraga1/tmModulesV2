@@ -78,7 +78,7 @@ public class NuevaTablaMaestra {
 
         modos= ModosUtil.cargarListaModos();
         tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
-        formatoArchivo = "Nota: Recuerde que el archivo debe estar en Formato CSV";
+        formatoArchivo = "Nota: Recuerde que el archivo IPH debe estar en Formato CSV";
     }
 
     public void habilitarTipoTabla(){

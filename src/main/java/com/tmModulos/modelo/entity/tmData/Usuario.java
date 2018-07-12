@@ -16,9 +16,6 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "roleu", nullable = false)
-    private Role role;
 
     @Column(name = "usuario")
     private String usuario;
@@ -73,14 +70,6 @@ public class Usuario {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public boolean isActivo() {

@@ -75,6 +75,8 @@
                 <value>com.tmModulos.modelo.entity.tmData.Vagon</value>
                 <value>com.tmModulos.modelo.entity.tmData.Role</value>
                 <value>com.tmModulos.modelo.entity.tmData.Usuario</value>
+                <value>com.tmModulos.modelo.entity.tmData.Aplicacion</value>
+                <value>com.tmModulos.modelo.entity.tmData.RolAplicacion</value>
                 <value>com.tmModulos.modelo.entity.tmData.MatrizTemporal</value>
                 <value>com.tmModulos.modelo.entity.tmData.ExpedicionesTemporal</value>
                 <value>com.tmModulos.modelo.entity.tmData.Equivalencias</value>
@@ -85,6 +87,7 @@
                 <value>com.tmModulos.modelo.entity.tmData.TempBusesHora</value>
                 <value>com.tmModulos.modelo.entity.tmData.ExpedicionesTempConv</value>
                 <value>com.tmModulos.modelo.entity.tmData.TempOfertaComercial</value>
+
 
             </list>
         </property>

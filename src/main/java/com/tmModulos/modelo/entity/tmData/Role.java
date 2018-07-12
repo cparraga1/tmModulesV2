@@ -29,8 +29,6 @@ public class Role {
     @Transient
     private long idNuevo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.REMOVE)
-    private Set<Usuario> usuariosRecords= new HashSet<Usuario>(0);
 
     public Role() {
     }

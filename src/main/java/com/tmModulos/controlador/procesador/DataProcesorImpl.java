@@ -105,6 +105,8 @@ public class DataProcesorImpl {
     }
 
     public GisServicio findOrSaveServicio(Row row,String nodoInicial,String nodoFinal){
+
+
         Integer sublinea =0;
         int linea=0;
         int sentido=0;
@@ -142,6 +144,11 @@ public class DataProcesorImpl {
                     exitoso =false;
                 }
 
+            }else{
+                //VERIFICAR NODO IGUAL
+                servicio.setPuntoInicial(calcularPunto(nodoInicial));
+                servicio.setPuntoFinal(calcularPunto(nodoFinal));
+                gisCargaService.updateGisServicio(servicio);
             }
             return servicio;
         }
