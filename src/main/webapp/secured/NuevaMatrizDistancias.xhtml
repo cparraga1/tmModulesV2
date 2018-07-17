@@ -37,9 +37,9 @@
                             <p:outputLabel for="buttonV" value="Fecha Hábil (DD-MM-AAAA):" />
                             <p:calendar id="buttonV" value="#{matrizDis.fechaDeVigencia}" showOn="button" style="width:90%" pattern="dd-MM-yyyy" locale="es"/>
                             <p:outputLabel for="buttonS" value="Fecha Sabado (DD-MM-AAAA):" pattern="dd-MM-yyyy" locale="es" />
-                            <p:calendar id="buttonS" value="#{matrizDis.fechaSabado}" showOn="button" style="width:90%"/>
+                            <p:calendar id="buttonS" value="#{matrizDis.fechaSabado}" showOn="button" style="width:90%" pattern="dd-MM-yyyy" locale="es"/>
                             <p:outputLabel for="buttonF" value="Fecha Festivos (DD-MM-AAAA):" pattern="dd-MM-yyyy" locale="es"/>
-                            <p:calendar id="buttonF" value="#{matrizDis.fechaFestivos}" showOn="button" style="width:90%"/>
+                            <p:calendar id="buttonF" value="#{matrizDis.fechaFestivos}" showOn="button" style="width:90%" pattern="dd-MM-yyyy" locale="es"/>
                             <p:outputLabel value="Archivo Matriz de Distancias (DD-MM-AAAA):" pattern="dd-MM-yyyy" locale="es"/>
                             <p:fileUpload  label="Seleccionar" value="#{matrizDis.matrizDistancias}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xls|xlsx)$/" style="width:90%"/>
 
