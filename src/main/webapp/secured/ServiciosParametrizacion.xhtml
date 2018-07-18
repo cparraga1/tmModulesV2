@@ -16,7 +16,7 @@
                 <p:growl id="message" showDetail="true" />
                 <p:panel id="basic" header="Servicios" style="margin-bottom:20px" visible="true">
                     <div style="margin-top:20px">
-                        <p:panelGrid columns="4">
+                        <p:panelGrid columns="6">
                             <p:commandButton actionListener="#{serviciosP.habilitarNuevo}" update="@form" value="Crear"
                                              oncomplete="PF('nuevoDialog').show()" icon="ui-icon-plus" title="View"
                                              rendered="#{loginBean.puedeEditar ()}" >
@@ -24,12 +24,19 @@
                             <p:commandButton actionListener="#{serviciosP.actualizarServicios}"  value="Actualizar"
                                               icon="ui-icon ui-icon-arrowrefresh-1-s" title="Actualizar Grupo de Servicios" >
                             </p:commandButton>
+                            <p:commandButton value="Mapa" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{serviciosP.fileMapa}" />
+                            </p:commandButton>
+                            <p:commandButton value="Listado" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{serviciosP.fileListado}" />
+                            </p:commandButton>
                             <h:outputText value="Exportar:" />
                             <h:commandLink>
                                 <p:graphicImage value="/resources/images/excel.png" width="24"/>
                                 <p:dataExporter type="xls"
                                                 target="matriz" fileName="Servicios"  />
                             </h:commandLink>
+
                         </p:panelGrid>
                         <div style="height: 10px"></div>
                         <p:dataTable id="matriz" var="ser" value="#{serviciosP.serviciosRecords}" widgetVar="MatrizTable"
@@ -268,6 +275,13 @@
                             </p:outputPanel>
                         </p:dialog>
 
+                        <p:dialog  widgetVar="statusDialog" modal="true" height="100" closable="false" resizable="false"
+                                   minHeight="40" style="height: 40px">
+                            <h:outputText value="En Proceso.." />
+                            <p:graphicImage name="images/ajaxloadingbar.gif" />
+                        </p:dialog>
+
+
                     </div>
                 </p:panel>
             </h:form>
@@ -277,5 +291,14 @@
     </ui:composition>
 
 </h:body>
+<script type="text/javascript">
+    function start() {
+        PF('statusDialog').show();
+    }
+
+    function stop() {
+        PF('statusDialog').hide();
+    }
+</script>
 
 </html>

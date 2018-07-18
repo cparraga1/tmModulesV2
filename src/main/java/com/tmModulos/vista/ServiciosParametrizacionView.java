@@ -4,6 +4,8 @@ import com.tmModulos.controlador.servicios.NodoService;
 import com.tmModulos.controlador.servicios.ServicioService;
 import com.tmModulos.controlador.utils.TipoHorario;
 import com.tmModulos.modelo.entity.tmData.*;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -14,6 +16,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +50,12 @@ public class ServiciosParametrizacionView {
     private Horario selectedHorario;
     private Date horaInicioNuevoHorario;
     private Date horaFinNuevoHorario;
+
+    private StreamedContent fileMapa;
+    private StreamedContent fileListado;
+
+
+
 
     private String console;
 
@@ -89,6 +98,11 @@ public class ServiciosParametrizacionView {
     }
 
     public ServiciosParametrizacionView() {
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/MapaEstaciones.png");
+        fileMapa = new DefaultStreamedContent(stream, "image/png", "mapa_estaciones.png");
+
+        InputStream streamListado = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/listado.xls");
+        fileListado = new DefaultStreamedContent(streamListado, "application/vnd.ms-excel", "listado_estaciones.xls");
     }
 
 
@@ -385,5 +399,21 @@ public class ServiciosParametrizacionView {
 
     public void setMessagesView(MessagesView messagesView) {
         this.messagesView = messagesView;
+    }
+
+    public StreamedContent getFileMapa() {
+        return fileMapa;
+    }
+
+    public void setFileMapa(StreamedContent fileMapa) {
+        this.fileMapa = fileMapa;
+    }
+
+    public StreamedContent getFileListado() {
+        return fileListado;
+    }
+
+    public void setFileListado(StreamedContent fileListado) {
+        this.fileListado = fileListado;
     }
 }
