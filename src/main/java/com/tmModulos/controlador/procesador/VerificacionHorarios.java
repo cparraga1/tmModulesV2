@@ -750,7 +750,9 @@ public class VerificacionHorarios {
     public void verificarHorarios(String fileName, InputStream inputstream, String tipoVerificacion, String tipoDia, String boxIntervaloMin, String boxIntervaloMax, String boxIntervaloMinRef, String boxIntervaloMaxRef) throws Exception {
         logDatos = new ArrayList<>();
         destination=PathFiles.PATH_FOR_FILES + "\\";
-        processorUtils.copyFile(fileName,inputstream,destination);
+
+        //Se usa copyFile para local y copyFileUTF8 para el servidor cloud
+        processorUtils.copyFileUTF8(fileName,inputstream,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
