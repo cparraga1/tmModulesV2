@@ -183,7 +183,7 @@ public class ServiciosParametrizacionView {
                 Tipologia tipologia = servicioService.getTipologiaByNombre(console);
                 nuevoServicio.setTipologia(tipologia);
                 String identificador = nuevoServicio.getMacro()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getSeccion()+"-"+nuevoServicio.getPunto();
-                String identificadorGIS = nuevoServicio.getMacro()+"-"+nuevoServicio.getSentido()+"-"+nuevoServicio.getLinea()+"-"+nuevoServicio.getPunto();
+                String identificadorGIS = nuevoServicio.getMacro()+"-"+nuevoServicio.getSentido()+"-"+nuevoServicio.getLinea();
                 nuevoServicio.setIdentificador(identificador);
                 nuevoServicio.setLineaCompuesta(0);
                 nuevoServicio.setTrayecto(0);

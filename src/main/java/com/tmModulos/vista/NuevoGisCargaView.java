@@ -60,27 +60,29 @@ public class NuevoGisCargaView implements Serializable{
     public void upload() {
         resultadosVisibles=false;
         if(isValid()){
-        if(gisCarga.getSize()>0) {
-            progress=20;
-            try {
-                status = true;
-                if(descripcion.isEmpty()){ descripcion="Sin descripcion";}
-                logDatos= dataProcesor.processDataFromFile(gisCarga.getFileName(),gisCarga.getInputstream(), fechaProgramacion, fechaVigencia,tipoDia,descripcion,modo);
-               status =false;
-                if(dataProcesor.isExitoso()){
-                    messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_GIS_CARGA_ALMACENADA);
-                }else{
-                    messagesView.error(Messages.MENSAJE_CALCULO_FALLA,Messages.ACCION_VERIFICACION);
+            if(gisCarga.getSize()>0) {
+                progress=20;
+                try {
+                    status = true;
+                    if(descripcion.isEmpty()){
+                        descripcion="Sin descripcion";
+                    }
+                    logDatos= dataProcesor.processDataFromFile(gisCarga.getFileName(),gisCarga.getInputstream(), fechaProgramacion, fechaVigencia,tipoDia,descripcion,modo);
+                    status =false;
+                    if(dataProcesor.isExitoso()){
+                        messagesView.info(Messages.MENSAJE_CARGA_EXITOSA,Messages.ACCION_GIS_CARGA_ALMACENADA);
+                    }else{
+                        messagesView.error(Messages.MENSAJE_CALCULO_FALLA,Messages.ACCION_VERIFICACION);
+                    }
+
+                    resultadosVisibles=true;
+                } catch (IOException e) {
+                    messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_FALLO_ARCHIVO);
                 }
 
-                resultadosVisibles=true;
-            } catch (IOException e) {
-                messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_FALLO_ARCHIVO);
+            }else{
+                messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_ARCHIVO_INCOMPATIBLE);
             }
-
-        }else{
-            messagesView.error(Messages.MENSAJE_FALLO_ARCHIVO,Messages.ACCION_ARCHIVO_INCOMPATIBLE);
-        }
         }else{
             messagesView.error(Messages.MENSAJE_CAMPOS_INCOMPLETOS,Messages.ACCION_CAMPOS_INCOMPLETOS);
         }

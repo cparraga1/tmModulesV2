@@ -46,72 +46,116 @@ public class IntervalosVerificacionHorarios {
 //        Date horaFinB = processorUtils.convertirATime(finB.get(0)+":"+finB.get(1)+":"+finB.get(2));
 
         List<String> intervalosResultado = new ArrayList<>();
-        List<Long> tiemposFranjaInicio = new ArrayList<>();
-        List<Long> tiemposFranjaPicoAM = new ArrayList<>();
-        List<Long> tiemposFranjaValle = new ArrayList<>();
-        List<Long> tiemposFranjaPicoPM = new ArrayList<>();
-        List<Long> tiemposFranjaCierre = new ArrayList<>();
+        List<Long> tiemposFranjaPrimera = new ArrayList<>();
+        List<Long> tiemposFranjaSegunda = new ArrayList<>();
+        List<Long> tiemposFranjaTercera = new ArrayList<>();
+        List<Long> tiemposFranjaCuarta = new ArrayList<>();
+        List<Long> tiemposFranjaQuinta = new ArrayList<>();
+        //------
+        List<Long> tiemposFranjaSexta = new ArrayList<>();
+        List<Long> tiemposFranjaSeptima = new ArrayList<>();
+        List<Long> tiemposFranjaOctava = new ArrayList<>();
+        List<Long> tiemposFranjaNovena = new ArrayList<>();
+        List<Long> tiemposFranjaDecima = new ArrayList<>();
 
 
         if(franjas.size()>0){
             for(ExpedicionesTemporal expediciones: expedicionesTemporals){
                 Date exp =  processorUtils.convertirATime(expediciones.getHoraInicio());
-                if(estaEnelRango(exp,"Inicio")){
-                    tiemposFranjaInicio.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Pico AM")){
-                    tiemposFranjaPicoAM.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Valle")){
-                    tiemposFranjaValle.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Pico PM")){
-                    tiemposFranjaPicoPM.add(exp.getTime());
+                if(estaEnelRango(exp,"Primera")){
+                    tiemposFranjaPrimera.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Segunda")){
+                    tiemposFranjaSegunda.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Tercera")){
+                    tiemposFranjaTercera.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Cuarta")){
+                    tiemposFranjaCuarta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Quinta")){
+                    tiemposFranjaQuinta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Sexta")){
+                    tiemposFranjaSexta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Septima")){
+                    tiemposFranjaSeptima.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Octava")){
+                    tiemposFranjaOctava.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Novena")){
+                    tiemposFranjaNovena.add(exp.getTime());
                 }else{
-                    tiemposFranjaCierre.add(exp.getTime());
+                    tiemposFranjaDecima.add(exp.getTime());
                 }
             }
         }
 
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaInicio);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoAM);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaValle);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoPM);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaCierre);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPrimera);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSegunda);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaTercera);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaCuarta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaQuinta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSexta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSeptima);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaOctava);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaNovena);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaDecima);
         return intervalosResultado;
 
     }
 
     public List<String> calcularIntervalosPos(List<TempPos> tempHorarios) {
         cargarFranjas();
+
         List<String> intervalosResultado = new ArrayList<>();
-        List<Long> tiemposFranjaInicio = new ArrayList<>();
-        List<Long> tiemposFranjaPicoAM = new ArrayList<>();
-        List<Long> tiemposFranjaValle = new ArrayList<>();
-        List<Long> tiemposFranjaPicoPM = new ArrayList<>();
-        List<Long> tiemposFranjaCierre = new ArrayList<>();
+        List<Long> tiemposFranjaPrimera = new ArrayList<>();
+        List<Long> tiemposFranjaSegunda = new ArrayList<>();
+        List<Long> tiemposFranjaTercera = new ArrayList<>();
+        List<Long> tiemposFranjaCuarta = new ArrayList<>();
+        List<Long> tiemposFranjaQuinta = new ArrayList<>();
+        //------
+        List<Long> tiemposFranjaSexta = new ArrayList<>();
+        List<Long> tiemposFranjaSeptima = new ArrayList<>();
+        List<Long> tiemposFranjaOctava = new ArrayList<>();
+        List<Long> tiemposFranjaNovena = new ArrayList<>();
+        List<Long> tiemposFranjaDecima = new ArrayList<>();
 
 
         if(franjas.size()>0){
             for(TempPos horario: tempHorarios){
 
                 Date exp =  processorUtils.convertirATime(horario.getHora()+":"+horario.getMinutos()+":"+horario.getSegundos());
-                if(estaEnelRango(exp,"Inicio")){
-                    tiemposFranjaInicio.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Pico AM")){
-                    tiemposFranjaPicoAM.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Valle")){
-                    tiemposFranjaValle.add(exp.getTime());
-                }else if(estaEnelRango(exp,"Pico PM")){
-                    tiemposFranjaPicoPM.add(exp.getTime());
+                if(estaEnelRango(exp,"Primera")){
+                    tiemposFranjaPrimera.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Segunda")){
+                    tiemposFranjaSegunda.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Tercera")){
+                    tiemposFranjaTercera.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Cuarta")){
+                    tiemposFranjaCuarta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Quinta")){
+                    tiemposFranjaQuinta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Sexta")){
+                    tiemposFranjaSexta.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Septima")){
+                    tiemposFranjaSeptima.add(exp.getTime());
+                }else if(estaEnelRango(exp,"Octava")){
+                    tiemposFranjaOctava.add(exp.getTime());
+                }
+                else if(estaEnelRango(exp,"Novena")){
+                    tiemposFranjaNovena.add(exp.getTime());
                 }else{
-                    tiemposFranjaCierre.add(exp.getTime());
+                    tiemposFranjaDecima.add(exp.getTime());
                 }
             }
         }
 
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaInicio);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoAM);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaValle);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPicoPM);
-        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaCierre);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaPrimera);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSegunda);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaTercera);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaCuarta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaQuinta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSexta);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaSeptima);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaOctava);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaNovena);
+        intervalosResultado = calcularValorIntervalosPorFranja(intervalosResultado,tiemposFranjaDecima);
         return intervalosResultado;
 
     }

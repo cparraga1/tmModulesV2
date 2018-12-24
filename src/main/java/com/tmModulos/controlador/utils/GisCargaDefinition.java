@@ -3,7 +3,6 @@ package com.tmModulos.controlador.utils;
 
 public class GisCargaDefinition {
 
-
     public static final int LINEA = 0;
     public static final int NODOINICIO = 1;
     public static final int NODOFINAL = 2;
@@ -18,8 +17,4 @@ public class GisCargaDefinition {
     public static final int SENTIDO = 12;
     public static final int SECUENCIA = 13;
     public static final int TIPOARCO = 14;
-
-
-
-
 }

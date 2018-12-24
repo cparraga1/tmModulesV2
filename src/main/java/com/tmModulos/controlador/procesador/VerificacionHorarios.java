@@ -164,6 +164,7 @@ public class VerificacionHorarios {
 
                 }
             }
+
             validarServiciosEncontrados(tipo,worksheet);
             fileInputStream.close();
             FileOutputStream outFile =new FileOutputStream(new File(PathFiles.PATH_FOR_FILES+"\\update.xls"));
@@ -245,6 +246,8 @@ public class VerificacionHorarios {
         return comparaciones;
     }
 
+    //Adicionar las nuevas franjas que son necesarias
+
     private void incluirResultadosIntervalos(Row row, List<String> intervalosExpediciones,String tipoServicio) {
         createCellResultadosIntervalos(row, intervalosExpediciones.get(0), ComparadorHorarioIndex.INT_PROMEDIO_INI,tipoServicio);
         createCellResultadosIntervalos(row, intervalosExpediciones.get(1),ComparadorHorarioIndex.INT_MINIMO_INI,tipoServicio);
@@ -265,6 +268,7 @@ public class VerificacionHorarios {
 
     private void verificacionPreHorario(Row row, List<Integer> horaInicio, List<Integer> horaInicioB, List<Integer> horaFin, List<Integer> horaFinB,
                                         int distancia,List<ExpedicionesTemporal> expediciones, String id,String tipoServicio) {
+
 
         if(expediciones.size()>0){
             serviciosEncontrados.add(id);
@@ -449,7 +453,7 @@ public class VerificacionHorarios {
             resultadoHoraIni.setCellStyle(generalStyle);
     }
 
-    private void createCellResultados(Row row, String valor,int num) {
+    private void createCellResultados(Row row, String valor, int num) {
         Cell resultadoHoraIni= row.createCell(num);
         resultadoHoraIni.setCellValue(valor);
         resultadoHoraIni.setCellType(Cell.CELL_TYPE_STRING);
@@ -796,7 +800,7 @@ public class VerificacionHorarios {
         List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
         for(ServicioTipoDia servicio: serviciosTipoDia) {
-            System.out.println("Servicio: "+filas);
+            System.out.println("Servicio: "+servicio.getIdentificador() +" fila: "+ filas);
             Row row = worksheet.createRow(filas);
             List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
             incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio);
@@ -818,7 +822,10 @@ public class VerificacionHorarios {
 
             intervalosVeri.cargarFranjas();
 
-            if(horaInicio.size()>0 && horaFin.size()>0){
+
+            //Se comentó para servicios qu eno se encuentran listados
+
+            /*if(horaInicio.size()>0 && horaFin.size()>0){*/
                 if (tipoVerificacion.equals("Pre")) {
                     String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
                     List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
@@ -828,9 +835,9 @@ public class VerificacionHorarios {
                 }else if(tipoVerificacion.equals("Pso")){
                     verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
                 }
-            }else{
+           /* }else{
                 System.out.println("Servicio con falla "+servicio.getIdentificador());
-            }
+            }*/
 
 
         filas++;

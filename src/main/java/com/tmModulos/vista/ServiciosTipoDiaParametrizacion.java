@@ -71,6 +71,8 @@ public class ServiciosTipoDiaParametrizacion {
            servicioService.deleteServicioTipoDia(selectedServicio);
             addMessage(FacesMessage.SEVERITY_INFO,"Servicio Eliminado", "");
             serviciosRecords = servicioService.getServiciosByTipoDia(tipoDia);
+        } else {
+            addMessage(FacesMessage.SEVERITY_INFO,"Ha ocurrido un error. No se ha podido eliminar el Servicio.", "");
         }
 
     }

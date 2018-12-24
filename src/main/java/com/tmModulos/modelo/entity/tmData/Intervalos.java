@@ -15,39 +15,70 @@ public class Intervalos {
     @Column(name = "id")
     private long id;
 
+    //Prueba
+
     @Column(name = "tipo_calculo")
     private String tipoCalculo;
 
-    @Column(name = "valor_inicio")
-    private Double valorInicio;
+    @Column(name = "valor_primera")
+    private Double valorPrimera;
 
-    @Column(name = "valor_am")
-    private Double valorAM;
+    @Column(name = "valor_segunda")
+    private Double valorSegunda;
 
-    @Column(name = "valor_valle")
-    private Double valorValle;
+    @Column(name = "valor_tercera")
+    private Double valorTercera;
 
-    @Column(name = "valor_pm")
-    private Double valorPM;
+    @Column(name = "valor_cuarta")
+    private Double valorCuarta;
 
-    @Column(name = "valor_cierre")
-    private Double valorCierre;
+    @Column(name = "valor_quinta")
+    private Double valorQuinta;
 
-    @Column(name = "buses_inicio")
-    private int busesInicio;
+    @Column(name = "valor_sexta")
+    private Double valorSexta;
 
-    @Column(name = "buses_am")
-    private int busesAM;
+    @Column(name = "valor_septima")
+    private Double valorSeptima;
 
-    @Column(name = "buses_valle")
-    private int busesValle;
+    @Column(name = "valor_octava")
+    private Double valorOctava;
 
-    @Column(name = "buses_pm")
-    private int busesPM;
+    @Column(name = "valor_novena")
+    private Double valorNovena;
 
-    @Column(name = "buses_cierre")
-    private int busesCierre;
+    @Column(name = "valor_decima")
+    private Double valorDecima;
 
+    @Column(name = "buses_primera")
+    private int busesPrimera;
+
+    @Column(name = "buses_segunda")
+    private int busesSegunda;
+
+    @Column(name = "buses_tercera")
+    private int busesTercera;
+
+    @Column(name = "buses_cuarta")
+    private int busesCuarta;
+
+    @Column(name = "buses_quinta")
+    private int busesQuinta;
+
+    @Column(name = "buses_sexta")
+    private int busesSexta;
+
+    @Column(name = "buses_septima")
+    private int busesSeptima;
+
+    @Column(name = "buses_octava")
+    private int busesOctava;
+
+    @Column(name = "buses_novena")
+    private int busesNovena;
+
+    @Column(name = "buses_decima")
+    private int busesDecima;
 
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
@@ -59,13 +90,18 @@ public class Intervalos {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private TablaMaestraServicios tablaMaestraServicios;
 
-    public Intervalos(String tipoCalculo, Double valorInicio, Double valorAM, Double valorValle, Double valorPM, Double valorCierre,ServicioTipoDia idServicio,TablaMaestraServicios tablaMaestraServicios) {
+    public Intervalos(String tipoCalculo, Double valorPrimera, Double valorSegunda, Double valorTercera, Double valorCuarta, Double valorQuinta, Double valorSexta, Double valorSeptima, Double valorOctava, Double valorNovena, Double valorDecima, ServicioTipoDia idServicio,TablaMaestraServicios tablaMaestraServicios) {
         this.tipoCalculo = tipoCalculo;
-        this.valorInicio = valorInicio;
-        this.valorAM = valorAM;
-        this.valorValle = valorValle;
-        this.valorPM = valorPM;
-        this.valorCierre = valorCierre;
+        this.valorPrimera = valorPrimera;
+        this.valorSegunda = valorSegunda;
+        this.valorTercera = valorTercera;
+        this.valorCuarta = valorCuarta;
+        this.valorQuinta = valorQuinta;
+        this.valorSexta = valorSexta;
+        this.valorSeptima = valorSeptima;
+        this.valorOctava = valorOctava;
+        this.valorNovena = valorNovena;
+        this.valorDecima = valorDecima;
         this.idServicio = idServicio;
         this.tablaMaestraServicios=tablaMaestraServicios;
     }
@@ -75,18 +111,28 @@ public class Intervalos {
     public Intervalos() {
     }
 
-    public Intervalos(String tipoCalculo, Double valorInicio, Double valorAM, Double valorValle, Double valorPM, Double valorCierre, int busesInicio, int busesAM, int busesValle, int busesPM, int busesCierre, ServicioTipoDia idServicio, TablaMaestraServicios tablaMaestraServicios) {
+    public Intervalos(String tipoCalculo, Double valorPrimera, Double valorSegunda, Double valorTercera, Double valorCuarta, Double valorQuinta, Double valorSexta, Double valorSeptima, Double valorOctava, Double valorNovena, Double valorDecima, int busesPrimera, int busesSegunda, int busesTercera, int busesCuarta, int busesQuinta, int busesSexta, int busesSeptima, int busesOctava, int busesNovena, int busesDecima, ServicioTipoDia idServicio, TablaMaestraServicios tablaMaestraServicios) {
         this.tipoCalculo = tipoCalculo;
-        this.valorInicio = valorInicio;
-        this.valorAM = valorAM;
-        this.valorValle = valorValle;
-        this.valorPM = valorPM;
-        this.valorCierre = valorCierre;
-        this.busesInicio = busesInicio;
-        this.busesAM = busesAM;
-        this.busesValle = busesValle;
-        this.busesPM = busesPM;
-        this.busesCierre = busesCierre;
+        this.valorPrimera = valorPrimera;
+        this.valorSegunda = valorSegunda;
+        this.valorTercera = valorTercera;
+        this.valorCuarta = valorCuarta;
+        this.valorQuinta = valorQuinta;
+        this.valorSexta = valorSexta;
+        this.valorSeptima = valorSeptima;
+        this.valorOctava = valorOctava;
+        this.valorNovena = valorNovena;
+        this.valorDecima = valorDecima;
+        this.busesPrimera = busesPrimera;
+        this.busesSegunda = busesSegunda;
+        this.busesTercera = busesTercera;
+        this.busesCuarta = busesCuarta;
+        this.busesQuinta = busesQuinta;
+        this.busesSexta = busesSexta;
+        this.busesSeptima = busesSeptima;
+        this.busesOctava = busesOctava;
+        this.busesNovena = busesQuinta;
+        this.busesDecima = busesQuinta;
         this.idServicio = idServicio;
         this.tablaMaestraServicios = tablaMaestraServicios;
     }
@@ -123,83 +169,163 @@ public class Intervalos {
         this.tipoCalculo = tipoCalculo;
     }
 
-    public Double getValorInicio() {
-        return valorInicio;
+    public Double getValorPrimera() {
+        return valorPrimera;
     }
 
-    public void setValorInicio(Double valorInicio) {
-        this.valorInicio = valorInicio;
+    public void setValorPrimera(Double valorPrimera) {
+        this.valorPrimera = valorPrimera;
     }
 
-    public Double getValorAM() {
-        return valorAM;
+    public Double getValorSegunda() {
+        return valorSegunda;
     }
 
-    public void setValorAM(Double valorAM) {
-        this.valorAM = valorAM;
+    public void setValorSegunda(Double valorSegunda) {
+        this.valorSegunda = valorSegunda;
     }
 
-    public Double getValorValle() {
-        return valorValle;
+    public Double getValorTercera() {
+        return valorTercera;
     }
 
-    public void setValorValle(Double valorValle) {
-        this.valorValle = valorValle;
+    public void setValorTercera(Double valorTercera) {
+        this.valorTercera = valorTercera;
     }
 
-    public Double getValorPM() {
-        return valorPM;
+    public Double getValorCuarta() {
+        return valorCuarta;
     }
 
-    public void setValorPM(Double valorPM) {
-        this.valorPM = valorPM;
+    public void setValorCuarta(Double valorCuarta) {
+        this.valorCuarta = valorCuarta;
     }
 
-    public Double getValorCierre() {
-        return valorCierre;
+    public Double getValorQuinta() {
+        return valorQuinta;
     }
 
-    public void setValorCierre(Double valorCierre) {
-        this.valorCierre = valorCierre;
+    public void setValorQuinta(Double valorQuinta) {
+        this.valorQuinta = valorQuinta;
     }
 
-    public int getBusesInicio() {
-        return busesInicio;
+    public Double getValorSexta() {
+        return valorSexta;
     }
 
-    public void setBusesInicio(int busesInicio) {
-        this.busesInicio = busesInicio;
+    public void setValorSexta(Double valorSexta) {
+        this.valorSexta = valorSexta;
     }
 
-    public int getBusesAM() {
-        return busesAM;
+    public Double getValorSeptima() {
+        return valorSeptima;
     }
 
-    public void setBusesAM(int busesAM) {
-        this.busesAM = busesAM;
+    public void setValorSeptima(Double valorSeptima) {
+        this.valorSeptima = valorSeptima;
     }
 
-    public int getBusesValle() {
-        return busesValle;
+    public Double getValorOctava() {
+        return valorOctava;
     }
 
-    public void setBusesValle(int busesValle) {
-        this.busesValle = busesValle;
+    public void setValorOctava(Double valorOctava) {
+        this.valorOctava = valorOctava;
     }
 
-    public int getBusesPM() {
-        return busesPM;
+    public Double getValorNovena() {
+        return valorNovena;
     }
 
-    public void setBusesPM(int busesPM) {
-        this.busesPM = busesPM;
+    public void setValorNovena(Double valorNovena) {
+        this.valorNovena = valorNovena;
     }
 
-    public int getBusesCierre() {
-        return busesCierre;
+    public Double getValorDecima() {
+        return valorDecima;
     }
 
-    public void setBusesCierre(int busesCierre) {
-        this.busesCierre = busesCierre;
+    public void setValorDecima(Double valorDecima) {
+        this.valorDecima = valorDecima;
+    }
+
+    public int getBusesPrimera() {
+        return busesPrimera;
+    }
+
+    public void setBusesPrimera(int busesPrimera) {
+        this.busesPrimera = busesPrimera;
+    }
+
+    public int getBusesSegunda() {
+        return busesSegunda;
+    }
+
+    public void setBusesSegunda(int busesSegunda) {
+        this.busesSegunda = busesSegunda;
+    }
+
+    public int getBusesTercera() {
+        return busesTercera;
+    }
+
+    public void setBusesTercera(int busesTercera) {
+        this.busesTercera = busesTercera;
+    }
+
+    public int getBusesCuarta() {
+        return busesCuarta;
+    }
+
+    public void setBusesCuarta(int busesCuarta) {
+        this.busesCuarta = busesCuarta;
+    }
+
+    public int getBusesQuinta() {
+        return busesQuinta;
+    }
+
+    public void setBusesQuinta(int busesQuinta) {
+        this.busesQuinta = busesQuinta;
+    }
+
+    public int getBusesSexta() {
+        return busesSexta;
+    }
+
+    public void setBusesSexta(int busesSexta) {
+        this.busesSexta = busesSexta;
+    }
+
+    public int getBusesSeptima() {
+        return busesSeptima;
+    }
+
+    public void setBusesSeptima(int busesSeptima) {
+        this.busesSeptima = busesSeptima;
+    }
+
+    public int getBusesOctava() {
+        return busesOctava;
+    }
+
+    public void setBusesOctava(int busesOctava) {
+        this.busesOctava = busesOctava;
+    }
+
+    public int getBusesNovena() {
+        return busesNovena;
+    }
+
+    public void setBusesNovena(int busesNovena) {
+        this.busesNovena = busesNovena;
+    }
+
+    public int getBusesDecima() {
+        return busesDecima;
+    }
+
+    public void setBusesDecima(int busesDecima) {
+        this.busesDecima = busesDecima;
     }
 }

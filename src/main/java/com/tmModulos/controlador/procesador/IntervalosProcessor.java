@@ -45,7 +45,54 @@ public class IntervalosProcessor {
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
 
-    private TipoFranja franjaIncio ;
+
+    /*Se modifican para más franjas creadas*/
+
+    private TipoFranja franjaPrimera ;
+    private TipoFranja franjaSegunda;
+    private TipoFranja franjaTercera;
+    private TipoFranja franjaCuarta;
+    private TipoFranja franjaQuinta;
+    private TipoFranja franjaSexta ;
+    private TipoFranja franjaSeptima;
+    private TipoFranja franjaOctava;
+    private TipoFranja franjaNovena;
+    private TipoFranja franjaDecima;
+
+    private List<IntervalosProgramacion> intervalosFranjaPrimera;
+    private List<IntervalosProgramacion> intervalosFranjaSegunda;
+    private List<IntervalosProgramacion> intervalosFranjaTercera;
+    private List<IntervalosProgramacion> intervalosFranjaCuarta;
+    private List<IntervalosProgramacion> intervalosFranjaQuinta;
+    private List<IntervalosProgramacion> intervalosFranjaSexta;
+    private List<IntervalosProgramacion> intervalosFranjaSeptima;
+    private List<IntervalosProgramacion> intervalosFranjaOctava;
+    private List<IntervalosProgramacion> intervalosFranjaNovena;
+    private List<IntervalosProgramacion> intervalosFranjaDecima;
+
+    Map<IntervalosProgramacion, Double> valoresFinalesPrimea;
+    Map<IntervalosProgramacion, Double> valoresFinalesSegunda;
+    Map<IntervalosProgramacion, Double> valoresFinalesTercera;
+    Map<IntervalosProgramacion, Double> valoresFinalesCuarta;
+    Map<IntervalosProgramacion, Double> valoresFinalesQuinta;
+    Map<IntervalosProgramacion, Double> valoresFinalesSexta;
+    Map<IntervalosProgramacion, Double> valoresFinalesSeptima;
+    Map<IntervalosProgramacion, Double> valoresFinalesOctava;
+    Map<IntervalosProgramacion, Double> valoresFinalesNovena;
+    Map<IntervalosProgramacion, Double> valoresFinalesDecima;
+
+    List<Double> intervalosPrimera;
+    List<Double> intervalosSegunda;
+    List<Double> intervalosTercera;
+    List<Double> intervalosCuarta;
+    List<Double> intervalosQuinta;
+    List<Double> intervalosSexta;
+    List<Double> intervalosSeptima;
+    List<Double> intervalosOctava;
+    List<Double> intervalosNovena;
+    List<Double> intervalosDecima;
+
+    /*private TipoFranja franjaIncio ;
     private TipoFranja franjaPicoAM;
     private TipoFranja franjaValle;
     private TipoFranja franjaPicoPM;
@@ -60,12 +107,11 @@ public class IntervalosProcessor {
     Map<IntervalosProgramacion, Double> valoresFinalesValle;
     Map<IntervalosProgramacion, Double> valoresFinalesPicoPM;
     Map<IntervalosProgramacion, Double> valoresFinalesCierre;
-
     List<Double> intervalosInicio;
     List<Double> intervalosPicoAM;
     List<Double> intervalosValle;
     List<Double> intervalosPicoPM;
-    List<Double> intervalosCierre;
+    List<Double> intervalosCierre;*/
 
 
 
@@ -100,7 +146,30 @@ public class IntervalosProcessor {
 
 
     public void precalcularIntervalosProgramacion(){
-        franjaIncio = horariosProvisionalServicio.getTipoFranjaByNombre("Inicio");
+
+        franjaPrimera = horariosProvisionalServicio.getTipoFranjaByNombre("Primera");
+        franjaSegunda = horariosProvisionalServicio.getTipoFranjaByNombre("Segunda");
+        franjaTercera = horariosProvisionalServicio.getTipoFranjaByNombre("Tercera");
+        franjaCuarta = horariosProvisionalServicio.getTipoFranjaByNombre("Cuarta");
+        franjaQuinta = horariosProvisionalServicio.getTipoFranjaByNombre("Quinta");
+        franjaSexta = horariosProvisionalServicio.getTipoFranjaByNombre("Sexta");
+        franjaSeptima = horariosProvisionalServicio.getTipoFranjaByNombre("Septima");
+        franjaOctava = horariosProvisionalServicio.getTipoFranjaByNombre("Octava");
+        franjaNovena = horariosProvisionalServicio.getTipoFranjaByNombre("Novena");
+        franjaDecima = horariosProvisionalServicio.getTipoFranjaByNombre("Decima");
+
+        intervalosFranjaPrimera = horariosProvisionalServicio.getIntervaloByFranja(franjaPrimera);
+        intervalosFranjaSegunda = horariosProvisionalServicio.getIntervaloByFranja(franjaSegunda);
+        intervalosFranjaTercera = horariosProvisionalServicio.getIntervaloByFranja(franjaTercera);
+        intervalosFranjaCuarta = horariosProvisionalServicio.getIntervaloByFranja(franjaCuarta);
+        intervalosFranjaQuinta= horariosProvisionalServicio.getIntervaloByFranja(franjaQuinta);
+        intervalosFranjaSexta = horariosProvisionalServicio.getIntervaloByFranja(franjaSexta);
+        intervalosFranjaSeptima = horariosProvisionalServicio.getIntervaloByFranja(franjaSeptima);
+        intervalosFranjaOctava = horariosProvisionalServicio.getIntervaloByFranja(franjaOctava);
+        intervalosFranjaNovena = horariosProvisionalServicio.getIntervaloByFranja(franjaNovena);
+        intervalosFranjaDecima = horariosProvisionalServicio.getIntervaloByFranja(franjaDecima);
+
+        /*franjaIncio = horariosProvisionalServicio.getTipoFranjaByNombre("Inicio");
         franjaPicoAM = horariosProvisionalServicio.getTipoFranjaByNombre("Pico AM");
         franjaValle = horariosProvisionalServicio.getTipoFranjaByNombre("Valle");
         franjaPicoPM = horariosProvisionalServicio.getTipoFranjaByNombre("Pico PM");
@@ -110,10 +179,9 @@ public class IntervalosProcessor {
         intervalosFranjaPicoAM= horariosProvisionalServicio.getIntervaloByFranja(franjaPicoAM);
         intervalosFranjaValle= horariosProvisionalServicio.getIntervaloByFranja(franjaValle);
         intervalosFranjaPicoPM= horariosProvisionalServicio.getIntervaloByFranja(franjaPicoPM);
-        intervalosFranjaCierre= horariosProvisionalServicio.getIntervaloByFranja(franjaCierre);
+        intervalosFranjaCierre= horariosProvisionalServicio.getIntervaloByFranja(franjaCierre);*/
 
     }
-
 
     public List<Intervalos> calcularIntervalos(TablaMaestraServicios tablaMaestraServicios,ServicioTipoDia servicio) {
         List<Intervalos> intervalosRecords = new ArrayList<Intervalos>();
@@ -128,48 +196,103 @@ public class IntervalosProcessor {
     }
 
     private Intervalos intervaloMaximo(ServicioTipoDia servicio, TablaMaestraServicios tablaMaestraServicios) {
-        double valorInicio = maximo(intervalosInicio);
+
+
+        double[] valores = new double[10];
+        valores[0] = maximo(intervalosPrimera);
+        valores[1] = maximo(intervalosSegunda);
+        valores[2] = maximo(intervalosTercera);
+        valores[3] = maximo(intervalosCuarta);
+        valores[4] = maximo(intervalosQuinta);
+        valores[5] = maximo(intervalosSexta);
+        valores[6] = maximo(intervalosSeptima);
+        valores[7] = maximo(intervalosOctava);
+        valores[8] = maximo(intervalosNovena);
+        valores[9] = maximo(intervalosDecima);
+
+        /*double valorInicio = maximo(intervalosInicio);
         double valorPicoAm = maximo(intervalosPicoAM);
         double valorValle = maximo(intervalosValle);
         double valorPicoPM = maximo(intervalosPicoPM);
-        double valorCierre = maximo(intervalosCierre);
-        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicios, valorInicio, valorPicoAm, valorValle, valorPicoPM, valorCierre, ProcessorUtils.CALCULO_MAXIMO);
+        double valorCierre = maximo(intervalosCierre);*/
+        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicios, valores, ProcessorUtils.CALCULO_MAXIMO);
         return intervalos;
     }
 
-    private Intervalos incluirIntervalos(ServicioTipoDia servicio, TablaMaestraServicios tablaMaestraServicios, double valorInicio, double valorPicoAm, double valorValle, double valorPicoPM, double valorCierre, String calculoMaximo) {
-        int busesInicio = calcularBuses(valorInicio);
+    private Intervalos incluirIntervalos(ServicioTipoDia servicio, TablaMaestraServicios tablaMaestraServicios, double[] valores, String calculoMaximo) {
+
+        int[] buses = new int[10];
+
+        for(int i=0; i<buses.length; i++){
+            buses[i] = calcularBuses(valores[i]);
+        }
+
+        /*int busesInicio = calcularBuses(valorInicio);
         int busesAM = calcularBuses(valorPicoAm);
         int busesValle = calcularBuses(valorValle);
         int busesPm = calcularBuses(valorPicoPM);
-        int busesCierre = calcularBuses(valorCierre);
-        Intervalos intervalos = new Intervalos(calculoMaximo, valorInicio, valorPicoAm, valorValle, valorPicoPM, valorCierre, servicio, tablaMaestraServicios);
-        intervalos.setBusesInicio(busesInicio);
-        intervalos.setBusesAM(busesAM);
-        intervalos.setBusesValle(busesValle);
-        intervalos.setBusesPM(busesPm);
-        intervalos.setBusesCierre(busesCierre);
+        int busesCierre = calcularBuses(valorCierre);*/
+
+        Intervalos intervalos = new Intervalos(calculoMaximo, valores[0], valores[1], valores[2], valores[3], valores[4], valores[5], valores[6],valores[7],valores[8],valores[9], servicio, tablaMaestraServicios);
+
+        intervalos.setBusesPrimera(buses[0]);
+        intervalos.setBusesSegunda(buses[1]);
+        intervalos.setBusesTercera(buses[2]);
+        intervalos.setBusesCuarta(buses[3]);
+        intervalos.setBusesQuinta(buses[4]);
+        intervalos.setBusesSexta(buses[5]);
+        intervalos.setBusesSeptima(buses[6]);
+        intervalos.setBusesOctava(buses[7]);
+        intervalos.setBusesNovena(buses[8]);
+        intervalos.setBusesDecima(buses[9]);
         horariosProvisionalServicio.addIntervalos(intervalos);
         return intervalos;
     }
 
     private Intervalos intervaloMinimo(ServicioTipoDia servicio, TablaMaestraServicios tablaMaestraServicios) {
-        double valorInicio = minimo(intervalosInicio);
-        double valorPicoAm = minimo(intervalosPicoAM);
-        double valorValle = minimo(intervalosValle);
-        double valorPicoPM = minimo(intervalosPicoPM);
-        double valorCierre = minimo(intervalosCierre);
-        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicios, valorInicio, valorPicoAm, valorValle, valorPicoPM, valorCierre, ProcessorUtils.CALCULO_MINIMO);
+
+        double[] valores = new double[10];
+        valores[0] = maximo(intervalosPrimera);
+        valores[1] = maximo(intervalosSegunda);
+        valores[2] = maximo(intervalosTercera);
+        valores[3] = maximo(intervalosCuarta);
+        valores[4] = maximo(intervalosQuinta);
+        valores[5] = maximo(intervalosSexta);
+        valores[6] = maximo(intervalosSeptima);
+        valores[7] = maximo(intervalosOctava);
+        valores[8] = maximo(intervalosNovena);
+        valores[9] = maximo(intervalosDecima);
+
+        /*double valorInicio = minimo(intervalosPrimera);
+        double valorPicoAm = minimo(intervalosSegunda);
+        double valorValle = minimo(intervalosTercera);
+        double valorPicoPM = minimo(intervalosCuarta);
+        double valorCierre = minimo(intervalosQuinta);*/
+        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicios, valores, ProcessorUtils.CALCULO_MINIMO);
         return intervalos;
     }
 
     private Intervalos intervaloPromedio(ServicioTipoDia servicio,TablaMaestraServicios tablaMaestraServicio) {
-        double promedioInicio = promedio( intervalosInicio);
+
+        double[] valores = new double[10];
+        valores[0] = maximo(intervalosPrimera);
+        valores[1] = maximo(intervalosSegunda);
+        valores[2] = maximo(intervalosTercera);
+        valores[3] = maximo(intervalosCuarta);
+        valores[4] = maximo(intervalosQuinta);
+        valores[5] = maximo(intervalosSexta);
+        valores[6] = maximo(intervalosSeptima);
+        valores[7] = maximo(intervalosOctava);
+        valores[8] = maximo(intervalosNovena);
+        valores[9] = maximo(intervalosDecima);
+
+        /*double promedioInicio = promedio( intervalosInicio);
         double promedioPicoAm = promedio(intervalosPicoAM);
         double promedioValle = promedio(intervalosValle);
         double promedioPicoPM = promedio(intervalosPicoPM);
-        double promedioCierre = promedio(intervalosCierre);
-        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicio, promedioInicio, promedioPicoAm, promedioValle, promedioPicoPM, promedioCierre, ProcessorUtils.CALCULO_PROMEDIO);
+        double promedioCierre = promedio(intervalosCierre);*/
+
+        Intervalos intervalos = incluirIntervalos(servicio, tablaMaestraServicio, valores, ProcessorUtils.CALCULO_PROMEDIO);
         return intervalos;
     }
 
@@ -179,11 +302,22 @@ public class IntervalosProcessor {
 
         Map<IntervalosProgramacion, List<Long>> franjaCuartos = distribuirTiemposEIntervalos(tiemposServicio);
 
-        intervalosInicio = new ArrayList<Double>();
+        intervalosPrimera = new ArrayList<Double>();
+        intervalosSegunda = new ArrayList<Double>();
+        intervalosTercera = new ArrayList<Double>();
+        intervalosCuarta = new ArrayList<Double>();
+        intervalosQuinta = new ArrayList<Double>();
+        intervalosSexta = new ArrayList<Double>();
+        intervalosSeptima = new ArrayList<Double>();
+        intervalosOctava = new ArrayList<Double>();
+        intervalosNovena = new ArrayList<Double>();
+        intervalosDecima = new ArrayList<Double>();
+
+        /*intervalosInicio = new ArrayList<Double>();
         intervalosPicoAM = new ArrayList<Double>();
         intervalosValle = new ArrayList<Double>();
         intervalosPicoPM = new ArrayList<Double>();
-        intervalosCierre = new ArrayList<Double>();
+        intervalosCierre = new ArrayList<Double>();*/
 
 
         Iterator it = franjaCuartos.entrySet().iterator();
@@ -193,16 +327,16 @@ public class IntervalosProcessor {
             double valorFInal = calcularPromedio(valores);
 
             IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
-            if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.INICIO) ){
-                intervalosInicio.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.PICO_AM)  ){
-                intervalosPicoAM.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.VALLE)  ){
-                intervalosValle.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.PICO_PM)  ){
-                intervalosPicoPM.add(valorFInal);
+            if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.PRIMERA) ){
+                intervalosPrimera.add(valorFInal);
+            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEGUNDA)  ){
+                intervalosSegunda.add(valorFInal);
+            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.TERCERA)  ){
+                intervalosTercera.add(valorFInal);
+            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.CUARTA)  ){
+                intervalosCuarta.add(valorFInal);
             }else{
-                intervalosCierre.add(valorFInal);
+                intervalosQuinta.add(valorFInal);
             }
 
         }
@@ -276,15 +410,15 @@ public class IntervalosProcessor {
     }
 
     private IntervalosProgramacion obtenerIntervaloProg(Time instante) {
-        IntervalosProgramacion prog = estaEnEstaFranja(instante,intervalosFranjaInicio);
+        IntervalosProgramacion prog = estaEnEstaFranja(instante,intervalosFranjaPrimera);
         if (prog == null) {
-            prog = estaEnEstaFranja(instante,intervalosFranjaPicoAM);
+            prog = estaEnEstaFranja(instante,intervalosFranjaSegunda);
             if(prog == null){
-                prog = estaEnEstaFranja(instante,intervalosFranjaValle);
+                prog = estaEnEstaFranja(instante,intervalosFranjaTercera);
                 if(prog == null){
-                    prog = estaEnEstaFranja(instante,intervalosFranjaPicoPM);
+                    prog = estaEnEstaFranja(instante,intervalosFranjaCuarta);
                     if(prog == null){
-                        prog = estaEnEstaFranja(instante,intervalosFranjaCierre);
+                        prog = estaEnEstaFranja(instante,intervalosFranjaQuinta);
                     }
                 }
             }
@@ -353,44 +487,83 @@ public class IntervalosProcessor {
         return ProcessorUtils.round(tiempoTotal,2);
     }
 
-
-    public List<IntervalosProgramacion> getIntervalosFranjaInicio() {
-        return intervalosFranjaInicio;
+    public List<IntervalosProgramacion> getIntervalosFranjaPrimera() {
+        return intervalosFranjaPrimera;
     }
 
-    public void setIntervalosFranjaInicio(List<IntervalosProgramacion> intervalosFranjaInicio) {
-        this.intervalosFranjaInicio = intervalosFranjaInicio;
+    public void setIntervalosFranjaPrimera(List<IntervalosProgramacion> intervalosFranjaPrimera) {
+        this.intervalosFranjaPrimera = intervalosFranjaPrimera;
     }
 
-    public List<IntervalosProgramacion> getIntervalosFranjaPicoAM() {
-        return intervalosFranjaPicoAM;
+    public List<IntervalosProgramacion> getIntervalosFranjaSegunda() {
+        return intervalosFranjaSegunda;
     }
 
-    public void setIntervalosFranjaPicoAM(List<IntervalosProgramacion> intervalosFranjaPicoAM) {
-        this.intervalosFranjaPicoAM = intervalosFranjaPicoAM;
+    public void setIntervalosFranjaSegunda(List<IntervalosProgramacion> intervalosFranjaSegunda) {
+        this.intervalosFranjaSegunda = intervalosFranjaSegunda;
     }
 
-    public List<IntervalosProgramacion> getIntervalosFranjaValle() {
-        return intervalosFranjaValle;
+    public List<IntervalosProgramacion> getIntervalosFranjaTercera() {
+        return intervalosFranjaTercera;
     }
 
-    public void setIntervalosFranjaValle(List<IntervalosProgramacion> intervalosFranjaValle) {
-        this.intervalosFranjaValle = intervalosFranjaValle;
+    public void setIntervalosFranjaTercera(List<IntervalosProgramacion> intervalosFranjaTercera) {
+        this.intervalosFranjaTercera = intervalosFranjaTercera;
     }
 
-    public List<IntervalosProgramacion> getIntervalosFranjaPicoPM() {
-        return intervalosFranjaPicoPM;
+    public List<IntervalosProgramacion> getIntervalosFranjaCuarta() {
+        return intervalosFranjaCuarta;
     }
 
-    public void setIntervalosFranjaPicoPM(List<IntervalosProgramacion> intervalosFranjaPicoPM) {
-        this.intervalosFranjaPicoPM = intervalosFranjaPicoPM;
+    public void setIntervalosFranjaCuarta(List<IntervalosProgramacion> intervalosFranjaCuarta) {
+        this.intervalosFranjaCuarta = intervalosFranjaCuarta;
     }
 
-    public List<IntervalosProgramacion> getIntervalosFranjaCierre() {
-        return intervalosFranjaCierre;
+    public List<IntervalosProgramacion> getIntervalosFranjaQuinta() {
+        return intervalosFranjaQuinta;
     }
 
-    public void setIntervalosFranjaCierre(List<IntervalosProgramacion> intervalosFranjaCierre) {
-        this.intervalosFranjaCierre = intervalosFranjaCierre;
+    public void setIntervalosFranjaQuinta(List<IntervalosProgramacion> intervalosFranjaQuinta) {
+        this.intervalosFranjaQuinta = intervalosFranjaQuinta;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaSexta() {
+        return intervalosFranjaSexta;
+    }
+
+    public void setIntervalosFranjaSexta(List<IntervalosProgramacion> intervalosFranjaSexta) {
+        this.intervalosFranjaSexta = intervalosFranjaSexta;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaSeptima() {
+        return intervalosFranjaSeptima;
+    }
+
+    public void setIntervalosFranjaSeptima(List<IntervalosProgramacion> intervalosFranjaSeptima) {
+        this.intervalosFranjaSeptima = intervalosFranjaSeptima;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaOctava() {
+        return intervalosFranjaOctava;
+    }
+
+    public void setIntervalosFranjaOctava(List<IntervalosProgramacion> intervalosFranjaOctava) {
+        this.intervalosFranjaOctava = intervalosFranjaOctava;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaNovena() {
+        return intervalosFranjaNovena;
+    }
+
+    public void setIntervalosFranjaNovena(List<IntervalosProgramacion> intervalosFranjaNovena) {
+        this.intervalosFranjaNovena = intervalosFranjaNovena;
+    }
+
+    public List<IntervalosProgramacion> getIntervalosFranjaDecima() {
+        return intervalosFranjaDecima;
+    }
+
+    public void setIntervalosFranjaDecima(List<IntervalosProgramacion> intervalosFranjaDecima) {
+        this.intervalosFranjaDecima = intervalosFranjaDecima;
     }
 }

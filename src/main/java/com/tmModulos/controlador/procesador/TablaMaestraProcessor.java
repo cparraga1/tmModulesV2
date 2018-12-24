@@ -54,7 +54,7 @@ public class TablaMaestraProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
-    private String destination= PathFiles.PATH_FOR_FILES+"\\Migracion\\";
+    private String destination= PathFiles.PATH_FOR_FILES+"\\Migracion\\/";
 
 
     private Map serviciosIncluidos;
@@ -94,10 +94,13 @@ public class TablaMaestraProcessor {
         destination=destination+filename;
         // Copiar informacion intervalos
         horariosProvisionalServicio.deleteTablaHorarioFromFile();
+
+        //LINEA PARA VALIDACION
+        //Carga el archivo dentro de la base de datos
         horariosProvisionalServicio.addTablaHorarioFromFile(destination);
 
 
-        //Encontrar parametros para la generacion de la tabla maestra
+        //Encontrar parametros para la generacion de la tabla maestra (GIS de carga y Matriz de Distancia)
         GisCarga gis= gisCargaService.getGisCargaById(gisCarga);
         MatrizDistancia matriz= matrizDistanciaService.getMatrizDistanciaById(matrizDistancia);
 
@@ -868,9 +871,9 @@ public class TablaMaestraProcessor {
 
         List<Intervalos> intervalos = tablaMaestraServicios.getServiciosRecords();
         for( Intervalos intervalo:intervalos ){
-            Intervalos nuevoInter = new Intervalos(intervalo.getTipoCalculo(),intervalo.getValorInicio(),intervalo.getValorAM(),
-                    intervalo.getValorValle(),intervalo.getValorPM(),intervalo.getValorCierre(),intervalo.getBusesInicio(),
-                    intervalo.getBusesAM(),intervalo.getBusesValle(),intervalo.getBusesPM(),intervalo.getBusesCierre(),
+            Intervalos nuevoInter = new Intervalos(intervalo.getTipoCalculo(),intervalo.getValorPrimera(),intervalo.getValorSegunda(),
+                    intervalo.getValorTercera(),intervalo.getValorCuarta(),intervalo.getValorQuinta(), intervalo.getValorSexta(), intervalo.getValorSeptima(), intervalo.getValorOctava(), intervalo.getValorNovena(), intervalo.getValorDecima(), intervalo.getBusesPrimera(),
+                    intervalo.getBusesSegunda(),intervalo.getBusesTercera(),intervalo.getBusesCuarta(),intervalo.getBusesQuinta(), intervalo.getBusesSexta(), intervalo.getBusesSeptima(), intervalo.getBusesOctava(), intervalo.getBusesNovena(), intervalo.getBusesDecima(),
                     intervalo.getIdServicio(), nuevaTablaMaestraServicios);
             tablaMaestraService.addIntervalos(nuevoInter);
 

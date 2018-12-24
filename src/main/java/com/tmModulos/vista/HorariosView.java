@@ -67,9 +67,9 @@ public class HorariosView {
     public void crearHorarioServicio(){
         SimpleDateFormat parser = new SimpleDateFormat("HH:mm:ss");
         if(horaInicioNuevoHorario!=null && horaFinNuevoHorario!= null){
-            if(horaInicioNuevoHorario.after(horaFinNuevoHorario)){
+            /*if(horaInicioNuevoHorario.after(horaFinNuevoHorario)){
                 messagesView.error("Error","El horario Inicio debe ser mayor que el horario Fin");
-            }else{
+            }else{*/
                 nuevoHorario.setHoraInicio(parser.format(horaInicioNuevoHorario));
                 nuevoHorario.setHoraFin(parser.format(horaFinNuevoHorario));
                 nuevoHorario.setServicio(selectedServicio);
@@ -77,8 +77,7 @@ public class HorariosView {
                 nuevoHorario.setTipoDia(tipoDiaObj);
                 servicioService.addHorarios(nuevoHorario);
                 horarioPorServicio = servicioService.getHorariosByServicio(selectedServicio);
-            }
-
+            /*}*/
         }
 
 

@@ -171,11 +171,16 @@ public class ConversionABusesHoraService {
 
     private void crearRowsFranjaHorario(HSSFSheet worksheet,HSSFWorkbook workbook) {
         intervalosProcessor.precalcularIntervalosProgramacion();
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaInicio(), FranjaDef.INICIO,worksheet,workbook.createCellStyle());
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoAM(), FranjaDef.PICO_AM,worksheet,workbook.createCellStyle());
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaValle(), FranjaDef.VALLE,worksheet,workbook.createCellStyle());
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPicoPM(), FranjaDef.PICO_PM,worksheet,workbook.createCellStyle());
-        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaCierre(), FranjaDef.CIERRE,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaPrimera(), FranjaDef.PRIMERA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaSegunda(), FranjaDef.SEGUNDA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaTercera(), FranjaDef.TERCERA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaCuarta(), FranjaDef.CUARTA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaQuinta(), FranjaDef.QUINTA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaSexta(), FranjaDef.SEXTA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaSeptima(), FranjaDef.SEPTIMA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaOctava(), FranjaDef.OCTAVA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaNovena(), FranjaDef.NOVENA,worksheet,workbook.createCellStyle());
+        crearRowsPorIntervalosCuartos(intervalosProcessor.getIntervalosFranjaDecima(), FranjaDef.DECIMA,worksheet,workbook.createCellStyle());
 
     }
 
@@ -194,7 +199,7 @@ public class ConversionABusesHoraService {
         cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
         cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-        if(nombreFranja.equals(FranjaDef.INICIO) || nombreFranja.equals(FranjaDef.VALLE) || nombreFranja.equals(FranjaDef.CIERRE)){
+        if(nombreFranja.equals(FranjaDef.PRIMERA) || nombreFranja.equals(FranjaDef.TERCERA) || nombreFranja.equals(FranjaDef.QUINTA) || nombreFranja.equals(FranjaDef.SEPTIMA) || nombreFranja.equals(FranjaDef.NOVENA)){
             cellStyle.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
         }else{
             cellStyle.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
