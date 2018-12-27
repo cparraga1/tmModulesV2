@@ -270,6 +270,7 @@ public class VerificacionHorarios {
                                         int distancia,List<ExpedicionesTemporal> expediciones, String id,String tipoServicio) {
 
 
+        //Servicios encontrados en el archivo EXP
         if(expediciones.size()>0){
             serviciosEncontrados.add(id);
             List< String> validacion = validarHorario(expediciones,horaInicio,horaInicioB,
@@ -752,7 +753,7 @@ public class VerificacionHorarios {
         destination=PathFiles.PATH_FOR_FILES + "\\";
 
         //Se usa copyFile para local y copyFileUTF8 para el servidor cloud
-        processorUtils.copyFileUTF8(fileName,inputstream,destination);
+        processorUtils.copyFile(fileName,inputstream,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
@@ -825,9 +826,8 @@ public class VerificacionHorarios {
             intervalosVeri.cargarFranjas();
 
 
-            //Se comentó para servicios qu eno se encuentran listados
 
-            /*if(horaInicio.size()>0 && horaFin.size()>0){*/
+            if(horaInicio.size()>0 && horaFin.size()>0){
                 if (tipoVerificacion.equals("Pre")) {
                     String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
                     List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
@@ -837,9 +837,19 @@ public class VerificacionHorarios {
                 }else if(tipoVerificacion.equals("Pso")){
                     verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
                 }
-           /* }else{
+            }else{
+                //Se hace lo mismo solo que muestra que el servicio falla
                 System.out.println("Servicio con falla "+servicio.getIdentificador());
-            }*/
+                if (tipoVerificacion.equals("Pre")) {
+                    String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
+                    List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
+                    verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
+                } else if(tipoVerificacion.equals("Pos")){
+                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
+                }else if(tipoVerificacion.equals("Pso")){
+                    verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
+                }
+            }
 
 
         filas++;
