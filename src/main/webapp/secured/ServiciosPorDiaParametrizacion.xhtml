@@ -111,7 +111,7 @@
                                     <p:selectOneMenu id="advanced" value="#{serviciosTipoDiaP.nombreEspecialServicio}"  panelStyle="width:180px"
                                                      effect="fade" var="t" style="width:160px" filter="true" filterMatchMode="startsWith">
                                         <f:selectItems value="#{serviciosTipoDiaP.serviciosPrincipalesRecords}" var="servicio"
-                                                       itemLabel="#{serviciosTipoDiaP.concatenarValorServicio(servicio)}" itemValue="#{servicio.identificadorGIS}" />
+                                                       itemLabel="#{servicio.identificador}" itemValue="#{servicio.identificador}" />
 
                                         <p:column>
                                             <h:outputText value="#{t}" />

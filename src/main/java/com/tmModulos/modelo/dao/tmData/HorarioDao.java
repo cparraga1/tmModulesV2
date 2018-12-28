@@ -60,7 +60,8 @@ public class HorarioDao {
         criteria.add(Restrictions.eq("servicio", servicio));
         criteria.add(Restrictions.eq("tipoDia", dia));
         criteria.add(Restrictions.eq("tipoHorario", "P"));
-        criteria.addOrder(Order.asc("config"));
+        criteria.addOrder(Order.asc("horaInicio"));
+        //criteria.addOrder(Order.asc("config"));
         return criteria.list();
     }
 

@@ -83,7 +83,7 @@ public class ServiciosTipoDiaParametrizacion {
 
     public void crear(){
         if(nombreEspecialServicio!=null && nuevoServicio!=null){
-                Servicio servicio = servicioService.getServicioByIdentificadorGIS(nombreEspecialServicio);
+                Servicio servicio = servicioService.getServicioByIdentificador(nombreEspecialServicio);
                 if(noEstaAsociadoElServicio(servicio)){
                     nuevoServicio.setServicio(servicio);
                     nuevoServicio.setIdentificador(servicio.getIdentificador());

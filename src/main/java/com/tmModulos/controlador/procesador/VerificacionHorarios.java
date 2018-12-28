@@ -753,7 +753,7 @@ public class VerificacionHorarios {
         destination=PathFiles.PATH_FOR_FILES + "\\";
 
         //Se usa copyFile para local y copyFileUTF8 para el servidor cloud
-        processorUtils.copyFile(fileName,inputstream,destination);
+        processorUtils.copyFileUTF8(fileName,inputstream,destination);
         destination=PathFiles.PATH_FOR_FILES+"\\"+fileName;
         serviciosEncontrados = new ArrayList<String>();
         String id = generarID();
