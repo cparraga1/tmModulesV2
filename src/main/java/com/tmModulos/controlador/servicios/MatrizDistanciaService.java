@@ -175,4 +175,8 @@ public class MatrizDistanciaService {
         if(matrizDistancia!=null) return true;
         return false;
     }
+
+    public DistanciaNodos getNodoByNombre(String nombreNodo){
+        return distanciaNodosDao.getDistanciaNodoByNombre(nombreNodo);
+    }
 }

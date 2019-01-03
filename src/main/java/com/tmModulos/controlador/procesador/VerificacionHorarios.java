@@ -2,12 +2,14 @@ package com.tmModulos.controlador.procesador;
 
 import com.tmModulos.controlador.servicios.*;
 import com.tmModulos.controlador.utils.*;
+import com.tmModulos.modelo.dao.tmData.DistanciaNodosDao;
 import com.tmModulos.modelo.entity.tmData.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.tmModulos.modelo.dao.tmData.TablaMaestraAuxiliarDao;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,8 @@ public class VerificacionHorarios {
     private String destination;
     private List<String> serviciosEncontrados;
 
+    @Autowired
+    private MatrizDistanciaService matrizDistanciaService;
 
     @Autowired
     private ProcessorUtils processorUtils;
@@ -1039,8 +1043,18 @@ public class VerificacionHorarios {
 
 
     private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {
-        createCellBase(row, obtenerNombreNodo(servicio.getPunto()), ComparadorHorarioIndex.NODO_INICIO);
-        createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
+
+        String nombreNodo = obtenerNombreNodo(servicio.getPunto());
+        DistanciaNodos nodo = matrizDistanciaService.getNodoByNombre(nombreNodo);
+
+        String distancia = "N/A";
+        if(nodo != null){
+            distancia = nodo.getDistancia()+"";
+        }
+
+        createCellBase(row, nombreNodo, ComparadorHorarioIndex.NODO_INICIO);
+        //createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
+        createCellBase(row, distancia, ComparadorHorarioIndex.DISTANCIA);
         createCellBase(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
         createCellBase(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
         createCellBase(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);

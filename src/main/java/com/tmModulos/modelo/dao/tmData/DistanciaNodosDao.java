@@ -84,4 +84,16 @@ public class DistanciaNodosDao {
         }
         return null;
     }
+
+    public DistanciaNodos getDistanciaNodoByNombre(String nombreNodo){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(DistanciaNodos.class);
+        criteria.add(Restrictions.eq("nodoNombre", nombreNodo));
+        //criteria.add(Restrictions.eq("matrizDistancia", matrizDistancia));
+        criteria.addOrder(Order.desc("matrizDistancia"));
+        List<DistanciaNodos> list = criteria.list();
+        if( list.size()>0){
+            return list.get(0);
+        }
+        return null;
+    }
 }

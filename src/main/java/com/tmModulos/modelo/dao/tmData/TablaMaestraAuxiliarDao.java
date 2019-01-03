@@ -127,6 +127,15 @@ public class TablaMaestraAuxiliarDao implements Serializable {
         return  servicioDistancia;
     }
 
+    public ServicioDistancia getServicioDistanciaByIdentificador(String identificador){
+        session = sessionFactoryServer.openSession();
+        Criteria criteria = session.createCriteria(ServicioDistancia.class);
+        criteria.add(Restrictions.eq("identificador", identificador));
+        ServicioDistancia servicioDistancia = (ServicioDistancia) criteria.uniqueResult();
+        session.close();
+        return  servicioDistancia;
+    }
+
     public DistanciaNodos getDistanciaNodosByServicioAndNodo(ServicioDistancia servicioDistancia, MatrizDistancia matrizDistancia,String nodoCodigo){
         session = sessionFactoryServer.openSession();
         Criteria criteria = session.createCriteria(DistanciaNodos.class);
