@@ -327,16 +327,30 @@ public class IntervalosProcessor {
             double valorFInal = calcularPromedio(valores);
 
             IntervalosProgramacion intervalo = (IntervalosProgramacion) pair.getKey();
-            if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.PRIMERA) ){
-                intervalosPrimera.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEGUNDA)  ){
-                intervalosSegunda.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.TERCERA)  ){
-                intervalosTercera.add(valorFInal);
-            }else if( intervalo.getTipoFranja().getNombre().equals(FranjaDef.CUARTA)  ){
-                intervalosCuarta.add(valorFInal);
-            }else{
-                intervalosQuinta.add(valorFInal);
+
+            if(intervalo != null) {
+
+                if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.PRIMERA)) {
+                    intervalosPrimera.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEGUNDA)) {
+                    intervalosSegunda.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.TERCERA)) {
+                    intervalosTercera.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.CUARTA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.QUINTA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEXTA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEPTIMA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.OCTAVA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.NOVENA)) {
+                    intervalosCuarta.add(valorFInal);
+                } else {
+                    intervalosQuinta.add(valorFInal);
+                }
             }
 
         }

@@ -99,7 +99,6 @@ public class TablaMaestraProcessor {
         //Carga el archivo dentro de la base de datos
         horariosProvisionalServicio.addTablaHorarioFromFile(destination);
 
-
         //Encontrar parametros para la generacion de la tabla maestra (GIS de carga y Matriz de Distancia)
         GisCarga gis= gisCargaService.getGisCargaById(gisCarga);
         MatrizDistancia matriz= matrizDistanciaService.getMatrizDistanciaById(matrizDistancia);

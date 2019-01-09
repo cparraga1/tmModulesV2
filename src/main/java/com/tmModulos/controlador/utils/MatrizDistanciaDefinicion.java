@@ -32,4 +32,5 @@ public class MatrizDistanciaDefinicion {
     public static final int NODO = 4;
     public static final int NOMBRE_NODO = 5;
     public static final int POSICION = 6;
+    public static final int TIPSERVICIO = 7;
 }

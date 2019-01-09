@@ -123,23 +123,37 @@ public class MatrizProcessor {
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
                 if( row.getCell(0) != null ){
-                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
-                    String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
                     int linea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.LINEA);
                     int sublinea = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.SUBLINEA);
-                    int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
+
+                    //Verificacion de la ruta para formato Antiguo y Nuevo
+
+                    String[] rutaText= excelExtract.getStringCellValue(row, MatrizDistanciaDefinicion.RUTA).split("] ");
+
+                    int ruta = 0;
+                    String nombreRuta = "";
+
+                    if(rutaText.length > 1){
+                        ruta = Integer.parseInt(rutaText[0].substring(1, rutaText[0].length()));
+                        nombreRuta = rutaText[1];
+                    } else {
+                        ruta = Integer.parseInt(rutaText[0]);
+                        nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
+                    }
+
+                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
+                    String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
+                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POSICION);
+
+                    //int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
                   //  String operador = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.OPERADOR);
                     // String idParada = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ID_PARADA);
 //                    String labelNodo = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.LABEL);
 //                    String atributos = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.ATRIBUTOS);
-                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POSICION);
 //                    Double posY = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_Y);
-                    String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
-                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(
-                            linea,sublinea,ruta,nombreRuta,codigoNodo,row);
-                    guardarDistanciaNodos(matrizDistancia,
-                            excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION),
-                            servicioDistancia,nodoNombre,codigoNodo+"",posX);
+                    //String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
+                    ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(linea,sublinea,ruta,nombreRuta,codigoNodo,row);
+                    guardarDistanciaNodos(matrizDistancia, excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION), servicioDistancia,nodoNombre,codigoNodo+"",posX);
                 }else{
                     break;
                 }
