@@ -132,18 +132,24 @@ public class MatrizProcessor {
 
                     int ruta = 0;
                     String nombreRuta = "";
+                    int numNodo = MatrizDistanciaDefinicion.NODO;
+                    int numNomNodo = MatrizDistanciaDefinicion.NOMBRE_NODO;
+                    int numPosicion = MatrizDistanciaDefinicion.POSICION;
 
                     if(rutaText.length > 1){
                         ruta = Integer.parseInt(rutaText[0].substring(1, rutaText[0].length()));
                         nombreRuta = rutaText[1];
+                        numNodo = 3;
+                        numNomNodo = 4;
+                        numPosicion = 5;
                     } else {
-                        ruta = Integer.parseInt(rutaText[0]);
+                        ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
                         nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
                     }
 
-                    int codigoNodo = excelExtract.getNumericCellValue(row, MatrizDistanciaDefinicion.NODO);
-                    String nodoNombre= row.getCell(MatrizDistanciaDefinicion.NOMBRE_NODO).getStringCellValue();
-                    Double posX = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POSICION);
+                    int codigoNodo = excelExtract.getNumericCellValue(row, numNodo);
+                    String nodoNombre= row.getCell(numNomNodo).getStringCellValue();
+                    Double posX = excelExtract.getDoubleCellValue(row,numPosicion);
 
                     //int ruta = excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.RUTA);
                   //  String operador = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.OPERADOR);
@@ -153,7 +159,8 @@ public class MatrizProcessor {
 //                    Double posY = excelExtract.getDoubleCellValue(row,MatrizDistanciaDefinicion.POS_Y);
                     //String nombreRuta = excelExtract.getStringCellValue(row,MatrizDistanciaDefinicion.NOMBRE_RUTA);
                     ServicioDistancia servicioDistancia= crearOBuscarServicioDistancia(linea,sublinea,ruta,nombreRuta,codigoNodo,row);
-                    guardarDistanciaNodos(matrizDistancia, excelExtract.getNumericCellValue(row,MatrizDistanciaDefinicion.POSICION), servicioDistancia,nodoNombre,codigoNodo+"",posX);
+                    guardarDistanciaNodos(matrizDistancia, excelExtract.getNumericCellValue(row,numPosicion), servicioDistancia,nodoNombre,codigoNodo+"",posX);
+                    log.info(linea + "-" + sublinea + "-" + ruta + "-" + nombreRuta + "-" + nodoNombre + "["+ row.getRowNum() + "]");
                 }else{
                     break;
                 }

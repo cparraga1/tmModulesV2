@@ -72,10 +72,10 @@
                                     <p:column colspan="3" headerText="Capacidad" style="width: 300px"/>
                                     <p:column colspan="4" headerText="Horarios Programados" style="width:380px"/>
                                     <p:column colspan="4" headerText="Horarios Usuarios" style="width: 380px"/>
-                                    <p:column colspan="5" headerText="Ciclo" style="width: 520px"/>
-                                    <p:column colspan="5" headerText="Intervalos" style="width: 520px"/>
-                                    <p:column colspan="5" headerText="Buses Hora" style="width: 520px"/>
-                                    <p:column colspan="3" headerText="Velocidades Teoricas" style="width: 380px"/>
+                                    <p:column colspan="10" headerText="Ciclo" style="width: 520px"/>
+                                    <p:column colspan="10" headerText="Intervalos" style="width: 520px"/>
+                                    <p:column colspan="10" headerText="Buses Hora" style="width: 520px"/>
+                                    <p:column colspan="8" headerText="Velocidades Teoricas" style="width: 380px"/>
 
                                 </p:row>
                                 <p:row>
@@ -156,182 +156,358 @@
                                     <p:column filterBy="#{tservicio.horariosServicio.horaFinUsuarioB}" headerText="Fin" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.horariosServicio.horaFinUsuarioB}" />
                                     <!--//Ciclo-->
-                                    <p:column filterBy="#{tservicio.cicloServicio.optimoInicio}" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoInicio}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoPrimera}" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPrimera}"
                                               visible="#{busquedaTabla.visibleOptimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.optimoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoAM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoSegunda}" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSegunda}"
                                               visible="#{busquedaTabla.visibleOptimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.optimoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoValle}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoTercera}" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoTercera}"
                                               visible="#{busquedaTabla.visibleOptimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.optimoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoCuarta}" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCuarta}"
                                               visible="#{busquedaTabla.visibleOptimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.optimoCierre}" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCierre}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoQuinta}"
                                               visible="#{busquedaTabla.visibleOptimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoInicio}" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoInicio}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoSexta}" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSexta}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSeptima}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoOctava}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoNovena}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.optimoDecima}" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoDecima}"
+                                              visible="#{busquedaTabla.visibleOptimos}"/>
+
+
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoPrimera}" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPrimera}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoAM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoSegunda}" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoSegunda}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoValle}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoTercera}" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoTercera}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoCuarta}" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCuarta}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoCierre}" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCierre}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoQuinta}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.maximoInicio}" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoInicio}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoSexta}" headerText="oSexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimooSexta}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoSeptima}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoOctava}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoNovena}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoDecima}" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoDecima}"
+                                              visible="#{busquedaTabla.visibleMinimos}"/>
+
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoPrimera}" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPrimera}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.maximoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoAM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoSegunda}" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSegunda}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.maximoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoValle}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoTercera}" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoTercera}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.maximoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPM}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoCuarta}" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCuarta}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.maximoCierre}" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCierre}"
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoQuinta}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoSexta}" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSexta}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSeptima}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoOctava}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoNovena}"
+                                              visible="#{busquedaTabla.visibleMaximos}"/>
+                                    <p:column filterBy="#{tservicio.cicloServicio.maximoDecima}" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoDecima}"
                                               visible="#{busquedaTabla.visibleMaximos}"/>
 
                                     <!--//Intervalo Promedio-->
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorPrimera }" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPrimera}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorSegunda}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorTercera }" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorTercera}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCuarta}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorQuinta}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPrimera}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorSeptima}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorOctava}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorNovena}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.valorDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorDecima}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+
                                     <!--//Buses hora Promedio-->
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesPrimera }" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPrimera}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSegunda}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesTercera }" headerText="Tercer" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesTercer}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCuarta}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesQuinta}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSexta}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSeptima}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesOctava}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesNovena}"
+                                              visible="#{busquedaTabla.visibleInterPromedio}"/>
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesDecima}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
 
                                     <!--//Intervalo Minimo-->
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorPrimera }" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPrimera}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorAM}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSegunda}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorValle}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorTercera }" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorTercera}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPM}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCuarta}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorQuinta}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSexta}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSeptima}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorOctava}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorNovena}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.valorDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorDecima}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+
                                     <!--//Buses hora Minimo-->
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesPrimera }" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPrimera}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesAM}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSegunda}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesValle}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesTercera }" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesTercera}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPM}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCuarta}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesQuinta}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSexta}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSeptima}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesOctava}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesNovena}"
+                                              visible="#{busquedaTabla.visibleInterMinimo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMinimo.busesDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesDecima}"
                                               visible="#{busquedaTabla.visibleInterMinimo}"/>
 
 
                                     <!--//Intervalo Maximo-->
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorPrimera }" headerText="Primera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPrimera}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorAM}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSegunda}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorValle}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorTercera }" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorTercera}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPM}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCuarta}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorQuinta}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSexta}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSeptima}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorOctava}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorNovena}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.valorDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorDecima}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
                                     <!--//Buses hora Maximo-->
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesInicio }" headerText="Inicio" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesInicio}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesPrimera }" headerText="Primer" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPrimer}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesAM }" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesAM}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesSegunda }" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSegunda}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesValle }" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesValle}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesTercera }" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesTercera}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesPM }" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPM}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesCuarta }" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCuarta}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesCierre }" headerText="Cierre" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCierre}"
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesQuinta }" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesQuinta}"
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
-
-
-
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesSexta }" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSexta}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesSeptima }" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSeptima}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesOctava }" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesOctava}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesNovena }" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesNovena}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
+                                    <p:column filterBy="#{tservicio.intervaloMaximo.busesDecima }" headerText="Decima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesDecima}"
+                                              visible="#{busquedaTabla.visibleInterMaximo}"/>
 
                                     <!--//Velocidad-->
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoSegunda}" headerText="Segunda" filterStyle="width: 70px;"
+                                                                                                                         filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSegunda}"
+                                                                                                                         style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoTercera}" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoTercera}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoValle}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoCuarta}" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoCuarta}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoQuinta}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoAM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoSexta}" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSexta}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSeptima}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoOctava}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoNovena}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+
+
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoSegunda}" headerText="Segunda" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSegunda}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoValle}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoTercera}" headerText="Tercera" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoTercera}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMinimos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoPM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoCuarta}" headerText="Cuarta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoCuarta}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoAM}" headerText="Pico AM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoAM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoQuinta}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}"/>
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoSexta}" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSexta}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSeptima}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoValle}" headerText="Valle" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoValle}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoOctava}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoNovena}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
-                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoPM}" headerText="Pico PM" filterStyle="width: 70px;"
-                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPM}"
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoQuinta}" headerText="Quinta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoQuinta}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoSexta}" headerText="Sexta" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSexta}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoSeptima}" headerText="Septima" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSeptima}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoOctava}" headerText="Octava" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoOctava}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoNovena}" headerText="Novena" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoNovena}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
                                 </p:row>
                             </p:columnGroup>
@@ -659,355 +835,718 @@
                             </p:column>
 
                             <!--//Ciclos-->
-                            <p:column filterBy="#{tservicio.cicloServicio.optimoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoInicio}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoPrimera}" headerText="C-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.optimoInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.optimoPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.optimoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoAM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoSegunda}" headerText="C-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.optimoAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.optimoSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.optimoValle}" headerText="C-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoValle}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoTercera}" headerText="C-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.optimoValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.optimoTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.optimoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoPM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoCuarta}" headerText="C-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.optimoPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.optimoCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.optimoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoCierre}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoQuinta}" headerText="C-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.optimoCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.optimoQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoSexta}" headerText="C-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.optimoSexta}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.minimoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoInicio}"
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoSeptima}" headerText="C-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.optimoSeptima}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoOctava}" headerText="C-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.optimoOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoNovena}" headerText="C-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.optimoNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.optimoDecima}" headerText="C-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.optimoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.optimoDecima}" style="width: 122px"/>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoPrimera}" headerText="C-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.minimoInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.minimoPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.minimoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoAM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoSegunda}" headerText="C-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.minimoAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.minimoSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.minimoValle}" headerText="C-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoValle}"
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoTercera}" headerText="C-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.minimoValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.minimoTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.minimoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoPM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoCuarta}" headerText="C-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.minimoPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.minimoCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.minimoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoCierre}"
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoQuinta}" headerText="C-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.cicloServicio.minimoCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.minimoQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoSexta}" headerText="C-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.minimoSexta}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.maximoInicio}" headerText="C-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoInicio}"
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoSeptima}" headerText="C-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.minimoSeptima}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoOctava}" headerText="C-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.minimoOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoNovena}" headerText="C-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.minimoNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.minimoDecima}" headerText="C-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.cicloServicio.minimoDecima}" style="width: 122px"/>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoPrimera}" headerText="C-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.cicloServicio.maximoInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.maximoPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.maximoAM}" headerText="C-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoAM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoSegunda}" headerText="C-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.cicloServicio.maximoAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.maximoSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.maximoValle}" headerText="C-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoValle}"
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoTercera}" headerText="C-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.cicloServicio.maximoValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.maximoTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.maximoPM}" headerText="C-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoPM}"
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoCuarta}" headerText="C-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.cicloServicio.maximoPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.maximoCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.cicloServicio.maximoCierre}" headerText="C-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoCierre}"
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoQuinta}" headerText="C-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.cicloServicio.maximoCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.cicloServicio.maximoQuinta}" style="width: 122px"/>
                             </p:column>
 
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoSexta}" headerText="C-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.cicloServicio.maximoSexta}" style="width: 122px"/>
+                            </p:column>
 
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoSeptima}" headerText="C-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.cicloServicio.maximoSeptima}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoOctava}" headerText="C-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.cicloServicio.maximoOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoNovena}" headerText="C-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.cicloServicio.maximoNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.cicloServicio.maximoDecima}" headerText="C-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.maximoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.cicloServicio.maximoDecima}" style="width: 122px"/>
+                            </p:column>
 
                             <!--//Intervalo Promedio-->
-                            <p:column filterBy="#{tservicio.intervaloPromedio.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorInicio}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorPrimera }" headerText="I-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorInicio}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorPrimera}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorAM}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorSegunda }" headerText="I-Segunda " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorSegunda }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorSegunda }" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorValle}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorTercera }" headerText="I-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorPM}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorCuarta }" headerText="I-Cuarta " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCuarta }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorPM}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorCuarta }" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorCierre}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorQuinta }" headerText="I-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.valorCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorSexta }" headerText="I-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorSexta}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorSeptima }" headerText="I-Septima  " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorSeptima  }"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorSeptima  }" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorOctava }" headerText="I-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorNovena }" headerText="I-Novena " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorNovena }"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorNovena }" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.valorDecima }" headerText="I-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.valorDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.valorDecima}" style="width: 122px"/>
                             </p:column>
 
 
                             <!--//Buses Hora Promedio-->
-                            <p:column filterBy="#{tservicio.intervaloPromedio.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesInicio}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesPrimera }" headerText="BH-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.busesInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesAM}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesSegunda }" headerText="BH-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.busesAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesValle}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesTercera}" headerText="BH-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.busesValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesPM}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesCuarta }" headerText="BH-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.busesPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloPromedio.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesCierre}"
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesQuinta }" headerText="BH-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
-                                <h:outputText value="#{tservicio.intervaloPromedio.busesCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesSexta }" headerText="BH-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesSexta}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesSeptima }" headerText="BH-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesSeptima}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesOctava}" headerText="BH-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesNovena }" headerText="BH-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloPromedio.busesDecima }" headerText="BH-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterPromedio}">
+                                <h:outputText value="#{tservicio.intervaloPromedio.busesDecima}" style="width: 122px"/>
                             </p:column>
 
 
                             <!--//Intervalo Minimo-->
-                            <p:column filterBy="#{tservicio.intervaloMinimo.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorInicio}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorPrimera }" headerText="I-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.valorInicio}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorPrimera}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorAM}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorSegunda }" headerText="I-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.valorAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorSegunda}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorValle}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorTercera}" headerText="I-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.valorValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorPM}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorCuarta }" headerText="I-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.valorPM}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorCuarta}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorCierre}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorQuinta }" headerText="I-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.valorCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorSexta }" headerText="I-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorSexta}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorSeptima }" headerText="I-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorSeptima}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorOctava}" headerText="I-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorNovena }" headerText="I-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorNovena}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.valorDecima }" headerText="I-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.valorDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.valorDecima}" style="width: 122px"/>
                             </p:column>
 
                             <!--//Buses Hora Minimo-->
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesInicio}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesPrimera }" headerText="BH-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.busesInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesAM}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesSegunda }" headerText="BH-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.busesAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesValle}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesTercera}" headerText="BH-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.busesValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesPM}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesCuarta }" headerText="BH-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.busesPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesCierre}"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesQuinta }" headerText="BH-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
-                                <h:outputText value="#{tservicio.intervaloMinimo.busesCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesSexta }" headerText="BH-Sexta " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSexta }"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesSexta }" style="width: 122px"/>
                             </p:column>
 
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesSeptima }" headerText="BH-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesSeptima}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesOctava}" headerText="BH-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesNovena }" headerText="BH-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesDecima }" headerText="BH-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
+                                <h:outputText value="#{tservicio.intervaloMinimo.busesDecima}" style="width: 122px"/>
+                            </p:column>
 
                             <!--//Intervalo Maximo-->
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorInicio }" headerText="I-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorInicio}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorPrimera }" headerText="I-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.valorInicio}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorPrimera}" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorAM }" headerText="I-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorAM}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorSegunda }" headerText="I-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.valorAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorSegunda}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorValle }" headerText="I-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorValle}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorTercera }" headerText="I-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.valorValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorPM }" headerText="I-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorPM}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorCuarta }" headerText="I-Cuarta " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCuarta }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.valorPM}" style="width: 122px">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorCuarta }" style="width: 122px">
                                     <f:convertNumber pattern="#0,00" />
                                 </h:outputText>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorCierre }" headerText="I-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCierre}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorQuinta }" headerText="I-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.valorCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorQuinta}" style="width: 122px"/>
+                            </p:column>
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorSexta }" headerText="I-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorSexta}" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorSeptima }" headerText="I-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorSeptima}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorOctava }" headerText="I-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorNovena }" headerText="I-Novena " filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorNovena }"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorNovena }" style="width: 122px">
+                                    <f:convertNumber pattern="#0,00" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorDecima }" headerText="I-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.valorDecima}" style="width: 122px"/>
                             </p:column>
 
                             <!--//Buses Hora Maximo-->
-                            <p:column filterBy="#{tservicio.intervaloMaximo.busesInicio }" headerText="BH-Inicio" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesInicio}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesPrimera }" headerText="BH-Primera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPrimera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.busesInicio}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesPrimera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.busesAM }" headerText="BH-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesAM}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesSegunda}" headerText="BH-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.busesAM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.busesValle }" headerText="BH-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesValle}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesTercera }" headerText="BH-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.busesValle}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.busesPM }" headerText="BH-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesPM}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesCuarta }" headerText="BH-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.busesPM}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesCuarta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.busesCierre }" headerText="BH-Cierre" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesCierre}"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesQuinta }" headerText="BH-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesQuinta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
-                                <h:outputText value="#{tservicio.intervaloMaximo.busesCierre}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesQuinta}" style="width: 122px"/>
                             </p:column>
 
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesSexta }" headerText="BH-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesSexta}" style="width: 122px"/>
+                            </p:column>
 
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesSeptima}" headerText="BH-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesSeptima}" style="width: 129px"/>
+                            </p:column>
 
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesOctava }" headerText="BH-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesNovena }" headerText="BH-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesNovena}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.intervaloMaximo.busesDecima }" headerText="BH-Decima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.busesDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
+                                <h:outputText value="#{tservicio.intervaloMaximo.busesDecima}" style="width: 122px"/>
+                            </p:column>
 
                             <!--//Velocidades teoricas-->
-                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoAM}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoSegunda}" headerText="V-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.optimoAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoSegunda}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoValle}" headerText="V-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoValle}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoTercera}" headerText="V-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.optimoValle}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoTercera}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPM}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoCuarta}" headerText="V-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.optimoPM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoCuarta}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoAM}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoQuinta}" headerText="V-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoQuinta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoQuinta}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoSexta}" headerText="V-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoSexta}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoSeptima}" headerText="V-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoSeptima}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoOctava}" headerText="V-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoOctava}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoNovena}" headerText="V-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoNovena}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoSegunda}" headerText="V-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.minimoAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoSegunda}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoValle}" headerText="V-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoValle}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoTercera}" headerText="V-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoTercera}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoTercera}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoCuarta}" headerText="V-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoCuarta}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.minimoValle}" style="width: 129px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoCuarta}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoPM}"
-                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.minimoPM}" style="width: 122px"/>
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoQuinta}" headerText="V-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoQuinta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoQuinta}" style="width: 129px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoAM}" headerText="V-Pico AM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoAM}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoSexta}" headerText="V-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoTercera}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.maximoAM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoSexta}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoAM}" headerText="V-Valle" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoAM}"
-                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.maximoAM}" style="width: 129px"/>
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoSeptima}" headerText="V-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoSeptima}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoPM}" headerText="V-Pico PM" filterStyle="width: 100px;"
-                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPM}"
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoOctava}" headerText="V-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoOctava}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
-                                <h:outputText value="#{tservicio.velocidadProgramada.maximoPM}" style="width: 122px"/>
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoOctava}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoNovena}" headerText="V-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoNovena}" style="width: 122px"/>
+                            </p:column>
+
+
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoSegunda}" headerText="V-Segunda" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSegunda}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoSegunda}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoTercera}" headerText="V-Tercera" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoTercera}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoTercera}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoCuarta}" headerText="V-Cuarta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoCuarta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoCuarta}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoQuinta}" headerText="V-Quinta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoQuinta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoQuinta}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoSexta}" headerText="V-Sexta" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSexta}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoSexta}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoSeptima}" headerText="V-Septima" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSeptima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoSeptima}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoOctava}" headerText="V-Octava" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoOctava}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoOctava}" style="width: 129px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoNovena}" headerText="V-Novena" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoNovena}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoNovena}" style="width: 122px"/>
                             </p:column>
 
                             <f:facet name="footer">

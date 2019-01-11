@@ -311,15 +311,34 @@ public class TablaMaestraProcessor {
     public void actualizarVelocidadProgramada(TablaMaestraServicios tablaMaestraServicios, CicloServicio cicloServicio, Integer distancia){
         VelocidadProgramada velocidadProgramada = getVelocidadProgramada(cicloServicio, distancia);
         VelocidadProgramada oldVelocidad = tablaMaestraServicios.getVelocidadProgramada();
-        oldVelocidad.setOptimoAM(velocidadProgramada.getOptimoAM());
-        oldVelocidad.setOptimoPM(velocidadProgramada.getOptimoPM());
-        oldVelocidad.setOptimoValle(velocidadProgramada.getOptimoValle());
-        oldVelocidad.setMinimoAM(velocidadProgramada.getMinimoAM());
-        oldVelocidad.setMinimoPM(velocidadProgramada.getMinimoPM());
-        oldVelocidad.setMinimoValle(velocidadProgramada.getMinimoValle());
-        oldVelocidad.setMaximoAM(velocidadProgramada.getMaximoAM());
-        oldVelocidad.setMaximoPM(velocidadProgramada.getMaximoPM());
-        oldVelocidad.setMaximoValle(velocidadProgramada.getMaximoValle());
+
+        //Velocidad ignorando franjas Primera y Decima ??
+
+        oldVelocidad.setOptimoSegunda(velocidadProgramada.getOptimoSegunda());
+        oldVelocidad.setMinimoSegunda(velocidadProgramada.getMinimoSegunda());
+        oldVelocidad.setMaximoSegunda(velocidadProgramada.getMaximoSegunda());
+        oldVelocidad.setOptimoTercera(velocidadProgramada.getOptimoTercera());
+        oldVelocidad.setMinimoTercera(velocidadProgramada.getMinimoTercera());
+        oldVelocidad.setMaximoTercera(velocidadProgramada.getMaximoTercera());
+        oldVelocidad.setOptimoCuarta(velocidadProgramada.getOptimoCuarta());
+        oldVelocidad.setMinimoCuarta(velocidadProgramada.getMinimoCuarta());
+        oldVelocidad.setMaximoCuarta(velocidadProgramada.getMaximoCuarta());
+        oldVelocidad.setOptimoQuinta(velocidadProgramada.getOptimoQuinta());
+        oldVelocidad.setMinimoQuinta(velocidadProgramada.getMinimoQuinta());
+        oldVelocidad.setMaximoQuinta(velocidadProgramada.getMaximoQuinta());
+        oldVelocidad.setOptimoSexta(velocidadProgramada.getOptimoSexta());
+        oldVelocidad.setMinimoSexta(velocidadProgramada.getMinimoSexta());
+        oldVelocidad.setMaximoSexta(velocidadProgramada.getMaximoSexta());
+        oldVelocidad.setOptimoSeptima(velocidadProgramada.getOptimoSeptima());
+        oldVelocidad.setMinimoSeptima(velocidadProgramada.getMinimoSeptima());
+        oldVelocidad.setMaximoSeptima(velocidadProgramada.getMaximoSeptima());
+        oldVelocidad.setOptimoOctava(velocidadProgramada.getOptimoOctava());
+        oldVelocidad.setMinimoOctava(velocidadProgramada.getMinimoOctava());
+        oldVelocidad.setMaximoOctava(velocidadProgramada.getMaximoOctava());
+        oldVelocidad.setOptimoNovena(velocidadProgramada.getOptimoNovena());
+        oldVelocidad.setMinimoNovena(velocidadProgramada.getMinimoNovena());
+        oldVelocidad.setMaximoNovena(velocidadProgramada.getMaximoNovena());
+
         tablaMaestraServicios.setVelocidadProgramada(oldVelocidad);
 
     }
@@ -329,15 +348,34 @@ public class TablaMaestraProcessor {
         Integer distanciaKM;
         if(distancia!=-1){
             distanciaKM = distancia/1000;
-            velocidadProgramada.setOptimoAM(calcularVelocidad(distanciaKM,cicloServicio.getOptimoAM()));
-            velocidadProgramada.setOptimoPM(calcularVelocidad(distanciaKM,cicloServicio.getOptimoPM()));
-            velocidadProgramada.setOptimoValle(calcularVelocidad(distanciaKM,cicloServicio.getOptimoValle()));
-            velocidadProgramada.setMaximoAM(calcularVelocidad(distanciaKM,cicloServicio.getMaximoAM()));
-            velocidadProgramada.setMaximoPM(calcularVelocidad(distanciaKM,cicloServicio.getMaximoPM()));
-            velocidadProgramada.setMaximoValle(calcularVelocidad(distanciaKM,cicloServicio.getMaximoValle()));
-            velocidadProgramada.setMinimoAM(calcularVelocidad(distanciaKM,cicloServicio.getMinimoAM()));
-            velocidadProgramada.setMinimoPM(calcularVelocidad(distanciaKM,cicloServicio.getMinimoPM()));
-            velocidadProgramada.setMinimoValle(calcularVelocidad(distanciaKM,cicloServicio.getMinimoValle()));
+
+            //Velocidad ignorando franjas Primera y Decima ??
+
+            velocidadProgramada.setOptimoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getOptimoSegunda()));
+            velocidadProgramada.setMaximoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getMaximoSegunda()));
+            velocidadProgramada.setMinimoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getMinimoSegunda()));
+            velocidadProgramada.setOptimoTercera(calcularVelocidad(distanciaKM,cicloServicio.getOptimoTercera()));
+            velocidadProgramada.setMaximoTercera(calcularVelocidad(distanciaKM,cicloServicio.getMaximoTercera()));
+            velocidadProgramada.setMinimoTercera(calcularVelocidad(distanciaKM,cicloServicio.getMinimoTercera()));
+            velocidadProgramada.setOptimoCuarta(calcularVelocidad(distanciaKM,cicloServicio.getOptimoCuarta()));
+            velocidadProgramada.setMaximoCuarta(calcularVelocidad(distanciaKM,cicloServicio.getMaximoCuarta()));
+            velocidadProgramada.setMinimoCuarta(calcularVelocidad(distanciaKM,cicloServicio.getMinimoCuarta()));
+            velocidadProgramada.setOptimoQuinta(calcularVelocidad(distanciaKM,cicloServicio.getOptimoQuinta()));
+            velocidadProgramada.setMaximoQuinta(calcularVelocidad(distanciaKM,cicloServicio.getMaximoQuinta()));
+            velocidadProgramada.setMinimoQuinta(calcularVelocidad(distanciaKM,cicloServicio.getMinimoQuinta()));
+            velocidadProgramada.setOptimoSexta(calcularVelocidad(distanciaKM,cicloServicio.getOptimoSexta()));
+            velocidadProgramada.setMaximoSexta(calcularVelocidad(distanciaKM,cicloServicio.getMaximoSexta()));
+            velocidadProgramada.setMinimoSexta(calcularVelocidad(distanciaKM,cicloServicio.getMinimoSexta()));
+            velocidadProgramada.setOptimoSeptima(calcularVelocidad(distanciaKM,cicloServicio.getOptimoSeptima()));
+            velocidadProgramada.setMaximoSeptima(calcularVelocidad(distanciaKM,cicloServicio.getMaximoSeptima()));
+            velocidadProgramada.setMinimoSeptima(calcularVelocidad(distanciaKM,cicloServicio.getMinimoSeptima()));
+            velocidadProgramada.setOptimoOctava(calcularVelocidad(distanciaKM,cicloServicio.getOptimoOctava()));
+            velocidadProgramada.setMaximoOctava(calcularVelocidad(distanciaKM,cicloServicio.getMaximoOctava()));
+            velocidadProgramada.setMinimoOctava(calcularVelocidad(distanciaKM,cicloServicio.getMinimoOctava()));
+            velocidadProgramada.setOptimoNovena(calcularVelocidad(distanciaKM,cicloServicio.getOptimoNovena()));
+            velocidadProgramada.setMaximoNovena(calcularVelocidad(distanciaKM,cicloServicio.getMaximoNovena()));
+            velocidadProgramada.setMinimoNovena(calcularVelocidad(distanciaKM,cicloServicio.getMinimoNovena()));
+
         }
         return velocidadProgramada;
     }
@@ -512,21 +550,38 @@ public class TablaMaestraProcessor {
     public void actualizarCicloServicio (TablaMaestraServicios tablaMaestraServicios, List<ArcoTiempo> arcoTiempoRecords){
         CicloServicio cicloServicio = getCicloServicio(arcoTiempoRecords);
         CicloServicio oldCicloServicio = tablaMaestraServicios.getCicloServicio();
-        oldCicloServicio.setMinimoAM(cicloServicio.getMinimoAM());
-        oldCicloServicio.setMaximoInicio(cicloServicio.getMinimoInicio());
-        oldCicloServicio.setMinimoValle(cicloServicio.getMinimoValle());
-        oldCicloServicio.setMinimoPM(cicloServicio.getMinimoPM());
-        oldCicloServicio.setMinimoCierre(cicloServicio.getMinimoCierre());
-        oldCicloServicio.setMaximoInicio(cicloServicio.getMaximoInicio());
-        oldCicloServicio.setMaximoAM(cicloServicio.getMaximoAM());
-        oldCicloServicio.setMaximoValle(cicloServicio.getMaximoValle());
-        oldCicloServicio.setMaximoPM(cicloServicio.getMaximoPM());
-        oldCicloServicio.setMaximoCierre(cicloServicio.getMaximoCierre());
-        oldCicloServicio.setOptimoInicio(cicloServicio.getOptimoInicio());
-        oldCicloServicio.setOptimoAM(cicloServicio.getOptimoAM());
-        oldCicloServicio.setOptimoValle(cicloServicio.getOptimoValle());
-        oldCicloServicio.setOptimoPM(cicloServicio.getOptimoPM());
-        oldCicloServicio.setOptimoCierre(cicloServicio.getOptimoCierre());
+
+        oldCicloServicio.setMinimoPrimera(cicloServicio.getMinimoPrimera());
+        oldCicloServicio.setMaximoPrimera(cicloServicio.getMaximoPrimera());
+        oldCicloServicio.setOptimoPrimera(cicloServicio.getOptimoPrimera());
+        oldCicloServicio.setMinimoSegunda(cicloServicio.getMinimoSegunda());
+        oldCicloServicio.setMaximoSegunda(cicloServicio.getMaximoSegunda());
+        oldCicloServicio.setOptimoSegunda(cicloServicio.getOptimoSegunda());
+        oldCicloServicio.setMinimoTercera(cicloServicio.getMinimoTercera());
+        oldCicloServicio.setMaximoTercera(cicloServicio.getMaximoTercera());
+        oldCicloServicio.setOptimoTercera(cicloServicio.getOptimoTercera());
+        oldCicloServicio.setMinimoCuarta(cicloServicio.getMinimoCuarta());
+        oldCicloServicio.setMaximoCuarta(cicloServicio.getMaximoCuarta());
+        oldCicloServicio.setOptimoCuarta(cicloServicio.getOptimoCuarta());
+        oldCicloServicio.setMinimoQuinta(cicloServicio.getMinimoQuinta());
+        oldCicloServicio.setMaximoQuinta(cicloServicio.getMaximoQuinta());
+        oldCicloServicio.setOptimoQuinta(cicloServicio.getOptimoQuinta());
+        oldCicloServicio.setMinimoSexta(cicloServicio.getMinimoSexta());
+        oldCicloServicio.setMaximoSexta(cicloServicio.getMaximoSexta());
+        oldCicloServicio.setOptimoSexta(cicloServicio.getOptimoSexta());
+        oldCicloServicio.setMinimoSeptima(cicloServicio.getMinimoSeptima());
+        oldCicloServicio.setMaximoSeptima(cicloServicio.getMaximoSeptima());
+        oldCicloServicio.setOptimoSeptima(cicloServicio.getOptimoSeptima());
+        oldCicloServicio.setMinimoOctava(cicloServicio.getMinimoOctava());
+        oldCicloServicio.setMaximoOctava(cicloServicio.getMaximoOctava());
+        oldCicloServicio.setOptimoOctava(cicloServicio.getOptimoOctava());
+        oldCicloServicio.setMinimoNovena(cicloServicio.getMinimoNovena());
+        oldCicloServicio.setMaximoNovena(cicloServicio.getMaximoNovena());
+        oldCicloServicio.setOptimoNovena(cicloServicio.getOptimoNovena());
+        oldCicloServicio.setMinimoDecima(cicloServicio.getMinimoDecima());
+        oldCicloServicio.setMaximoDecima(cicloServicio.getMaximoDecima());
+        oldCicloServicio.setOptimoDecima(cicloServicio.getOptimoDecima());
+
         tablaMaestraService.updateCicloServicio(oldCicloServicio);
 
     }
@@ -539,26 +594,46 @@ public class TablaMaestraProcessor {
             horaFin = validarHoraFin(horaFin);
             TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(horaInicio,horaFin);
             if(tipoFranja!=null){
-                if(tipoFranja.getNombre().equals("Inicio")){
-                    cicloServicio.setMinimoInicio(sumaValores(cicloServicio.getMinimoInicio(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoInicio(sumaValores(cicloServicio.getMaximoInicio(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoInicio(sumaValores(cicloServicio.getOptimoInicio(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Pico AM")){
-                    cicloServicio.setMinimoAM(sumaValores(cicloServicio.getMinimoAM(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoAM(sumaValores(cicloServicio.getMaximoAM(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoAM(sumaValores(cicloServicio.getOptimoAM(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Pico PM")){
-                    cicloServicio.setMinimoPM(sumaValores(cicloServicio.getMinimoPM(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoPM(sumaValores(cicloServicio.getMaximoPM(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoPM(sumaValores(cicloServicio.getOptimoPM(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Valle")){
-                    cicloServicio.setMinimoValle(sumaValores(cicloServicio.getMinimoValle(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoValle(sumaValores(cicloServicio.getMaximoValle(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoValle(sumaValores(cicloServicio.getOptimoValle(),arcoTiempo.getTiempoOptimo()));
+                if(tipoFranja.getNombre().equals("Primera")){
+                    cicloServicio.setMinimoPrimera(sumaValores(cicloServicio.getMinimoPrimera(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoPrimera(sumaValores(cicloServicio.getMaximoPrimera(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoPrimera(sumaValores(cicloServicio.getOptimoPrimera(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Segunda")){
+                    cicloServicio.setMinimoSegunda(sumaValores(cicloServicio.getMinimoSegunda(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSegunda(sumaValores(cicloServicio.getMaximoSegunda(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSegunda(sumaValores(cicloServicio.getOptimoSegunda(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Tercera")){
+                    cicloServicio.setMinimoTercera(sumaValores(cicloServicio.getMinimoTercera(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoTercera(sumaValores(cicloServicio.getMaximoTercera(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoTercera(sumaValores(cicloServicio.getOptimoTercera(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Cuarta")){
+                    cicloServicio.setMinimoCuarta(sumaValores(cicloServicio.getMinimoCuarta(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoCuarta(sumaValores(cicloServicio.getMaximoCuarta(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoCuarta(sumaValores(cicloServicio.getOptimoCuarta(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Quinta")){
+                    cicloServicio.setMinimoQuinta(sumaValores(cicloServicio.getMinimoQuinta(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoQuinta(sumaValores(cicloServicio.getMaximoQuinta(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoQuinta(sumaValores(cicloServicio.getOptimoQuinta(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Sexta")){
+                    cicloServicio.setMinimoSexta(sumaValores(cicloServicio.getMinimoSexta(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSexta(sumaValores(cicloServicio.getMaximoSexta(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSexta(sumaValores(cicloServicio.getOptimoSexta(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Septima")){
+                    cicloServicio.setMinimoSeptima(sumaValores(cicloServicio.getMinimoSeptima(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSeptima(sumaValores(cicloServicio.getMaximoSeptima(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSeptima(sumaValores(cicloServicio.getOptimoSeptima(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Octava")){
+                    cicloServicio.setMinimoOctava(sumaValores(cicloServicio.getMinimoOctava(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoOctava(sumaValores(cicloServicio.getMaximoOctava(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoOctava(sumaValores(cicloServicio.getOptimoOctava(),arcoTiempo.getTiempoOptimo()));
+                }else if(tipoFranja.getNombre().equals("Novena")){
+                    cicloServicio.setMinimoNovena(sumaValores(cicloServicio.getMinimoNovena(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoNovena(sumaValores(cicloServicio.getMaximoNovena(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoNovena(sumaValores(cicloServicio.getOptimoNovena(),arcoTiempo.getTiempoOptimo()));
                 }else {
-                    cicloServicio.setMinimoCierre(sumaValores(cicloServicio.getMinimoCierre(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoCierre(sumaValores(cicloServicio.getMaximoCierre(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoCierre(sumaValores(cicloServicio.getOptimoCierre(),arcoTiempo.getTiempoOptimo()));
+                    cicloServicio.setMinimoDecima(sumaValores(cicloServicio.getMinimoDecima(),arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoDecima(sumaValores(cicloServicio.getMaximoDecima(),arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoDecima(sumaValores(cicloServicio.getOptimoDecima(),arcoTiempo.getTiempoOptimo()));
                 }
 
             }else{
@@ -822,34 +897,70 @@ public class TablaMaestraProcessor {
         nuevaTablaMaestraServicios.setSentido(tablaMaestraServicios.getSentido());
 
         CicloServicio cicloServicio = new CicloServicio();
-        cicloServicio.setOptimoInicio(tablaMaestraServicios.getCicloServicio().getOptimoInicio());
-        cicloServicio.setOptimoAM(tablaMaestraServicios.getCicloServicio().getOptimoAM());
-        cicloServicio.setOptimoValle(tablaMaestraServicios.getCicloServicio().getOptimoValle());
-        cicloServicio.setOptimoPM(tablaMaestraServicios.getCicloServicio().getOptimoPM());
-        cicloServicio.setOptimoCierre(tablaMaestraServicios.getCicloServicio().getOptimoCierre());
-        cicloServicio.setMaximoInicio(tablaMaestraServicios.getCicloServicio().getMaximoInicio());
-        cicloServicio.setMaximoAM(tablaMaestraServicios.getCicloServicio().getMaximoAM());
-        cicloServicio.setMaximoValle(tablaMaestraServicios.getCicloServicio().getMaximoValle());
-        cicloServicio.setMaximoPM(tablaMaestraServicios.getCicloServicio().getMaximoPM());
-        cicloServicio.setMaximoCierre(tablaMaestraServicios.getCicloServicio().getMaximoCierre());
-        cicloServicio.setMinimoInicio(tablaMaestraServicios.getCicloServicio().getMinimoInicio());
-        cicloServicio.setMinimoAM(tablaMaestraServicios.getCicloServicio().getMinimoAM());
-        cicloServicio.setMinimoValle(tablaMaestraServicios.getCicloServicio().getMinimoValle());
-        cicloServicio.setMinimoPM(tablaMaestraServicios.getCicloServicio().getMinimoPM());
-        cicloServicio.setMinimoCierre(tablaMaestraServicios.getCicloServicio().getMinimoCierre());
+
+        cicloServicio.setOptimoPrimera(tablaMaestraServicios.getCicloServicio().getOptimoPrimera());
+        cicloServicio.setMaximoPrimera(tablaMaestraServicios.getCicloServicio().getMaximoPrimera());
+        cicloServicio.setMinimoPrimera(tablaMaestraServicios.getCicloServicio().getMinimoPrimera());
+        cicloServicio.setOptimoSegunda(tablaMaestraServicios.getCicloServicio().getOptimoSegunda());
+        cicloServicio.setMaximoSegunda(tablaMaestraServicios.getCicloServicio().getMaximoSegunda());
+        cicloServicio.setMinimoSegunda(tablaMaestraServicios.getCicloServicio().getMinimoSegunda());
+        cicloServicio.setOptimoTercera(tablaMaestraServicios.getCicloServicio().getOptimoTercera());
+        cicloServicio.setMaximoTercera(tablaMaestraServicios.getCicloServicio().getMaximoTercera());
+        cicloServicio.setMinimoTercera(tablaMaestraServicios.getCicloServicio().getMinimoTercera());
+        cicloServicio.setOptimoCuarta(tablaMaestraServicios.getCicloServicio().getOptimoCuarta());
+        cicloServicio.setMaximoCuarta(tablaMaestraServicios.getCicloServicio().getMaximoCuarta());
+        cicloServicio.setMinimoCuarta(tablaMaestraServicios.getCicloServicio().getMinimoCuarta());
+        cicloServicio.setOptimoQuinta(tablaMaestraServicios.getCicloServicio().getOptimoQuinta());
+        cicloServicio.setMaximoQuinta(tablaMaestraServicios.getCicloServicio().getMaximoQuinta());
+        cicloServicio.setMinimoQuinta(tablaMaestraServicios.getCicloServicio().getMinimoQuinta());
+        cicloServicio.setOptimoSexta(tablaMaestraServicios.getCicloServicio().getOptimoSexta());
+        cicloServicio.setMaximoSexta(tablaMaestraServicios.getCicloServicio().getMaximoSexta());
+        cicloServicio.setMinimoSexta(tablaMaestraServicios.getCicloServicio().getMinimoSexta());
+        cicloServicio.setOptimoSeptima(tablaMaestraServicios.getCicloServicio().getOptimoSeptima());
+        cicloServicio.setMaximoSeptima(tablaMaestraServicios.getCicloServicio().getMaximoSeptima());
+        cicloServicio.setMinimoSeptima(tablaMaestraServicios.getCicloServicio().getMinimoSeptima());
+        cicloServicio.setOptimoOctava(tablaMaestraServicios.getCicloServicio().getOptimoOctava());
+        cicloServicio.setMaximoOctava(tablaMaestraServicios.getCicloServicio().getMaximoOctava());
+        cicloServicio.setMinimoOctava(tablaMaestraServicios.getCicloServicio().getMinimoOctava());
+        cicloServicio.setOptimoNovena(tablaMaestraServicios.getCicloServicio().getOptimoNovena());
+        cicloServicio.setMaximoNovena(tablaMaestraServicios.getCicloServicio().getMaximoNovena());
+        cicloServicio.setMinimoNovena(tablaMaestraServicios.getCicloServicio().getMinimoNovena());
+        cicloServicio.setOptimoDecima(tablaMaestraServicios.getCicloServicio().getOptimoDecima());
+        cicloServicio.setMaximoDecima(tablaMaestraServicios.getCicloServicio().getMaximoDecima());
+        cicloServicio.setMinimoDecima(tablaMaestraServicios.getCicloServicio().getMinimoDecima());
+
         tablaMaestraService.addCicloServicio(cicloServicio);
         nuevaTablaMaestraServicios.setCicloServicio(cicloServicio);
 
         VelocidadProgramada velocidadProgramada = new VelocidadProgramada();
-        velocidadProgramada.setMaximoAM(tablaMaestraServicios.getVelocidadProgramada().getMaximoAM());
-        velocidadProgramada.setMaximoValle(tablaMaestraServicios.getVelocidadProgramada().getMaximoValle());
-        velocidadProgramada.setMaximoPM(tablaMaestraServicios.getVelocidadProgramada().getMaximoPM());
-        velocidadProgramada.setMinimoAM(tablaMaestraServicios.getVelocidadProgramada().getMinimoAM());
-        velocidadProgramada.setMinimoPM(tablaMaestraServicios.getVelocidadProgramada().getMinimoPM());
-        velocidadProgramada.setMinimoValle(tablaMaestraServicios.getVelocidadProgramada().getMinimoValle());
-        velocidadProgramada.setOptimoAM(tablaMaestraServicios.getVelocidadProgramada().getOptimoAM());
-        velocidadProgramada.setOptimoValle(tablaMaestraServicios.getVelocidadProgramada().getOptimoValle());
-        velocidadProgramada.setOptimoPM(tablaMaestraServicios.getVelocidadProgramada().getOptimoPM());
+
+        //Velocidad Programada ignorando la Primera y Decima Franja ??
+
+        velocidadProgramada.setMaximoSegunda(tablaMaestraServicios.getVelocidadProgramada().getMaximoSegunda());
+        velocidadProgramada.setMinimoSegunda(tablaMaestraServicios.getVelocidadProgramada().getMinimoSegunda());
+        velocidadProgramada.setOptimoSegunda(tablaMaestraServicios.getVelocidadProgramada().getOptimoSegunda());
+        velocidadProgramada.setMaximoTercera(tablaMaestraServicios.getVelocidadProgramada().getMaximoTercera());
+        velocidadProgramada.setMinimoTercera(tablaMaestraServicios.getVelocidadProgramada().getMinimoTercera());
+        velocidadProgramada.setOptimoTercera(tablaMaestraServicios.getVelocidadProgramada().getOptimoTercera());
+        velocidadProgramada.setMaximoCuarta(tablaMaestraServicios.getVelocidadProgramada().getMaximoCuarta());
+        velocidadProgramada.setMinimoCuarta(tablaMaestraServicios.getVelocidadProgramada().getMinimoCuarta());
+        velocidadProgramada.setOptimoCuarta(tablaMaestraServicios.getVelocidadProgramada().getOptimoCuarta());
+        velocidadProgramada.setMaximoQuinta(tablaMaestraServicios.getVelocidadProgramada().getMaximoQuinta());
+        velocidadProgramada.setMinimoQuinta(tablaMaestraServicios.getVelocidadProgramada().getMinimoQuinta());
+        velocidadProgramada.setOptimoQuinta(tablaMaestraServicios.getVelocidadProgramada().getOptimoQuinta());
+        velocidadProgramada.setMaximoSexta(tablaMaestraServicios.getVelocidadProgramada().getMaximoSexta());
+        velocidadProgramada.setMinimoSexta(tablaMaestraServicios.getVelocidadProgramada().getMinimoSexta());
+        velocidadProgramada.setOptimoSexta(tablaMaestraServicios.getVelocidadProgramada().getOptimoSexta());
+        velocidadProgramada.setMaximoSeptima(tablaMaestraServicios.getVelocidadProgramada().getMaximoSeptima());
+        velocidadProgramada.setMinimoSeptima(tablaMaestraServicios.getVelocidadProgramada().getMinimoSeptima());
+        velocidadProgramada.setOptimoSeptima(tablaMaestraServicios.getVelocidadProgramada().getOptimoSeptima());
+        velocidadProgramada.setMaximoOctava(tablaMaestraServicios.getVelocidadProgramada().getMaximoOctava());
+        velocidadProgramada.setMinimoOctava(tablaMaestraServicios.getVelocidadProgramada().getMinimoOctava());
+        velocidadProgramada.setOptimoOctava(tablaMaestraServicios.getVelocidadProgramada().getOptimoOctava());
+        velocidadProgramada.setMaximoNovena(tablaMaestraServicios.getVelocidadProgramada().getMaximoNovena());
+        velocidadProgramada.setMinimoNovena(tablaMaestraServicios.getVelocidadProgramada().getMinimoNovena());
+        velocidadProgramada.setOptimoNovena(tablaMaestraServicios.getVelocidadProgramada().getOptimoNovena());
+
         tablaMaestraService.addVelocidadProgramada(velocidadProgramada);
         nuevaTablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
 

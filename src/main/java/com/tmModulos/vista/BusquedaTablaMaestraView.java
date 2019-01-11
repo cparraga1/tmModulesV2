@@ -226,6 +226,9 @@ public class BusquedaTablaMaestraView {
         textoGeneracionMatrix="Tabla Maestra "+obtenerTipoTabla()+" generada para tipo ciclo: "+tipoCiclo+" y tipo intervalo: "+tipoIntervalo;
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
+
+            //Para generar el formato de Excel
+
             if(obtenerTipoTabla().equals("Definitiva")){
                 ec.redirect(ec.getRequestContextPath()
                         + "/secured/tablaMaestra.xhtml");

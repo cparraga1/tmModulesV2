@@ -14,63 +14,352 @@ public class CicloServicio {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "optimo_primera")
+    private String optimoPrimera;
 
-    @Column(name = "optimo_inicio")
-    private String optimoInicio;
+    @Column(name = "minimo_primera")
+    private String minimoPrimera;
 
-    @Column(name = "minimo_inicio")
-    private String minimoInicio;
+    @Column(name = "maximo_primera")
+    private String maximoPrimera;
 
-    @Column(name = "maximo_inicio")
-    private String maximoInicio;
+    @Column(name = "optimo_segunda")
+    private String optimoSegunda;
 
-    @Column(name = "optimo_am")
-    private String optimoAM;
+    @Column(name = "minimo_segunda")
+    private String minimoSegunda;
 
-    @Column(name = "minimo_am")
-    private String minimoAM;
+    @Column(name = "maximo_segunda")
+    private String maximoSegunda;
 
-    @Column(name = "maximo_am")
-    private String maximoAM;
+    @Column(name = "optimo_tercera")
+    private String optimoTercera;
 
-    @Column(name = "optimo_valle")
-    private String optimoValle;
+    @Column(name = "minimo_tercera")
+    private String minimoTercera;
 
-    @Column(name = "minimo_valle")
-    private String minimoValle;
+    @Column(name = "maximo_tercera")
+    private String maximoTercera;
 
-    @Column(name = "maximo_valle")
-    private String maximoValle;
+    @Column(name = "optimo_cuarta")
+    private String optimoCuarta;
 
-    @Column(name = "optimo_pm")
-    private String optimoPM;
+    @Column(name = "minimo_cuarta")
+    private String minimoCuarta;
 
-    @Column(name = "minimo_pm")
-    private String minimoPM;
+    @Column(name = "maximo_cuarta")
+    private String maximoCuarta;
 
-    @Column(name = "maximo_pm")
-    private String maximoPM;
+    @Column(name = "optimo_quinta")
+    private String optimoQuinta;
 
-    @Column(name = "optimo_cierre")
-    private String optimoCierre;
+    @Column(name = "minimo_quinta")
+    private String minimoQuinta;
 
-    @Column(name = "minimo_cierre")
-    private String minimoCierre;
+    @Column(name = "maximo_quinta")
+    private String maximoQuinta;
 
-    @Column(name = "maximo_cierre")
-    private String maximoCierre;
+    @Column(name = "optimo_sexta")
+    private String optimoSexta;
+
+    @Column(name = "minimo_sexta")
+    private String minimoSexta;
+
+    @Column(name = "maximo_sexta")
+    private String maximoSexta;
+
+    @Column(name = "optimo_septima")
+    private String optimoSeptima;
+
+    @Column(name = "minimo_septima")
+    private String minimoSeptima;
+
+    @Column(name = "maximo_septima")
+    private String maximoSeptima;
+
+    @Column(name = "optimo_octava")
+    private String optimoOctava;
+
+    @Column(name = "minimo_octava")
+    private String minimoOctava;
+
+    @Column(name = "maximo_octava")
+    private String maximoOctava;
+
+    @Column(name = "optimo_novena")
+    private String optimoNovena;
+
+    @Column(name = "minimo_novena")
+    private String minimoNovena;
+
+    @Column(name = "maximo_novena")
+    private String maximoNovena;
+
+    @Column(name = "optimo_decima")
+    private String optimoDecima;
+
+    @Column(name = "minimo_decima")
+    private String minimoDecima;
+
+    @Column(name = "maximo_decima")
+    private String maximoDecima;
 
 
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "cicloServicio", cascade = CascadeType.REMOVE)
     private TablaMaestraServicios tablaMaestraServicios;
 
-    public CicloServicio(String optimoInicio, String optimoAM, String optimoValle, String optimoPM, String optimoCierre) {
-        this.optimoInicio = optimoInicio;
-        this.optimoAM = optimoAM;
-        this.optimoValle = optimoValle;
-        this.optimoPM = optimoPM;
-        this.optimoCierre = optimoCierre;
+    public CicloServicio(String optimoPrimera, String optimoSegunda, String optimoTercera, String optimoCuarta, String optimoQuinta, String optimoSexta, String optimoSeptima, String optimoOctava, String optimoNovena, String optimoDecima) {
+        this.optimoPrimera = optimoPrimera;
+        this.optimoSegunda = optimoSegunda;
+        this.optimoTercera = optimoTercera;
+        this.optimoCuarta = optimoCuarta;
+        this.optimoQuinta = optimoQuinta;
+        this.optimoSexta = optimoSexta;
+        this.optimoSeptima = optimoSeptima;
+        this.optimoOctava = optimoOctava;
+        this.optimoNovena = optimoNovena;
+        this.optimoDecima = optimoDecima;
+    }
+
+    public String getOptimoPrimera() {
+        return optimoPrimera;
+    }
+
+    public void setOptimoPrimera(String optimoPrimera) {
+        this.optimoPrimera = optimoPrimera;
+    }
+
+    public String getMinimoPrimera() {
+        return minimoPrimera;
+    }
+
+    public void setMinimoPrimera(String minimoPrimera) {
+        this.minimoPrimera = minimoPrimera;
+    }
+
+    public String getMaximoPrimera() {
+        return maximoPrimera;
+    }
+
+    public void setMaximoPrimera(String maximoPrimera) {
+        this.maximoPrimera = maximoPrimera;
+    }
+
+    public String getOptimoSegunda() {
+        return optimoSegunda;
+    }
+
+    public void setOptimoSegunda(String optimoSegunda) {
+        this.optimoSegunda = optimoSegunda;
+    }
+
+    public String getMinimoSegunda() {
+        return minimoSegunda;
+    }
+
+    public void setMinimoSegunda(String minimoSegunda) {
+        this.minimoSegunda = minimoSegunda;
+    }
+
+    public String getMaximoSegunda() {
+        return maximoSegunda;
+    }
+
+    public void setMaximoSegunda(String maximoSegunda) {
+        this.maximoSegunda = maximoSegunda;
+    }
+
+    public String getOptimoTercera() {
+        return optimoTercera;
+    }
+
+    public void setOptimoTercera(String optimoTercera) {
+        this.optimoTercera = optimoTercera;
+    }
+
+    public String getMinimoTercera() {
+        return minimoTercera;
+    }
+
+    public void setMinimoTercera(String minimoTercera) {
+        this.minimoTercera = minimoTercera;
+    }
+
+    public String getMaximoTercera() {
+        return maximoTercera;
+    }
+
+    public void setMaximoTercera(String maximoTercera) {
+        this.maximoTercera = maximoTercera;
+    }
+
+    public String getOptimoCuarta() {
+        return optimoCuarta;
+    }
+
+    public void setOptimoCuarta(String optimoCuarta) {
+        this.optimoCuarta = optimoCuarta;
+    }
+
+    public String getMinimoCuarta() {
+        return minimoCuarta;
+    }
+
+    public void setMinimoCuarta(String minimoCuarta) {
+        this.minimoCuarta = minimoCuarta;
+    }
+
+    public String getMaximoCuarta() {
+        return maximoCuarta;
+    }
+
+    public void setMaximoCuarta(String maximoCuarta) {
+        this.maximoCuarta = maximoCuarta;
+    }
+
+    public String getOptimoQuinta() {
+        return optimoQuinta;
+    }
+
+    public void setOptimoQuinta(String optimoQuinta) {
+        this.optimoQuinta = optimoQuinta;
+    }
+
+    public String getMinimoQuinta() {
+        return minimoQuinta;
+    }
+
+    public void setMinimoQuinta(String minimoQuinta) {
+        this.minimoQuinta = minimoQuinta;
+    }
+
+    public String getMaximoQuinta() {
+        return maximoQuinta;
+    }
+
+    public void setMaximoQuinta(String maximoQuinta) {
+        this.maximoQuinta = maximoQuinta;
+    }
+
+    public String getOptimoSexta() {
+        return optimoSexta;
+    }
+
+    public void setOptimoSexta(String optimoSexta) {
+        this.optimoSexta = optimoSexta;
+    }
+
+    public String getMinimoSexta() {
+        return minimoSexta;
+    }
+
+    public void setMinimoSexta(String minimoSexta) {
+        this.minimoSexta = minimoSexta;
+    }
+
+    public String getMaximoSexta() {
+        return maximoSexta;
+    }
+
+    public void setMaximoSexta(String maximoSexta) {
+        this.maximoSexta = maximoSexta;
+    }
+
+    public String getOptimoSeptima() {
+        return optimoSeptima;
+    }
+
+    public void setOptimoSeptima(String optimoSeptima) {
+        this.optimoSeptima = optimoSeptima;
+    }
+
+    public String getMinimoSeptima() {
+        return minimoSeptima;
+    }
+
+    public void setMinimoSeptima(String minimoSeptima) {
+        this.minimoSeptima = minimoSeptima;
+    }
+
+    public String getMaximoSeptima() {
+        return maximoSeptima;
+    }
+
+    public void setMaximoSeptima(String maximoSeptima) {
+        this.maximoSeptima = maximoSeptima;
+    }
+
+    public String getOptimoOctava() {
+        return optimoOctava;
+    }
+
+    public void setOptimoOctava(String optimoOctava) {
+        this.optimoOctava = optimoOctava;
+    }
+
+    public String getMinimoOctava() {
+        return minimoOctava;
+    }
+
+    public void setMinimoOctava(String minimoOctava) {
+        this.minimoOctava = minimoOctava;
+    }
+
+    public String getMaximoOctava() {
+        return maximoOctava;
+    }
+
+    public void setMaximoOctava(String maximoOctava) {
+        this.maximoOctava = maximoOctava;
+    }
+
+    public String getOptimoNovena() {
+        return optimoNovena;
+    }
+
+    public void setOptimoNovena(String optimoNovena) {
+        this.optimoNovena = optimoNovena;
+    }
+
+    public String getMinimoNovena() {
+        return minimoNovena;
+    }
+
+    public void setMinimoNovena(String minimoNovena) {
+        this.minimoNovena = minimoNovena;
+    }
+
+    public String getMaximoNovena() {
+        return maximoNovena;
+    }
+
+    public void setMaximoNovena(String maximoNovena) {
+        this.maximoNovena = maximoNovena;
+    }
+
+    public String getOptimoDecima() {
+        return optimoDecima;
+    }
+
+    public void setOptimoDecima(String optimoDecima) {
+        this.optimoDecima = optimoDecima;
+    }
+
+    public String getMinimoDecima() {
+        return minimoDecima;
+    }
+
+    public void setMinimoDecima(String minimoDecima) {
+        this.minimoDecima = minimoDecima;
+    }
+
+    public String getMaximoDecima() {
+        return maximoDecima;
+    }
+
+    public void setMaximoDecima(String maximoDecima) {
+        this.maximoDecima = maximoDecima;
     }
 
     public CicloServicio(TablaMaestraServicios tablaMaestraServicios) {
@@ -86,126 +375,6 @@ public class CicloServicio {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getOptimoInicio() {
-        return optimoInicio;
-    }
-
-    public void setOptimoInicio(String optimoInicio) {
-        this.optimoInicio = optimoInicio;
-    }
-
-    public String getMinimoInicio() {
-        return minimoInicio;
-    }
-
-    public void setMinimoInicio(String minimoInicio) {
-        this.minimoInicio = minimoInicio;
-    }
-
-    public String getMaximoInicio() {
-        return maximoInicio;
-    }
-
-    public void setMaximoInicio(String maximoInicio) {
-        this.maximoInicio = maximoInicio;
-    }
-
-    public String getOptimoAM() {
-        return optimoAM;
-    }
-
-    public void setOptimoAM(String optimoAM) {
-        this.optimoAM = optimoAM;
-    }
-
-    public String getMinimoAM() {
-        return minimoAM;
-    }
-
-    public void setMinimoAM(String minimoAM) {
-        this.minimoAM = minimoAM;
-    }
-
-    public String getMaximoAM() {
-        return maximoAM;
-    }
-
-    public void setMaximoAM(String maximoAM) {
-        this.maximoAM = maximoAM;
-    }
-
-    public String getOptimoValle() {
-        return optimoValle;
-    }
-
-    public void setOptimoValle(String optimoValle) {
-        this.optimoValle = optimoValle;
-    }
-
-    public String getMinimoValle() {
-        return minimoValle;
-    }
-
-    public void setMinimoValle(String minimoValle) {
-        this.minimoValle = minimoValle;
-    }
-
-    public String getMaximoValle() {
-        return maximoValle;
-    }
-
-    public void setMaximoValle(String maximoValle) {
-        this.maximoValle = maximoValle;
-    }
-
-    public String getOptimoPM() {
-        return optimoPM;
-    }
-
-    public void setOptimoPM(String optimoPM) {
-        this.optimoPM = optimoPM;
-    }
-
-    public String getMinimoPM() {
-        return minimoPM;
-    }
-
-    public void setMinimoPM(String minimoPM) {
-        this.minimoPM = minimoPM;
-    }
-
-    public String getMaximoPM() {
-        return maximoPM;
-    }
-
-    public void setMaximoPM(String maximoPM) {
-        this.maximoPM = maximoPM;
-    }
-
-    public String getOptimoCierre() {
-        return optimoCierre;
-    }
-
-    public void setOptimoCierre(String optimoCierre) {
-        this.optimoCierre = optimoCierre;
-    }
-
-    public String getMinimoCierre() {
-        return minimoCierre;
-    }
-
-    public void setMinimoCierre(String minimoCierre) {
-        this.minimoCierre = minimoCierre;
-    }
-
-    public String getMaximoCierre() {
-        return maximoCierre;
-    }
-
-    public void setMaximoCierre(String maximoCierre) {
-        this.maximoCierre = maximoCierre;
     }
 
     public TablaMaestraServicios getTablaMaestraServicios() {
