@@ -176,7 +176,7 @@ public class MatrizDistanciaService {
         return false;
     }
 
-    public DistanciaNodos getNodoByNombre(String nombreNodo){
-        return distanciaNodosDao.getDistanciaNodoByNombre(nombreNodo);
+    public DistanciaNodos getNodoByNombre(String nombreNodo, Servicio servicio){
+        return distanciaNodosDao.getDistanciaNodoByNombre(nombreNodo, servicio);
     }
 }

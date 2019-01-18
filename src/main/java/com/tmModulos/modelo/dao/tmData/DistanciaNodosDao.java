@@ -4,6 +4,7 @@ import com.tmModulos.modelo.entity.tmData.DistanciaNodos;
 import com.tmModulos.modelo.entity.tmData.MatrizDistancia;
 import com.tmModulos.modelo.entity.tmData.Nodo;
 import com.tmModulos.modelo.entity.tmData.ServicioDistancia;
+import com.tmModulos.modelo.entity.tmData.Servicio;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -85,7 +86,7 @@ public class DistanciaNodosDao {
         return null;
     }
 
-    public DistanciaNodos getDistanciaNodoByNombre(String nombreNodo){
+    public DistanciaNodos getDistanciaNodoByNombre(String nombreNodo, Servicio servicio){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(DistanciaNodos.class);
         criteria.add(Restrictions.eq("nodoNombre", nombreNodo));
         //criteria.add(Restrictions.eq("matrizDistancia", matrizDistancia));

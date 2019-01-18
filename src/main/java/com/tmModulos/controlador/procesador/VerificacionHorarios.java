@@ -769,11 +769,10 @@ public class VerificacionHorarios {
             veriPreHorarios.addEquivalenciasFromFile(destination);
             verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
             veriPreHorarios.deleteEquivalencias();
-
         } else if (tipoVerificacion.equals("Pos")){
             veriPreHorarios.deleteTablaHorario();
             veriPreHorarios.addTablaHorarioFromFile(destination);
-             verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
+            verificarExpediciones(tipoVerificacion,fileForTipoDia(tipoDia),tipoDia);
             veriPreHorarios.deleteTablaHorario();
         }else if (tipoVerificacion.equals("Pso")){
             veriPreHorarios.deleteOfertaComercial();
@@ -1044,15 +1043,22 @@ public class VerificacionHorarios {
 
     private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {
 
-        String nombreNodo = obtenerNombreNodo(servicio.getPunto());
-        DistanciaNodos nodo = matrizDistanciaService.getNodoByNombre(nombreNodo);
+        String nombreNodo1 = obtenerNombreNodo(servicio.getPunto());
+        DistanciaNodos nodo1 = matrizDistanciaService.getNodoByNombre(nombreNodo1, servicio);
+
+        String nombreNodo2 = obtenerNombreNodo(servicio.getPuntoFin());
+        DistanciaNodos nodo2 = matrizDistanciaService.getNodoByNombre(nombreNodo2, servicio);
 
         String distancia = "N/A";
-        if(nodo != null){
-            distancia = nodo.getDistancia()+"";
+        int numDistancia = 0;
+
+        if(nodo1 != null && nodo2 != null){
+            numDistancia = nodo2.getDistancia() - nodo1.getDistancia();
+            distancia = numDistancia + "";
+            System.out.println("Distancia: "+ nodo2.getDistancia() +" - "+ nodo1.getDistancia() + " = " + numDistancia);
         }
 
-        createCellBase(row, nombreNodo, ComparadorHorarioIndex.NODO_INICIO);
+        createCellBase(row, nombreNodo1, ComparadorHorarioIndex.NODO_INICIO);
         //createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
         createCellBase(row, distancia, ComparadorHorarioIndex.DISTANCIA);
         createCellBase(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
@@ -1061,6 +1067,10 @@ public class VerificacionHorarios {
         createCellBase(row, servicio.getNombreEspecial(), ComparadorHorarioIndex.SERVICIO_E);
         createCellBase(row, servicio.getNombreGeneral(), ComparadorHorarioIndex.SERVICIO_G);
         createCellBase(row, servicio.getTipoServicio(), ComparadorHorarioIndex.TIPO_SERVICIO);
+
+        //Adicionando Tipologia del Servicio
+        createCellBase(row, servicio.getTipologia().getNombre(), ComparadorHorarioIndex.TIPOLOGIA);
+
         if(horariosByServicio.size()>0){
             createCellBase(row, horariosByServicio.get(0).getHoraInicio(), ComparadorHorarioIndex.HORA_INICIO);
             createCellBase(row, horariosByServicio.get(0).getHoraFin(), ComparadorHorarioIndex.HORA_FIN);
@@ -1114,6 +1124,7 @@ public class VerificacionHorarios {
         createCellBase(row, ComparadorHorarioIndex.INT_PROMEDIO_CI_TX, ComparadorHorarioIndex.INT_PROMEDIO_CI);
         createCellBase(row, ComparadorHorarioIndex.INT_MINIMO_CI_TX, ComparadorHorarioIndex.INT_MINIMO_CI);
         createCellBase(row, ComparadorHorarioIndex.INT_MAXIMO_CI_TX, ComparadorHorarioIndex.INT_MAXIMO_CI);
+        createCellBase(row, ComparadorHorarioIndex.TIPOLOGIA_TX, ComparadorHorarioIndex.TIPOLOGIA);
     }
 
     public NodoService getNodoService() {

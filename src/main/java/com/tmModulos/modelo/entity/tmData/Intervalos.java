@@ -131,8 +131,8 @@ public class Intervalos {
         this.busesSexta = busesSexta;
         this.busesSeptima = busesSeptima;
         this.busesOctava = busesOctava;
-        this.busesNovena = busesQuinta;
-        this.busesDecima = busesQuinta;
+        this.busesNovena = busesNovena;
+        this.busesDecima = busesDecima;
         this.idServicio = idServicio;
         this.tablaMaestraServicios = tablaMaestraServicios;
     }

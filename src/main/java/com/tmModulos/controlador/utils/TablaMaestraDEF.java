@@ -26,15 +26,15 @@ public class TablaMaestraDEF {
     public static String RANGO_CAPACIDAD = "V1:X1";
     public static String RANGO_HORARIO_PROGRAMACION = "Y1:AB1";
     public static String RANGO_HORARIO_USUARIO = "AC1:AF1";
-    public static String RANGO_CICLO_OPTIMO = "AG1:AK1";
-    public static String RANGO_CICLO_MINIMO = "AL1:AP1";
-    public static String RANGO_CICLO_MAXIMO = "AQ1:AU1";
-    public static String RANGO_INTERVALO_PROMEDIO = "AV1:AZ1";
-    public static String RANGO_BUSES_HORA_PROMEDIO = "BA1:BE1";
-    public static String RANGO_INTERVALO_MINIMO = "BF1:BJ1";
-    public static String RANGO_BUSES_HORA_MINIMO = "BK1:BO1";
-    public static String RANGO_INTERVALO_MAXIMO = "BP1:BT1";
-    public static String RANGO_BUSES_HORA_MAXIMO = "BU1:BY1";
+    public static String RANGO_CICLO_OPTIMO = "AG1:AP1";
+    public static String RANGO_CICLO_MINIMO = "AQ1:AZ1";
+    public static String RANGO_CICLO_MAXIMO = "BA1:BJ1";
+    public static String RANGO_INTERVALO_PROMEDIO = "BK1:BT1";
+    public static String RANGO_BUSES_HORA_PROMEDIO = "BU1:CD1";
+    public static String RANGO_INTERVALO_MINIMO = "CE1:CN1";
+    public static String RANGO_BUSES_HORA_MINIMO = "CO1:CX1";
+    public static String RANGO_INTERVALO_MAXIMO = "CY1:DH1";
+    public static String RANGO_BUSES_HORA_MAXIMO = "DI1:";
     public static String RANGO_VELOCIDAD_TEORICA = "BZ1:CH1";
 
     public static String INFO_SERVICIO_BASE = "Información Base del Servicio";

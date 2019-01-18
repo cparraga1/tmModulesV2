@@ -90,8 +90,10 @@ public class TablaMaestraProcessor {
         logDatos = new ArrayList<>();
         logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
         log.info("<<Inicio Calculo Tabla Maestra>>");
-        processorUtils.copyFile(filename,in,destination);
+        processorUtils.copyFileUTF8(filename,in,destination);
+        //processorUtils.copyFile(filename,in,destination);
         destination=destination+filename;
+
         // Copiar informacion intervalos
         horariosProvisionalServicio.deleteTablaHorarioFromFile();
 
@@ -124,7 +126,7 @@ public class TablaMaestraProcessor {
 
                 //Encontrar nodo Inicio del servicio por el codigo
                 // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
-               List<GisServicio> gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
+                List<GisServicio> gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
 
                 TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
                 tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
@@ -156,6 +158,7 @@ public class TablaMaestraProcessor {
                                 //Calcular ciclos
                                 CicloServicio cicloServicio = calcularCiclos(tablaMaestraServicios,arcoTiempoRecords);
                                 tablaMaestraServicios.setCicloServicio(cicloServicio);
+                                //Calcular Velocidad Programada
                                 VelocidadProgramada  velocidadProgramada = calcularVelocidadProgramada(cicloServicio,tablaMaestraServicios.getDistancia());
                                 tablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
 
@@ -227,7 +230,7 @@ public class TablaMaestraProcessor {
         List<ServicioTipoDia> updateServicios= new ArrayList<>();
         for(ServicioTipoDia servicio: serviciosTipoDia){
             if(servicio.getServicio().isEstado()){
-             updateServicios.add(servicio);
+                updateServicios.add(servicio);
             }
         }
 
@@ -390,10 +393,10 @@ public class TablaMaestraProcessor {
 
             if(horas!=0){
                 double velocidad =distanciaKM/horas;
-             //   String velocidadFormateada = String.format("%.2f",velocidad);
+                //   String velocidadFormateada = String.format("%.2f",velocidad);
                 try{
                     return ProcessorUtils.round(velocidad,2);
-                //    return Double.parseDouble(velocidadFormateada);
+                    //    return Double.parseDouble(velocidadFormateada);
                 }catch (Exception e){
                     logDatos.add(new LogDatos(e.getMessage(),TipoLog.ERROR));
                     log.error(e.getMessage());
@@ -532,12 +535,12 @@ public class TablaMaestraProcessor {
     }
 
     public Nodo getNodoInicio(String nodoIncial) {
-       Nodo nodo = nodoService.getNodoByCodigo(nodoIncial);
-       return nodo;
+        Nodo nodo = nodoService.getNodoByCodigo(nodoIncial);
+        return nodo;
     }
 
     private GisIntervalos generarIntervalosDeTiempo(Date fechaIntervalos,String descripcion, String tipoDia, TablaMaestra tablaMaestra, TipoDia servicio) {
-       return intervalosProcessor.generarIntervalos(fechaIntervalos,descripcion,tipoDia,tablaMaestra,servicio);
+        return intervalosProcessor.generarIntervalos(fechaIntervalos,descripcion,tipoDia,tablaMaestra,servicio);
     }
 
     //Calcular ciclos de tiempos de recorrido - en base al GIS de carga
@@ -586,6 +589,7 @@ public class TablaMaestraProcessor {
 
     }
 
+    //Calcula los Ciclos del Servicio
     private CicloServicio getCicloServicio(List<ArcoTiempo> arcoTiempoRecords) {
         CicloServicio cicloServicio = new CicloServicio();
         for (ArcoTiempo arcoTiempo: arcoTiempoRecords){
@@ -647,13 +651,13 @@ public class TablaMaestraProcessor {
     private String sumaValores(String anterior, String nuevo) {
         if(anterior!=null){
             try {
-            String pt = "1970-01-01-";
-            final DateFormat dt = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
-            final Calendar sum = Calendar.getInstance();
-            sum.setTimeInMillis(0);
+                String pt = "1970-01-01-";
+                final DateFormat dt = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+                final Calendar sum = Calendar.getInstance();
+                sum.setTimeInMillis(0);
 
-            long tm0 = 0;
-            tm0 = new SimpleDateFormat("yyyy-MM-dd").parse(pt).getTime();
+                long tm0 = 0;
+                tm0 = new SimpleDateFormat("yyyy-MM-dd").parse(pt).getTime();
 
                 Date x = dt.parse(pt + anterior);
                 // System.out.println(x.getTime());
@@ -665,16 +669,16 @@ public class TablaMaestraProcessor {
                 sum.add(Calendar.MILLISECOND, (int)x.getTime());
                 sum.add(Calendar.MILLISECOND, (int)-tm0);
 
-            long tm = sum.getTime().getTime();
+                long tm = sum.getTime().getTime();
 
-            tm = tm / 1000;
+                tm = tm / 1000;
 
-            long hh = tm / 3600;
-            tm %= 3600;
-            long mm = tm / 60;
-            tm %= 60;
-            long ss = tm;
-            nuevo = format(hh) + ":" + format(mm) + ":" + format(ss);
+                long hh = tm / 3600;
+                tm %= 3600;
+                long mm = tm / 60;
+                tm %= 60;
+                long ss = tm;
+                nuevo = format(hh) + ":" + format(mm) + ":" + format(ss);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -787,7 +791,7 @@ public class TablaMaestraProcessor {
     private void noHayValoresenMatriz(Nodo nodoFin, ServicioDistancia servicioDistancia) {
         log.warn("Error en la busqueda de la matriz de distancia");
         log.warn("No es posible encontrar valores para "+servicioDistancia.getMacro()+"-"
-        +servicioDistancia.getLinea()+"-"+servicioDistancia.getSeccion()+" nodo: "+nodoFin.getCodigo()+"-"+nodoFin.getNombre());
+                +servicioDistancia.getLinea()+"-"+servicioDistancia.getSeccion()+" nodo: "+nodoFin.getCodigo()+"-"+nodoFin.getNombre());
         logDatos.add(new LogDatos("No es posible encontrar valores para "+servicioDistancia.getMacro()+"-"
                 +servicioDistancia.getLinea()+"-"+servicioDistancia.getSeccion()+" nodo: "+nodoFin.getCodigo()+"-"+nodoFin.getNombre(), TipoLog.WARN));
     }
@@ -809,7 +813,7 @@ public class TablaMaestraProcessor {
 
     private int calcularDistanciaEspecial(int seccion, DistanciaNodos distanciaNodosA, DistanciaNodos distanciaNodosB,ServicioDistancia servicioDistancia, ServicioDistancia servicioDistanciaAux,MatrizDistancia matrizDistancia ) {
         DistanciaNodos ultimoNodoSeccion = matrizDistanciaService.getUltimoDistanciaNodosByServicioAndPunto(servicioDistancia,matrizDistancia);
-     return   distanciaNodosB.getDistancia()+ultimoNodoSeccion.getDistancia();
+        return   distanciaNodosB.getDistancia()+ultimoNodoSeccion.getDistancia();
     }
 
     private String calcularId(Servicio servicio, String codigo) {
@@ -818,7 +822,7 @@ public class TablaMaestraProcessor {
 
     private TablaMaestra crearTablaMaestra(Date fechaDeProgramacion, Date fechaCreacion, String descripcion, GisCarga gisCarga,
                                            MatrizDistancia matrizDistancia,String modo) {
-       TablaMaestra tablaMaestra = new TablaMaestra(fechaCreacion,fechaDeProgramacion,descripcion,matrizDistancia,gisCarga,modo);
+        TablaMaestra tablaMaestra = new TablaMaestra(fechaCreacion,fechaDeProgramacion,descripcion,matrizDistancia,gisCarga,modo);
         tablaMaestra.setEsDefinitiva(true);
         return tablaMaestra;
     }

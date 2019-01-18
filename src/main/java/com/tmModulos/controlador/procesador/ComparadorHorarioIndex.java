@@ -37,6 +37,7 @@ public class ComparadorHorarioIndex {
     public static final int INT_PROMEDIO_CI     = 30 ;
     public static final int INT_MINIMO_CI       = 31 ;
     public static final int INT_MAXIMO_CI       = 32 ;
+    public static final int TIPOLOGIA           = 33 ;
 
 
     public static final String NODO_INICIO_TX         = "Nodo" ;
@@ -73,4 +74,6 @@ public class ComparadorHorarioIndex {
     public static final String INT_PROMEDIO_CI_TX      = "Promedio Cierre" ;
     public static final String INT_MINIMO_CI_TX        = "Minimo Cierre" ;
     public static final String INT_MAXIMO_CI_TX        = "Máximo Cierre" ;
+    public static final String TIPOLOGIA_TX            = "Tipologia" ;
+
 }

@@ -4,16 +4,14 @@ import com.tmModulos.controlador.servicios.HorariosProvisionalServicio;
 import com.tmModulos.controlador.servicios.TablaHorarioService;
 import com.tmModulos.controlador.servicios.TipoDiaService;
 import com.tmModulos.controlador.servicios.VeriPreHorarios;
-import com.tmModulos.controlador.utils.FranjaCuartos;
-import com.tmModulos.controlador.utils.FranjaDef;
-import com.tmModulos.controlador.utils.IntervaloCuartos;
-import com.tmModulos.controlador.utils.ProcessorUtils;
+import com.tmModulos.controlador.utils.*;
 import com.tmModulos.modelo.dao.tmData.HoraFranjaDao;
 import com.tmModulos.modelo.dao.tmData.TempBusesHoraDao;
 import com.tmModulos.modelo.dao.tmData.TempPosDao;
 import com.tmModulos.modelo.entity.saeBogota.HorarioS;
 import com.tmModulos.modelo.entity.saeBogota.Vigencias;
 import com.tmModulos.modelo.entity.tmData.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -45,6 +43,8 @@ public class IntervalosProcessor {
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
 
+    private List<LogDatos> logDatos;
+    private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
 
     /*Se modifican para más franjas creadas*/
 
@@ -210,6 +210,16 @@ public class IntervalosProcessor {
         valores[8] = maximo(intervalosNovena);
         valores[9] = maximo(intervalosDecima);
 
+        String valoress = "";
+        for(int i=0; i<valores.length; i++){
+            valoress = valoress + "["+ valores[i] +"] ";
+        }
+
+        log.info("Maximo: "+valoress);
+
+        logDatos = new ArrayList<>();
+        logDatos.add(new LogDatos("Maximo: "+valoress, TipoLog.INFO));
+
         /*double valorInicio = maximo(intervalosInicio);
         double valorPicoAm = maximo(intervalosPicoAM);
         double valorValle = maximo(intervalosValle);
@@ -246,22 +256,41 @@ public class IntervalosProcessor {
         intervalos.setBusesNovena(buses[8]);
         intervalos.setBusesDecima(buses[9]);
         horariosProvisionalServicio.addIntervalos(intervalos);
+
+        String valoress = "";
+        for(int i=0; i<buses.length; i++){
+            valoress = valoress + "["+ buses[i] +"] ";
+        }
+        log.info("I. Buses: "+valoress);
+
+        logDatos = new ArrayList<>();
+        logDatos.add(new LogDatos("Maximo: "+valoress, TipoLog.INFO));
+
         return intervalos;
     }
 
     private Intervalos intervaloMinimo(ServicioTipoDia servicio, TablaMaestraServicios tablaMaestraServicios) {
 
         double[] valores = new double[10];
-        valores[0] = maximo(intervalosPrimera);
-        valores[1] = maximo(intervalosSegunda);
-        valores[2] = maximo(intervalosTercera);
-        valores[3] = maximo(intervalosCuarta);
-        valores[4] = maximo(intervalosQuinta);
-        valores[5] = maximo(intervalosSexta);
-        valores[6] = maximo(intervalosSeptima);
-        valores[7] = maximo(intervalosOctava);
-        valores[8] = maximo(intervalosNovena);
-        valores[9] = maximo(intervalosDecima);
+        valores[0] = minimo(intervalosPrimera);
+        valores[1] = minimo(intervalosSegunda);
+        valores[2] = minimo(intervalosTercera);
+        valores[3] = minimo(intervalosCuarta);
+        valores[4] = minimo(intervalosQuinta);
+        valores[5] = minimo(intervalosSexta);
+        valores[6] = minimo(intervalosSeptima);
+        valores[7] = minimo(intervalosOctava);
+        valores[8] = minimo(intervalosNovena);
+        valores[9] = minimo(intervalosDecima);
+
+        String valoress = "";
+        for(int i=0; i<valores.length; i++){
+            valoress = valoress + "["+ valores[i] +"] ";
+        }
+        log.info("Minimo: "+valoress);
+
+        logDatos = new ArrayList<>();
+        logDatos.add(new LogDatos("Maximo: "+valoress, TipoLog.INFO));
 
         /*double valorInicio = minimo(intervalosPrimera);
         double valorPicoAm = minimo(intervalosSegunda);
@@ -275,16 +304,25 @@ public class IntervalosProcessor {
     private Intervalos intervaloPromedio(ServicioTipoDia servicio,TablaMaestraServicios tablaMaestraServicio) {
 
         double[] valores = new double[10];
-        valores[0] = maximo(intervalosPrimera);
-        valores[1] = maximo(intervalosSegunda);
-        valores[2] = maximo(intervalosTercera);
-        valores[3] = maximo(intervalosCuarta);
-        valores[4] = maximo(intervalosQuinta);
-        valores[5] = maximo(intervalosSexta);
-        valores[6] = maximo(intervalosSeptima);
-        valores[7] = maximo(intervalosOctava);
-        valores[8] = maximo(intervalosNovena);
-        valores[9] = maximo(intervalosDecima);
+        valores[0] = promedio(intervalosPrimera);
+        valores[1] = promedio(intervalosSegunda);
+        valores[2] = promedio(intervalosTercera);
+        valores[3] = promedio(intervalosCuarta);
+        valores[4] = promedio(intervalosQuinta);
+        valores[5] = promedio(intervalosSexta);
+        valores[6] = promedio(intervalosSeptima);
+        valores[7] = promedio(intervalosOctava);
+        valores[8] = promedio(intervalosNovena);
+        valores[9] = promedio(intervalosDecima);
+
+        String valoress = "";
+        for(int i=0; i<valores.length; i++){
+            valoress = valoress + "["+ valores[i] +"] ";
+        }
+        log.info("Promedio: "+valoress);
+
+        logDatos = new ArrayList<>();
+        logDatos.add(new LogDatos("Maximo: "+valoress, TipoLog.INFO));
 
         /*double promedioInicio = promedio( intervalosInicio);
         double promedioPicoAm = promedio(intervalosPicoAM);
@@ -339,17 +377,17 @@ public class IntervalosProcessor {
                 } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.CUARTA)) {
                     intervalosCuarta.add(valorFInal);
                 } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.QUINTA)) {
-                    intervalosCuarta.add(valorFInal);
-                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEXTA)) {
-                    intervalosCuarta.add(valorFInal);
-                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEPTIMA)) {
-                    intervalosCuarta.add(valorFInal);
-                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.OCTAVA)) {
-                    intervalosCuarta.add(valorFInal);
-                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.NOVENA)) {
-                    intervalosCuarta.add(valorFInal);
-                } else {
                     intervalosQuinta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEXTA)) {
+                    intervalosSexta.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.SEPTIMA)) {
+                    intervalosSeptima.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.OCTAVA)) {
+                    intervalosOctava.add(valorFInal);
+                } else if (intervalo.getTipoFranja().getNombre().equals(FranjaDef.NOVENA)) {
+                    intervalosNovena.add(valorFInal);
+                } else {
+                    intervalosDecima.add(valorFInal);
                 }
             }
 
@@ -433,6 +471,21 @@ public class IntervalosProcessor {
                     prog = estaEnEstaFranja(instante,intervalosFranjaCuarta);
                     if(prog == null){
                         prog = estaEnEstaFranja(instante,intervalosFranjaQuinta);
+                        if(prog == null){
+                            prog = estaEnEstaFranja(instante,intervalosFranjaSexta);
+                            if(prog == null){
+                                prog = estaEnEstaFranja(instante,intervalosFranjaSeptima);
+                                if(prog == null){
+                                    prog = estaEnEstaFranja(instante,intervalosFranjaOctava);
+                                    if(prog == null){
+                                        prog = estaEnEstaFranja(instante,intervalosFranjaNovena);
+                                        if(prog == null){
+                                            prog = estaEnEstaFranja(instante,intervalosFranjaDecima);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -496,7 +549,6 @@ public class IntervalosProcessor {
             tiempoTotal= tiempoTotal/tiempos.size();
            return ProcessorUtils.round(tiempoTotal,2);
         }
-
 
         return ProcessorUtils.round(tiempoTotal,2);
     }

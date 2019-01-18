@@ -230,9 +230,8 @@ public class ProcessorUtils {
                 HSSFCell cell = row.getCell(cellInd);
                 String strVal = cell.getStringCellValue();
                 String headerName = header.getCell(cellInd).getStringCellValue();
-                if(headerName.equals("V-Pico AM") ||headerName.equals("V-Valle") ||headerName.equals("V-Pico PM") ||
-                        headerName.equals("I-Inicio") ||headerName.equals("I-Pico AM") ||headerName.equals("I-Valle") ||
-                        headerName.equals("I-Pico PM") ||headerName.equals("I-Cierre") ){
+                if(headerName.equals("V-05:30-06:30") ||headerName.equals("V-06:30-08:00") ||headerName.equals("V-08:00-09:00") || headerName.equals("V-09:00-16:00") || headerName.equals("V-16:00-17:00") || headerName.equals("V-17:00-18:30") || headerName.equals("V-18:30-19:30") ||headerName.equals("V-19:30-20:30") ||
+                        headerName.equals("I-00:00-05:30") ||headerName.equals("I-05:30-06:30") ||headerName.equals("I-06:30-08:00") || headerName.equals("I-08:00-09:00") ||headerName.equals("I-09:00-16:00") || headerName.equals("I-16:00-17:00") ||headerName.equals("I-17:00-18:30") ||headerName.equals("I-18:30-19:30") || headerName.equals("I-19:30-20:30") ||headerName.equals("I-20:30-00:00")){
                     //Double
                     try {
                         double dblVal = Double.valueOf(strVal);
