@@ -75,7 +75,7 @@
                                     <p:column colspan="10" headerText="Ciclo" style="width: 520px"/>
                                     <p:column colspan="10" headerText="Intervalos" style="width: 520px"/>
                                     <p:column colspan="10" headerText="Buses Hora" style="width: 520px"/>
-                                    <p:column colspan="8" headerText="Velocidades Teoricas" style="width: 380px"/>
+                                    <p:column colspan="10" headerText="Velocidades Teoricas" style="width: 380px"/>
 
                                 </p:row>
                                 <p:row>
@@ -203,7 +203,7 @@
                                     <p:column filterBy="#{tservicio.cicloServicio.minimoQuinta}" headerText="09:00-16:00" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimoQuinta}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
-                                    <p:column filterBy="#{tservicio.cicloServicio.minimoSexta}" headerText="o16:00-17:00" filterStyle="width: 70px;"
+                                    <p:column filterBy="#{tservicio.cicloServicio.minimoSexta}" headerText="16:00-17:00" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.cicloServicio.minimooSexta}"
                                               visible="#{busquedaTabla.visibleMinimos}"/>
                                     <p:column filterBy="#{tservicio.cicloServicio.minimoSeptima}" headerText="17:00-18:30" filterStyle="width: 70px;"
@@ -289,7 +289,7 @@
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesSegunda }" headerText="05:30-06:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSegunda}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesTercera }" headerText="Tercer" filterStyle="width: 70px;"
+                                    <p:column filterBy="#{tservicio.intervaloPromedio.busesTercera }" headerText="06:30-08:00" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesTercer}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesCuarta }" headerText="08:00-09:00" filterStyle="width: 70px;"
@@ -298,7 +298,6 @@
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesQuinta }" headerText="09:00-16:00" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesQuinta}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
-
                                     <p:column filterBy="#{tservicio.intervaloPromedio.busesSexta }" headerText="16:00-17:00" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.intervaloPromedio.busesSexta}"
                                               visible="#{busquedaTabla.visibleInterPromedio}"/>
@@ -444,6 +443,9 @@
                                               visible="#{busquedaTabla.visibleInterMaximo}"/>
 
                                     <!--//Velocidad-->
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoPrimera}" headerText="00:00-05:30" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPrimera}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
                                     <p:column filterBy="#{tservicio.velocidadProgramada.optimoSegunda}" headerText="05:30-06:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSegunda}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
@@ -468,8 +470,14 @@
                                     <p:column filterBy="#{tservicio.velocidadProgramada.optimoNovena}" headerText="19:30-20:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoNovena}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.optimoDecima}" headerText="20:30-00:00" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoDecima}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleOptimos}" />
 
 
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoPrimera}" headerText="00:00-05:30" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoPrimera}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMinimos}"/>
                                     <p:column filterBy="#{tservicio.velocidadProgramada.minimoSegunda}" headerText="05:30-06:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoSegunda}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMinimos}"/>
@@ -494,7 +502,13 @@
                                     <p:column filterBy="#{tservicio.velocidadProgramada.minimoNovena}" headerText="19:30-20:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoNovena}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.minimoDecima}" headerText="20:30-00:00" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoDecima}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
 
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoPrimera}" headerText="00:00-05:30" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPrimera}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
                                     <p:column filterBy="#{tservicio.velocidadProgramada.maximoSegunda}" headerText="05:30-06:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSegunda}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
@@ -518,6 +532,9 @@
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
                                     <p:column filterBy="#{tservicio.velocidadProgramada.maximoNovena}" headerText="19:30-20:30" filterStyle="width: 70px;"
                                               filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoNovena}"
+                                              style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
+                                    <p:column filterBy="#{tservicio.velocidadProgramada.maximoDecima}" headerText="20:30-00:00" filterStyle="width: 70px;"
+                                              filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoDecima}"
                                               style="width: 120px" visible="#{busquedaTabla.visibleMaximos}" />
                                 </p:row>
                             </p:columnGroup>
@@ -1253,7 +1270,7 @@
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
                                 <h:outputText value="#{tservicio.intervaloMinimo.busesQuinta}" style="width: 122px"/>
                             </p:column>
-                            <p:column filterBy="#{tservicio.intervaloMinimo.busesSexta }" headerText="BH-Sexta " filterStyle="width: 100px;"
+                            <p:column filterBy="#{tservicio.intervaloMinimo.busesSexta }" headerText="BH-16:00-17:00" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloMinimo.busesSexta }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMinimo}">
                                 <h:outputText value="#{tservicio.intervaloMinimo.busesSexta }" style="width: 122px"/>
@@ -1304,7 +1321,7 @@
                                 <h:outputText value="#{tservicio.intervaloMaximo.valorTercera}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorCuarta }" headerText="I-Cuarta " filterStyle="width: 100px;"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorCuarta }" headerText="I-08:00-09:00" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorCuarta }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
                                 <h:outputText value="#{tservicio.intervaloMaximo.valorCuarta }" style="width: 122px">
@@ -1337,7 +1354,7 @@
                                 <h:outputText value="#{tservicio.intervaloMaximo.valorOctava}" style="width: 122px"/>
                             </p:column>
 
-                            <p:column filterBy="#{tservicio.intervaloMaximo.valorNovena }" headerText="I-Novena " filterStyle="width: 100px;"
+                            <p:column filterBy="#{tservicio.intervaloMaximo.valorNovena }" headerText="I-19:30-20:30" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.intervaloMaximo.valorNovena }"
                                       style="width: 120px" visible="#{busquedaTabla.visibleInterMaximo}">
                                 <h:outputText value="#{tservicio.intervaloMaximo.valorNovena }" style="width: 122px">
@@ -1413,6 +1430,12 @@
                             </p:column>
 
                             <!--//Velocidades teoricas-->
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoPrimera}" headerText="V-00:00-05:30" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPrimera}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoPrimera}" style="width: 122px"/>
+                            </p:column>
+
                             <p:column filterBy="#{tservicio.velocidadProgramada.optimoSegunda}" headerText="V-05:30-06:30" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoSegunda}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
@@ -1459,6 +1482,19 @@
                                       filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoNovena}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
                                 <h:outputText value="#{tservicio.velocidadProgramada.optimoNovena}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoDecima}" headerText="V-20:30-00:00" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoDecima}" style="width: 122px"/>
+                            </p:column>
+
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.optimoPrimera}" headerText="V-00:00-05:30" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.optimoPrimera}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleOptimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.optimoPrimera}" style="width: 122px"/>
                             </p:column>
 
                             <p:column filterBy="#{tservicio.velocidadProgramada.minimoSegunda}" headerText="V-05:30-06:30" filterStyle="width: 100px;"
@@ -1509,7 +1545,18 @@
                                 <h:outputText value="#{tservicio.velocidadProgramada.minimoNovena}" style="width: 122px"/>
                             </p:column>
 
+                            <p:column filterBy="#{tservicio.velocidadProgramada.minimoDecima}" headerText="V-20:30-00:00" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.minimoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMinimos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.minimoDecima}" style="width: 122px"/>
+                            </p:column>
 
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoPrimera}" headerText="V-00:00-05:30" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoPrimera}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoPrimera}" style="width: 122px"/>
+                            </p:column>
 
                             <p:column filterBy="#{tservicio.velocidadProgramada.maximoSegunda}" headerText="V-05:30-06:30" filterStyle="width: 100px;"
                                       filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoSegunda}"
@@ -1557,6 +1604,12 @@
                                       filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoNovena}"
                                       style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
                                 <h:outputText value="#{tservicio.velocidadProgramada.maximoNovena}" style="width: 122px"/>
+                            </p:column>
+
+                            <p:column filterBy="#{tservicio.velocidadProgramada.maximoDecima}" headerText="V-20:30-00:00" filterStyle="width: 100px;"
+                                      filterMatchMode="contains" sortBy="#{tservicio.velocidadProgramada.maximoDecima}"
+                                      style="width: 120px" visible="#{busquedaTabla.visibleMaximos}">
+                                <h:outputText value="#{tservicio.velocidadProgramada.maximoDecima}" style="width: 122px"/>
                             </p:column>
 
                             <f:facet name="footer">

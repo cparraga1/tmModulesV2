@@ -158,6 +158,7 @@ public class ProcessorUtils {
 
         worksheet.shiftRows(0, worksheet.getLastRowNum(), 1);
         Row rowInfo1 = worksheet.createRow(0);
+
         createCellResultados(rowInfo1, TablaMaestraDEF.INFO_SERVICIO_BASE,TablaMaestraDEF.COL_SERVICIO_BASE);
         worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_SERVICIO_BASE));
 
@@ -200,10 +201,14 @@ public class ProcessorUtils {
         createCellResultados(rowInfo1, TablaMaestraDEF.INFO_BUSES_HORA_MAXIMO,TablaMaestraDEF.COL_BUSES_HORA_MAXIMO);
         worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_BUSES_HORA_MAXIMO));
 
-        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_VELOCIDAD_TEORICA,TablaMaestraDEF.COL_VELOCIDAD_TEORICA);
-        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_VELOCIDAD_TEORICA));
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_VELOCIDAD_TEORICA_PROMEDIO,TablaMaestraDEF.COL_VELOCIDAD_TEORICA_PROMEDIO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_VELOCIDAD_TEORICA_PROMEDIO));
 
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_VELOCIDAD_TEORICA_MINIMO,TablaMaestraDEF.COL_VELOCIDAD_TEORICA_MINIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_VELOCIDAD_TEORICA_MINIMO));
 
+        createCellResultados(rowInfo1, TablaMaestraDEF.INFO_VELOCIDAD_TEORICA_MAXIMO,TablaMaestraDEF.COL_VELOCIDAD_TEORICA_MAXIMO);
+        worksheet.addMergedRegion(CellRangeAddress.valueOf(TablaMaestraDEF.RANGO_VELOCIDAD_TEORICA_MAXIMO));
     }
 
 

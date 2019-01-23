@@ -315,8 +315,9 @@ public class TablaMaestraProcessor {
         VelocidadProgramada velocidadProgramada = getVelocidadProgramada(cicloServicio, distancia);
         VelocidadProgramada oldVelocidad = tablaMaestraServicios.getVelocidadProgramada();
 
-        //Velocidad ignorando franjas Primera y Decima ??
-
+        oldVelocidad.setOptimoPrimera(velocidadProgramada.getOptimoPrimera());
+        oldVelocidad.setMinimoPrimera(velocidadProgramada.getMinimoPrimera());
+        oldVelocidad.setMaximoPrimera(velocidadProgramada.getMaximoPrimera());
         oldVelocidad.setOptimoSegunda(velocidadProgramada.getOptimoSegunda());
         oldVelocidad.setMinimoSegunda(velocidadProgramada.getMinimoSegunda());
         oldVelocidad.setMaximoSegunda(velocidadProgramada.getMaximoSegunda());
@@ -341,6 +342,9 @@ public class TablaMaestraProcessor {
         oldVelocidad.setOptimoNovena(velocidadProgramada.getOptimoNovena());
         oldVelocidad.setMinimoNovena(velocidadProgramada.getMinimoNovena());
         oldVelocidad.setMaximoNovena(velocidadProgramada.getMaximoNovena());
+        oldVelocidad.setOptimoDecima(velocidadProgramada.getOptimoDecima());
+        oldVelocidad.setMinimoDecima(velocidadProgramada.getMinimoDecima());
+        oldVelocidad.setMaximoDecima(velocidadProgramada.getMaximoDecima());
 
         tablaMaestraServicios.setVelocidadProgramada(oldVelocidad);
 
@@ -352,8 +356,9 @@ public class TablaMaestraProcessor {
         if(distancia!=-1){
             distanciaKM = distancia/1000;
 
-            //Velocidad ignorando franjas Primera y Decima ??
-
+            velocidadProgramada.setOptimoPrimera(calcularVelocidad(distanciaKM,cicloServicio.getOptimoPrimera()));
+            velocidadProgramada.setMaximoPrimera(calcularVelocidad(distanciaKM,cicloServicio.getMaximoPrimera()));
+            velocidadProgramada.setMinimoPrimera(calcularVelocidad(distanciaKM,cicloServicio.getMinimoPrimera()));
             velocidadProgramada.setOptimoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getOptimoSegunda()));
             velocidadProgramada.setMaximoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getMaximoSegunda()));
             velocidadProgramada.setMinimoSegunda(calcularVelocidad(distanciaKM,cicloServicio.getMinimoSegunda()));
@@ -378,7 +383,9 @@ public class TablaMaestraProcessor {
             velocidadProgramada.setOptimoNovena(calcularVelocidad(distanciaKM,cicloServicio.getOptimoNovena()));
             velocidadProgramada.setMaximoNovena(calcularVelocidad(distanciaKM,cicloServicio.getMaximoNovena()));
             velocidadProgramada.setMinimoNovena(calcularVelocidad(distanciaKM,cicloServicio.getMinimoNovena()));
-
+            velocidadProgramada.setOptimoDecima(calcularVelocidad(distanciaKM,cicloServicio.getOptimoDecima()));
+            velocidadProgramada.setMaximoDecima(calcularVelocidad(distanciaKM,cicloServicio.getMaximoDecima()));
+            velocidadProgramada.setMinimoDecima(calcularVelocidad(distanciaKM,cicloServicio.getMinimoDecima()));
         }
         return velocidadProgramada;
     }
@@ -938,8 +945,9 @@ public class TablaMaestraProcessor {
 
         VelocidadProgramada velocidadProgramada = new VelocidadProgramada();
 
-        //Velocidad Programada ignorando la Primera y Decima Franja ??
-
+        velocidadProgramada.setMaximoPrimera(tablaMaestraServicios.getVelocidadProgramada().getMaximoPrimera());
+        velocidadProgramada.setMinimoPrimera(tablaMaestraServicios.getVelocidadProgramada().getMinimoPrimera());
+        velocidadProgramada.setOptimoPrimera(tablaMaestraServicios.getVelocidadProgramada().getOptimoPrimera());
         velocidadProgramada.setMaximoSegunda(tablaMaestraServicios.getVelocidadProgramada().getMaximoSegunda());
         velocidadProgramada.setMinimoSegunda(tablaMaestraServicios.getVelocidadProgramada().getMinimoSegunda());
         velocidadProgramada.setOptimoSegunda(tablaMaestraServicios.getVelocidadProgramada().getOptimoSegunda());
@@ -964,6 +972,9 @@ public class TablaMaestraProcessor {
         velocidadProgramada.setMaximoNovena(tablaMaestraServicios.getVelocidadProgramada().getMaximoNovena());
         velocidadProgramada.setMinimoNovena(tablaMaestraServicios.getVelocidadProgramada().getMinimoNovena());
         velocidadProgramada.setOptimoNovena(tablaMaestraServicios.getVelocidadProgramada().getOptimoNovena());
+        velocidadProgramada.setMaximoDecima(tablaMaestraServicios.getVelocidadProgramada().getMaximoDecima());
+        velocidadProgramada.setMinimoDecima(tablaMaestraServicios.getVelocidadProgramada().getMinimoDecima());
+        velocidadProgramada.setOptimoDecima(tablaMaestraServicios.getVelocidadProgramada().getOptimoDecima());
 
         tablaMaestraService.addVelocidadProgramada(velocidadProgramada);
         nuevaTablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
