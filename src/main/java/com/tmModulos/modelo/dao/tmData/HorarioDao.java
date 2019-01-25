@@ -52,6 +52,7 @@ public class HorarioDao {
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Horario.class);
         criteria.add(Restrictions.eq("servicio", servicio));
         criteria.add(Restrictions.eq("tipoDia", tipoDia));
+        criteria.addOrder(Order.asc("horaInicio"));
         return criteria.list();
     }
 

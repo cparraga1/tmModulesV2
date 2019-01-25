@@ -265,21 +265,28 @@ public class TablaMaestraProcessor {
 
     private HorariosServicio getHorariosServicio(List<Horario> horariosByServicio) {
         HorariosServicio horario= new HorariosServicio();
+
+        int ext = 0;
+
         if( horariosByServicio.size()>0){
             for(Horario hr: horariosByServicio){
+                ext = ext + 1;
                 if(hr.getTipoHorario().equals("P")){
-                    if(hr.getConfig()==1){
+                    //if(hr.getConfig()==1){
+                    if(ext <= 2){
                         horario.setHoraInicioProgA(hr.getHoraInicio());
                         horario.setHoraFinProgA(hr.getHoraFin());
-                    }else if(hr.getConfig() ==2){
+                    } else /*if(hr.getConfig() ==2)*/{
                         horario.setHoraInicioProgB(hr.getHoraInicio());
                         horario.setHoraFinProgB(hr.getHoraFin());
                     }
-                }else {
-                    if(hr.getConfig()==1){
+                }
+                else {
+                    //if(hr.getConfig()==1){
+                    if(ext <= 2){
                         horario.setHoraInicioUsuarioA(hr.getHoraInicio());
                         horario.setHoraFinUsuarioA(hr.getHoraFin());
-                    }else if(hr.getConfig() ==2){
+                    }else /*if(hr.getConfig() ==2)*/{
                         horario.setHoraInicioUsuarioB(hr.getHoraInicio());
                         horario.setHoraFinUsuarioB(hr.getHoraFin());
                     }
