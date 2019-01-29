@@ -54,7 +54,8 @@ public class TablaMaestraProcessor {
 
     private List<LogDatos> logDatos;
     private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
-    private String destination= PathFiles.PATH_FOR_FILES+"\\Migracion\\/";
+    //private String destination = PathFiles.PATH_FOR_FILES+"\\Migracion\\/";
+    private String destination = PathFiles.PATH_FOR_FILES_CONVERSION;
 
 
     private Map serviciosIncluidos;
@@ -122,61 +123,76 @@ public class TablaMaestraProcessor {
             // intervalosProcessor.precalcularIntervalosProgramacion();
 
             for (ServicioTipoDia servicio: serviciosTipoDia) {
-                System.out.println(servicio.getServicio().getIdentificador());
 
-                //Encontrar nodo Inicio del servicio por el codigo
-                // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
-                List<GisServicio> gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
+                if (servicio.getServicio().getIdentificador().equals("56-863-1046-1966") || servicio.getServicio().getIdentificador().equals("56-863-1046-1304") || servicio.getServicio().getIdentificador().equals("56-863-1179-1908") || servicio.getServicio().getIdentificador().equals("56-863-1179-1312")) {
 
-                TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
-                tablaMaestraServicios= copiarInfoBasicaServicio(servicio, tablaMaestraServicios,tablaMaestra);
+                    System.out.println(servicio.getServicio().getIdentificador());
 
+                    //Encontrar nodo Inicio del servicio por el codigo
+                    // Nodo nodo = nodoService.getNodoByCodigo(servicio.getServicio().getPunto());
+                    List<GisServicio> gisServicio = obtenerGisServicio(servicio, servicio.getServicio().getIdentificadorGIS());
 
-                if(gisServicio.size()>0){
-
-                    //Obtener información de los arco tiempo del GIS de carga
-                    List<ArcoTiempo> arcoTiempoRecords = gisCargaService.getArcoTiempoByGisCargaAndServicio(gis,gisServicio);
-                    if(arcoTiempoRecords.size()>0){
-
-                        ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
+                    TablaMaestraServicios tablaMaestraServicios = new TablaMaestraServicios();
+                    tablaMaestraServicios = copiarInfoBasicaServicio(servicio, tablaMaestraServicios, tablaMaestra);
 
 
-                        //Obtener Nodo Inicio basado en la informacion del GIS de carga
-                        Nodo nodoInicio = getNodoInicio(servicio.getServicio().getPunto()+"");
-                        if(nodoInicio!=null){
-                            tablaMaestraServicios = agregarInfoNodo(servicio.getServicio(), tablaMaestraServicios, nodoInicio);
+                    if (gisServicio.size() > 0) {
 
-                            Nodo nodoFinal = getNodoInicio(servicio.getServicio().getPuntoFin()+"");
-                            if(nodoFinal!=null){
-                                tablaMaestraServicios =agregarInfoNodoFin(servicio.getServicio(),tablaMaestraServicios,nodoFinal);
+                        //Obtener información de los arco tiempo del GIS de carga
+                        List<ArcoTiempo> arcoTiempoRecords = gisCargaService.getArcoTiempoByGisCargaAndServicio(gis, gisServicio);
+                        if (arcoTiempoRecords.size() > 0) {
 
-                                //Calcular datos basicos matriz
-                                tablaMaestraServicios.setTipoDia(tipoDia);
-                                tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
-                                tablaMaestraServicios= calcularDistancia(tablaMaestraServicios,nodoInicio,nodoFinal,matriz);
+                            ArcoTiempo arcoTiempoBase = arcoTiempoRecords.get(0);
 
-                                //Calcular ciclos
-                                CicloServicio cicloServicio = calcularCiclos(tablaMaestraServicios,arcoTiempoRecords);
-                                tablaMaestraServicios.setCicloServicio(cicloServicio);
-                                //Calcular Velocidad Programada
-                                VelocidadProgramada  velocidadProgramada = calcularVelocidadProgramada(cicloServicio,tablaMaestraServicios.getDistancia());
-                                tablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
 
-                                HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(),dia);
-                                tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                            //Obtener Nodo Inicio basado en la informacion del GIS de carga
+                            Nodo nodoInicio = getNodoInicio(servicio.getServicio().getPunto() + "");
+                            if (nodoInicio != null) {
+                                tablaMaestraServicios = agregarInfoNodo(servicio.getServicio(), tablaMaestraServicios, nodoInicio);
 
-                                tablaMaestraService.addTServicios(tablaMaestraServicios);
+                                Nodo nodoFinal = getNodoInicio(servicio.getServicio().getPuntoFin() + "");
+                                if (nodoFinal != null) {
+                                    tablaMaestraServicios = agregarInfoNodoFin(servicio.getServicio(), tablaMaestraServicios, nodoFinal);
 
-                                //Calcular Intervalos de tiempo
-                                intervalosProcessor.precalcularIntervalosProgramacion();
-                                List<Intervalos> intervaloses = intervalosProcessor.calcularIntervalos(tablaMaestraServicios, servicio);
+                                    //Calcular datos basicos matriz
+                                    tablaMaestraServicios.setTipoDia(tipoDia);
+                                    tablaMaestraServicios.setSecuencia(arcoTiempoBase.getSecuencia());
+                                    tablaMaestraServicios = calcularDistancia(tablaMaestraServicios, nodoInicio, nodoFinal, matriz);
+
+                                    //Calcular ciclos
+                                    CicloServicio cicloServicio = calcularCiclos(tablaMaestraServicios, arcoTiempoRecords);
+                                    tablaMaestraServicios.setCicloServicio(cicloServicio);
+                                    //Calcular Velocidad Programada
+                                    VelocidadProgramada velocidadProgramada = calcularVelocidadProgramada(cicloServicio, tablaMaestraServicios.getDistancia());
+                                    tablaMaestraServicios.setVelocidadProgramada(velocidadProgramada);
+
+                                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
+                                    tablaMaestraServicios.setHorariosServicio(horariosServicio);
+
+                                    tablaMaestraService.addTServicios(tablaMaestraServicios);
+
+                                    //Calcular Intervalos de tiempo
+                                    intervalosProcessor.precalcularIntervalosProgramacion();
+                                    List<Intervalos> intervaloses = intervalosProcessor.calcularIntervalos(tablaMaestraServicios, servicio);
 //                                 List<Intervalos> intervaloses = intervalosProcessor.calcularValorIntervaloPorFranja(tablaMaestraServicios, servicio,gisIntervalos);
 
 
-                            }else{
-                                log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado");
-                                logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoFinal()+" No encontrado", TipoLog.WARN));
-                                tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
+                                } else {
+                                    log.warn("Nodo con nombre " + arcoTiempoBase.getServicio().getNodoFinal() + " No encontrado");
+                                    logDatos.add(new LogDatos("Nodo con nombre " + arcoTiempoBase.getServicio().getNodoFinal() + " No encontrado", TipoLog.WARN));
+                                    tablaMaestraServicios = addCicloServicio(tablaMaestraServicios);
+                                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
+                                    tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                                    tablaMaestraServicios.setIdentificadorb("0");
+                                    tablaMaestraServicios.setIdentificadorc("0");
+                                    tablaMaestraServicios.setSentido(1);
+                                    tablaMaestraService.addTServicios(tablaMaestraServicios);
+                                }
+
+                            } else {
+                                log.warn("Nodo con nombre " + arcoTiempoBase.getServicio().getNodoIncial() + " No encontrado");
+                                logDatos.add(new LogDatos("Nodo con nombre " + arcoTiempoBase.getServicio().getNodoIncial() + " No encontrado", TipoLog.WARN));
+                                tablaMaestraServicios = addCicloServicio(tablaMaestraServicios);
                                 HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
                                 tablaMaestraServicios.setHorariosServicio(horariosServicio);
                                 tablaMaestraServicios.setIdentificadorb("0");
@@ -185,33 +201,22 @@ public class TablaMaestraProcessor {
                                 tablaMaestraService.addTServicios(tablaMaestraServicios);
                             }
 
-                        }else{
-                            log.warn("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado");
-                            logDatos.add(new LogDatos("Nodo con nombre "+arcoTiempoBase.getServicio().getNodoIncial()+" No encontrado", TipoLog.WARN));
-                            tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
-                            HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
-                            tablaMaestraServicios.setHorariosServicio(horariosServicio);
-                            tablaMaestraServicios.setIdentificadorb("0");
-                            tablaMaestraServicios.setIdentificadorc("0");
-                            tablaMaestraServicios.setSentido(1);
-                            tablaMaestraService.addTServicios(tablaMaestraServicios);
+
+                        } else {
+                            servicioNoExisteEnGISCarga(servicio);
+
                         }
+                    } else {
+                        tablaMaestraServicios = addCicloServicio(tablaMaestraServicios);
 
-
-                    }else{
+                        HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
+                        tablaMaestraServicios.setHorariosServicio(horariosServicio);
+                        tablaMaestraServicios.setIdentificadorb("0");
+                        tablaMaestraServicios.setIdentificadorc("0");
+                        tablaMaestraServicios.setSentido(1);
+                        tablaMaestraService.addTServicios(tablaMaestraServicios);
                         servicioNoExisteEnGISCarga(servicio);
-
                     }
-                }else{
-                    tablaMaestraServicios= addCicloServicio(tablaMaestraServicios);
-
-                    HorariosServicio horariosServicio = calcularHorarioServicios(servicio.getServicio(), dia);
-                    tablaMaestraServicios.setHorariosServicio(horariosServicio);
-                    tablaMaestraServicios.setIdentificadorb("0");
-                    tablaMaestraServicios.setIdentificadorc("0");
-                    tablaMaestraServicios.setSentido(1);
-                    tablaMaestraService.addTServicios(tablaMaestraServicios);
-                    servicioNoExisteEnGISCarga(servicio);
                 }
             }
         }
