@@ -74,6 +74,8 @@ public class ServiciosParametrizacionView {
         tipologias.add("ARTICULADO");
         tipologias.add("BIARTICULADO");
         tipologias.add("MIXTO");
+        tipologias.add("DUAL HIBRIDO");
+        tipologias.add("DUAL DIESEL");
         tipoServicio= new ArrayList<>();
         tipoServicio.add("1");
         tipoServicio.add("2");
@@ -148,7 +150,7 @@ public class ServiciosParametrizacionView {
             servicioService.deleteServicioTipoDia(servicioTipoDia);
         }
         messagesView.info("Servicio Eliminado","");
-        serviciosRecords = servicioService.getServicioAll();
+        serviciosRecords = servicioService.getServiciosActivos();
     }
 
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
@@ -188,6 +190,7 @@ public class ServiciosParametrizacionView {
                 nuevoServicio.setLineaCompuesta(0);
                 nuevoServicio.setTrayecto(0);
                 nuevoServicio.setIdentificadorGIS(identificadorGIS);
+                nuevoServicio.setConfig(1);
                 servicioService.addServicio(nuevoServicio);
                 serviciosRecords= servicioService.getServicioAll();
                 messagesView.info("Servicio Creado","");

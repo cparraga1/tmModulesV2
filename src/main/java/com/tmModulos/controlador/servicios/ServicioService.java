@@ -148,6 +148,10 @@ public class ServicioService {
         return servicioDao.getServicioAll();
     }
 
+    public List<Servicio> getServiciosActivos() {
+        return servicioDao.getServiciosActivos();
+    }
+
     public List<ServicioTipoDia> getServiciosById(String Identificador){
         return servicioTipoDiaDao.getServiciosById(Identificador);
     }

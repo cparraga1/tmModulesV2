@@ -51,6 +51,9 @@ public class VerificacionHorarios {
     @Autowired
     private CargaDatosIntervalosPre intervalosPre;
 
+    @Autowired
+    TablaMaestraService tablaMaestraService;
+
     private CellStyle cellStyle;
     private CellStyle generalStyle;
     private Font font;
@@ -809,7 +812,7 @@ public class VerificacionHorarios {
             System.out.println("Servicio: "+servicio.getIdentificador() +" fila: "+ filas);
             Row row = worksheet.createRow(filas);
             List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
-            incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio);
+            incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio, dia.getNombre());
             List<Integer> horaInicioB = null;
             List<Integer> horaInicio = new ArrayList<>();
             List<Integer> horaFinB = null;
@@ -1041,26 +1044,16 @@ public class VerificacionHorarios {
     }
 
 
-    private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio) {
+    private void incluirDatosBaseServicio(Row row, Servicio servicio, List<Horario> horariosByServicio, String tipoDia) {
 
         String nombreNodo1 = obtenerNombreNodo(servicio.getPunto());
         DistanciaNodos nodo1 = matrizDistanciaService.getNodoByNombre(nombreNodo1, servicio);
 
-        String nombreNodo2 = obtenerNombreNodo(servicio.getPuntoFin());
-        DistanciaNodos nodo2 = matrizDistanciaService.getNodoByNombre(nombreNodo2, servicio);
-
-        String distancia = "N/A";
-        int numDistancia = 0;
-
-        if(nodo1 != null && nodo2 != null){
-            numDistancia = nodo2.getDistancia() - nodo1.getDistancia();
-            distancia = numDistancia + "";
-            System.out.println("Distancia: "+ nodo2.getDistancia() +" - "+ nodo1.getDistancia() + " = " + numDistancia);
-        }
+        String distancia = tablaMaestraService.getDistanciaServicio(servicio.getIdentificador(), tipoDia).getDistancia()+"";
 
         createCellBase(row, nombreNodo1, ComparadorHorarioIndex.NODO_INICIO);
         //createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
-        createCellBase(row, distancia, ComparadorHorarioIndex.DISTANCIA);
+        createCellBase(row, distancia+".0", ComparadorHorarioIndex.DISTANCIA);
         createCellBase(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
         createCellBase(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
         createCellBase(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);

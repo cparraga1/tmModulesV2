@@ -8,6 +8,7 @@ import com.tmModulos.modelo.entity.tmData.TablaMaestraServicios;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +54,19 @@ public class TablaMaestraServiciosDao {
         criteria.add(Restrictions.eq("tablaMeestra", tablaMaestra));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         return criteria.list();
+    }
+
+    public TablaMaestraServicios getDistanciaServicio(String idServicio, String tipoDia){
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TablaMaestraServicios.class);
+        criteria.add(Restrictions.eq("idInicio", idServicio));
+        criteria.add(Restrictions.eq("tipoDia", tipoDia));
+        criteria.addOrder(Order.asc("id"));
+
+        List<TablaMaestraServicios> lista = criteria.list();
+        if(lista.size()>0){
+            return lista.get(0);
+        }
+        return null;
     }
 
 }

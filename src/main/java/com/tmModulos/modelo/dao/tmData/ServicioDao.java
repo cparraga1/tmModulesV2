@@ -44,6 +44,12 @@ public class ServicioDao {
         return list;
     }
 
+    public List<Servicio> getServiciosActivos() {
+        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Servicio.class);
+        criteria.add(Restrictions.eq("estado", true));
+        return criteria.list();
+    }
+
     public Servicio getServicioBymacroLineaYseccion(int macro,int linea,int seccion, int nodo){
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Servicio.class);
         criteria.add(Restrictions.eq("macro", macro));

@@ -43,11 +43,14 @@ public class TipoFranjaDao {
         return list;
     }
 
-    public TipoFranja getTipoFranjaByHorario(String horaIncio,String horaFin){
+    public List<TipoFranja> getTipoFranjaByHorario(String horaInicio,String horaFin){
+
         Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TipoFranja.class);
-        criteria.add(Restrictions.eq("horaInicio", horaIncio));
-        criteria.add(Restrictions.eq("horaFin", horaFin));
-        return (TipoFranja) criteria.uniqueResult();
+        criteria.add(Restrictions.or(
+                Restrictions.or(Restrictions.eq("horaInicio", horaInicio), Restrictions.eq("horaFin", horaFin)),
+                Restrictions.and(Restrictions.gt("horaInicio", horaInicio), Restrictions.lt("horaFin", horaFin)))
+        );
+        return criteria.list();
     }
 
 

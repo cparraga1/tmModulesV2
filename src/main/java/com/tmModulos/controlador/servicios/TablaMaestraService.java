@@ -130,7 +130,7 @@ public class TablaMaestraService {
         return tipoFranjaDao.getTipoFranjaAll();
     }
 
-    public TipoFranja getTipoFranjaByHorario(String horaIncio,String horaFin){
+    public List<TipoFranja> getTipoFranjaByHorario(String horaIncio,String horaFin){
         return tipoFranjaDao.getTipoFranjaByHorario(horaIncio,horaFin);
     }
 
@@ -253,5 +253,9 @@ public class TablaMaestraService {
 
     public List<Horario> getHorariosByServicioAndTipoDia(Servicio servicio, TipoDia dia) {
         return horarioDao.getHorariosByServicioAndTipoDio(servicio,dia);
+    }
+
+    public TablaMaestraServicios getDistanciaServicio(String idServicio, String tipoDia){
+        return tablaMaestraServiciosDao.getDistanciaServicio(idServicio, tipoDia);
     }
 }

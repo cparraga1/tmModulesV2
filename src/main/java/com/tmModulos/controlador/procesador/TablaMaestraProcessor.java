@@ -124,7 +124,7 @@ public class TablaMaestraProcessor {
 
             for (ServicioTipoDia servicio: serviciosTipoDia) {
 
-                if (servicio.getServicio().getIdentificador().equals("56-863-1046-1966") || servicio.getServicio().getIdentificador().equals("56-863-1046-1304") || servicio.getServicio().getIdentificador().equals("56-863-1179-1908") || servicio.getServicio().getIdentificador().equals("56-863-1179-1312")) {
+                if (servicio.getServicio().getIdentificador().equals("263-640-855-11423") || servicio.getServicio().getIdentificador().equals("263-640-855-11423") || servicio.getServicio().getIdentificador().equals("56-863-1046-1966") || servicio.getServicio().getIdentificador().equals("56-863-1046-1304") || servicio.getServicio().getIdentificador().equals("56-863-1179-1908") || servicio.getServicio().getIdentificador().equals("56-863-1179-1312")) {
 
                     System.out.println(servicio.getServicio().getIdentificador());
 
@@ -611,57 +611,60 @@ public class TablaMaestraProcessor {
     //Calcula los Ciclos del Servicio
     private CicloServicio getCicloServicio(List<ArcoTiempo> arcoTiempoRecords) {
         CicloServicio cicloServicio = new CicloServicio();
-        for (ArcoTiempo arcoTiempo: arcoTiempoRecords){
+        for (ArcoTiempo arcoTiempo: arcoTiempoRecords) {
             String horaInicio = arcoTiempo.getHoraDesde();
             String horaFin = arcoTiempo.getHoraHasta();
-            horaFin = validarHoraFin(horaFin);
-            TipoFranja tipoFranja = tablaMaestraService.getTipoFranjaByHorario(horaInicio,horaFin);
-            if(tipoFranja!=null){
-                if(tipoFranja.getNombre().equals("Primera")){
-                    cicloServicio.setMinimoPrimera(sumaValores(cicloServicio.getMinimoPrimera(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoPrimera(sumaValores(cicloServicio.getMaximoPrimera(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoPrimera(sumaValores(cicloServicio.getOptimoPrimera(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Segunda")){
-                    cicloServicio.setMinimoSegunda(sumaValores(cicloServicio.getMinimoSegunda(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoSegunda(sumaValores(cicloServicio.getMaximoSegunda(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoSegunda(sumaValores(cicloServicio.getOptimoSegunda(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Tercera")){
-                    cicloServicio.setMinimoTercera(sumaValores(cicloServicio.getMinimoTercera(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoTercera(sumaValores(cicloServicio.getMaximoTercera(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoTercera(sumaValores(cicloServicio.getOptimoTercera(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Cuarta")){
-                    cicloServicio.setMinimoCuarta(sumaValores(cicloServicio.getMinimoCuarta(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoCuarta(sumaValores(cicloServicio.getMaximoCuarta(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoCuarta(sumaValores(cicloServicio.getOptimoCuarta(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Quinta")){
-                    cicloServicio.setMinimoQuinta(sumaValores(cicloServicio.getMinimoQuinta(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoQuinta(sumaValores(cicloServicio.getMaximoQuinta(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoQuinta(sumaValores(cicloServicio.getOptimoQuinta(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Sexta")){
-                    cicloServicio.setMinimoSexta(sumaValores(cicloServicio.getMinimoSexta(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoSexta(sumaValores(cicloServicio.getMaximoSexta(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoSexta(sumaValores(cicloServicio.getOptimoSexta(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Septima")){
-                    cicloServicio.setMinimoSeptima(sumaValores(cicloServicio.getMinimoSeptima(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoSeptima(sumaValores(cicloServicio.getMaximoSeptima(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoSeptima(sumaValores(cicloServicio.getOptimoSeptima(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Octava")){
-                    cicloServicio.setMinimoOctava(sumaValores(cicloServicio.getMinimoOctava(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoOctava(sumaValores(cicloServicio.getMaximoOctava(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoOctava(sumaValores(cicloServicio.getOptimoOctava(),arcoTiempo.getTiempoOptimo()));
-                }else if(tipoFranja.getNombre().equals("Novena")){
-                    cicloServicio.setMinimoNovena(sumaValores(cicloServicio.getMinimoNovena(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoNovena(sumaValores(cicloServicio.getMaximoNovena(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoNovena(sumaValores(cicloServicio.getOptimoNovena(),arcoTiempo.getTiempoOptimo()));
-                }else {
-                    cicloServicio.setMinimoDecima(sumaValores(cicloServicio.getMinimoDecima(),arcoTiempo.getTiempoMinimo()));
-                    cicloServicio.setMaximoDecima(sumaValores(cicloServicio.getMaximoDecima(),arcoTiempo.getTiempoMaximo()));
-                    cicloServicio.setOptimoDecima(sumaValores(cicloServicio.getOptimoDecima(),arcoTiempo.getTiempoOptimo()));
-                }
+            //horaFin = validarHoraFin(horaFin);
+            List<TipoFranja> tipoFranjaList = tablaMaestraService.getTipoFranjaByHorario(horaInicio, horaFin);
 
-            }else{
-                System.out.println("Tipo de franja no existente: "+horaInicio+"-"+horaFin);
+            //Para saber si la franja indicada en el GIS contiene una o varias tipo_franjas reales
+            for(TipoFranja tipoFranja:tipoFranjaList){
+            if (tipoFranja != null) {
+                if (tipoFranja.getNombre().equals("Primera")) {
+                    cicloServicio.setMinimoPrimera(sumaValores(cicloServicio.getMinimoPrimera(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoPrimera(sumaValores(cicloServicio.getMaximoPrimera(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoPrimera(sumaValores(cicloServicio.getOptimoPrimera(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Segunda")) {
+                    cicloServicio.setMinimoSegunda(sumaValores(cicloServicio.getMinimoSegunda(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSegunda(sumaValores(cicloServicio.getMaximoSegunda(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSegunda(sumaValores(cicloServicio.getOptimoSegunda(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Tercera")) {
+                    cicloServicio.setMinimoTercera(sumaValores(cicloServicio.getMinimoTercera(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoTercera(sumaValores(cicloServicio.getMaximoTercera(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoTercera(sumaValores(cicloServicio.getOptimoTercera(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Cuarta")) {
+                    cicloServicio.setMinimoCuarta(sumaValores(cicloServicio.getMinimoCuarta(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoCuarta(sumaValores(cicloServicio.getMaximoCuarta(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoCuarta(sumaValores(cicloServicio.getOptimoCuarta(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Quinta")) {
+                    cicloServicio.setMinimoQuinta(sumaValores(cicloServicio.getMinimoQuinta(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoQuinta(sumaValores(cicloServicio.getMaximoQuinta(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoQuinta(sumaValores(cicloServicio.getOptimoQuinta(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Sexta")) {
+                    cicloServicio.setMinimoSexta(sumaValores(cicloServicio.getMinimoSexta(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSexta(sumaValores(cicloServicio.getMaximoSexta(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSexta(sumaValores(cicloServicio.getOptimoSexta(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Septima")) {
+                    cicloServicio.setMinimoSeptima(sumaValores(cicloServicio.getMinimoSeptima(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoSeptima(sumaValores(cicloServicio.getMaximoSeptima(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoSeptima(sumaValores(cicloServicio.getOptimoSeptima(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Octava")) {
+                    cicloServicio.setMinimoOctava(sumaValores(cicloServicio.getMinimoOctava(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoOctava(sumaValores(cicloServicio.getMaximoOctava(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoOctava(sumaValores(cicloServicio.getOptimoOctava(), arcoTiempo.getTiempoOptimo()));
+                } else if (tipoFranja.getNombre().equals("Novena")) {
+                    cicloServicio.setMinimoNovena(sumaValores(cicloServicio.getMinimoNovena(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoNovena(sumaValores(cicloServicio.getMaximoNovena(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoNovena(sumaValores(cicloServicio.getOptimoNovena(), arcoTiempo.getTiempoOptimo()));
+                } else {
+                    cicloServicio.setMinimoDecima(sumaValores(cicloServicio.getMinimoDecima(), arcoTiempo.getTiempoMinimo()));
+                    cicloServicio.setMaximoDecima(sumaValores(cicloServicio.getMaximoDecima(), arcoTiempo.getTiempoMaximo()));
+                    cicloServicio.setOptimoDecima(sumaValores(cicloServicio.getOptimoDecima(), arcoTiempo.getTiempoOptimo()));
+                }
+            } else {
+                System.out.println("Tipo de franja no existente: " + horaInicio + "-" + horaFin);
             }
+        }
 
         }
         return cicloServicio;
