@@ -143,14 +143,26 @@ public class ServiciosParametrizacionView {
     }
 
     public void eliminar(){
-        selectedServicio.setEstado(false);
-        servicioService.updateServicio(selectedServicio);
+
         List<ServicioTipoDia> serviciosByServicio = servicioService.getServiciosByServicio(selectedServicio);
         for(ServicioTipoDia servicioTipoDia:serviciosByServicio){
             servicioService.deleteServicioTipoDia(servicioTipoDia);
         }
+        servicioService.deleteServicio(selectedServicio);
         messagesView.info("Servicio Eliminado","");
-        serviciosRecords = servicioService.getServiciosActivos();
+        serviciosRecords = servicioService.getServicioAll();
+    }
+
+    public void modificarEstado(){
+
+        boolean estado = true;
+        if(selectedServicio.getEstado() == estado){
+            estado = false;
+        }
+        selectedServicio.setEstado(estado);
+        servicioService.updateServicio(selectedServicio);
+        messagesView.info("Modicó Estado del Servicio","");
+        serviciosRecords = servicioService.getServicioAll();
     }
 
     public void addMessage(FacesMessage.Severity severity , String summary, String detail) {
@@ -191,6 +203,7 @@ public class ServiciosParametrizacionView {
                 nuevoServicio.setTrayecto(0);
                 nuevoServicio.setIdentificadorGIS(identificadorGIS);
                 nuevoServicio.setConfig(1);
+                nuevoServicio.setDistanciaBase(0);
                 servicioService.addServicio(nuevoServicio);
                 serviciosRecords= servicioService.getServicioAll();
                 messagesView.info("Servicio Creado","");
@@ -222,8 +235,6 @@ public class ServiciosParametrizacionView {
     }
 
     public void verDetalleFranjaHorario(){
-
-
 
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {

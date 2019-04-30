@@ -18,7 +18,7 @@
                     <div style="margin-top:20px">
                         <h3>#{nodosP.selectedestacion.nombre}</h3>
                         <div style="height: 10px"></div>
-                        <p:panelGrid columns="4">
+                        <p:panelGrid columns="4" >
                             <p:commandButton actionListener="#{nodosP.atras}" id="atras"  icon="ui-icon ui-icon-arrow-1-w" title="atras" />
                             <p:commandButton actionListener="#{nodosP.añadirVagon}" update=":form:nuevoVagon" value="Nuevo Vagon"
                                              oncomplete="PF('nuevoVagon').show()" icon="ui-icon-plus" title="View" rendered="#{loginBean.puedeEditar()}">

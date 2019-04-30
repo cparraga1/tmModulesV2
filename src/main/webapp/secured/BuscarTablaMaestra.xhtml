@@ -53,8 +53,20 @@
                         <f:facet name="header">
                             Matriz de distancias
                         </f:facet>
-                        <p:column headerText="Numeración">
+                        <p:column headerText="Identificador">
                             <h:outputText value="#{tabla.descripcion}" />
+                        </p:column>
+
+                        <p:column headerText="GIS">
+                            <h:outputText value="#{tabla.gisCarga.descripcion}" />
+                        </p:column>
+
+                        <p:column headerText="Matriz Dis.">
+                            <h:outputText value="#{tabla.matrizDistancia.numeracion}" />
+                        </p:column>
+
+                        <p:column headerText="Tipo Día">
+                            <h:outputText value="#{tabla.tipoDia}" />
                         </p:column>
                         <p:column headerText="Modo">
                             <h:outputText value="#{tabla.modoFormatted}" />
@@ -82,7 +94,7 @@
                         </p:column>
                     </p:dataTable>
 
-                    <p:confirmDialog message="¿Esta seguro de eliminar la Tabla Maestra?. Recuerd que se eliminaran todos los registros de la tabla maestra."
+                    <p:confirmDialog message="¿Esta seguro de eliminar la Tabla Maestra?. Recuerde que se eliminaran todos los registros de la tabla maestra."
                                      showEffect="fade"
                                      hideEffect="explode"
                                      widgetVar="groupDeleteConfirm">

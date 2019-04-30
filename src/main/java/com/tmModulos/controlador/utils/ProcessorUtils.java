@@ -54,13 +54,13 @@ public class ProcessorUtils {
         }
     }
 
-    public void copyFileUTF8(String fileName, InputStream in, String destination) {
+    public String copyFileUTF8(String fileName, InputStream in, String destination) {
         try {
 
             destination= destination+fileName;
             // write the inputStream to a FileOutputStream
-            Writer out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(destination)));
+
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(destination)));
 //            IOUtils.copy(in, out, "UTF-8");
             IOUtils.copy(in, out, "ISO-8859-1");
             IOUtils.closeQuietly(out);
@@ -69,15 +69,18 @@ public class ProcessorUtils {
 //            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in,"8859_1"));
 //            String line = bufferedReader.readLine();
 //            while(line != null){
-//                inputStringBuilder.append(line);inputStringBuilder.append('\n');
+//                inputStringBuilder.append(line);
+//                inputStringBuilder.append('\n');
 //                out.write(line);
 //                line = bufferedReader.readLine();
 //            }
-////            out.flush();
-//            out.close();
+//          out.flush();
+//          out.close();
             System.out.println("New file created!");
+            return "OK";
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            return "1. "+e.getMessage() +"\n 2. "+e.getLocalizedMessage() + "\n 3. " + e.toString() + "\n 4. "+fileName;
         }
     }
 

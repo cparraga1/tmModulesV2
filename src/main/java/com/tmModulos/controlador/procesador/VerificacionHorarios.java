@@ -790,7 +790,6 @@ public class VerificacionHorarios {
 
     private void verificarExpediciones(String tipoVerificacion, String file,String tipoDia) throws IOException {
 
-
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet worksheet = workbook.createSheet("Verificacion");
 
@@ -809,10 +808,13 @@ public class VerificacionHorarios {
         List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
         for(ServicioTipoDia servicio: serviciosTipoDia) {
-            System.out.println("Servicio: "+servicio.getIdentificador() +" fila: "+ filas);
+
+            //if (servicio.getIdentificador().equals("7-912-1219-1566") || servicio.getIdentificador().equals("112-931-1261-1552")){
+
+            System.out.println("Servicio: " + servicio.getIdentificador() + " fila: " + filas);
             Row row = worksheet.createRow(filas);
             List<Horario> horariosByServicio = horariosProvisionalServicio.getHorariosByServicioAndTipoDia(servicio.getServicio(), dia);
-            incluirDatosBaseServicio(row,servicio.getServicio(),horariosByServicio, dia.getNombre());
+            incluirDatosBaseServicio(row, servicio.getServicio(), horariosByServicio, dia.getNombre());
             List<Integer> horaInicioB = null;
             List<Integer> horaInicio = new ArrayList<>();
             List<Integer> horaFinB = null;
@@ -827,38 +829,41 @@ public class VerificacionHorarios {
             }
             String tipoServicio = servicio.getServicio().getTipoServicio();
             int distancia = 0;
-//            int distancia = servicio.getServicio().getDistanciaBase();
+
+            if(tablaMaestraService.getDistanciaServicio(servicio.getIdentificador(), tipoDia) != null){
+                distancia = tablaMaestraService.getDistanciaServicio(servicio.getIdentificador(), tipoDia).getDistancia();
+            }
 
             intervalosVeri.cargarFranjas();
 
 
-
-            if(horaInicio.size()>0 && horaFin.size()>0){
+            if (horaInicio.size() > 0 && horaFin.size() > 0) {
                 if (tipoVerificacion.equals("Pre")) {
                     String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
                     List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
                     verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
-                } else if(tipoVerificacion.equals("Pos")){
-                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
-                }else if(tipoVerificacion.equals("Pso")){
+                } else if (tipoVerificacion.equals("Pos")) {
+                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, tipoServicio);
+                } else if (tipoVerificacion.equals("Pso")) {
                     verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
                 }
-            }else{
+            } else {
                 //Se hace lo mismo solo que muestra que el servicio falla
-                System.out.println("Servicio con falla "+servicio.getIdentificador());
+                System.out.println("Servicio con falla " + servicio.getIdentificador());
                 if (tipoVerificacion.equals("Pre")) {
                     String identificador = servicio.getServicio().getMacro() + "-" + servicio.getServicio().getLinea() + "-" + servicio.getServicio().getPunto();
                     List<ExpedicionesTemporal> expedicionesTemporalsData = veriPreHorarios.getExpedicionesTemporalsData(identificador);
                     verificacionPreHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, expedicionesTemporalsData, identificador, tipoServicio);
-                } else if(tipoVerificacion.equals("Pos")){
-                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia,tipoServicio);
-                }else if(tipoVerificacion.equals("Pso")){
+                } else if (tipoVerificacion.equals("Pos")) {
+                    verificacionPostHorario(row, horaInicio, horaInicioB, horaFin, horaFinB, distancia, tipoServicio);
+                } else if (tipoVerificacion.equals("Pso")) {
                     verificacionPSO(row, horaInicio, horaInicioB, horaFin, horaFinB, servicio.getServicio());
                 }
             }
 
 
-        filas++;
+            filas++;
+        //}
         }
 
         try {
@@ -1049,11 +1054,17 @@ public class VerificacionHorarios {
         String nombreNodo1 = obtenerNombreNodo(servicio.getPunto());
         DistanciaNodos nodo1 = matrizDistanciaService.getNodoByNombre(nombreNodo1, servicio);
 
-        String distancia = tablaMaestraService.getDistanciaServicio(servicio.getIdentificador(), tipoDia).getDistancia()+"";
+        String distancia = "N/A";
+
+        try {
+            distancia = tablaMaestraService.getDistanciaServicio(servicio.getIdentificador(), tipoDia).getDistancia() + ".0";
+        } catch (Exception e){
+        }
+
 
         createCellBase(row, nombreNodo1, ComparadorHorarioIndex.NODO_INICIO);
         //createCellBase(row, servicio.getDistanciaBase()+"", ComparadorHorarioIndex.DISTANCIA);
-        createCellBase(row, distancia+".0", ComparadorHorarioIndex.DISTANCIA);
+        createCellBase(row, distancia, ComparadorHorarioIndex.DISTANCIA);
         createCellBase(row, servicio.getPuntoFin()+"", ComparadorHorarioIndex.NODO_FIN);
         createCellBase(row, servicio.getIdentificador(), ComparadorHorarioIndex.iD);
         createCellBase(row, servicio.getMacro()+"-"+servicio.getLinea()+"-"+servicio.getPunto(), ComparadorHorarioIndex.iD_PRE);

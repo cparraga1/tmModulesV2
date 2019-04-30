@@ -199,6 +199,10 @@ public class Servicio {
         this.estado = estado;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
     public Integer getLineaCompuesta() {
         return lineaCompuesta;
     }

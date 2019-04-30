@@ -56,6 +56,7 @@ public class TablaMaestraProcessor {
     private static Logger log = Logger.getLogger(TablaMaestraServicios.class);
     //private String destination = PathFiles.PATH_FOR_FILES+"\\Migracion\\/";
     private String destination = PathFiles.PATH_FOR_FILES_CONVERSION;
+    private String destination2 = PathFiles.PATH_FOR_FILES;
 
 
     private Map serviciosIncluidos;
@@ -89,42 +90,47 @@ public class TablaMaestraProcessor {
                                                Date fechaIntervalos,String tipoDia, String filename, InputStream in,String modo) {
         long tiempoIncial = System.currentTimeMillis();
         logDatos = new ArrayList<>();
-        logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
-        log.info("<<Inicio Calculo Tabla Maestra>>");
-        processorUtils.copyFileUTF8(filename,in,destination);
-        //processorUtils.copyFile(filename,in,destination);
-        destination=destination+filename;
 
-        // Copiar informacion intervalos
-        horariosProvisionalServicio.deleteTablaHorarioFromFile();
+        String copia = processorUtils.copyFileUTF8(filename,in,destination);
 
-        //LINEA PARA VALIDACION
-        //Carga el archivo dentro de la base de datos
-        horariosProvisionalServicio.addTablaHorarioFromFile(destination);
+        if(copia.equals("OK")) {
+            logDatos.add(new LogDatos("<<Inicio Calculo Tabla Maestra>>", TipoLog.INFO));
+            logDatos.add(new LogDatos("<<Nombre Archivo>> "+ filename, TipoLog.INFO));
+            log.info("<<Inicio Calculo Tabla Maestra>>");
 
-        //Encontrar parametros para la generacion de la tabla maestra (GIS de carga y Matriz de Distancia)
-        GisCarga gis= gisCargaService.getGisCargaById(gisCarga);
-        MatrizDistancia matriz= matrizDistanciaService.getMatrizDistanciaById(matrizDistancia);
+            //processorUtils.copyFile(filename,in,destination);
+            destination = destination + filename;
 
-        //Crear tabla maestra con los parametros encontrados
-        TablaMaestra tablaMaestra = crearTablaMaestra(fechaDeProgramacion,new Date(),descripcion,gis,matriz,modo);
-        tablaMaestra.setTipoDia(tipoDia);
-        tablaMaestraService.addCustomer(tablaMaestra);
+            // Copiar informacion intervalos
+            horariosProvisionalServicio.deleteTablaHorarioFromFile();
 
-        // Traer servicios disponibles por tipo Dia
-        TipoDia dia = tipoDiaService.getTipoDia(tipoDia);
-        if(dia!=null){
-            List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
+            //LINEA PARA VALIDACION
+            //Carga el archivo dentro de la base de datos
+            horariosProvisionalServicio.addTablaHorarioFromFile(destination);
 
-            serviciosTipoDia = cleanServiciosTipoDia(serviciosTipoDia);
+            //Encontrar parametros para la generacion de la tabla maestra (GIS de carga y Matriz de Distancia)
+            GisCarga gis = gisCargaService.getGisCargaById(gisCarga);
+            MatrizDistancia matriz = matrizDistanciaService.getMatrizDistanciaById(matrizDistancia);
 
-            //Calcular intervalos
-            GisIntervalos gisIntervalos= generarIntervalosDeTiempo(fechaDeProgramacion,descripcion,tipoDia,tablaMaestra,dia);
-            // intervalosProcessor.precalcularIntervalosProgramacion();
+            //Crear tabla maestra con los parametros encontrados
+            TablaMaestra tablaMaestra = crearTablaMaestra(fechaDeProgramacion, new Date(), descripcion, gis, matriz, modo);
+            tablaMaestra.setTipoDia(tipoDia);
+            tablaMaestraService.addCustomer(tablaMaestra);
 
-            for (ServicioTipoDia servicio: serviciosTipoDia) {
+            // Traer servicios disponibles por tipo Dia
+            TipoDia dia = tipoDiaService.getTipoDia(tipoDia);
+            if (dia != null) {
+                List<ServicioTipoDia> serviciosTipoDia = horariosProvisionalServicio.getServiciosByTipoDia(dia);
 
-                if (servicio.getServicio().getIdentificador().equals("263-640-855-11423") || servicio.getServicio().getIdentificador().equals("263-640-855-11423") || servicio.getServicio().getIdentificador().equals("56-863-1046-1966") || servicio.getServicio().getIdentificador().equals("56-863-1046-1304") || servicio.getServicio().getIdentificador().equals("56-863-1179-1908") || servicio.getServicio().getIdentificador().equals("56-863-1179-1312")) {
+                serviciosTipoDia = cleanServiciosTipoDia(serviciosTipoDia);
+
+                //Calcular intervalos
+                GisIntervalos gisIntervalos = generarIntervalosDeTiempo(fechaDeProgramacion, descripcion, tipoDia, tablaMaestra, dia);
+                // intervalosProcessor.precalcularIntervalosProgramacion();
+
+                for (ServicioTipoDia servicio : serviciosTipoDia) {
+
+                    //if (servicio.getServicio().getIdentificador().equals("263-640-855-11423")) {
 
                     System.out.println(servicio.getServicio().getIdentificador());
 
@@ -217,17 +223,22 @@ public class TablaMaestraProcessor {
                         tablaMaestraService.addTServicios(tablaMaestraServicios);
                         servicioNoExisteEnGISCarga(servicio);
                     }
+                    //}
                 }
             }
+
+
+            veriPreHorarios.deleteTablaHorario();
+            horariosProvisionalServicio.deleteTablaHorarioFromFile();
+
+            logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
+            log.info("<<Fin Calculo Tabla Maestra>>");
+            tiempoIncial = System.currentTimeMillis() - tiempoIncial;
+            log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
+        } else {
+            logDatos.clear();
+            logDatos.add(new LogDatos(copia, TipoLog.INFO));
         }
-
-
-        veriPreHorarios.deleteTablaHorario();
-        horariosProvisionalServicio.deleteTablaHorarioFromFile();
-        logDatos.add(new LogDatos("<<Fin Calculo Tabla Maestra>>", TipoLog.INFO));
-        log.info("<<Fin Calculo Tabla Maestra>>");
-        tiempoIncial = System.currentTimeMillis() - tiempoIncial;
-        log.info("Tiempo de procesamiento: "+ProcessorUtils.convertLongToTime(tiempoIncial));
         return logDatos;
     }
 
@@ -613,7 +624,7 @@ public class TablaMaestraProcessor {
         CicloServicio cicloServicio = new CicloServicio();
         for (ArcoTiempo arcoTiempo: arcoTiempoRecords) {
             String horaInicio = arcoTiempo.getHoraDesde();
-            String horaFin = arcoTiempo.getHoraHasta();
+            String horaFin = modificarFinal(arcoTiempo.getHoraHasta());
             //horaFin = validarHoraFin(horaFin);
             List<TipoFranja> tipoFranjaList = tablaMaestraService.getTipoFranjaByHorario(horaInicio, horaFin);
 
@@ -670,6 +681,28 @@ public class TablaMaestraProcessor {
         return cicloServicio;
     }
 
+    private String modificarFinal(String horaFin){
+        String hora = "";
+        String[] separado = horaFin.split(":");
+        if(Integer.parseInt(separado[0]) >= 24){
+            hora = horaFin;
+        } else {
+            try {
+                String pt = "1970-01-01-" + horaFin;
+                final DateFormat dt = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+                final Calendar cal = Calendar.getInstance();
+                cal.setTime(dt.parse(pt));
+                cal.add(Calendar.MINUTE, -1);
+                Date tm = cal.getTime();
+                final SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+                hora = formato.format(tm);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return hora;
+    }
+
     private String sumaValores(String anterior, String nuevo) {
         if(anterior!=null){
             try {
@@ -692,9 +725,7 @@ public class TablaMaestraProcessor {
                 sum.add(Calendar.MILLISECOND, (int)-tm0);
 
                 long tm = sum.getTime().getTime();
-
                 tm = tm / 1000;
-
                 long hh = tm / 3600;
                 tm %= 3600;
                 long mm = tm / 60;

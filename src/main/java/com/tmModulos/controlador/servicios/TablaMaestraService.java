@@ -256,6 +256,7 @@ public class TablaMaestraService {
     }
 
     public TablaMaestraServicios getDistanciaServicio(String idServicio, String tipoDia){
-        return tablaMaestraServiciosDao.getDistanciaServicio(idServicio, tipoDia);
+        TablaMaestraServicios tablaMaestraServicios = tablaMaestraServiciosDao.getDistanciaServicio(idServicio, tipoDia);
+        return tablaMaestraServicios;
     }
 }

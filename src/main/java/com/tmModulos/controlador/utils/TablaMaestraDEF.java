@@ -39,7 +39,7 @@ public class TablaMaestraDEF {
     public static String RANGO_BUSES_HORA_MAXIMO = "DI1:DR1";
     public static String RANGO_VELOCIDAD_TEORICA_PROMEDIO = "DS1:EB1";
     public static String RANGO_VELOCIDAD_TEORICA_MINIMO = "EC1:EL1";
-    public static String RANGO_VELOCIDAD_TEORICA_MAXIMO = "EM1:EU1";
+    public static String RANGO_VELOCIDAD_TEORICA_MAXIMO = "EM1:EV1";
 
     public static String INFO_SERVICIO_BASE = "Información Base del Servicio";
     public static String INFO_MATRIZ_DISTANCIA = "Matriz de Distancia";

@@ -45,12 +45,15 @@ public class TipoFranjaDao {
 
     public List<TipoFranja> getTipoFranjaByHorario(String horaInicio,String horaFin){
 
-        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TipoFranja.class);
+        List list = getSessionFactory().getCurrentSession().createQuery("from  TipoFranja where (horaInicio >= \'"+horaInicio+"\' AND horaFin <= \'" + horaFin + "\') OR (\'" + horaInicio + "\' BETWEEN horaInicio AND horaFin) OR (\'" + horaFin + "\' BETWEEN horaInicio AND horaFin)").list();
+        return list;
+
+        /*Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(TipoFranja.class);
         criteria.add(Restrictions.or(
                 Restrictions.or(Restrictions.eq("horaInicio", horaInicio), Restrictions.eq("horaFin", horaFin)),
                 Restrictions.and(Restrictions.gt("horaInicio", horaInicio), Restrictions.lt("horaFin", horaFin)))
         );
-        return criteria.list();
+        return criteria.list();*/
     }
 
 

@@ -21,6 +21,7 @@ public class Messages {
     public static final String ACCION_PASSWORD_NEW = "Las nueva contraseña no coincide";
     public static final String ACCION_CAMBIO_PASSWORD = "La contraseña fue actualizada";
 
+    public static final String MENSAJE_NO_SUBIO_ARCHIVO = "Error al cargar la IPH";
 
     //INFORMACION
     public static final String MENSAJE_CARGA_EXITOSA = "Carga exitosa";

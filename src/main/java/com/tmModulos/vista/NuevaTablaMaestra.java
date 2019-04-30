@@ -4,6 +4,7 @@ import com.tmModulos.controlador.procesador.TablaMaestraProcessor;
 import com.tmModulos.controlador.utils.ListObject;
 import com.tmModulos.controlador.utils.LogDatos;
 import com.tmModulos.controlador.utils.ModosUtil;
+import com.tmModulos.controlador.utils.TipoLog;
 import com.tmModulos.modelo.entity.tmData.GisCarga;
 import com.tmModulos.modelo.entity.tmData.GisIntervalos;
 import com.tmModulos.modelo.entity.tmData.MatrizDistancia;
@@ -79,6 +80,8 @@ public class NuevaTablaMaestra {
         modos= ModosUtil.cargarListaModos();
         tiposDia = ModosUtil.cargarListaTipoDiaTroncal();
         formatoArchivo = "Nota: Recuerde que el archivo IPH debe estar en Formato CSV";
+
+        intervalosTiempo = null;
     }
 
     public void habilitarTipoTabla(){
@@ -130,12 +133,15 @@ public class NuevaTablaMaestra {
                 logDatos=tablaMaestraProcessor.calcularTablaMaestra(fechaDeProgramacion,
                         descripcion,gisCarga,matrizDistancia,fechaDeVigencia,tipoDia,intervalosTiempo.getFileName(),
                         intervalosTiempo.getInputstream(), modo);
+                intervalosTiempo = null;
             } catch (IOException e) {
                 e.printStackTrace();
             }
             resultadosVisibles=true;
-            if(logDatos.size()>2){
+            if(logDatos.size()>1){
                 messagesView.info(Messages.MENSAJE_CALCULO_EXITOSO,Messages.ACCION_TABLA_MAESTRA_ALMACENADA);
+            } else{
+                messagesView.error(Messages.MENSAJE_FALLO,Messages.MENSAJE_NO_SUBIO_ARCHIVO);
             }
 
         }else{
